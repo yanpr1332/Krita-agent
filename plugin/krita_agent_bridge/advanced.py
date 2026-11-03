@@ -1,7 +1,7 @@
 """Separate route table for second-round native Krita features."""
-from . import advanced_layers, advanced_documents, advanced_media, advanced_transforms, advanced_checkpoint
+from . import advanced_layers, advanced_documents, advanced_media, advanced_transforms, advanced_checkpoint, advanced_round3
 
-HANDLERS = (advanced_layers, advanced_documents, advanced_media, advanced_transforms, advanced_checkpoint)
+HANDLERS = (advanced_layers, advanced_documents, advanced_media, advanced_transforms, advanced_checkpoint, advanced_round3)
 ADVANCED_COMMANDS = frozenset().union(*(handler.COMMANDS for handler in HANDLERS))
 
 
