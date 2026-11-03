@@ -15,7 +15,10 @@ ALLOWED = frozenset((
     "image.import", "reference.import",
     "selection.rectangle", "selection.clear", "selection.info",
     "preview.canvas", "preview.layer", "preview.region",
-    "document.info", "document.list", "document.save", "document.export"
+    "document.info", "document.list", "document.save", "document.export",
+    "checkpoint.create", "color.info", "mask.create", "mask.inspect",
+    "mask.selection.set", "selection.combine", "selection.modify", "selection.metrics",
+    "filter.layer.create", "filter.mask.create", "brush.profile", "brush.presets"
 ))
 # Queries stay available as direct commands, but have no side effects.
 QUERY_ONLY = frozenset((

@@ -27,6 +27,7 @@ def _save(bridge, image, filename):
     with open(target, "rb") as source:
         for block in iter(lambda: source.read(128*1024), b""):
             digest.update(block)
+    bridge.last_preview_path = str(target)
     return {"path": target, "width": image.width(), "height": image.height(),
             "sha256": digest.hexdigest()}
 

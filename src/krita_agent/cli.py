@@ -17,6 +17,9 @@ from .upstream_semantics import enrich, ingest_probes
 from .protocol import TERMINAL_STATES, TaskError, compile_task, points
 from .session import DEFAULT_PORT, launch, load_session
 from . import upstream as upstream_api
+from . import upstream3
+from . import revisions
+from .creative_plans import compile_scene
 
 
 def inspect(path, timeout=10):
@@ -180,8 +183,54 @@ def parser_build():
     up.add_argument("--update-baseline", action="store_true")
     up.add_argument("--write-report")
     up.add_argument("--probe", action="append", default=[], metavar="BUILD=FILE")
-    up.add_argument("action", nargs="?", choices=("snapshot", "init", "check", "diff"),
+    up.add_argument("action", nargs="?", choices=("snapshot", "init", "check", "diff", "catalog"),
                     default="snapshot")
+    checkpoint = commands.add_parser("checkpoint", help="Durable KRA checkpoints and explicit recovery")
+    cp_actions = checkpoint.add_subparsers(dest="action", required=True)
+    for action in ("create", "list", "inspect", "restore", "resume"):
+        p = cp_actions.add_parser(action)
+        _connection(p)
+        if action == "create":
+            p.add_argument("--path", help="Optional new path under output root ending .kra")
+        if action in ("inspect", "restore", "resume"):
+            p.add_argument("id")
+        if action in ("restore", "resume"):
+            p.add_argument("--confirm", action="store_true")
+
+    scene = commands.add_parser("scene", help="Compile a structured, deterministic scene")
+    _connection(scene)
+    scene.add_argument("--file", required=True)
+    scene.add_argument("--output", help="Write compiled JSON plan, refusing overwrite")
+    scene.add_argument("--submit", action="store_true")
+    scene.add_argument("--wait", action="store_true")
+
+    revision = commands.add_parser("revision", help="Target-image local revision planner")
+    revisions_cmd = revision.add_subparsers(dest="action", required=True)
+    rp = revisions_cmd.add_parser("plan")
+    rp.add_argument("--before", required=True)
+    rp.add_argument("--target", required=True)
+    rp.add_argument("--layer-id", required=True)
+    rp.add_argument("--output", required=True)
+    rp.add_argument("--threshold", type=int, default=2)
+    rp.add_argument("--region", nargs=4, type=int)
+    ra = revisions_cmd.add_parser("apply")
+    _connection(ra)
+    ra.add_argument("--plan", required=True)
+    ra.add_argument("--confirm", action="store_true")
+    ra.add_argument("--no-wait", action="store_true")
+
+    capreg = commands.add_parser("capability-registry", help="Manually reviewed runtime evidence")
+    regcmd = capreg.add_subparsers(dest="action", required=True)
+    listcmd = regcmd.add_parser("list")
+    listcmd.add_argument("--file", default=".cache/capabilities.json")
+    writecmd = regcmd.add_parser("record")
+    writecmd.add_argument("--file", default=".cache/capabilities.json")
+    writecmd.add_argument("--build", required=True)
+    writecmd.add_argument("--symbol", required=True)
+    writecmd.add_argument("--state", required=True,
+                          choices=("source_seen", "present_in_build", "not_supported", "tested_working"))
+    writecmd.add_argument("--evidence", required=True)
+    writecmd.add_argument("--confirm-reviewed", action="store_true")
     return parser
 
 
@@ -217,6 +266,14 @@ def main(argv=None):
             elif args.action == "check":
                 result = upstream_api.check(args.repo, args.baseline_file, args.fetch,
                                             args.update_baseline)
+            elif args.action == "catalog":
+                if not args.base:
+                    raise ValueError("upstream catalog requires --from-sha")
+                result = upstream3.catalog(args.repo, args.base, args.to_sha)
+                if args.write_report:
+                    result["report_file"] = upstream3.save_catalog(result, args.write_report)
+                _show(result)
+                return 0
             else:
                 if not args.base:
                     raise ValueError("upstream diff requires --from-sha")
@@ -233,6 +290,25 @@ def main(argv=None):
                 result = enrich(result, ingest_probes(probes))
             if args.write_report:
                 result["report_file"] = upstream_api.write_report(result, args.write_report)
+            _show(result)
+            return 0
+        if args.command == "capability-registry":
+            if args.action == "list":
+                _show(upstream3.registry_list(args.file))
+            else:
+                _show(upstream3.registry_record(
+                    args.file, args.build, args.symbol, args.state, args.evidence,
+                    confirm=args.confirm_reviewed))
+            return 0
+        if args.command == "revision":
+            if args.action == "plan":
+                result = revisions.propose(
+                    args.before, args.target, args.layer_id,
+                    threshold=args.threshold, region=args.region)
+                result["written_to"] = revisions.write_plan(result, args.output)
+            else:
+                result = revisions.apply(_client(args), revisions.load_plan(args.plan),
+                                         confirm=args.confirm, wait=not args.no_wait)
             _show(result)
             return 0
         if args.command == "feedback":
@@ -288,6 +364,31 @@ def main(argv=None):
                 _show(_call(args, "job.list"))
             else:
                 _show(_call(args, "job." + args.action, id=args.id))
+        elif args.command == "checkpoint":
+            if args.action == "list":
+                result = _call(args, "checkpoint.list")
+            elif args.action == "create":
+                result = _call(args, "checkpoint.create", **({"path": args.path} if args.path else {}))
+            else:
+                result = _call(args, "checkpoint." + args.action,
+                               id=args.id, **({"confirm": args.confirm}
+                                              if args.action in ("restore", "resume") else {}))
+            _show(result)
+        elif args.command == "scene":
+            steps = compile_scene(_read_json(args.file))
+            if args.output:
+                archive = {"steps": steps}
+                output = Path(args.output)
+                output.parent.mkdir(parents=True, exist_ok=True)
+                with output.open("x", encoding="utf-8") as f:
+                    json.dump(archive, f, ensure_ascii=False, indent=2)
+            if args.submit:
+                client = _client(args)
+                job = client.submit(steps)
+                _show(_wait_for_job(client, job["id"]) if args.wait else job)
+            else:
+                _show({"steps": len(steps), "output": args.output,
+                       "submitted": False, "hint": "Use --submit to run in Krita"})
         elif args.command == "workflow":
             client = _client(args)
             steps = compile_workflow(_read_json(args.file))

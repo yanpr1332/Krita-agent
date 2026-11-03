@@ -1,0 +1,40 @@
+{
+  "pause": {
+    "id": "e824289828934551ae04bd6b1671e032",
+    "state": "paused",
+    "total": 400,
+    "done": 202,
+    "error": null,
+    "last_result": {
+      "name": "Restart safety",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": false
+  },
+  "resume": "UI running progress observed",
+  "cancel": {
+    "id": "e824289828934551ae04bd6b1671e032",
+    "state": "cancelled",
+    "total": 400,
+    "done": 202,
+    "error": null,
+    "last_result": {
+      "name": "Restart safety",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": true
+  },
+  "actual_ui_clicks": true,
+  "qt_scale_factor": "1.5",
+  "layout": "Fixed controls usable in scaled compact window; scrollable content",
+  "observations": [
+    "Actual Pause/Resume/Cancel clicked with independent progress checks",
+    "8 recent rows and error label present",
+    "Outer scrollbar reaches error and actual red-on-white preview at 1.5 scale",
+    "Fixed controls remain visible while content scrolls"
+  ]
+}

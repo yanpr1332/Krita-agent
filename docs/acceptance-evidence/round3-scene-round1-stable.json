@@ -1,0 +1,68 @@
+[
+  {
+    "case": "scene",
+    "ok": true,
+    "steps": 11,
+    "job": {
+      "id": "8bb28e102b624a7aba5aa6ddab0554fd",
+      "state": "completed",
+      "total": 11,
+      "done": 11,
+      "error": null,
+      "last_result": {
+        "schema": 1,
+        "id": "90bc67c96dfa41d6afdc854e99c5b2be",
+        "created_at": "2026-11-03T11:40:43.814973+00:00",
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705985\\checkpoints\\90bc67c96dfa41d6afdc854e99c5b2be.kra",
+        "sha256": "3b01cf1513bf7ae29266c40c478c53601aa222a7f0abf9bde4e5493dccc4712e",
+        "document_name": "Round3 Structured Drawing",
+        "width": 1024,
+        "height": 1024,
+        "color_model": "RGBA",
+        "color_depth": "U8",
+        "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+        "job_id": "8bb28e102b624a7aba5aa6ddab0554fd",
+        "after_step": 11,
+        "policy": "immutable snapshot; never overwrite or automatically replay",
+        "steps_sha256": "1beee2ae5a28107696bca394052a875ecaf0de3f40f64dca9f8e62cf72b419f9"
+      },
+      "cancel_requested": false
+    },
+    "layers": [
+      "Background",
+      "Sketch",
+      "Accent"
+    ],
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  {
+    "case": "round1-pressure",
+    "ok": true,
+    "steps": 12,
+    "job": {
+      "id": "f3c04a28cc234ae6ab1c33808bdd1f17",
+      "state": "completed",
+      "total": 12,
+      "done": 12,
+      "error": null,
+      "last_result": {
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705985\\examples\\pressure-comparison.png",
+        "format": "png"
+      },
+      "cancel_requested": false
+    },
+    "layers": [
+      "Background",
+      "Increasing Pressure",
+      "Thin Thick Thin",
+      "Constant Pressure"
+    ],
+    "size": [
+      1024,
+      1024
+    ]
+  }
+]

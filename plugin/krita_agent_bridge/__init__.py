@@ -39,6 +39,10 @@ COMMANDS = frozenset((
 TASK_STEPS = COMMANDS.difference((
     "status", "capabilities", "document.open", "job.submit", "job.status",
     "job.list", "job.pause", "job.resume", "job.cancel", "job.history", "job.recover",
+    "checkpoint.list", "checkpoint.inspect", "checkpoint.restore", "checkpoint.resume",
+    "pixel.transaction.undo", "pixel.transaction.redo", "pixel.transaction.inspect",
+    "pixel.transaction.reconcile",
+    "clipboard.save", "clipboard.load", "clipboard.inspect",
     "document.close", "document.activate", "document.crop", "selection.cut",
     "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
 ))
@@ -91,6 +95,7 @@ class KritaAgentBridge(Extension):
         self.output_dir = None
         self.jobs = {}
         self.journal = None
+        self._current_job_id = None
         self.active = deque()
         self.recent = {}
         self.in_flight = set()
@@ -264,6 +269,11 @@ class KritaAgentBridge(Extension):
             "Node.paintRectangle": hasattr(node_cls, "paintRectangle"),
             "View.brushPosition": hasattr(view_cls, "brushPosition"),
             "View.setCurrentBrushPreset": hasattr(view_cls, "setCurrentBrushPreset"),
+            "Document.createTransparencyMask": hasattr(getattr(krita_module, "Document", None), "createTransparencyMask"),
+            "Document.createFilterMask": hasattr(getattr(krita_module, "Document", None), "createFilterMask"),
+            "Document.setColorSpace": hasattr(getattr(krita_module, "Document", None), "setColorSpace"),
+            "Selection.feather": hasattr(getattr(krita_module, "Selection", None), "feather"),
+            "Node.setPixelData": hasattr(node_cls, "setPixelData"),
         }
         return {"krita_version": Krita.instance().version(), "qt_version": QT_VERSION_STR,
                 "qt_binding": QT_BINDING, "python": sys.version.split()[0],
@@ -289,7 +299,8 @@ class KritaAgentBridge(Extension):
             return {"krita_version": app.version(), "connected": True,
                     "active_document": bool(document),
                     "document": (document.name() if document else None),
-                    "jobs": len(self.jobs), "output_dir": str(self.output_dir)}
+                    "jobs": len(self.jobs), "output_dir": str(self.output_dir),
+                    "input_dir": str(Path(os.environ.get("KRITA_AGENT_INPUT_DIR") or self.output_dir).resolve())}
         if command == "capabilities":
             return self._capabilities()
         if command.startswith("job."):
@@ -548,6 +559,7 @@ class KritaAgentBridge(Extension):
         job["state"] = "running"
         self.journal.save(job)
         step = job["steps"][job["done"]]
+        self._current_job_id = identifier
         try:
             job["last_result"] = self._execute(step["command"], step.get("parameters", {}))
             job["done"] += 1
@@ -561,6 +573,8 @@ class KritaAgentBridge(Extension):
             self.journal.save(job)
             self.active.popleft()
             # Partial artwork is preserved for inspection; no destructive rollback.
+        finally:
+            self._current_job_id = None
 
 
 BRIDGE_INSTANCE = KritaAgentBridge(Krita.instance())

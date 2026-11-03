@@ -1,6 +1,6 @@
 # Krita Agent — Drawing Automation Design
 
-> Historical architecture and feature design, not a current implementation checklist. See [ROADMAP](ROADMAP.md), [REPORT-004](REPORT-004.md) and [REPORT-005](REPORT-005.md) for verified first-round results and unverified second-round source status.
+> Historical architecture and feature design, not a current implementation checklist. See [ROADMAP](ROADMAP.md), [REPORT-004](REPORT-004.md), [REPORT-007](REPORT-007.md) and [REPORT-008](REPORT-008.md) for verified Round 1/2 behavior and unverified Round 3 source.
 >
 > Original planning statement: Planning and technical design draft, not a list of implemented features. Target: Windows 11 x64, with stable Krita and Krita Next builds. All APIs, commands, and behaviors must be validated in the actual target build.
 

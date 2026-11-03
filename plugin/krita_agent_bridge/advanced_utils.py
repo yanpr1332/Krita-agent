@@ -78,3 +78,13 @@ def describe(node, depth=0):
             "opacity": node.opacity()/255.0, "blending_mode": node.blendingMode(),
             "position": [position.x(), position.y()], "depth": depth,
             "children": len(node.childNodes())}
+
+
+def storage_root(bridge, directory):
+    """Resolve internal stores against the authorized root, rejecting junction escapes."""
+    authorized = bridge.output_dir.resolve()
+    target = (authorized / directory).resolve()
+    if authorized not in target.parents:
+        raise ValueError("Internal storage escaped the output sandbox")
+    target.mkdir(parents=True, exist_ok=True)
+    return target

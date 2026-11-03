@@ -1,0 +1,425 @@
+{
+  "schema": 1,
+  "entries": [
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintLine",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.305898+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintPolylineStroke",
+      "state": "not_supported",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.328178+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "StrokePoint",
+      "state": "not_supported",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.347854+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintPath",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.367842+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintEllipse",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.384639+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintPolygon",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.404163+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.paintRectangle",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.420330+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "View.brushPosition",
+      "state": "not_supported",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.441127+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "View.setCurrentBrushPreset",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.458717+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Document.createTransparencyMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.480105+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Document.createFilterMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.501616+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Document.setColorSpace",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.521447+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Selection.feather",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.544075+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "stable: 5.3.4.1 (git bd6e8d0)",
+      "symbol": "Node.setPixelData",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-stable.json",
+      "evidence_sha256": "60c466923d1932b7fcc274ad77f761a5ccdbfcd020fdfc8d6beb69627326e5ae",
+      "recorded_at": "2026-11-03T11:56:48.562838+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintLine",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.584837+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPolylineStroke",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.602653+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "StrokePoint",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.621512+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPath",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.638850+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintEllipse",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.660881+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPolygon",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.684013+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintRectangle",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.704134+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "View.brushPosition",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.725793+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "View.setCurrentBrushPreset",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.746154+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Document.createTransparencyMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.771499+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Document.createFilterMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.794407+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Document.setColorSpace",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.814408+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Selection.feather",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.839512+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt5: 5.4.0-prealpha (git 2687e5d)",
+      "symbol": "Node.setPixelData",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt5.json",
+      "evidence_sha256": "e972a7429b02d2c48436ba475deee51be550674afe1dfe5f67d5cffbdc9a41bb",
+      "recorded_at": "2026-11-03T11:56:48.860277+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintLine",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.882887+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPolylineStroke",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.905800+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "StrokePoint",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.927819+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPath",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.949464+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintEllipse",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.973008+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintPolygon",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:48.997461+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.paintRectangle",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.018338+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "View.brushPosition",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.038521+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "View.setCurrentBrushPreset",
+      "state": "present_in_build",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.056932+00:00",
+      "reviewer_confirmed": false,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Document.createTransparencyMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.076532+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Document.createFilterMask",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.099644+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Document.setColorSpace",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.119362+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Selection.feather",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.139877+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    },
+    {
+      "build": "qt6: 6.1.0-prealpha (git 2687e5d)",
+      "symbol": "Node.setPixelData",
+      "state": "tested_working",
+      "evidence_path": "D:\\computer\\Krita\\Krita-agent\\docs\\acceptance-evidence\\round3-native-qt6.json",
+      "evidence_sha256": "6aa0e3edd8f6ad9ad77b407360e9425a5b40661531cf2340700fe7e119c6a881",
+      "recorded_at": "2026-11-03T11:56:49.159099+00:00",
+      "reviewer_confirmed": true,
+      "source": "manual_declared_evidence"
+    }
+  ]
+}

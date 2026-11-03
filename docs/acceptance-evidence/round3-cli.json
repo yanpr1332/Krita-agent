@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "--help"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "efed674b99252c88ba29a267c13919e25ae8a7b355b409091e10ae8b4037d805"
+  },
+  {
+    "command": [
+      "checkpoint",
+      "list"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "e32a8b8fc3ed93deb96463247ab4994758e6b603eb9c13abdedc57b7d329af37"
+  },
+  {
+    "command": [
+      "checkpoint",
+      "inspect"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "fdaae00058f0ed7ce26c6fb214512dde32d4ae5f3d53d2b43adfe36e368d4978"
+  },
+  {
+    "command": [
+      "scene",
+      "--file"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "4688ba1f3944ebf95505e489a49203543852b1e23c075a02100a9956e2667e95"
+  },
+  {
+    "command": [
+      "revision",
+      "plan"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "72ce9775ecba52f0aee13fb10989483d8d31bacf6786e85da356f515bcf8817e"
+  },
+  {
+    "command": [
+      "revision",
+      "apply"
+    ],
+    "expected_exit": 1,
+    "actual_exit": 1,
+    "ok": true,
+    "stdout_sha256": "567b17977cf6ca40d05c7c166978e8d7913716ae520b0b4a9676fea1b889afc2"
+  },
+  {
+    "command": [
+      "capability-registry",
+      "list"
+    ],
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "ok": true,
+    "stdout_sha256": "3266e3474eae2227f4fc372886e1a42cdb581838dd856d4217220b4b475ece2e"
+  },
+  {
+    "command": [
+      "upstream",
+      "catalog"
+    ],
+    "ok": true,
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout_sha256": "fc78865a42014b933cd11db56bed54b0d9f2cb5ac58b7e4e124c992a4cf567c5",
+    "environment": "same account that created fixture; no safe.directory override"
+  }
+]

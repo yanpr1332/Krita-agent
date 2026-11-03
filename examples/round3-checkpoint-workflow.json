@@ -1,0 +1,89 @@
+{
+  "steps": [
+    {
+      "command": "canvas.create",
+      "parameters": {
+        "width": 512,
+        "height": 512,
+        "name": "Checkpointed Drawing"
+      }
+    },
+    {
+      "command": "layer.create",
+      "parameters": {
+        "name": "Ink"
+      }
+    },
+    {
+      "command": "brush.configure",
+      "parameters": {
+        "size": 15,
+        "color": "#405070",
+        "pressure_enabled": true
+      }
+    },
+    {
+      "command": "draw.stroke",
+      "parameters": {
+        "mode": "auto",
+        "points": [
+          {
+            "x": 40,
+            "y": 50,
+            "pressure": 0.2,
+            "time_ms": 0
+          },
+          {
+            "x": 200,
+            "y": 100,
+            "pressure": 0.8,
+            "time_ms": 50
+          },
+          {
+            "x": 440,
+            "y": 320,
+            "pressure": 0.3,
+            "time_ms": 100
+          }
+        ]
+      }
+    },
+    {
+      "command": "checkpoint.create",
+      "parameters": {}
+    },
+    {
+      "command": "draw.stroke",
+      "parameters": {
+        "mode": "auto",
+        "points": [
+          {
+            "x": 30,
+            "y": 300,
+            "pressure": 0.3,
+            "time_ms": 0
+          },
+          {
+            "x": 210,
+            "y": 330,
+            "pressure": 0.9,
+            "time_ms": 50
+          },
+          {
+            "x": 470,
+            "y": 455,
+            "pressure": 0.3,
+            "time_ms": 100
+          }
+        ]
+      }
+    },
+    {
+      "command": "document.save",
+      "parameters": {
+        "path": "round3/after-stroke.kra",
+        "overwrite": false
+      }
+    }
+  ]
+}

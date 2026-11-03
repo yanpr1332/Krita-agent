@@ -1,0 +1,6 @@
+{
+  "kind": "transparency",
+  "name": "Soft visibility mask",
+  "parent_name": "Ink",
+  "require_selection": true
+}

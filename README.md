@@ -1,71 +1,87 @@
 # Krita Agent
 
-**Round 2 acceptance completed on installed Stable, Next Qt5 and Next Qt6 (2026-11-03).** 34 offline tests pass; actual Dock button interactions and pixel assertions passed. See [REPORT-007](docs/REPORT-007.md), which supersedes older unverified-status statements below.
-
 English | [简体中文](README.zh-CN.md)
 
-Local Windows automation for Krita's **native painting engine**. Python Controller/SDK, authenticated loopback Bridge running as a Krita Extension, editable multi-layer jobs, pressure strokes, optional advanced editor commands, and upstream source tracking.
+Krita Agent is a Windows-native Python/Qt automation system for **real editable Krita painting**. An authenticated loopback IPC channel connects an external Controller to a Krita Python Extension running on the GUI thread. The project deliberately separates source implementation, offline test results and actual installed-build acceptance.
 
-## Status
+## Project status (2026-11-03)
 
-- **Round 1 verified (2026-11-03):** Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha passed the documented core acceptance; 18 offline tests were reported passing. See [REPORT-004](docs/REPORT-004.md) for actual limits.
-- **Round 2 source authored on `feat/round2-advanced-workflow`:** advanced layers/documents, import/reference images, selection, previews, curves, local feedback, persistent job journal, upstream impact classification, optional Docker, and a single-shot workflow CLI. **None of these NEW features has been tested or verified in this round.** See [REPORT-005](docs/REPORT-005.md).
-- **No auto-merge, no automatic Krita installation, no CI validation triggered.** The manual CI workflow is opt-in only.
+| Milestone | Status | Evidence |
+| --- | --- | --- |
+| Round 1: Native painting and basic tasks | **Accepted** on Stable and both Next builds | [REPORT-004](docs/REPORT-004.md) |
+| Round 2: Editable workflow, previews, images and Dock | **Accepted**, 34 offline tests passed and pixel/Dock real-build checks recorded | [REPORT-006](docs/REPORT-006.md), [REPORT-007](docs/REPORT-007.md) |
+| Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Accepted on the three installed builds; 57 offline tests passed** | [REPORT-009](docs/REPORT-009.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
 
-## Architecture
+Acceptance covers three specific builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha. They are not blanket future-version guarantees. Round 3 native, crash-recovery, pixel and actual Dock acceptance is recorded in [REPORT-009](docs/REPORT-009.md). No CI was triggered.
 
-External Windows CLI → authenticated JSON over `127.0.0.1` → in-process Krita Python Extension on the Qt GUI thread → native editable Krita documents. No cloud model is required for the core system.
+## Main architecture
 
 ```text
-src/krita_agent/                  Controller, workflows, geometry, feedback, sessions
-plugin/krita_agent_bridge/       Krita Extension, native handlers, journal, optional Docker
-tests/                           Offline tests (new tests unexecuted)
-scripts/                         Dry-run-first plugin installer and probe helpers
-examples/                        Source-controlled example JSON workflows
-docs/                            Reports, architecture, plans and API reference
+src/krita_agent/              External Controller, task protocol, geometry,
+                              structured scenes, local image revisions,
+                              feedback, Git upstream inventory
+plugin/krita_agent_bridge/    Krita Python Extension, native nodes/brush,
+                              masks, checkpoints, per-pixel reversible history,
+                              compressed clips, optional local Dock
+tests/                        Offline regression tests (57 passed)
+scripts/                      Dry-run plugin installer, acceptance helpers
+examples/                     JSON geometry / workflow examples
+docs/                         Milestone reports, architecture, acceptance
 ```
 
-## Installation and usage
+## Setup and existing first/second round API
 
-After reviewing the shared Krita user resource directory, install the native Windows controller and explicitly deploy the Bridge. Stable and Next may share plugin directories, so back up first.
+The installer previews changes by default. **Krita Stable and Next may share the user plugin directory.** Back it up before an explicit install:
 
 ```powershell
+cd "D:\computer\Krita\Krita-agent"
 python -m pip install -e .
 python scripts\install_plugin.py
+# Review user resources / backup before choosing:
 python scripts\install_plugin.py --apply
 ```
 
-Enable the Bridge in **Settings → Configure Krita → Python Plugin Manager**, then restart the chosen Krita build. An ordinary Krita launch will not start the bridge without a launch credential.
+Enable the Bridge in **Settings → Configure Krita → Python Plugin Manager**, restart Krita and launch it explicitly with Controller credentials:
 
 ```powershell
-krita-agent doctor
-krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe" --output-dir "D:\drawings\out" --input-dir "D:\drawings\references"
+krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe" --output-dir "D:\drawings\out" --input-dir "D:\drawings\references" --dock
 krita-agent connect
 krita-agent capabilities
-
-# Existing first-round native painting task:
-krita-agent job run --file ".\examples\pressure-demo.json" --wait
-
-# New second-round source commands (runtime compatibility unverified):
-krita-agent invoke layer.tree --params "{}"
-krita-agent invoke brush.list --params "{}"
 krita-agent workflow --file ".\examples\round2-edit-workflow.json" --wait
-krita-agent job recover YOUR_JOB_ID
-krita-agent feedback compare ".\a.png" ".\b.png"
 ```
 
-All Bridge commands use an explicit allowlist. For complex JSON on Windows PowerShell, save parameters to a file and invoke `--params-file`.
+Installed-build evidence and limits are recorded in REPORT-009.
 
-## Native drawing and recovery boundaries
+## Round 3 commands (installed-build acceptance recorded)
 
-Native stroke pressure is brush-preset-dependent. Next continuous strokes and Stable segmented fallback are different in performance, texture and undo granularity. The new stroke planner supports splines, smoothing and spatial resampling without depending on Qt outside Krita.
+```powershell
+# Real KRA snapshot + explicit inspect / restore to a fresh file copy:
+krita-agent checkpoint create
+krita-agent checkpoint list
+krita-agent checkpoint inspect CHECKPOINT_ID
+krita-agent checkpoint restore CHECKPOINT_ID --confirm
 
-Jobs journal states to disk under the authorized output root. After an unexpected shutdown, an unfinished job becomes **interrupted**; no possibly duplicated brush stroke is replayed automatically. A real KRA save point must be managed explicitly; job metadata alone is not a full painting checkpoint.
+# Build an inspectable structured drawing plan:
+krita-agent scene --file ".\examples\round3-scene.json" --output ".\plans\scene.json"
 
-Inputs are limited to the configured input root; outputs remain inside the authorized output root and do not overwrite existing art by default.
+# Analyze a target image and plan a safe bounded local edit:
+krita-agent revision plan --before ".\before.png" --target ".\reference\goal.png" --layer-id LAYER_ID --output ".\plans\revision.json"
+krita-agent revision apply --plan ".\plans\revision.json" --confirm
 
-## References
+# New mask/filter/color and separate reversible pixel commands use:
+krita-agent invoke mask.create --params-file ".\examples\round3-mask.json"
+krita-agent invoke color.info --params "{}"
 
-[Round 2 command guide](docs/ROUND2-API.md) · [Architecture](docs/ARCHITECTURE.md) · [Roadmap](docs/ROADMAP.md) · [Verified Round 1](docs/REPORT-004.md) · [Unverified Round 2 implementation](docs/REPORT-005.md).
+# Local upstream source signature inventory (not runtime proof):
+krita-agent upstream catalog --repo "D:\computer\Krita\Krita-upstream" --from-sha OLD_SHA --to-sha HEAD
+```
 
-Original project code is MIT-licensed; Krita and other software are subject to their own licenses.
+An interrupted job is never replayed on startup. The restoration process verifies a stored KRA checksum and can explicitly restore a fresh copy and submit only the suffix after an authenticated job checkpoint. Direct RGBA U8 pixel undo is a separate, checksum-protected journal, **not** the Krita native Undo stack. The image revision planner requires an approved preview/target pair, a single visible fully opaque normal paint layer and a bounded patch.
+
+Optional image-difference planning requires `pip install -e ".[feedback]"`. The core Controller has no required cloud API or generative model.
+
+## Documentation and contribution
+
+[Round 3 API](docs/ROUND3-API.md) · [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) · [Current roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Round 3 implementation report](docs/REPORT-008.md) · [Contributing](CONTRIBUTING.md).
+
+The project-authored code is MIT-licensed. Krita and all third-party dependencies retain their own licensing terms.
