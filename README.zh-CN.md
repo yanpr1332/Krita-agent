@@ -1,5 +1,7 @@
 # Krita Agent
 
+**第二轮本机验收已完成（2026-11-03）**：34 项离线测试通过，Stable、Next Qt5、Next Qt6 的 Dock 按钮及像素断言通过。[REPORT-007](docs/REPORT-007.md) 更新了下文历史“未验证”状态。
+
 [English](README.md) | 简体中文
 
 Krita Agent 是面向 Windows 的 Krita **原生绘图自动化控制器**：外部 Python CLI/SDK、Krita 内部插件、受控本机通信、可编辑分层绘图、压感轨迹，以及 KDE 上游功能追踪。

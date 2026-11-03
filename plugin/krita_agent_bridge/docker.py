@@ -61,5 +61,8 @@ class AgentStatusDocker(DockWidget):
 def register(bridge):
     global _bridge_ref
     _bridge_ref = bridge
+    position = getattr(DockWidgetFactoryBase, "DockRight", None)
+    if position is None:
+        position = DockWidgetFactoryBase.DockPosition.DockRight
     Krita.instance().addDockWidgetFactory(
-        DockWidgetFactory("krita_agent_status", DockWidgetFactoryBase.DockRight, AgentStatusDocker))
+        DockWidgetFactory("krita_agent_status", position, AgentStatusDocker))

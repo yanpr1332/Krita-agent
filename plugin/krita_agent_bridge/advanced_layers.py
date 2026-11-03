@@ -85,4 +85,6 @@ def execute(bridge, command, p):
         return result
     else:
         raise ValueError("Unknown layer operation")
+    doc.refreshProjection()
+    doc.waitForDone()
     return describe(node)

@@ -1,5 +1,7 @@
 # Round 2 API and CLI reference (source implemented; runtime unverified)
 
+**Acceptance update:** REPORT-007.md supersedes earlier unverified-status notes. Selection transfer uses a session-local RGBA U8 buffer, bounded to 4 million pixels. Paste composites source-over within the canvas; copy/cut must precede paste in the same Bridge session. Full-canvas-coordinate previews preserve alpha; layer previews require RGBA U8. Direct pixel edits are not promised as native undo transactions.
+
 ## Installation prerequisites
 
 First-round Bridge must already be installed and enabled in Krita. After the second-round code is accepted, backup shared user resources before reinstalling the Bridge. Stable and Next may share Python plugin directories.

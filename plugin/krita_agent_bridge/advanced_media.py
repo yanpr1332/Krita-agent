@@ -108,8 +108,13 @@ def execute(bridge, command, p):
             h = integer(p.get("height", 512), "height", 1, 2048)
             if w*h > 2000000:
                 raise ValueError("Preview too large")
-            image = (doc.thumbnail(w, h) if command == "preview.canvas" else
-                     find_node(doc, p).thumbnail(w, h))
+            if command == "preview.canvas":
+                image = doc.projection(0, 0, doc.width(), doc.height())
+            else:
+                _rgba(doc)
+                data = bytes(find_node(doc, p).projectionPixelData(0, 0, doc.width(), doc.height()))
+                image = QImage(data, doc.width(), doc.height(), ARGB32).copy()
+            image = image.scaled(w, h)
         return _save(bridge, image, p.get("filename", "preview/snapshot.png"))
     if command in ("pixel.fill", "pixel.clear"):
         _rgba(doc)

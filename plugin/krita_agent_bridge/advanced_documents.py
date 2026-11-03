@@ -1,6 +1,10 @@
 """Multiple documents, non-destructive selections and bounded document crop."""
 from krita import Krita, Selection
 from .advanced_utils import integer, word
+try:
+    from PyQt5.QtCore import QByteArray
+except ImportError:
+    from PyQt6.QtCore import QByteArray
 
 COMMANDS = frozenset((
     "document.list", "document.activate", "document.close", "document.crop",
@@ -79,17 +83,46 @@ def execute(bridge, command, p):
     if selection is None:
         raise RuntimeError("No selection")
     node = bridge._node()
-    if command == "selection.copy":
-        selection.copy(node)
-        return {"copied": True}
-    if command == "selection.cut":
-        if p.get("confirm") is not True:
+    if node.locked() and command != "selection.copy":
+        raise ValueError("Target layer locked")
+    if doc.colorModel() != "RGBA" or doc.colorDepth() != "U8":
+        raise RuntimeError("Selection transfer requires RGBA U8")
+    if command in ("selection.copy", "selection.cut"):
+        if command == "selection.cut" and p.get("confirm") is not True:
             raise ValueError("Cut requires confirm=true")
-        selection.cut(node)
-        return {"cut": True}
+        x, y, w, h = selection.x(), selection.y(), selection.width(), selection.height()
+        if w < 1 or h < 1 or w*h > 4000000:
+            raise ValueError("Selection must contain 1 to 4 million pixels")
+        data = bytearray(node.pixelData(x, y, w, h))
+        mask = bytes(selection.pixelData(x, y, w, h))
+        if len(data) != w*h*4 or len(mask) != w*h:
+            raise RuntimeError("Invalid selection pixel buffer")
+        for i, coverage in enumerate(mask):
+            data[i*4+3] = (data[i*4+3]*coverage+127)//255
+        bridge.selection_clip = (w, h, bytes(data))
+        if command == "selection.cut":
+            selection.cut(node)
+            doc.refreshProjection()
+            doc.waitForDone()
+        return {"copied": True, "cut": command == "selection.cut", "width": w, "height": h}
     if command == "selection.paste":
-        x = integer(p.get("x", selection.x()), "x", -32768, 32768)
-        y = integer(p.get("y", selection.y()), "y", -32768, 32768)
-        selection.paste(node, x, y)
-        return {"pasted": [x, y]}
+        clip = getattr(bridge, "selection_clip", None)
+        if clip is None:
+            raise RuntimeError("Copy or cut a selection in this Bridge session first")
+        w, h, source = clip
+        x = integer(p.get("x", selection.x()), "x", 0, doc.width()-w)
+        y = integer(p.get("y", selection.y()), "y", 0, doc.height()-h)
+        target = bytearray(node.pixelData(x, y, w, h))
+        for i in range(w*h):
+            offset = i*4
+            sa, da = source[offset+3], target[offset+3]
+            alpha = sa*255 + da*(255-sa)
+            for channel in range(3):
+                target[offset+channel] = ((source[offset+channel]*sa*255 + target[offset+channel]*da*(255-sa) + alpha//2)//alpha) if alpha else 0
+            target[offset+3] = (alpha+127)//255
+        if not node.setPixelData(QByteArray(bytes(target)), x, y, w, h):
+            raise RuntimeError("Krita refused selection paste")
+        doc.refreshProjection()
+        doc.waitForDone()
+        return {"pasted": [x, y], "width": w, "height": h}
     raise ValueError("Unknown document command")

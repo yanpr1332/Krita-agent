@@ -20,6 +20,10 @@ def execute(bridge, command, p):
         if action is None or not action.isEnabled():
             raise RuntimeError("No enabled Krita action: " + key)
         action.trigger()
+        doc = bridge._doc()
+        doc.waitForDone()
+        doc.refreshProjection()
+        doc.waitForDone()
         return {"action": key, "triggered": True}
     doc = bridge._doc()
     node = find_node(doc, p)

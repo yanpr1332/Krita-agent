@@ -1,5 +1,7 @@
 # Project roadmap
 
+**Acceptance update (2026-11-03):** REPORT-006.md and REPORT-007.md record the installed-build native, pixel and Dock acceptance. The unchecked source-stage list below is retained as historical planning, not current acceptance status.
+
 ## Verified first-round baseline (2026-11-03)
 
 The actual local acceptance results are documented in [REPORT-004](REPORT-004.md), not inferred from this roadmap.

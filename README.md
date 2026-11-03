@@ -1,5 +1,7 @@
 # Krita Agent
 
+**Round 2 acceptance completed on installed Stable, Next Qt5 and Next Qt6 (2026-11-03).** 34 offline tests pass; actual Dock button interactions and pixel assertions passed. See [REPORT-007](docs/REPORT-007.md), which supersedes older unverified-status statements below.
+
 English | [简体中文](README.zh-CN.md)
 
 Local Windows automation for Krita's **native painting engine**. Python Controller/SDK, authenticated loopback Bridge running as a Krita Extension, editable multi-layer jobs, pressure strokes, optional advanced editor commands, and upstream source tracking.
