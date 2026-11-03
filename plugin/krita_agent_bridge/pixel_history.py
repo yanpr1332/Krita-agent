@@ -6,7 +6,7 @@ import os
 import uuid
 import zlib
 from pathlib import Path
-from .advanced_utils import find_node, integer, word
+from .advanced_utils import find_node, integer, word, safe_input
 
 try:
     from PyQt5.QtCore import QByteArray
@@ -17,7 +17,7 @@ except ImportError:
 
 COMMANDS = frozenset(("pixel.transaction.fill", "pixel.transaction.clear",
                       "pixel.transaction.undo", "pixel.transaction.redo",
-                      "pixel.transaction.inspect"))
+                      "pixel.transaction.inspect", "pixel.transaction.patch"))
 MAX_PIXELS = 500000
 
 
@@ -61,7 +61,7 @@ def _atomic(path, data):
 
 
 def _read(bridge, identifier):
-    key = str(uuid.UUID(word(identifier, "transaction id", 50)))
+    key = uuid.UUID(word(identifier, "transaction id", 50)).hex
     path = _storage(bridge) / (key + ".json")
     record = json.loads(path.read_text(encoding="utf-8"))
     if record.get("id") != key or record.get("schema") != 1:
@@ -134,6 +134,30 @@ def execute(bridge, command, p):
         if not color.isValid() or not color.name().startswith("#"):
             raise ValueError("Invalid color")
         after = bytes((color.blue(), color.green(), color.red(), color.alpha()))*(width*height)
+    elif command == "pixel.transaction.patch":
+        source = safe_input(bridge, p.get("path"))
+        try:
+            from PyQt5.QtGui import QImage
+            argb = QImage.Format_ARGB32
+        except ImportError:
+            from PyQt6.QtGui import QImage
+            argb = QImage.Format.Format_ARGB32
+        image = QImage(str(source))
+        if image.isNull() or image.width()*image.height() > 32000000:
+            raise ValueError("Invalid or oversized reference image")
+        source_x = integer(p.get("source_x", x), "source_x", 0, image.width()-1)
+        source_y = integer(p.get("source_y", y), "source_y", 0, image.height()-1)
+        if source_x+width > image.width() or source_y+height > image.height():
+            raise ValueError("Patch exceeds reference image")
+        patch_image = image.copy(source_x, source_y, width, height).convertToFormat(argb)
+        pointer = patch_image.bits()
+        try:
+            pointer.setsize(width*height*4)
+        except AttributeError:
+            pass
+        after = bytes(pointer[:width*height*4])
+        if len(after) != len(before):
+            raise RuntimeError("Qt reference pixel size mismatch")
     else:
         raise ValueError("Unsupported pixel transaction")
     identifier = uuid.uuid4().hex

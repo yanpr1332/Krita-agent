@@ -43,7 +43,7 @@ def _store(bridge):
 
 def _manifest(bridge, identifier):
     try:
-        key = str(uuid.UUID(word(identifier, "checkpoint id", 50)))
+        key = uuid.UUID(word(identifier, "checkpoint id", 50)).hex
     except ValueError as exc:
         raise ValueError("Invalid checkpoint UUID") from exc
     path = _store(bridge) / (key + ".json")
