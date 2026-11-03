@@ -268,6 +268,11 @@ class KritaAgentBridge(Extension):
             "Node.paintRectangle": hasattr(node_cls, "paintRectangle"),
             "View.brushPosition": hasattr(view_cls, "brushPosition"),
             "View.setCurrentBrushPreset": hasattr(view_cls, "setCurrentBrushPreset"),
+            "Document.createTransparencyMask": hasattr(getattr(krita_module, "Document", None), "createTransparencyMask"),
+            "Document.createFilterMask": hasattr(getattr(krita_module, "Document", None), "createFilterMask"),
+            "Document.setColorSpace": hasattr(getattr(krita_module, "Document", None), "setColorSpace"),
+            "Selection.feather": hasattr(getattr(krita_module, "Selection", None), "feather"),
+            "Node.setPixelData": hasattr(node_cls, "setPixelData"),
         }
         return {"krita_version": Krita.instance().version(), "qt_version": QT_VERSION_STR,
                 "qt_binding": QT_BINDING, "python": sys.version.split()[0],

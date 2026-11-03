@@ -42,8 +42,9 @@ def _decode(encoded, maximum):
     result = decoder.decompress(packed, maximum + 1)
     if len(result) > maximum or decoder.unconsumed_tail:
         raise ValueError("Pixel history decompression limit exceeded")
-    result += decoder.flush(maximum + 1 - len(result))
-    if len(result) > maximum or not decoder.eof:
+    if not decoder.eof:
+        raise ValueError("Pixel history stream incomplete")
+    if len(result) > maximum:
         raise ValueError("Pixel history stream truncated or too large")
     return result
 

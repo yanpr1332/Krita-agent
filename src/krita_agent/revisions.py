@@ -170,8 +170,16 @@ def apply(client, plan, confirm=False, wait=True):
             if state["state"] == "completed":
                 from .feedback import compare
                 # Using normalized pixel statistics rather than file byte equality.
-                result["feedback"] = compare(plan["target_file"], state["last_result"].get("path", checkpoint["path"])) if False else {
-                    "next": "Compare target with the recorded revision-after preview"}
+                after_path = (Path(checkpoint["path"]).resolve().parent.parent
+                              / result["output_png"])
+                if after_path.is_file():
+                    result["feedback"] = compare(plan["target_file"], after_path)
+                    with _images(after_path, after_path)[0] as final_image:
+                        result["goal_rgba_match"] = (
+                            _rgba_sha(final_image) == plan["target_rgba_sha256"])
+                else:
+                    result["feedback"] = {"status": "missing_preview",
+                                          "note": "The job finished but preview file was not found"}
             return result
         time.sleep(.25)
     result["terminal"] = {"state": "unknown", "error": "Polling deadline exceeded; inspect job manually"}

@@ -131,8 +131,17 @@ def registry_record(filename, build, symbol, state, evidence_file, confirm=False
     registry["entries"].append(item)
     target = Path(filename)
     target.parent.mkdir(parents=True, exist_ok=True)
-    with target.open("x", encoding="utf-8") as out:
-        json.dump(registry, out, ensure_ascii=False, indent=2)
+    import os
+    import uuid
+    temp = target.with_name(target.name + "." + uuid.uuid4().hex + ".tmp")
+    try:
+        with temp.open("w", encoding="utf-8") as stream:
+            json.dump(registry, stream, ensure_ascii=False, indent=2)
+            stream.flush()
+            os.fsync(stream.fileno())
+        temp.replace(target)
+    finally:
+        temp.unlink(missing_ok=True)
     return item
 
 

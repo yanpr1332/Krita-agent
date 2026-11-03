@@ -86,6 +86,12 @@ def create(bridge, p):
         doc.setBatchmode(prior_batch)
     if not ok or not target.is_file():
         raise RuntimeError("Krita failed to create a durable KRA checkpoint")
+    import zipfile
+    if not zipfile.is_zipfile(target):
+        raise RuntimeError("Krita checkpoint is not a valid ZIP-based KRA archive")
+    with zipfile.ZipFile(target) as archive:
+        if not any(name.endswith("maindoc.xml") for name in archive.namelist()):
+            raise RuntimeError("KRA checkpoint is missing maindoc.xml")
     job_id = getattr(bridge, "_current_job_id", None)
     job = bridge.jobs.get(job_id) if job_id else None
     after_step = (int(job["done"]) + 1) if job is not None else None
