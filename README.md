@@ -7,35 +7,35 @@ Local Windows automation for Krita's **native painting engine**. Python Controll
 ## Status
 
 - **Round 1 verified (2026-11-03):** Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha passed the documented core acceptance; 18 offline tests were reported passing. See [REPORT-004](docs/REPORT-004.md) for actual limits.
-- **Round 2 source authored on \`feat/round2-advanced-workflow\`:** advanced layers/documents, import/reference images, selection, previews, curves, local feedback, persistent job journal, upstream impact classification, optional Docker, and a single-shot workflow CLI. **None of these NEW features has been tested or verified in this round.** See [REPORT-005](docs/REPORT-005.md).
+- **Round 2 source authored on `feat/round2-advanced-workflow`:** advanced layers/documents, import/reference images, selection, previews, curves, local feedback, persistent job journal, upstream impact classification, optional Docker, and a single-shot workflow CLI. **None of these NEW features has been tested or verified in this round.** See [REPORT-005](docs/REPORT-005.md).
 - **No auto-merge, no automatic Krita installation, no CI validation triggered.** The manual CI workflow is opt-in only.
 
 ## Architecture
 
-External Windows CLI → authenticated JSON over \`127.0.0.1\` → in-process Krita Python Extension on the Qt GUI thread → native editable Krita documents. No cloud model is required for the core system.
+External Windows CLI → authenticated JSON over `127.0.0.1` → in-process Krita Python Extension on the Qt GUI thread → native editable Krita documents. No cloud model is required for the core system.
 
-\`\`\`text
+```text
 src/krita_agent/                  Controller, workflows, geometry, feedback, sessions
 plugin/krita_agent_bridge/       Krita Extension, native handlers, journal, optional Docker
 tests/                           Offline tests (new tests unexecuted)
 scripts/                         Dry-run-first plugin installer and probe helpers
 examples/                        Source-controlled example JSON workflows
 docs/                            Reports, architecture, plans and API reference
-\`\`\`
+```
 
 ## Installation and usage
 
 After reviewing the shared Krita user resource directory, install the native Windows controller and explicitly deploy the Bridge. Stable and Next may share plugin directories, so back up first.
 
-\`\`\`powershell
+```powershell
 python -m pip install -e .
 python scripts\install_plugin.py
 python scripts\install_plugin.py --apply
-\`\`\`
+```
 
 Enable the Bridge in **Settings → Configure Krita → Python Plugin Manager**, then restart the chosen Krita build. An ordinary Krita launch will not start the bridge without a launch credential.
 
-\`\`\`powershell
+```powershell
 krita-agent doctor
 krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe" --output-dir "D:\drawings\out" --input-dir "D:\drawings\references"
 krita-agent connect
@@ -50,9 +50,9 @@ krita-agent invoke brush.list --params "{}"
 krita-agent workflow --file ".\examples\round2-edit-workflow.json" --wait
 krita-agent job recover YOUR_JOB_ID
 krita-agent feedback compare ".\a.png" ".\b.png"
-\`\`\`
+```
 
-All Bridge commands use an explicit allowlist. For complex JSON on Windows PowerShell, save parameters to a file and invoke \`--params-file\`.
+All Bridge commands use an explicit allowlist. For complex JSON on Windows PowerShell, save parameters to a file and invoke `--params-file`.
 
 ## Native drawing and recovery boundaries
 
