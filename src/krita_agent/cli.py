@@ -2,6 +2,7 @@
 import argparse
 import json
 import subprocess
+from .upstream import snapshot
 from pathlib import Path
 
 
@@ -32,7 +33,16 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     doctor = sub.add_parser("doctor", help="Inspect an explicitly selected Krita executable")
     doctor.add_argument("--krita", required=True, help="Path to a Krita executable")
+    upstream = sub.add_parser("upstream", help="Inspect a local upstream Git checkout")
+    upstream.add_argument("--repo", required=True)
     args = parser.parse_args(argv)
+    if args.command == "upstream":
+        try:
+            print(json.dumps(snapshot(args.repo), ensure_ascii=False, indent=2))
+            return 0
+        except (OSError, subprocess.CalledProcessError) as exc:
+            print(json.dumps({"error": str(exc)}, ensure_ascii=False))
+            return 1
     result = inspect(args.krita)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 1 if result["error"] else 0
@@ -40,3 +50,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
