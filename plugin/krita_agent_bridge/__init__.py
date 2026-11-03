@@ -10,6 +10,7 @@ import threading
 import uuid
 from collections import deque
 from pathlib import Path
+from .advanced import ADVANCED_COMMANDS, dispatch_advanced
 
 import krita as krita_module
 from krita import Extension, InfoObject, Krita, ManagedColor
@@ -32,10 +33,12 @@ COMMANDS = frozenset((
     "draw.line", "draw.stroke", "draw.shape",
     "document.save", "document.export",
     "job.submit", "job.status", "job.list", "job.pause", "job.resume", "job.cancel"
-))
+)) | ADVANCED_COMMANDS
 TASK_STEPS = COMMANDS.difference((
     "status", "capabilities", "document.open", "job.submit", "job.status",
-    "job.list", "job.pause", "job.resume", "job.cancel"
+    "job.list", "job.pause", "job.resume", "job.cancel",
+    "document.close", "document.activate", "document.crop", "selection.cut",
+    "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
 ))
 
 
@@ -467,6 +470,8 @@ class KritaAgentBridge(Extension):
             if not succeeded:
                 raise RuntimeError("Krita refused to write " + target)
             return {"path": target, "format": expected[1:]}
+        if command in ADVANCED_COMMANDS:
+            return dispatch_advanced(self, command, p)
         raise ValueError("Command not implemented or denied: " + command)
 
     def _job(self, command, p):
