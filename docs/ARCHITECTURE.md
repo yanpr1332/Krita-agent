@@ -2,7 +2,7 @@
 
 ## Runtime-proven foundation
 
-**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. New Round 3 code has **not been deployed or verified**. A feature's availability always refers to a concrete build and test.
+**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. A feature's availability always refers to a concrete build and test.
 
 ```text
 CLI / SDK (Windows Python)
@@ -54,3 +54,5 @@ Krita Plugin, in-process Qt GUI context
 ## Status maintenance
 
 Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 3 status. Manual-only GitHub workflow remains opt-in; no CI or desktop test was launched while authoring this round.
+
+Round 3 acceptance completed with 57 offline tests and native, pixel, controlled-crash and actual Dock evidence; see REPORT-009. Atomic metadata replacement has bounded Windows sharing-lock retries; integrity and root bounds are checked before recovery writes.

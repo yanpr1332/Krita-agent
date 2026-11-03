@@ -12,8 +12,9 @@ import shutil
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
+from .atomic_io import atomic_replace
 from krita import Krita
-from .advanced_utils import word
+from .advanced_utils import storage_root, word
 
 COMMANDS = frozenset(("checkpoint.create", "checkpoint.list", "checkpoint.inspect",
                       "checkpoint.restore", "checkpoint.resume"))
@@ -36,9 +37,7 @@ def _fingerprint(steps):
 
 
 def _store(bridge):
-    root = bridge.output_dir / ".krita-agent-checkpoints"
-    root.mkdir(parents=True, exist_ok=True)
-    return root
+    return storage_root(bridge, ".krita-agent-checkpoints")
 
 
 def _manifest(bridge, identifier):
@@ -47,6 +46,8 @@ def _manifest(bridge, identifier):
     except ValueError as exc:
         raise ValueError("Invalid checkpoint UUID") from exc
     path = _store(bridge) / (key + ".json")
+    if path.stat().st_size > 2000000 or bridge.output_dir.resolve() not in path.resolve().parents:
+        raise ValueError("Checkpoint metadata outside bounds")
     data = json.loads(path.read_text(encoding="utf-8"))
     if data.get("id") != key or data.get("schema") != 1:
         raise ValueError("Unknown checkpoint schema or ID")
@@ -65,7 +66,7 @@ def _write_record(path, record):
             json.dump(record, stream, ensure_ascii=False, sort_keys=True, indent=2)
             stream.flush()
             os.fsync(stream.fileno())
-        tmp.replace(path)
+        atomic_replace(tmp, path)
     finally:
         tmp.unlink(missing_ok=True)
 
@@ -120,6 +121,8 @@ def _steps(bridge, record):
     index = record.get("after_step")
     if type(index) is not int or not 0 <= index <= len(job["steps"]):
         raise ValueError("Invalid checkpoint step boundary")
+    if index < 1 or job["steps"][index-1]["command"] != "checkpoint.create":
+        raise ValueError("Checkpoint boundary is not a checkpoint step")
     steps = job["steps"][index:]
     if any(step["command"] in BASIC_RESUME_DENY for step in steps):
         raise ValueError("Suffix contains a non-resumable command")
@@ -128,8 +131,7 @@ def _steps(bridge, record):
 
 def _restore(bridge, record):
     """Open a new *copy*, so the interrupted in-memory document is untouched."""
-    root = bridge.output_dir / "recovered"
-    root.mkdir(parents=True, exist_ok=True)
+    root = storage_root(bridge, "recovered")
     target = root / (record["id"] + "-" + uuid.uuid4().hex + ".kra")
     shutil.copyfile(record["path"], target)
     if _digest(target) != record["sha256"]:

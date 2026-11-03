@@ -116,6 +116,18 @@ def apply(client, plan, confirm=False, wait=True):
     """Explicit, one-shot local plan application. Never automatically retries."""
     if confirm is not True:
         raise TaskError("Revision apply requires explicit --confirm")
+    if plan.get("status") == "no_change":
+        return {"status": "no_change", "mutated": False}
+    if plan.get("schema") != "krita-agent-revision/1" or plan.get("status") != "patch_required":
+        raise TaskError("Unrecognized revision plan")
+    try:
+        uuid.UUID(plan["id"])
+        x, y, w, h = plan["rect"]
+        width, height = plan["size"]
+        if any(type(n) is not int for n in (x, y, w, h, width, height)) or min(x, y) < 0 or min(w, h) < 1 or w*h > 500000 or x+w > width or y+h > height:
+            raise ValueError("bounds")
+    except (KeyError, TypeError, ValueError):
+        raise TaskError("Invalid revision identity or rectangle")
     if _file_sha(plan["target_file"]) != plan["target_file_sha256"]:
         raise TaskError("Target reference was modified after plan approval")
     status = client.request("status")

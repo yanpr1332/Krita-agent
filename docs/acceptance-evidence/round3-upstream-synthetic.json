@@ -1,0 +1,169 @@
+{
+  "repository": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-upstream-494727aede7848bd91f2320e7c175916",
+  "baseline": "6c21db971eba7f64da09f0cef0cae414ef4f566d",
+  "target": "ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16",
+  "scoped_paths": [
+    "libs/libkis/Node.h",
+    "plugins/extensions/pykrita/api.py"
+  ],
+  "api_candidates": [
+    {
+      "symbol": "added",
+      "file": "libs/libkis/Node.h",
+      "kind": "added",
+      "before": null,
+      "after": "int x",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+      "classification": "heuristic_header",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "added",
+        "kind": "added",
+        "areas": [
+          "layers"
+        ],
+        "priority": "medium",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Check node order and editable layer preservation after KRA roundtrip"
+        ]
+      }
+    },
+    {
+      "symbol": "modified",
+      "file": "libs/libkis/Node.h",
+      "kind": "signature_changed",
+      "before": "int x",
+      "after": "int x, int y",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+      "classification": "heuristic_header",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "modified",
+        "kind": "signature_changed",
+        "areas": [
+          "layers"
+        ],
+        "priority": "medium",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Check node order and editable layer preservation after KRA roundtrip"
+        ]
+      }
+    },
+    {
+      "symbol": "removed",
+      "file": "libs/libkis/Node.h",
+      "kind": "removed",
+      "before": "int x",
+      "after": null,
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+      "classification": "heuristic_header",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "removed",
+        "kind": "removed",
+        "areas": [
+          "layers"
+        ],
+        "priority": "high",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/libs/libkis/Node.h",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Check node order and editable layer preservation after KRA roundtrip"
+        ]
+      }
+    },
+    {
+      "symbol": "API.added",
+      "file": "plugins/extensions/pykrita/api.py",
+      "kind": "added",
+      "before": null,
+      "after": "self",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+      "classification": "AST",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "API.added",
+        "kind": "added",
+        "areas": [
+          "plugin_compatibility"
+        ],
+        "priority": "medium",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Load Bridge separately in Qt5 and Qt6 installations"
+        ]
+      }
+    },
+    {
+      "symbol": "API.changed",
+      "file": "plugins/extensions/pykrita/api.py",
+      "kind": "signature_changed",
+      "before": "self, x",
+      "after": "self, x, pressure=1",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+      "classification": "AST",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "API.changed",
+        "kind": "signature_changed",
+        "areas": [
+          "plugin_compatibility"
+        ],
+        "priority": "medium",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Load Bridge separately in Qt5 and Qt6 installations"
+        ]
+      }
+    },
+    {
+      "symbol": "API.gone",
+      "file": "plugins/extensions/pykrita/api.py",
+      "kind": "removed",
+      "before": "self",
+      "after": null,
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+      "classification": "AST",
+      "evidence": "source_seen",
+      "impact": {
+        "symbol": "API.gone",
+        "kind": "removed",
+        "areas": [
+          "plugin_compatibility"
+        ],
+        "priority": "high",
+        "source_url": "https://invent.kde.org/graphics/krita/-/blob/ccb86ceed275f4e31b09f6919ef0fdbca5f0ab16/plugins/extensions/pykrita/api.py",
+        "state": "source_seen",
+        "runtime_verified": false,
+        "suggested_tests": [
+          "Check callable presence and signature in each installed Krita build",
+          "Verify behavior using a disposable KRA and compare output",
+          "Load Bridge separately in Qt5 and Qt6 installations"
+        ]
+      }
+    }
+  ],
+  "checked_at": "2026-11-03T11:17:14.679049+00:00",
+  "caveat": "Parsed signature delta is not proof of installed API or working behavior"
+}

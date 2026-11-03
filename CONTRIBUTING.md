@@ -1,6 +1,6 @@
 # Contributing to Krita Agent
 
-Krita Agent has verified Round 1/2 core capabilities and **unverified Round 3 implementation**. This is not a planning-only repository. For active status see [ROADMAP](docs/ROADMAP.md) and [REPORT-008](docs/REPORT-008.md).
+Krita Agent has verified Round 1/2 core capabilities and **installed-build Round 3 acceptance**. This is not a planning-only repository. For active status see [ROADMAP](docs/ROADMAP.md) and [REPORT-009](docs/REPORT-009.md).
 
 Develop in a named topic branch from current main and open a PR for review. Do not merge a feature that only has authored source if the PR claims runtime compatibility. Include actual support matrix and limit statements after verification.
 

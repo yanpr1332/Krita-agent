@@ -1,0 +1,58 @@
+[
+  {
+    "case": "crash_restore_resume_cross_session_clip",
+    "ok": true,
+    "checkpoint": {
+      "after_step": 1,
+      "color_depth": "U8",
+      "color_model": "RGBA",
+      "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+      "created_at": "2026-11-03T12:05:34.708334+00:00",
+      "document_name": "Restart safety",
+      "height": 96,
+      "id": "db0a5ff1411042b9a2576e164c368644",
+      "job_id": "565783bbbac34942a7deccffcd9132d9",
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\db0a5ff1411042b9a2576e164c368644.kra",
+      "policy": "immutable snapshot; never overwrite or automatically replay",
+      "schema": 1,
+      "sha256": "9e89962737909f57cf15873e971a5bede1ea03a464e7700ce8d200ea3897c857",
+      "steps_sha256": "7f655a1ac43df9395e505ab8ea6a3e2151807a2f03065af487c67bccd2127af2",
+      "width": 96,
+      "integrity": "sha256_verified",
+      "remaining_steps": null,
+      "resume_possible": false,
+      "resume_blocked": "Recovery requires a stopped/interrupted job"
+    },
+    "interrupted": {
+      "id": "565783bbbac34942a7deccffcd9132d9",
+      "state": "interrupted",
+      "total": 400,
+      "done": 2,
+      "error": "Interrupted before clean completion; the last native step may have applied. Manual inspection required.",
+      "last_result": {
+        "mode": "line",
+        "warning": "Visual pressure response depends on active brush preset"
+      },
+      "cancel_requested": false
+    },
+    "resumed": {
+      "id": "fced6a4d326849698f965dc72cec2fb8",
+      "state": "completed",
+      "total": 399,
+      "done": 399,
+      "error": null,
+      "last_result": {
+        "name": "Restart safety",
+        "width": 96,
+        "height": 96,
+        "active_layer": "Ink"
+      },
+      "cancel_requested": false
+    },
+    "from_step": 1,
+    "original_unchanged": true,
+    "clipboard_pixels": true,
+    "persisted_pixel_undo_redo": true,
+    "zero_auto_playback": true
+  }
+]

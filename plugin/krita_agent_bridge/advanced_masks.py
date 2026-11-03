@@ -49,13 +49,15 @@ def execute(bridge, command, p):
         if parent.locked() or parent.type() in ("transparencymask", "selectionmask", "filtermask"):
             raise ValueError("Mask parent is locked or is a mask")
         mask = _new(doc, kind, word(p.get("name"), "mask name"))
-        if kind == "transparency":
+        if kind in ("transparency", "selection"):
             selection = doc.selection()
             if selection is None:
                 if p.get("require_selection", True) is not False:
-                    raise ValueError("A selection is required for transparency mask creation")
+                    raise ValueError("A selection is required for mask creation")
                 selection = Selection()
                 selection.select(0, 0, doc.width(), doc.height(), 255)
+            if selection.width() < 1 or selection.height() < 1:
+                raise ValueError("A nonempty selection is required for mask creation")
             mask.setSelection(selection.duplicate())
         if not parent.addChildNode(mask, None):
             raise RuntimeError("Could not attach mask")

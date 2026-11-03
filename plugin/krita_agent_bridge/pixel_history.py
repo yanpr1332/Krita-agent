@@ -6,7 +6,8 @@ import os
 import uuid
 import zlib
 from pathlib import Path
-from .advanced_utils import find_node, integer, word, safe_input
+from .atomic_io import atomic_replace
+from .advanced_utils import storage_root, find_node, integer, word, safe_input
 
 try:
     from PyQt5.QtCore import QByteArray
@@ -22,9 +23,7 @@ MAX_PIXELS = 500000
 
 
 def _storage(bridge):
-    root = bridge.output_dir / ".krita-agent-pixel-history"
-    root.mkdir(parents=True, exist_ok=True)
-    return root
+    return storage_root(bridge, ".krita-agent-pixel-history")
 
 
 def _sha(data):
@@ -42,7 +41,7 @@ def _decode(encoded, maximum):
     result = decoder.decompress(packed, maximum + 1)
     if len(result) > maximum or decoder.unconsumed_tail:
         raise ValueError("Pixel history decompression limit exceeded")
-    if not decoder.eof:
+    if not decoder.eof or decoder.unused_data:
         raise ValueError("Pixel history stream incomplete")
     if len(result) > maximum:
         raise ValueError("Pixel history stream truncated or too large")
@@ -56,17 +55,35 @@ def _atomic(path, data):
             json.dump(data, f, ensure_ascii=False)
             f.flush()
             os.fsync(f.fileno())
-        tmp.replace(path)
+        atomic_replace(tmp, path)
     finally:
         tmp.unlink(missing_ok=True)
 
 
 def _read(bridge, identifier):
     key = uuid.UUID(word(identifier, "transaction id", 50)).hex
-    path = _storage(bridge) / (key + ".json")
+    root = _storage(bridge)
+    path = root / (key + ".json")
+    if root.resolve() not in path.resolve().parents:
+        raise ValueError("Pixel history metadata escaped its storage root")
+    if path.stat().st_size > 8000000:
+        raise ValueError("Pixel transaction metadata too large")
     record = json.loads(path.read_text(encoding="utf-8"))
     if record.get("id") != key or record.get("schema") != 1:
         raise ValueError("Invalid pixel transaction")
+    rect = record.get("rect")
+    if not isinstance(rect, list) or len(rect) != 4 or any(type(n) is not int for n in rect):
+        raise ValueError("Invalid pixel transaction rectangle")
+    x, y, width, height = rect
+    if min(x, y) < 0 or min(width, height) < 1 or width*height > MAX_PIXELS:
+        raise ValueError("Pixel transaction rectangle exceeds limits")
+    document = record.get("document")
+    if not isinstance(document, list) or len(document) != 6 or any(type(n) is not int for n in document[2:4]) or x+width > document[2] or y+height > document[3]:
+        raise ValueError("Pixel transaction rectangle outside saved document")
+    for key in ("before", "after"):
+        raw = _decode(record[key], width*height*4)
+        if len(raw) != width*height*4 or _sha(raw) != record[key+"_sha256"]:
+            raise ValueError("Pixel transaction payload integrity mismatch")
     return record, path
 
 

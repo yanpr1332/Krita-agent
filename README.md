@@ -10,9 +10,9 @@ Krita Agent is a Windows-native Python/Qt automation system for **real editable 
 | --- | --- | --- |
 | Round 1: Native painting and basic tasks | **Accepted** on Stable and both Next builds | [REPORT-004](docs/REPORT-004.md) |
 | Round 2: Editable workflow, previews, images and Dock | **Accepted**, 34 offline tests passed and pixel/Dock real-build checks recorded | [REPORT-006](docs/REPORT-006.md), [REPORT-007](docs/REPORT-007.md) |
-| Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Source authored / not yet validated** | [REPORT-008](docs/REPORT-008.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
+| Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Accepted on the three installed builds; 57 offline tests passed** | [REPORT-009](docs/REPORT-009.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
 
-The prior two milestone reports cover three specific builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha. They are not blanket future-version guarantees. **No new Round 3 tests, desktop actions or CI checks were run during this implementation task.**
+Acceptance covers three specific builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha. They are not blanket future-version guarantees. Round 3 native, crash-recovery, pixel and actual Dock acceptance is recorded in [REPORT-009](docs/REPORT-009.md). No CI was triggered.
 
 ## Main architecture
 
@@ -23,7 +23,7 @@ src/krita_agent/              External Controller, task protocol, geometry,
 plugin/krita_agent_bridge/    Krita Python Extension, native nodes/brush,
                               masks, checkpoints, per-pixel reversible history,
                               compressed clips, optional local Dock
-tests/                        Offline regression tests (Round 3 unexecuted)
+tests/                        Offline regression tests (57 passed)
 scripts/                      Dry-run plugin installer, acceptance helpers
 examples/                     JSON geometry / workflow examples
 docs/                         Milestone reports, architecture, acceptance
@@ -50,9 +50,9 @@ krita-agent capabilities
 krita-agent workflow --file ".\examples\round2-edit-workflow.json" --wait
 ```
 
-This is usage guidance, not evidence that new Round 3 features already run on your installed builds.
+Installed-build evidence and limits are recorded in REPORT-009.
 
-## Round 3 source commands (not runtime verified)
+## Round 3 commands (installed-build acceptance recorded)
 
 ```powershell
 # Real KRA snapshot + explicit inspect / restore to a fresh file copy:

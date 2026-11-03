@@ -10,9 +10,9 @@ Krita Agent 是 Windows 环境下的 **Krita 原生绘画自动化系统**：外
 | --- | --- | --- |
 | 第一轮：原生绘图与基础任务 | **已验收**：Stable 和两种 Next 构建 | [REPORT-004](docs/REPORT-004.md) |
 | 第二轮：可编辑工作流、预览、导入及 Dock | **已验收**：34 项离线测试及真实像素/Dock 验收 | [REPORT-006](docs/REPORT-006.md)、[REPORT-007](docs/REPORT-007.md) |
-| 第三轮：安全检查点、非破坏性蒙版、局部修订与上游证据登记 | **源码已编写，未开始验收** | [REPORT-008](docs/REPORT-008.md)、[第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) |
+| 第三轮：安全检查点、非破坏性蒙版、局部修订与上游证据登记 | **三个本机构建已验收，57 项离线测试通过** | [REPORT-009](docs/REPORT-009.md)、[第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) |
 
-此前经过验收的是三个具体构建：Stable 5.3.4.1、Next Qt5 5.4.0-prealpha、Next Qt6 6.1.0-prealpha，并不代表所有后续 Krita 版本。**本次第三轮开发没有运行新测试、操作 Krita 桌面或触发 CI。**
+验收覆盖三个具体构建：Stable 5.3.4.1、Next Qt5 5.4.0-prealpha、Next Qt6 6.1.0-prealpha，并不代表所有后续 Krita 版本。第三轮原生功能、像素、崩溃恢复及 Dock 实际交互结果见 [REPORT-009](docs/REPORT-009.md)。未触发 CI。
 
 ## 工程结构
 
@@ -21,7 +21,7 @@ src/krita_agent/             外部控制器、任务协议、曲线与结构化
                              基于目标图像的局部修订、反馈和上游追踪
 plugin/krita_agent_bridge/  Krita 内部插件、原生图层、蒙版、检查点、
                              独立可逆像素记录、跨会话复制与可选 Dock
-tests/                      离线回归测试源码（第三轮尚未运行）
+tests/                      离线回归测试（57 项通过）
 scripts/                    默认预览的插件安装器及验收辅助工具
 examples/                   JSON 画面与任务示例
 docs/                       验收报告、架构与开发文档
@@ -48,9 +48,9 @@ krita-agent capabilities
 krita-agent workflow --file ".\examples\round2-edit-workflow.json" --wait
 ```
 
-这是使用说明，并不代表第三轮新增功能已在你的三个构建中通过。
+具体构建的实测结果和限制见 REPORT-009。
 
-## 第三轮新增命令（尚未实机验证）
+## 第三轮新增命令（本机构建已验收）
 
 ```powershell
 # 保存真实 KRA 检查点，查看并显式恢复到新的 KRA 副本：

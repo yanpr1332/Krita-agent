@@ -9,11 +9,11 @@ from krita import Krita, DockWidget, DockWidgetFactory, DockWidgetFactoryBase
 try:
     from PyQt5.QtCore import QTimer
     from PyQt5.QtGui import QPixmap
-    from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QListWidget
+    from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QListWidget, QScrollArea
 except ImportError:
     from PyQt6.QtCore import QTimer
     from PyQt6.QtGui import QPixmap
-    from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QListWidget
+    from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QListWidget, QScrollArea
 
 _bridge_ref = None
 
@@ -32,7 +32,7 @@ class AgentStatusDocker(DockWidget):
         self.error.setWordWrap(True)
         self.preview = QLabel("No preview yet")
         self.preview.setMaximumHeight(180)
-        self.preview.setMinimumHeight(32)
+        self.preview.setMinimumHeight(80)
         layout.addWidget(self.connection)
         layout.addWidget(self.progress)
         layout.addWidget(QLabel("Recent jobs"))
@@ -46,8 +46,14 @@ class AgentStatusDocker(DockWidget):
             button.clicked.connect(lambda checked=False, operation=operation: self._action(operation))
             row.addWidget(button)
             self.controls.append(button)
-        layout.addLayout(row)
-        self.setWidget(container)
+        root = QWidget()
+        root_layout = QVBoxLayout(root)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(container)
+        root_layout.addWidget(scroll)
+        root_layout.addLayout(row)
+        self.setWidget(root)
         self._last_thumbnail = None
         self._last_rows = ()
         self.refresh_timer = QTimer(self)
@@ -90,7 +96,7 @@ class AgentStatusDocker(DockWidget):
             if identity != self._last_thumbnail:
                 image = QPixmap(str(location))
                 if not image.isNull():
-                    self.preview.setPixmap(image.scaledToWidth(min(240, image.width())))
+                    self.preview.setPixmap(image.scaledToHeight(min(100, image.height())))
                     self._last_thumbnail = identity
         except OSError:
             pass

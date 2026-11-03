@@ -8,6 +8,7 @@ import os
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
+from .atomic_io import atomic_replace
 
 
 class Journal:
@@ -32,7 +33,7 @@ class Journal:
                 json.dump(record, stream, ensure_ascii=False, allow_nan=False, indent=2)
                 stream.flush()
                 os.fsync(stream.fileno())
-            tmp.replace(filename)
+            atomic_replace(tmp, filename)
         finally:
             tmp.unlink(missing_ok=True)
 

@@ -18,7 +18,9 @@ def _rect(doc, p):
 
 def execute(bridge, command, p):
     doc = bridge._doc()
-    selection = doc.selection()
+    doc.waitForDone()
+    current = doc.selection()
+    selection = current.duplicate() if current is not None else None
     if command == "selection.combine":
         x, y, w, h = _rect(doc, p)
         incoming = Selection()

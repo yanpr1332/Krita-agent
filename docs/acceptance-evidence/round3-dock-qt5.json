@@ -1,0 +1,34 @@
+{
+  "pause": {
+    "id": "2fa1d50be7be42618ee3c3530c9cab5c",
+    "state": "paused",
+    "total": 400,
+    "done": 367,
+    "error": null,
+    "last_result": {
+      "name": "Restart safety",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": false
+  },
+  "resume": "UI running progress observed",
+  "cancel": {
+    "id": "2fa1d50be7be42618ee3c3530c9cab5c",
+    "state": "cancelled",
+    "total": 400,
+    "done": 367,
+    "error": null,
+    "last_result": {
+      "name": "Restart safety",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": true
+  },
+  "actual_ui_clicks": true,
+  "qt_scale_factor": "1.25",
+  "layout": "Controls visible in compact window; scrollable 8-job history, error and preview"
+}

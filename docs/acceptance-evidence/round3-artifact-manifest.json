@@ -1,0 +1,2575 @@
+{
+  "source_hashes": {
+    "plugin\\krita_agent_bridge\\advanced.py": "ebc63ef033d4ce87f7bf279212ab18c5b4b891e96f01d46da2d5df155f5e724b",
+    "plugin\\krita_agent_bridge\\advanced_brushes.py": "f0c46eb98e59c88987a63d41ce9e0b45e59afef61ef770388535fb023d36ab24",
+    "plugin\\krita_agent_bridge\\advanced_checkpoint.py": "5e343f154d5fd16529fcd899286006b78ad73d3876403c0862de8e765a47efba",
+    "plugin\\krita_agent_bridge\\advanced_color.py": "a5633a1a8355f2ece591defcfe907fe612458b82d80939b26c544fbb8d2ac6e6",
+    "plugin\\krita_agent_bridge\\advanced_documents.py": "dc4476206f38cc865bda5d5fd33ea237e2354ae3d4c6dac284802d869c425637",
+    "plugin\\krita_agent_bridge\\advanced_layers.py": "8bf7170f36a0ad89f011a2c63a25ff3ad592a72468ee879d9628ad72ab1b1540",
+    "plugin\\krita_agent_bridge\\advanced_masks.py": "a308f3cd7a4e590ec1e16de5d51300c34f65aea22307f099037840e37e3295a4",
+    "plugin\\krita_agent_bridge\\advanced_media.py": "0f002368dcd39e2d898faccc6879d702a1f776edc75895ab170fba8be11cac90",
+    "plugin\\krita_agent_bridge\\advanced_round3.py": "a96114e78e16e31bd94a20c8f248fd4d54f22e93de6daa965e46f7ecd7cd343d",
+    "plugin\\krita_agent_bridge\\advanced_selection.py": "f9c45e4fdec25800fa0da6075e6f560d19ce6c93c45a1a7dc92762904f8d9f59",
+    "plugin\\krita_agent_bridge\\advanced_transforms.py": "59a0b9f1108d67ff015f0bc4f1dccce3ea7dca8034e3b2a217e42cde697521f1",
+    "plugin\\krita_agent_bridge\\advanced_utils.py": "af0a97389c2a5114a05323eb23b182f1c7f3e8b4eecd2d0d0356bbeaadce7b34",
+    "plugin\\krita_agent_bridge\\atomic_io.py": "76da79418602ff297b1caae5a229c8485eea7d58725326a48c3b1bb5ced28446",
+    "plugin\\krita_agent_bridge\\checkpoints.py": "a5395620a88b564599124fc1704299445947be6b2c82fab46178e95689156016",
+    "plugin\\krita_agent_bridge\\clipboard_store.py": "bb10d2320e49ea006023f90278777b4c8017f012a5bd8c27d98755cbfc3b46ca",
+    "plugin\\krita_agent_bridge\\docker.py": "a177b60c499b3c34a65fd2d9d82839063bffde0d1e9bdc916a1f0ec0a377be9c",
+    "plugin\\krita_agent_bridge\\job_journal.py": "fb1c9760b28d679c93adbf9b83f5c7ebdd0b31d1d7276d51c808cb75d3902825",
+    "plugin\\krita_agent_bridge\\pixel_history.py": "6f78018cceb2f9261178397cbcaedd29f82b15638017fef3010051186980f357",
+    "plugin\\krita_agent_bridge\\__init__.py": "d88eadc44c5c3fa3c586c03417fd112c802c20c819216f89bd07a5641e7a4e7f",
+    "src\\krita_agent\\cli.py": "43dcc8b01187dcc45250f10bfca2a85483081f3342007cce3b3424f762c20327",
+    "src\\krita_agent\\client.py": "1cea1cdb25a53b71518d858f5b3ad860bd8a898ca32285afe2ae0b45694e6d53",
+    "src\\krita_agent\\creative_plans.py": "3d72ae13131a30d9b10c20deac5ee9da501d14481a28f07e37f7911ea81df6d9",
+    "src\\krita_agent\\feedback.py": "963993cd0f7a3c320b304ad7ba3e30a6f80c6ca0fe67861ca5adc3d9d54f6c6e",
+    "src\\krita_agent\\geometry.py": "165fea25fa008453cc4bb70be16554d3e3d1c0e9f8bf1df7bb95d01db82f124c",
+    "src\\krita_agent\\protocol.py": "81062a50bf9e2cb4fdfac187d589115dbac07b06806bfcc59fe66be00f1e01b8",
+    "src\\krita_agent\\revisions.py": "af7f1ce725e94e5e3cb7fee9dc5ee72623959febba938ba261f518ffd7b13976",
+    "src\\krita_agent\\session.py": "3dcebf4bcafb33314b84e60e623f41646edfc38742ec6926accd120de30c1b8c",
+    "src\\krita_agent\\stroke_engine.py": "fec2891bcb8b1ea9bba43a387182f8fad507291cf9c073c593ddaa1ca5a238ba",
+    "src\\krita_agent\\task_store.py": "330c5b72395f2914438ce6082e58d426237bbf3c51e8d0716116299a6f9f918b",
+    "src\\krita_agent\\upstream.py": "7dc0f0cabdbb543471467b189b88c355723963c0e3d2ba889919a8de381154f4",
+    "src\\krita_agent\\upstream3.py": "d6c6c4aa7afaebed048b2f51d6298a5d0001538caa042e60c01e835530697e5d",
+    "src\\krita_agent\\upstream_semantics.py": "cd014cb6a3f9ea417e8ebd0c51c7871b6cf826a6c021d7b623fb24aacced245c",
+    "src\\krita_agent\\workflow.py": "2ccc06841a02770171c161408743e3d1328a124b5b7810892b2b59360918bd01",
+    "src\\krita_agent\\__init__.py": "cf826e1b9a8c0c299104c6faa33e80f3d6afdef08b68926f7e19a2e3b9e9a2fa",
+    "scripts\\acceptance_round2.py": "3beb58ac853e4b226a8f7d30c31ce0b2443ee4df7e31f10ab1fdda2c043bab88",
+    "scripts\\acceptance_round2_pixels.py": "948b5e32ffdf94c0e88177b8e77066d3c59ca7126bf578778a9f3effdef88a14",
+    "scripts\\acceptance_round3.py": "ed4d5095ecde22809c95d4b73ecc12c587cc5acc43a25125353e86b278ded9a1",
+    "scripts\\acceptance_round3_crashes.py": "3e767a3dd7bdaeb3b6ccd3cf434c88c89d4c94b8767d9d6dc00ed1a06aba7a62",
+    "scripts\\acceptance_round3_ipc.py": "b2181f36be201ed3ed6b0b2a3de3b69e8f8a07b4a8c5670678b5d2814421b7ab",
+    "scripts\\acceptance_round3_restart.py": "5cef447d508131b7bb39844e945f34b7ea7c1c8bcbe3dc536c75bb9cc91a048d",
+    "scripts\\acceptance_round3_scene.py": "b6d2b29c5fcb431c41a8b930fe6d1a10f70f83d8b6b9c1a2ed092d8acda3021e",
+    "scripts\\acceptance_round3_supplement.py": "79c47778c887b5c225c21f923d55aa21d33a902b5b344f3633c62f9b96216aec",
+    "scripts\\install_plugin.py": "7e1f4f8598a6ed3ef067ffc495bf44f207879483b3e9f3150b75a2db5ffb0361",
+    "scripts\\prepare_round3_crash_fixture.py": "156f6bbcb46afbfa31be748d846dbe82789d48efce622a20abbe521605993981",
+    "scripts\\probe_krita_api.py": "e7ed52ed261ed770d3d58d5f849efb2a7d4053b0181f63746620307d2d93c8d5"
+  },
+  "installed_plugin_matches": true,
+  "builds": {
+    "stable": {
+      "files": {
+        "native": "docs\\acceptance-evidence\\round3-native-stable.json",
+        "crash-phases": "docs\\acceptance-evidence\\round3-crash-phases-stable.json",
+        "regression-round2": "docs\\acceptance-evidence\\round3-regression-round2-stable.json",
+        "regression-pixels": "docs\\acceptance-evidence\\round3-regression-pixels-stable.json",
+        "supplement": "docs\\acceptance-evidence\\round3-supplement-stable.json",
+        "restart": "docs\\acceptance-evidence\\round3-restart-stable.json",
+        "scene-round1": "docs\\acceptance-evidence\\round3-scene-round1-stable.json",
+        "ipc": "docs\\acceptance-evidence\\round3-ipc-stable.json",
+        "dock": "docs\\acceptance-evidence\\round3-dock-stable.json"
+      },
+      "all_passed": true,
+      "capabilities": {
+        "krita_version": "5.3.4.1 (git bd6e8d0)",
+        "qt_version": "5.15.7",
+        "qt_binding": "PyQt5",
+        "python": "3.13.5",
+        "symbols": {
+          "Node.paintLine": true,
+          "Node.paintPolylineStroke": false,
+          "StrokePoint": false,
+          "Node.paintPath": true,
+          "Node.paintEllipse": true,
+          "Node.paintPolygon": true,
+          "Node.paintRectangle": true,
+          "View.brushPosition": false,
+          "View.setCurrentBrushPreset": true,
+          "Document.createTransparencyMask": true,
+          "Document.createFilterMask": true,
+          "Document.setColorSpace": true,
+          "Selection.feather": true,
+          "Node.setPixelData": true
+        },
+        "evidence": "present_in_build only; drawing untested"
+      },
+      "checkpoint_measurement": {
+        "seconds": 0.2382324999780394,
+        "bytes": 21421,
+        "sha256": "5fd3442185fce878eca6f21635ffdce2b940280945697f0adf237172cb56a1ab"
+      }
+    },
+    "qt5": {
+      "files": {
+        "native": "docs\\acceptance-evidence\\round3-native-qt5.json",
+        "crash-phases": "docs\\acceptance-evidence\\round3-crash-phases-qt5.json",
+        "regression-round2": "docs\\acceptance-evidence\\round3-regression-round2-qt5.json",
+        "regression-pixels": "docs\\acceptance-evidence\\round3-regression-pixels-qt5.json",
+        "supplement": "docs\\acceptance-evidence\\round3-supplement-qt5.json",
+        "restart": "docs\\acceptance-evidence\\round3-restart-qt5.json",
+        "scene-round1": "docs\\acceptance-evidence\\round3-scene-round1-qt5.json",
+        "ipc": "docs\\acceptance-evidence\\round3-ipc-qt5.json",
+        "dock": "docs\\acceptance-evidence\\round3-dock-qt5.json"
+      },
+      "all_passed": true,
+      "capabilities": {
+        "krita_version": "5.4.0-prealpha (git 2687e5d)",
+        "qt_version": "5.15.7",
+        "qt_binding": "PyQt5",
+        "python": "3.13.5",
+        "symbols": {
+          "Node.paintLine": true,
+          "Node.paintPolylineStroke": true,
+          "StrokePoint": true,
+          "Node.paintPath": true,
+          "Node.paintEllipse": true,
+          "Node.paintPolygon": true,
+          "Node.paintRectangle": true,
+          "View.brushPosition": true,
+          "View.setCurrentBrushPreset": true,
+          "Document.createTransparencyMask": true,
+          "Document.createFilterMask": true,
+          "Document.setColorSpace": true,
+          "Selection.feather": true,
+          "Node.setPixelData": true
+        },
+        "evidence": "present_in_build only; drawing untested"
+      },
+      "checkpoint_measurement": {
+        "seconds": 0.1256075000273995,
+        "bytes": 30156,
+        "sha256": "a8910cac4d93a77025133711783f2648ece3574e3e1ff0f401bb37320eae0177"
+      }
+    },
+    "qt6": {
+      "files": {
+        "native": "docs\\acceptance-evidence\\round3-native-qt6.json",
+        "crash-phases": "docs\\acceptance-evidence\\round3-crash-phases-qt6.json",
+        "regression-round2": "docs\\acceptance-evidence\\round3-regression-round2-qt6.json",
+        "regression-pixels": "docs\\acceptance-evidence\\round3-regression-pixels-qt6.json",
+        "supplement": "docs\\acceptance-evidence\\round3-supplement-qt6.json",
+        "restart": "docs\\acceptance-evidence\\round3-restart-qt6.json",
+        "scene-round1": "docs\\acceptance-evidence\\round3-scene-round1-qt6.json",
+        "ipc": "docs\\acceptance-evidence\\round3-ipc-qt6.json",
+        "dock": "docs\\acceptance-evidence\\round3-dock-qt6.json"
+      },
+      "all_passed": true,
+      "capabilities": {
+        "krita_version": "6.1.0-prealpha (git 2687e5d)",
+        "qt_version": "6.11.0",
+        "qt_binding": "PyQt6",
+        "python": "3.13.5",
+        "symbols": {
+          "Node.paintLine": true,
+          "Node.paintPolylineStroke": true,
+          "StrokePoint": true,
+          "Node.paintPath": true,
+          "Node.paintEllipse": true,
+          "Node.paintPolygon": true,
+          "Node.paintRectangle": true,
+          "View.brushPosition": true,
+          "View.setCurrentBrushPreset": true,
+          "Document.createTransparencyMask": true,
+          "Document.createFilterMask": true,
+          "Document.setColorSpace": true,
+          "Selection.feather": true,
+          "Node.setPixelData": true
+        },
+        "evidence": "present_in_build only; drawing untested"
+      },
+      "checkpoint_measurement": {
+        "seconds": 0.14803660003235564,
+        "bytes": 30157,
+        "sha256": "ce8d1483f7b9a702cb29c92472e282ae840977e8fef55397f3a1525179129918"
+      }
+    }
+  },
+  "local_artifacts": [
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\alpha-fixture.png",
+      "sha256": "a881bc1f73011e03e9fcd35d8de1529f3c31d7364f5a6b7dc310eaf96ffbe6f8",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\canvas-1793706126.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\canvas.png",
+      "sha256": "30bc1b5208c86246b747db4f7cc76ee80bab18fbd7efb79b60606117882e4f74",
+      "bytes": 474
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\252d5077e8b243cea0ac3b9be2d1ff8a.kra",
+      "sha256": "a8910cac4d93a77025133711783f2648ece3574e3e1ff0f401bb37320eae0177",
+      "bytes": 30156
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\35f74a9b14eb4ad8a417093035095523.kra",
+      "sha256": "b580ab5beddde25c0d36152853b3c43a0e2cc35d28915a5041fa5c9288904056",
+      "bytes": 13399
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\39bad16f0a19428986453e0d01ecc86b.kra",
+      "sha256": "11f22dfb1ba8242d5f76be6700fdd75dbb9b98cf17bb04b1b6a53532748f0596",
+      "bytes": 30362
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\5b715948b865430da147420703dc4c37.kra",
+      "sha256": "e6e0e23ceb0d07618d817adda93a6d300898042fcde89a19f226e84a38bc7d2e",
+      "bytes": 14172
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\5e267fe3d88c4395abea585c0183ffcf.kra",
+      "sha256": "5e6ebf153611830471ead8e4511918cbcd878e5eb028de593baf785e8cf036cd",
+      "bytes": 30353
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\9bc5a7e0b30a4b87a919ec8dbf5998c4.kra",
+      "sha256": "c72d67c3e32516efcfa2982729223ba3fa31752a1fced189869ad0840facd095",
+      "bytes": 30277
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\ef6bdadb3e7647c7b2002a3c2bf16f70.kra",
+      "sha256": "dab17656e7778e30cf0f48c81d813fe1527371e8f024cbf6e925c212ec34b31f",
+      "bytes": 30096
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\fb5f11fb3e9f4338b7fd4af6d6e62aad.kra",
+      "sha256": "2cbf4871ebe30bff6bd674bc4449a30ba9bd05fe6a5bfc7f8434ab10b7074045",
+      "bytes": 40086
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\fc632f9e75834e36bcc0ffa9a66ee77c.kra",
+      "sha256": "ccfede271a0fe24f714b69818447f0b7a61970cdd473b098dc8b2daf7342c7a1",
+      "bytes": 30406
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\checkpoints\\revision-before-c19102da8cda4ac9b154a3d4b401589c.kra",
+      "sha256": "bc6e01cd8daaff96299be28c7ef952056beda59d5e3c31f975e94b35444e7a41",
+      "bytes": 30131
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\clips\\safe-40a0f3f0.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\0802f80e0b4e43b2963c59b83bb19ff5.png",
+      "sha256": "a5321d73e083ffd99b6411537b22abc6f7ce487117fb5f689d2f5febbcb3ee74",
+      "bytes": 197
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\189c7ac7c0fb497494d1d10a452bb2e4.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\18cfdd379c3245639778d23ecd36b063.png",
+      "sha256": "435d237e27649e70f70776c4ac189c131fd9d8d432d79b0fad60b8bd7901bc30",
+      "bytes": 214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\19f9a2f112fb458c84303c7fcad8cc2e.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\1c3b0ee83f6e4214af80490ea535e3b3.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\2aff5adef2ca4e1cb85c91f2da6dbb52.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\3062d976a4b841c69f1a6443a51f72db.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\359562a00072454a9edc90ad23879327.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\427e86fc23cc448abe3b5440dc3fed10.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\4aceeb76d22141618a94e715979162bd.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\4c5667d6c7064c20a9fc143966807dd4.png",
+      "sha256": "364dd7c93c72e6a1aad0ed43255d246b9fd6f7733bddf7e7d78840977ffa100b",
+      "bytes": 196
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\4d0b3db88575476b9ca661bfa7036176.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\4f791eece60c4d6aa053be64f36dbf7d.png",
+      "sha256": "93176c23e0fced38512130142571d24a851be3d25b9a9d0091725a8606708a53",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\6c92b8e3692240ff882ad04f49f3d006.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\78c931a7f2e44013a6e5b40c20ba84a2.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\7e5d4eb4474445b8957c4c24bab8bb54.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\83add07753f64756bbc9b06ed1dc53df.png",
+      "sha256": "a3ffa9972b269005d729a1ee1f781432102fb80f892ddd8ccec347487b667ebe",
+      "bytes": 193
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\859f77c0085e47a59e7a0dacc91b5a2a.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\862a1d51e91e401eb1f5f325a0e6de05.png",
+      "sha256": "4ab156d50277d9a9fcf87421019766a2aca013b20c77cdf5fdf345de7a728720",
+      "bytes": 270
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\86c750d9c9794792b14522b52565d78a.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\8e4dbed042e94d95a317a4fa568b49d5.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\91ec242786e9432e99a1c271d69d8789.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\9bfa5219ebe24e6d803ceff54e7a9574.png",
+      "sha256": "d3fcc1fb3bd8764e430e7bda2936285e5a49ff8eab907d40754352a3a1c0d909",
+      "bytes": 189
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\a381d36381b2430c834f5ffe1961eb4d.png",
+      "sha256": "7fbe276be016d442c0e8be329ebd40500579dd95441913d3db6e39de8f518e9e",
+      "bytes": 195
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\a40690ca43f34839a8d2d0b0f527f5d0.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\a83dc43a0bcc4004977741cd66f9ba87.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\ac59e2c68d344663916acf1409cf33c9.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\adf30df1eefd48968a22e46816e35120.png",
+      "sha256": "ce4bec720e00f554466d5c63a9c41259a292e4263442da045313e8af5b799f3a",
+      "bytes": 194
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\af340d6d0ce14f908d72e95e1c293761.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\b08d8f57955b42e5820a27b1ca1a5a98.png",
+      "sha256": "5c04207df5f58ab6ce59f2e84cc198e4ed989d81412a17bfb68b5921f84c6532",
+      "bytes": 220
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\b99690dae13e49caacd99c4d3135e967.png",
+      "sha256": "8e8100fa11e3ec780644c4536938835226c1b780bd48468e5ea41410e6a92cb7",
+      "bytes": 248
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\ba35525f81fa4e488a26c108a9210ac2.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\bc5225d5db5f4b548e16db8f74c1e4a1.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\c16c3e7f23d94d7e8000c64b8070f8de.png",
+      "sha256": "3e179b6f0aae6774a8192de8cf75d6ef5ca06dc2847708a2d271b64ff04f6cb9",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\c5a5672087234892b314ea2d25c9e37d.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\c7f9ecd10f6b4255a6311c7c178ff1a0.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\c901b6ead47f4d7eb96400f9757cbe35.png",
+      "sha256": "3f111f1c96fe77a4d49edbb2c1ad5138599165f4f997f9bd498ee34137847b9f",
+      "bytes": 335
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\edcbd725fc9f4e439a32bd6e6f7d8c88.png",
+      "sha256": "79e5873f65d14251b14ec2108c9d95c969767b5111e43baf7fb33b9c28c5c2b4",
+      "bytes": 378
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\ee667d306bba42bba963f139233ed241.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\ef2d834487e648298a19f121839ec81c.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\f95d08a011c64ff78741d7332fb98378.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\fd8969528c9145fcb54b4fb5812ad39c.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\fdc61f230ce94696abba3d8ed79f0d57.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\evidence\\original-40a0f3f0.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\failure-target.png",
+      "sha256": "b9990e6092f90999740c8e70ea86e0961bc3dc35a5840a15a179b43f23b2c10e",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\filters-40a0f3f0.kra",
+      "sha256": "6b838560d05170c12e79f668eea617169fbd72babd99ba0c72ef3a37f58dfe1e",
+      "bytes": 31712
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\fixture.png",
+      "sha256": "3e8728cf80301a615d3f8230837cce4eff4211f522b4fc008e6a9987b8d4fdb2",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\goal.png",
+      "sha256": "ba8fae4ced1200fe4d987ebd35f4c489f55f92e927fdbcbf8199d714feb7bc37",
+      "bytes": 201
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\input.png",
+      "sha256": "ca1955cdab259866b7e832aa2f9e6981ee2543063af84563388c57b4a6a9afcc",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\layer-1793706126.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\layer.png",
+      "sha256": "52a9c6443208f48b8fec8f9166fc640e053350f445c976a9599f6609e16e86f8",
+      "bytes": 315
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\masks-40a0f3f0.kra",
+      "sha256": "ad70a20482bb394ace0fdccee070b6f219095c3784ef154acab0edce5b1f49ad",
+      "bytes": 31495
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\patch.png",
+      "sha256": "1f6f425a0bc5e564d8446b73af0c7d83b6501a476bb1e13f188672991fe7ebf7",
+      "bytes": 292
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706110.png",
+      "sha256": "4865fd7c5a2d9b431d5b77efd3e72cd630fb2a02ae00a789bf2d0cda892b643e",
+      "bytes": 9178
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706111.png",
+      "sha256": "d4bf56476aae3ed595bd4d84c4565ee0b590522e39976366235e67e905bbc5c0",
+      "bytes": 9167
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706112.png",
+      "sha256": "284f6e767e31d88f5a6031b0b37769355eb5365ea284c5c6df71e7727e975c2e",
+      "bytes": 9202
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706113.png",
+      "sha256": "8142ad89d72b69c0711ae8ede8f4407dddb506ed52c19573953affd5dfac5a85",
+      "bytes": 9169
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706114.png",
+      "sha256": "f82fb17bd364c3f923c41c48f3d6dd625fda9772eb8192623df522b2795e78b4",
+      "bytes": 9159
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706115.png",
+      "sha256": "e39f12fac1b9abe79e12684f634f2efee9248d4420f356d8ea790a5b5ef957e0",
+      "bytes": 9206
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706116.png",
+      "sha256": "6fbab88ed80455bb83fee6798e6ce324186a8d8a6703eacb8350d68b4eafcafd",
+      "bytes": 9267
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706117.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706118.png",
+      "sha256": "974f09b7babf2be3e04e84b4bc0c257b6ed8219bfb6ecd13086504feb0466946",
+      "bytes": 9428
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706119.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706120.png",
+      "sha256": "974f09b7babf2be3e04e84b4bc0c257b6ed8219bfb6ecd13086504feb0466946",
+      "bytes": 9428
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706121.png",
+      "sha256": "cecb8e23ed23f8a926c972d4f4640c84d908e37983c824d199635cefb0cd5eff",
+      "bytes": 9170
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706122.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706123.png",
+      "sha256": "5390e61cf68d2a9c4163af7b71399c45fede81f2eebfc83153a9b959070a8ec9",
+      "bytes": 9157
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706124.png",
+      "sha256": "cecb8e23ed23f8a926c972d4f4640c84d908e37983c824d199635cefb0cd5eff",
+      "bytes": 9170
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706125.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706126.png",
+      "sha256": "2d849c4ebe40d6582582e27365a594f2fb3bd675d8004f0479adc9e8bfa31ed6",
+      "bytes": 9158
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706127.png",
+      "sha256": "2d849c4ebe40d6582582e27365a594f2fb3bd675d8004f0479adc9e8bfa31ed6",
+      "bytes": 9158
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706128.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706129.png",
+      "sha256": "0b390c087bba229b2367e67b210b10954d72695e1d7c938ee37190ba0940dd50",
+      "bytes": 8945
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706130.png",
+      "sha256": "0b390c087bba229b2367e67b210b10954d72695e1d7c938ee37190ba0940dd50",
+      "bytes": 8945
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706131.png",
+      "sha256": "13d4cec318d325540a35cf07def3422e478e777871b2c6a45952d5a36ace30e8",
+      "bytes": 9218
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706132.png",
+      "sha256": "f07d713e59007407cec178e902f9bfa25151fd485b367179613d6084cd71a19c",
+      "bytes": 9160
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706133.png",
+      "sha256": "db35b4b39e7339b9ba027e8a5cad057f9a502e413f7d126303f54754bdce4f3d",
+      "bytes": 9168
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706134.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706135.png",
+      "sha256": "4cdd9202feb08bf6ed9c98f0154cdc3c73bed080e8a176dc48a7d9c61b4139da",
+      "bytes": 9164
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixel-1793706136.png",
+      "sha256": "8aba2673c79ff912a9ed3ac202bc4c572857cb041d4f59d66e7e6acb87b87499",
+      "bytes": 9169
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\pixels-1793706129.kra",
+      "sha256": "d14b4d0488de42e04944a588c5f412e9cf29947b4575bd35a3adb5269e2a8634",
+      "bytes": 30178
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\previews\\revision-after-c19102da8cda4ac9b154a3d4b401589c.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\previews\\revision-preflight-1258c44c935b4427b3ae27dcdd0708d8.png",
+      "sha256": "dec3b2f4692e59803e4b50391ff6020b87a3795a09356e1f929cbaf9d1a454ac",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\previews\\revision-preflight-2bb7a365f3d4449ebb3fba485cc54795.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\previews\\revision-preflight-d45ef688cda34d31853c3c418b39bff5.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\252d5077e8b243cea0ac3b9be2d1ff8a-f4ccc31dfad94a8db8599001e6ec47e6.kra",
+      "sha256": "a8910cac4d93a77025133711783f2648ece3574e3e1ff0f401bb37320eae0177",
+      "bytes": 30156
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\39bad16f0a19428986453e0d01ecc86b-57bd6d1d99df4abfab6659dde0a2d7d2.kra",
+      "sha256": "11f22dfb1ba8242d5f76be6700fdd75dbb9b98cf17bb04b1b6a53532748f0596",
+      "bytes": 30362
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\5e267fe3d88c4395abea585c0183ffcf-f0ed0eaa4cb245b2a6e84291286728c3.kra",
+      "sha256": "5e6ebf153611830471ead8e4511918cbcd878e5eb028de593baf785e8cf036cd",
+      "bytes": 30353
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\fb5f11fb3e9f4338b7fd4af6d6e62aad-81a97f25ba7343b090560388c2ac1bb8.kra",
+      "sha256": "2cbf4871ebe30bff6bd674bc4449a30ba9bd05fe6a5bfc7f8434ab10b7074045",
+      "bytes": 40086
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\fb5f11fb3e9f4338b7fd4af6d6e62aad-c706c0baff6c4c069352754287bd4975.kra",
+      "sha256": "2cbf4871ebe30bff6bd674bc4449a30ba9bd05fe6a5bfc7f8434ab10b7074045",
+      "bytes": 40086
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\recovered\\fc632f9e75834e36bcc0ffa9a66ee77c-924c0dbb3eac471c87ecf8bbca638baf.kra",
+      "sha256": "ccfede271a0fe24f714b69818447f0b7a61970cdd473b098dc8b2daf7342c7a1",
+      "bytes": 30406
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\reference-fixture.png",
+      "sha256": "4f420e87c1e5e2e6a0c24f98a544edae4266efadadc21ca50291a9b0c69f540c",
+      "bytes": 79
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\region-1793706126.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\region.png",
+      "sha256": "73ff88f332149edeed55a41a5a742b8c3a0dd32ba3f82738e51412f701c8873a",
+      "bytes": 469
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\restart\\0dc4a5844cc3450b9fcad309aa56ce8b.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\restart\\33b7cbbd99a64258a6f201f14665513e.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\restart\\7e5429851a9d4af7a46d4d6e79fcf35a.png",
+      "sha256": "69f45bb3491ffc36de386b604b0bbbe97d3f0b4db332985b7c37f8e81dc4df8f",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\revisions\\reopened-40a0f3f0.kra",
+      "sha256": "46d58cef238a808b9c0a196b59c9a84725397ea191c7349b12a2b78909c4434b",
+      "bytes": 40008
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\revisions\\revision-c19102da8cda4ac9b154a3d4b401589c.kra",
+      "sha256": "df12783cf5d9df688119360af9319774bb1e3d855fd3554d6f5a9aeca40c7ef6",
+      "bytes": 40008
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\round2.kra",
+      "sha256": "c422e75a641ae90421980a814097334ccd26f92dfa857f35038836c3bbdfb3d2",
+      "bytes": 54306
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793706082\\round2.png",
+      "sha256": "17380cfc57b3d4eee0520a477a6cfd1ed8edb33380b6a283e0e89f07bec7a143",
+      "bytes": 10240
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\checkpoints\\65f2b6c572134b85a020cce9089ddfed.kra",
+      "sha256": "a8949e9216e082471cd1e774d47ab1369e852553c574b3fe92c74f38e80fd1a6",
+      "bytes": 30279
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\checkpoints\\b602347080464c1981c3cf8209678a16.kra",
+      "sha256": "be650bf090e1f836543badbcae531335f079153905777b8e96de82d2a51ad59d",
+      "bytes": 30209
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\checkpoints\\b85bdf3b465f47fdb318b8aca39815b6.kra",
+      "sha256": "553ac13b0693b5a5e36b71d2754fd8dd55b58a5561da864335232db9ec685606",
+      "bytes": 40090
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\clips\\safe-912f771b.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\2698cb2cef364b3daa048b8d8d02628c.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\34f4b25b1c24437da7d5eefae6dbc3d6.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\42135e03601c45519bd6ce7e3c2ec3a0.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\5febe8db7f3f45c49fd220fe7d26f01a.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\7432786cc325456dbcd1ac183f73932d.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\evidence\\ea4e540b0b874cefa725e70862b25c34.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\previews\\dock-2c5f7876741d449fb437b5c302e39baa.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\previews\\revision-preflight-161b3072516548ff93ff35057266b881.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\previews\\revision-preflight-6226a01d43df4158bfebf7ec355d4982.png",
+      "sha256": "dec3b2f4692e59803e4b50391ff6020b87a3795a09356e1f929cbaf9d1a454ac",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\recovered\\b85bdf3b465f47fdb318b8aca39815b6-76f07c0a28f64f3f9045bf117eb3043b.kra",
+      "sha256": "553ac13b0693b5a5e36b71d2754fd8dd55b58a5561da864335232db9ec685606",
+      "bytes": 40090
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\recovered\\b85bdf3b465f47fdb318b8aca39815b6-9740df51344f4425bd7eb8817e3bccc1.kra",
+      "sha256": "553ac13b0693b5a5e36b71d2754fd8dd55b58a5561da864335232db9ec685606",
+      "bytes": 40090
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\restart\\0a812516239049fb88b93048395976ea.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\restart\\1a7a325ef0de47d18a7996c676471eed.png",
+      "sha256": "69f45bb3491ffc36de386b604b0bbbe97d3f0b4db332985b7c37f8e81dc4df8f",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\restart\\447d3a15c8ba46099a90063d47f8b9e6.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\restart\\929c73be0de64a62afd58d32815e8eec.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\restart\\a6fb4e81d30342ca95fcab1c4cc69f00.png",
+      "sha256": "44e99bb2f1bee6abebebbfdd73b4fbcaaa8ab44b323b3483c3fe10a289fa7e73",
+      "bytes": 312
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\supplement-912f771b.kra",
+      "sha256": "baf6308d9db21c7d399b2c0920aaf1b987a39319bdba68a82b85b2145a03d6e2",
+      "bytes": 31782
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793707831\\transactions\\cross-session.kra",
+      "sha256": "442246bb88819056c41b2189a10c545f33a24ab900fae444e57cf9d2e596fa73",
+      "bytes": 40015
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\alpha-fixture.png",
+      "sha256": "a881bc1f73011e03e9fcd35d8de1529f3c31d7364f5a6b7dc310eaf96ffbe6f8",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\canvas-1793706565.png",
+      "sha256": "73d3997195d2a4733dec4c948cab6c7011240593c945fa3387f12e82a4ec9d81",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\canvas.png",
+      "sha256": "f1fcd8124801d047736f18255088ba4d1cd0f7e30f85667b36c880dbebd49618",
+      "bytes": 474
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\5da6976c604d45d19ef2983843b4ffff.kra",
+      "sha256": "1236a945116d5f35907c50568b44177b833fb32b4f019e5df971654a10bdb0d6",
+      "bytes": 167679
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\5ea6f479054d4a919701d478f7894d2c.kra",
+      "sha256": "bba8fe9c66f23fd6bd4ed03ad19683863c1bcb77bd4e1e49c7d685cc8dd284dd",
+      "bytes": 30097
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\7e8028cb546e43898d5847c1391bb6f7.kra",
+      "sha256": "acdde98fd972745808486d2bb16e9a5913ed10c044ee2d60eca8c459d7543df6",
+      "bytes": 30353
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\9ea83178ecab424dbb7fc395e017e0e1.kra",
+      "sha256": "ce8d1483f7b9a702cb29c92472e282ae840977e8fef55397f3a1525179129918",
+      "bytes": 30157
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\a19ad3b040044264ac9dc55056d6d671.kra",
+      "sha256": "1f5cc7725653dce0ff4d1a1cb9a19b969742ac07eddc1b54a631f0b265467097",
+      "bytes": 30364
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\b58c113ed7e8431db72a023a9fd6d158.kra",
+      "sha256": "26ee11a09dcd67e9efa8a05f53c53d0f99eb682ef6bea0638681256521ace096",
+      "bytes": 14173
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\c1e0daab655f4cada3688b4af2f3c8ea.kra",
+      "sha256": "da3acd0090940cecead7e4975c1852a48e46d3e6626cb3c9c36013b137d1a59e",
+      "bytes": 40054
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\d2999fb639a14cedabb7e9e8893e7b76.kra",
+      "sha256": "6e288c22be4326990b17a69a768ffbb0413a7e2e547f873209f771e5aa0ed306",
+      "bytes": 30407
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\eaeb3604e13f44bbb1c0a4ba5e202eab.kra",
+      "sha256": "fac075815be933559dd8e0819f1aa9791fc237d8a37a9eaf9480abaaecc4c8ce",
+      "bytes": 30269
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\f13377d92f37482f82bf594c3abbaed4.kra",
+      "sha256": "75f673cd5c4faf3a966790d8b65c0e4608f0b556529c2fcb885dd335714885c0",
+      "bytes": 13399
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\checkpoints\\revision-before-68793429731444d1a48906b56623647b.kra",
+      "sha256": "09af798cdd1040f195e8fdedb05abe3e29e2688a7df98e6d5cb88b146aa6699b",
+      "bytes": 30131
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\clips\\safe-50a1e81c.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\05536b69d56747b49333fe9db9257200.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\0c65c10004bd4781aaa015dc2d8c3134.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\0fbea966e32445908758fd488f84767e.png",
+      "sha256": "d41eb28cc3422b17eaf2229586f1be6a93c7957d1f70ed4f482550ac146565b0",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\13155c2102964f34a24589f960e80586.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\150587ba3b71486b99c8b8791e69a96c.png",
+      "sha256": "ea417c31f3987736f38cc884fb15159809deea45674c0f1b7c5cc56f8702315c",
+      "bytes": 193
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\202f374be38a4e3a821a3922f7ee348f.png",
+      "sha256": "112a36dc40059af3cf1aec859fb0c3588cb9996561d78605b5e658e355e5d530",
+      "bytes": 197
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\20405867fb5546a89aefb8c8139c43db.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\245d3e0be00b48f8afbd17dd83fcf72c.png",
+      "sha256": "460b862cab89517386540ee3084bcee4972c62018a7c8cd7a818b5e7217ee3cb",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\2634ce2c75ed4e439ee5502a11f7fc76.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\2ae6460673dc40d09ebba6dd3ccdce6a.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\35ba6556d12a4812aaa6f4a695057492.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\411218038175494093666e69fdffe561.png",
+      "sha256": "6285d50c50f8f8e17d11b322da1adfe661b56e79084d53e8108d169dd74401ff",
+      "bytes": 189
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\44dd10ed3a5543d4b26826f43b1b8ee9.png",
+      "sha256": "218270b8f75d74e5539fa65b9a0e382d17b1876f20933fac0f2a327faae157ac",
+      "bytes": 220
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\4641ce6733f64b579db9548170d3024e.png",
+      "sha256": "0a87fbecbdb2f7f86c76b5503287b21b92374f22bf2f1f5d80bdbea0b9c8d397",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\49c1870c793a4f1597d01f93a67a746c.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\4acaf54afde94c5c8a179c88b4afa013.png",
+      "sha256": "9105aa8d7662dba209407c16f23d415994a111629cff0679950b547f8ead6fa7",
+      "bytes": 214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\4b0b08e61e9e492f8ef323cc9d86e429.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\4be1db54e94c4e4894ca88f8f6f12847.png",
+      "sha256": "ef580a914a17d42a0290a3da2ebe0063a89a7b917ce6d9d400a892f816181dbb",
+      "bytes": 335
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\4d0691d12e7b421e9874148fec359985.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\52b2c2d15c714b55b00471f6b660c155.png",
+      "sha256": "d41eb28cc3422b17eaf2229586f1be6a93c7957d1f70ed4f482550ac146565b0",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\59d3b5ed12fa47aa929599e74c000aaa.png",
+      "sha256": "c0a5f821b4cc38c42dc74ee9f7436bc9d6d227c7824eb556bd950db6749c70c4",
+      "bytes": 270
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\6170fd163d1a4a11bd69c46d9a66d2b9.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\618b81e4ed9241af84c73f9af6e6a7fa.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\6da511723270401b92eabc120ebaf686.png",
+      "sha256": "dbe4e38fbfcf9c04b0a2cb06090f9ed90edd0178aa159e31b34a3c6b637b4af2",
+      "bytes": 196
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\707515fb00634327aa63207d4fa61155.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\75ec4be1ebd746828cde3c24503eae7b.png",
+      "sha256": "460b862cab89517386540ee3084bcee4972c62018a7c8cd7a818b5e7217ee3cb",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\77ec35cce8b2474caf15aaa555f6187c.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\786ee5c352bd4d3e928d5ffd83561d52.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\7f19c49607774247b66038a065e4f343.png",
+      "sha256": "62a0d96f6ebcd487bbef9764ff85e18ef34dd952cca3f3575fff422a4709fdc8",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\80c10ca12ada4cb3ada52c403b054651.png",
+      "sha256": "1c5d0f5071e493bf8d387f8c961f8086e046a2e436dd586454471c1708610a26",
+      "bytes": 248
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\854b3012c2664a8a8c0fd4e6d89fd88c.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\8ed7f507ec8445eb8ef607c4c91839fc.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\8f2d6d4af912443093b824305f8142b7.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\b1ddf9398f094ce7b1b950d400a70f2f.png",
+      "sha256": "e15d98ebf6eda9f69c1bbfe85968c9d388a2c04b256a0f30d73f27f38b3e3b6f",
+      "bytes": 194
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\b9ddf967b9e747c89b5170d1ba6eb1f0.png",
+      "sha256": "25c92fc80aedc61792ed9ec66805d3ad432a96c17b5b22b43509331c1ca05887",
+      "bytes": 378
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\bb49e892a12041179d37142d09c112ef.png",
+      "sha256": "d41eb28cc3422b17eaf2229586f1be6a93c7957d1f70ed4f482550ac146565b0",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\c0eaaeac29b34017903f75a3a7afef5c.png",
+      "sha256": "3871ae9b034ef62fd1cc5a65bb8c818e5e27408416b53e3e4d82fa8f4269ac04",
+      "bytes": 195
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\c2cf8dfda9eb40c0b66f585d42bc1956.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\cb4463f8062b476eb9b5461041da2d2a.png",
+      "sha256": "9e47cff925d12d2deaf1e05f826e7ce9d4d70aed267b2cc792a5cfb6f48930bc",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\cbb5c4033cb84a309b6dbe6100a96124.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\e3a58e6781ae4c6194def1a94cef85b5.png",
+      "sha256": "0a87fbecbdb2f7f86c76b5503287b21b92374f22bf2f1f5d80bdbea0b9c8d397",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\e79439a9d7bc450090e936fe65d065e6.png",
+      "sha256": "460b862cab89517386540ee3084bcee4972c62018a7c8cd7a818b5e7217ee3cb",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\e9927733735b43d4b0a61e7f6409e1a9.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\evidence\\original-50a1e81c.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\examples\\pressure-comparison.kra",
+      "sha256": "b06e1c75fdd800f62fe39fd0bcc7d9213c8282f795445a57552aeeb4a7f459e4",
+      "bytes": 158688
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\examples\\pressure-comparison.png",
+      "sha256": "08d3a955d72e87cc934a9ee3257b685d65a2e106eb77d847b0e4e54cc5ff3173",
+      "bytes": 56480
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\failure-target.png",
+      "sha256": "b9990e6092f90999740c8e70ea86e0961bc3dc35a5840a15a179b43f23b2c10e",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\filters-50a1e81c.kra",
+      "sha256": "6bf3b6aa2b0c7843897b57dd401876eb0834d780514e7e2f5fa20897dea698bf",
+      "bytes": 31711
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\fixture.png",
+      "sha256": "3e8728cf80301a615d3f8230837cce4eff4211f522b4fc008e6a9987b8d4fdb2",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\goal.png",
+      "sha256": "ba8fae4ced1200fe4d987ebd35f4c489f55f92e927fdbcbf8199d714feb7bc37",
+      "bytes": 201
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\input.png",
+      "sha256": "ca1955cdab259866b7e832aa2f9e6981ee2543063af84563388c57b4a6a9afcc",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\layer-1793706565.png",
+      "sha256": "73d3997195d2a4733dec4c948cab6c7011240593c945fa3387f12e82a4ec9d81",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\layer.png",
+      "sha256": "e7a8f11b4e04aa3c2f7d3d75560b407040a945ceac9462e4ea8277d5ace0bebe",
+      "bytes": 315
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\masks-50a1e81c.kra",
+      "sha256": "d3421ac8432af11e1a66c3815f5e98d6b99ae30dc7f3c63932b0c052f3a278d3",
+      "bytes": 31497
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\patch.png",
+      "sha256": "1f6f425a0bc5e564d8446b73af0c7d83b6501a476bb1e13f188672991fe7ebf7",
+      "bytes": 292
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706549.png",
+      "sha256": "4865fd7c5a2d9b431d5b77efd3e72cd630fb2a02ae00a789bf2d0cda892b643e",
+      "bytes": 9178
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706550.png",
+      "sha256": "d4bf56476aae3ed595bd4d84c4565ee0b590522e39976366235e67e905bbc5c0",
+      "bytes": 9167
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706551.png",
+      "sha256": "284f6e767e31d88f5a6031b0b37769355eb5365ea284c5c6df71e7727e975c2e",
+      "bytes": 9202
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706552.png",
+      "sha256": "8142ad89d72b69c0711ae8ede8f4407dddb506ed52c19573953affd5dfac5a85",
+      "bytes": 9169
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706553.png",
+      "sha256": "f82fb17bd364c3f923c41c48f3d6dd625fda9772eb8192623df522b2795e78b4",
+      "bytes": 9159
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706554.png",
+      "sha256": "e39f12fac1b9abe79e12684f634f2efee9248d4420f356d8ea790a5b5ef957e0",
+      "bytes": 9206
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706555.png",
+      "sha256": "6fbab88ed80455bb83fee6798e6ce324186a8d8a6703eacb8350d68b4eafcafd",
+      "bytes": 9267
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706556.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706557.png",
+      "sha256": "974f09b7babf2be3e04e84b4bc0c257b6ed8219bfb6ecd13086504feb0466946",
+      "bytes": 9428
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706558.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706559.png",
+      "sha256": "974f09b7babf2be3e04e84b4bc0c257b6ed8219bfb6ecd13086504feb0466946",
+      "bytes": 9428
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706560.png",
+      "sha256": "cecb8e23ed23f8a926c972d4f4640c84d908e37983c824d199635cefb0cd5eff",
+      "bytes": 9170
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706561.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706562.png",
+      "sha256": "5390e61cf68d2a9c4163af7b71399c45fede81f2eebfc83153a9b959070a8ec9",
+      "bytes": 9157
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706563.png",
+      "sha256": "cecb8e23ed23f8a926c972d4f4640c84d908e37983c824d199635cefb0cd5eff",
+      "bytes": 9170
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706564.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706565.png",
+      "sha256": "2d849c4ebe40d6582582e27365a594f2fb3bd675d8004f0479adc9e8bfa31ed6",
+      "bytes": 9158
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706566.png",
+      "sha256": "2d849c4ebe40d6582582e27365a594f2fb3bd675d8004f0479adc9e8bfa31ed6",
+      "bytes": 9158
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706567.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706568.png",
+      "sha256": "0b390c087bba229b2367e67b210b10954d72695e1d7c938ee37190ba0940dd50",
+      "bytes": 8945
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706569.png",
+      "sha256": "0b390c087bba229b2367e67b210b10954d72695e1d7c938ee37190ba0940dd50",
+      "bytes": 8945
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706570.png",
+      "sha256": "13d4cec318d325540a35cf07def3422e478e777871b2c6a45952d5a36ace30e8",
+      "bytes": 9218
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706571.png",
+      "sha256": "f07d713e59007407cec178e902f9bfa25151fd485b367179613d6084cd71a19c",
+      "bytes": 9160
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706572.png",
+      "sha256": "db35b4b39e7339b9ba027e8a5cad057f9a502e413f7d126303f54754bdce4f3d",
+      "bytes": 9168
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706573.png",
+      "sha256": "b5c5e373b4f15d896ffd51a7995524d2b795d0bb5a31e07e6e67d412ca9b9c50",
+      "bytes": 9119
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706574.png",
+      "sha256": "4cdd9202feb08bf6ed9c98f0154cdc3c73bed080e8a176dc48a7d9c61b4139da",
+      "bytes": 9164
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixel-1793706575.png",
+      "sha256": "8aba2673c79ff912a9ed3ac202bc4c572857cb041d4f59d66e7e6acb87b87499",
+      "bytes": 9169
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\pixels-1793706568.kra",
+      "sha256": "aaaf221364fcc33aef7c28f514f61b090a04fb3914bcb2601e6e31559845304d",
+      "bytes": 30181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\revision-after-68793429731444d1a48906b56623647b.png",
+      "sha256": "0a87fbecbdb2f7f86c76b5503287b21b92374f22bf2f1f5d80bdbea0b9c8d397",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\revision-preflight-7fd4b20574624e78b0ec0b08298cc53e.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\revision-preflight-9e05c70a3b3a43e8bf1f9ce571a5b85e.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\revision-preflight-f08628c2eb17483eb19e292fa5a82b50.png",
+      "sha256": "54ebf91f61a5b997ffe8b60e95961c4263a6c6eff580b7b7a54468fdb62201b5",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\scene-5.png",
+      "sha256": "b5abc3eb7d0be63a136991737a59d189362d8cd90f13bbc0b922e03bba7da9d4",
+      "bytes": 8193
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\previews\\scene-9.png",
+      "sha256": "96ef04a2a1409b5a1b291a57ab57b42a3f5d0f83326c680e6fac565aa203dea4",
+      "bytes": 10297
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\7e8028cb546e43898d5847c1391bb6f7-adcb73fb9e164849a7053db9edf4e8b2.kra",
+      "sha256": "acdde98fd972745808486d2bb16e9a5913ed10c044ee2d60eca8c459d7543df6",
+      "bytes": 30353
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\9ea83178ecab424dbb7fc395e017e0e1-8257bc400bd84d64a63b2c2edf1ab24f.kra",
+      "sha256": "ce8d1483f7b9a702cb29c92472e282ae840977e8fef55397f3a1525179129918",
+      "bytes": 30157
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\a19ad3b040044264ac9dc55056d6d671-9f92fa6435f049f285143ad83febb0df.kra",
+      "sha256": "1f5cc7725653dce0ff4d1a1cb9a19b969742ac07eddc1b54a631f0b265467097",
+      "bytes": 30364
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\c1e0daab655f4cada3688b4af2f3c8ea-52974e89abb54fa68b48bc3a6a8cfac5.kra",
+      "sha256": "da3acd0090940cecead7e4975c1852a48e46d3e6626cb3c9c36013b137d1a59e",
+      "bytes": 40054
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\c1e0daab655f4cada3688b4af2f3c8ea-7ca90f90c3704c7d8beb13327409c7d0.kra",
+      "sha256": "da3acd0090940cecead7e4975c1852a48e46d3e6626cb3c9c36013b137d1a59e",
+      "bytes": 40054
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\recovered\\d2999fb639a14cedabb7e9e8893e7b76-b1b49afa421f4f418d488f62b5302b21.kra",
+      "sha256": "6e288c22be4326990b17a69a768ffbb0413a7e2e547f873209f771e5aa0ed306",
+      "bytes": 30407
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\reference-fixture.png",
+      "sha256": "4f420e87c1e5e2e6a0c24f98a544edae4266efadadc21ca50291a9b0c69f540c",
+      "bytes": 79
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\region-1793706565.png",
+      "sha256": "73d3997195d2a4733dec4c948cab6c7011240593c945fa3387f12e82a4ec9d81",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\region.png",
+      "sha256": "7c148755edc660520a18cefdc2a06fc8126cd03db44f6bfafdbbf1eefc039fd2",
+      "bytes": 469
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\restart\\20609ca443164a83a1930cc40c7e1ab5.png",
+      "sha256": "d1497fa5021fa215adf941cac2e15e368a9bb0396841e41d89dca6e537de8d38",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\restart\\3c5814c449744870a5cc3bfa186a4b38.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\restart\\cecc08894cad4ec9b3893454748ee899.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\revisions\\reopened-50a1e81c.kra",
+      "sha256": "697910b8e0353c6fe90a6c3b376445ac9b0b0c024b8366760e48c581d36d3eb4",
+      "bytes": 39990
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\revisions\\revision-68793429731444d1a48906b56623647b.kra",
+      "sha256": "cc7a619852616d9d4bf75c90acfe7d2fbcaa6e262b1150cac0b3d7f958d3e814",
+      "bytes": 39991
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\round2.kra",
+      "sha256": "33dd0844cc965a6c6c2cd36ff4faa9a9119ee4b9f78e48fdbc9e67850084892d",
+      "bytes": 54271
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\round2.png",
+      "sha256": "17380cfc57b3d4eee0520a477a6cfd1ed8edb33380b6a283e0e89f07bec7a143",
+      "bytes": 10240
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\scene-regression-round1-pressure.kra",
+      "sha256": "1a14b84bd8c324a183636a516d819a8ea3f48311eebc6a9f6f5bc29fc0e9f109",
+      "bytes": 158689
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\scene-regression-round1-pressure.png",
+      "sha256": "08d3a955d72e87cc934a9ee3257b685d65a2e106eb77d847b0e4e54cc5ff3173",
+      "bytes": 56480
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\scene-regression-scene.kra",
+      "sha256": "b617c9894276b8bece34b71b90fd15f08da3b679314fffe2783c53227f94d6c9",
+      "bytes": 167680
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793706518\\scene-regression-scene.png",
+      "sha256": "ebf6b3c244c82a36f0d4347c470938d7063e1c482c52acf0dbb2271059ee104a",
+      "bytes": 52891
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\checkpoints\\97fc8bb7dfba45e2b3037e2f8d44793a.kra",
+      "sha256": "6e88b7aa91444eac4980474f56b09389e336f00bdca398995a185f7872ebc3eb",
+      "bytes": 30214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\checkpoints\\c6548ebc0aca45f389c39f1463bf4382.kra",
+      "sha256": "8afe17009ea9b3d7981d93d6e3a980daf0df3547c71e2c5bc2e351002f9a7c47",
+      "bytes": 40056
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\checkpoints\\ec297310855c4eabbbe702e62293c71e.kra",
+      "sha256": "ef7d1eaaf3e07f0898108bb039595b42f0648ca4e2714753208e4e57a48e82d1",
+      "bytes": 30269
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\clips\\safe-2090b528.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\24f5de07cad148dc9a778e8c03648b32.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\4a03bf698a1f407c9e49430935dce42a.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\6b2da309f9bd41cfac1b0ac9bf63526c.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\842f93641f184030bf61ef592e4bf1ab.png",
+      "sha256": "67a9c8c815fceb23beb1293b860ccd9c75e17890c653fda5388e7a33c0cfc803",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\a105533481d84d6abd9c33058bb9d570.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\evidence\\e34c41f810ed40c089ab4fe0ccdad366.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\previews\\dock-46617da51198479e827ae57fc485f88e.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\previews\\revision-preflight-0db076f0fe3b4016a977fbefa7654c7f.png",
+      "sha256": "54ebf91f61a5b997ffe8b60e95961c4263a6c6eff580b7b7a54468fdb62201b5",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\previews\\revision-preflight-9fa6e70d90cb400d97797fa5a077f9ea.png",
+      "sha256": "a093d3ad59d49ebd17eb35b2deb34e53d8344b283fece78524530227d34f4a3e",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\recovered\\c6548ebc0aca45f389c39f1463bf4382-00ee9cf76dd5488d94901c555810c084.kra",
+      "sha256": "8afe17009ea9b3d7981d93d6e3a980daf0df3547c71e2c5bc2e351002f9a7c47",
+      "bytes": 40056
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\recovered\\c6548ebc0aca45f389c39f1463bf4382-00ee9cf76dd5488d94901c555810c084.kra-autosave.kra",
+      "sha256": "ab2a5d604a606b615ea7f30f75f4c771fc149152621cef67b3bb8d54229015b5",
+      "bytes": 31879
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\recovered\\c6548ebc0aca45f389c39f1463bf4382-31713075c1fb41e58c1ea2855a543cf0.kra",
+      "sha256": "8afe17009ea9b3d7981d93d6e3a980daf0df3547c71e2c5bc2e351002f9a7c47",
+      "bytes": 40056
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\recovered\\c6548ebc0aca45f389c39f1463bf4382-31713075c1fb41e58c1ea2855a543cf0.kra-autosave.kra",
+      "sha256": "d23d3cedcfea822821e2c151c61ff478f15b0dc60ee14ff3e3128ae2f445c248",
+      "bytes": 30372
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\restart\\3103a28c61224de5b6962aca722a71e8.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\restart\\68cd6b25799f41c3a6725c520886814f.png",
+      "sha256": "d1497fa5021fa215adf941cac2e15e368a9bb0396841e41d89dca6e537de8d38",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\restart\\781cd34df45b40a6a965c5dfb496f788.png",
+      "sha256": "c9662a604e69534bc4caecf700ed9b31c6f8c0d8ec6fb3adada9e83efb75f961",
+      "bytes": 312
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\restart\\cb71937679ad4f739b897883d74d4e0f.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\restart\\fa10a67a58e7470db3576e4b85003227.png",
+      "sha256": "c1d6cf254e6d4d3810ae395a7ca050de5721e0c8f216cc3b066a06b4b74f4e71",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\supplement-2090b528.kra",
+      "sha256": "e2e8adbf4e2b203d62d31692c70429bbeebc26f952d23cf11ae2b33c72987e3f",
+      "bytes": 31774
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\transactions\\cross-session.kra",
+      "sha256": "536b2c38656ff3769b5ddb04dbb76bd70b1d6ff15e64ecf6682e54c391433b8f",
+      "bytes": 39996
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\alpha-fixture.png",
+      "sha256": "a881bc1f73011e03e9fcd35d8de1529f3c31d7364f5a6b7dc310eaf96ffbe6f8",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\canvas-1793705785.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\canvas.png",
+      "sha256": "30bc1b5208c86246b747db4f7cc76ee80bab18fbd7efb79b60606117882e4f74",
+      "bytes": 474
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\016380e794394d6ebd667bc7700fab12.kra",
+      "sha256": "059a7a8b90d47142b621fc1f48fa7bc2f45672a819ba551987f45879cae64c53",
+      "bytes": 4663
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\6c3a6857e02f4959979fa2e3afa0a70e.kra",
+      "sha256": "26b514a12a39e90e9d1cfbcce614688d762cfce2c2404c2af5b0730afd99907f",
+      "bytes": 5436
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\80cf30c54efe420a80f29e6efdf2f243.kra",
+      "sha256": "9e48d78f1890c0611ed89374dcece36db60d48783ea5383c6b8e073ef7357b0b",
+      "bytes": 21613
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\ab8526e35d644bb1a63e8215a7829c48.kra",
+      "sha256": "aca327cde838b527b83c0c8853e6cc57acb85a7c261b27f7d431c9b322247928",
+      "bytes": 21361
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\bce965efa9cc43c5befb98059bc1e939.kra",
+      "sha256": "2fff2893d1a9af439672318f927a7faa5ea05b9622fe0edaae9e1271020a2961",
+      "bytes": 21625
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\d23d6560b30a48599b8c0724e967514f.kra",
+      "sha256": "9641cd8db1c1dd987aa2883d62bd7d53befe677473d056d870e91653ecbc19e6",
+      "bytes": 31347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\eec15cd1f5b241ef8e1403b60b7bca49.kra",
+      "sha256": "5fd3442185fce878eca6f21635ffdce2b940280945697f0adf237172cb56a1ab",
+      "bytes": 21421
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\fa1eed8afd4c47dbb475483c851f157d.kra",
+      "sha256": "36fbe331f8f7d88b80857017af049ce62b5c67d2d587cb1632f5b4180d8cda66",
+      "bytes": 21672
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\revision-before-17f95adb6ba44f2b8e93fb3d89f215e9.kra",
+      "sha256": "6f848698cb7f1a0c5a7c2739ba544e420b8f1917310f3d365a34e0d25067518f",
+      "bytes": 21397
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\clips\\safe-ac68d778.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\136b01254db84b84ae9b06b522cff339.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\199772085fde400eb628de7dd492b0d5.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\1d92e364d2ff45f2aebccf01719dba47.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\250b29e4d1df4edcaefb1b71ff81fd42.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\2cd11c471dae4940a98d4f2b0ec6869f.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\3cf330d30d62480990cbcd5fbee11f5d.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\4344a022dddd47af862d61bd0f40d4bc.png",
+      "sha256": "93176c23e0fced38512130142571d24a851be3d25b9a9d0091725a8606708a53",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\4401c2580dce466cbded3f489e5ab7aa.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\45075fd847a740309390b00e4af3a45c.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\48fd099c6b8e46f39172b2345a2dc506.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\4ff65dc6a7b04382b7da67d5a8efd01e.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\513b6a0deed848469b71ebe76a209262.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\665db71fd78044f2bee943ae5a2a238f.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\6f9b5d4fad084299b51215eadf6072a1.png",
+      "sha256": "8e8100fa11e3ec780644c4536938835226c1b780bd48468e5ea41410e6a92cb7",
+      "bytes": 248
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\70bde76bf5b34b1c929fdc6b2d1a60a3.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\71d70668d7964972a372585348f13454.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\720486ce87f149959c1b696a84795675.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\8315fbeed3c24b7485eb920bfc949fa3.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\86b77c7730e6410393017651b3ebc398.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\8c8208e5d5734947ba8f85a444b66165.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\8f22b3e7fa594905a9ed318a5bb5e1ed.png",
+      "sha256": "d3fcc1fb3bd8764e430e7bda2936285e5a49ff8eab907d40754352a3a1c0d909",
+      "bytes": 189
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\97ffb998ee28432d8881b41f2fee2048.png",
+      "sha256": "5c04207df5f58ab6ce59f2e84cc198e4ed989d81412a17bfb68b5921f84c6532",
+      "bytes": 220
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\99075432ee5948a08e94b3828e1b29ce.png",
+      "sha256": "435d237e27649e70f70776c4ac189c131fd9d8d432d79b0fad60b8bd7901bc30",
+      "bytes": 214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\99f480d4662b47a3b67ee72808c75712.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\a0ad110a63d745378f69b8d303da2f8c.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\a5d13004a1c9428899b184797fa08568.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\a6041d52f69c4857a8783df1862383c6.png",
+      "sha256": "ce4bec720e00f554466d5c63a9c41259a292e4263442da045313e8af5b799f3a",
+      "bytes": 194
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\a78c6454d8dd4af8aed06e27fc24d317.png",
+      "sha256": "a5321d73e083ffd99b6411537b22abc6f7ce487117fb5f689d2f5febbcb3ee74",
+      "bytes": 197
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\adcbf9d4f609492cbb8c49985936af3f.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\bd4b2befd8914f53ad0570dba5b9a1d8.png",
+      "sha256": "3e179b6f0aae6774a8192de8cf75d6ef5ca06dc2847708a2d271b64ff04f6cb9",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\c710ee9060ec49a0a1ec1ebb94ba223f.png",
+      "sha256": "79e5873f65d14251b14ec2108c9d95c969767b5111e43baf7fb33b9c28c5c2b4",
+      "bytes": 378
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\cbcf48ed8a1943428a4b1ccbeba6c44d.png",
+      "sha256": "7fbe276be016d442c0e8be329ebd40500579dd95441913d3db6e39de8f518e9e",
+      "bytes": 195
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\ce29cf6b69414e89a49ae9f88992df6b.png",
+      "sha256": "a3ffa9972b269005d729a1ee1f781432102fb80f892ddd8ccec347487b667ebe",
+      "bytes": 193
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\ceda1982aed34b7fabb35c928508ffd4.png",
+      "sha256": "364dd7c93c72e6a1aad0ed43255d246b9fd6f7733bddf7e7d78840977ffa100b",
+      "bytes": 196
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\d60206e0b4654576abaed41ebb385503.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\d7cf2f1a06d5449fa265e15797f84f47.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\d97e27c4395d48f083e66de45fc013f5.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\ddd458757af143cc92358802edb6a0a4.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\de9954e91e454f5394ec6fa301c25181.png",
+      "sha256": "4ab156d50277d9a9fcf87421019766a2aca013b20c77cdf5fdf345de7a728720",
+      "bytes": 270
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\e5242852a73741998eb419c11feba495.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\e71e69e18e5d43d2a5e83a5fda099eb9.png",
+      "sha256": "082828f8c5025c29ead7c78b7a687af8b6d4aa66e681572c8e4332db945637e7",
+      "bytes": 199
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\e7508db2e3144240b847324653dacd1f.png",
+      "sha256": "3f111f1c96fe77a4d49edbb2c1ad5138599165f4f997f9bd498ee34137847b9f",
+      "bytes": 335
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\f09d446f8907467b8af1d011c20066a9.png",
+      "sha256": "006c9b9a910b920c739f90d4886868137553f96f4cf0f725d797659fb4ddac65",
+      "bytes": 137
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\evidence\\original-ac68d778.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\failure-target.png",
+      "sha256": "b9990e6092f90999740c8e70ea86e0961bc3dc35a5840a15a179b43f23b2c10e",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\filters-ac68d778.kra",
+      "sha256": "bbf4319a6710e8e6dfe7ab89f5bcd3e3f795a4f49e3dadc499c1f3d2b649d0e4",
+      "bytes": 22973
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\fixture.png",
+      "sha256": "3e8728cf80301a615d3f8230837cce4eff4211f522b4fc008e6a9987b8d4fdb2",
+      "bytes": 78
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\goal.png",
+      "sha256": "ba8fae4ced1200fe4d987ebd35f4c489f55f92e927fdbcbf8199d714feb7bc37",
+      "bytes": 201
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\input.png",
+      "sha256": "ca1955cdab259866b7e832aa2f9e6981ee2543063af84563388c57b4a6a9afcc",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\layer-1793705785.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\layer.png",
+      "sha256": "52a9c6443208f48b8fec8f9166fc640e053350f445c976a9599f6609e16e86f8",
+      "bytes": 315
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\masks-ac68d778.kra",
+      "sha256": "63ea65cbb81cd1b0000e184980ecb704de006a2df33095caa3fe9a33e0a44aec",
+      "bytes": 22758
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\patch.png",
+      "sha256": "1f6f425a0bc5e564d8446b73af0c7d83b6501a476bb1e13f188672991fe7ebf7",
+      "bytes": 292
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705769.png",
+      "sha256": "271430505bd17834d07955172c36f754d0d751b7ef6a1a48fe2b8b2ce846dfc9",
+      "bytes": 447
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705770.png",
+      "sha256": "22417f525c07d46ba7dde5cf54ee9949c08f2df7c2d921c2148a54bcd6e84af4",
+      "bytes": 436
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705771.png",
+      "sha256": "f645840e05de01e8d194ffe0975ff1c3ab8b6a4cca3bda8b391db9d2d1bd190f",
+      "bytes": 471
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705772.png",
+      "sha256": "cee13bdf72019aa3d0f42539dacc6481edb1974add265dfe99dd67f4bdca30b8",
+      "bytes": 438
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705773.png",
+      "sha256": "cb1f17486b235af7b2dce96339e2f73e11584a5d2be111513df2fab7beac0623",
+      "bytes": 428
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705774.png",
+      "sha256": "e75b3c75c0d76621300df57fbfb78b975efece247976bae77b5ab3bdd9ff79dc",
+      "bytes": 475
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705775.png",
+      "sha256": "bcfe453abb61b227930f9edfd2742e4239dc2cf37e9b724beaae4fe212935c7b",
+      "bytes": 536
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705776.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705777.png",
+      "sha256": "7d8bda273a1f6a11b43d63eef000411a575ed5f2e7fce5170048cf13fa1f6f92",
+      "bytes": 697
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705778.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705779.png",
+      "sha256": "7d8bda273a1f6a11b43d63eef000411a575ed5f2e7fce5170048cf13fa1f6f92",
+      "bytes": 697
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705780.png",
+      "sha256": "4821b068e614bce466d6cee5273c97da54b9c2e3df86e625f3d7175177913df0",
+      "bytes": 439
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705781.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705782.png",
+      "sha256": "001679154cd1e0244c84f32799d802edeaa37fcbe8d47c5d6324bc72c944dd1f",
+      "bytes": 426
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705783.png",
+      "sha256": "4821b068e614bce466d6cee5273c97da54b9c2e3df86e625f3d7175177913df0",
+      "bytes": 439
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705784.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705785.png",
+      "sha256": "f3e0abc93790a8826ffe227d9a829037ec13e0ee1a9657abc4642e45858c777e",
+      "bytes": 427
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705786.png",
+      "sha256": "f3e0abc93790a8826ffe227d9a829037ec13e0ee1a9657abc4642e45858c777e",
+      "bytes": 427
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705787.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705788.png",
+      "sha256": "0f91359afdb5a77dbf7a874c3b4d4557d1ccf4dc49e64bdb20a6770a5ec218b1",
+      "bytes": 214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705789.png",
+      "sha256": "0f91359afdb5a77dbf7a874c3b4d4557d1ccf4dc49e64bdb20a6770a5ec218b1",
+      "bytes": 214
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705790.png",
+      "sha256": "177ff6d13c0dbd9fd8cfb756f4241b3e4ad1246ad50bd6edcb888c2e2d417467",
+      "bytes": 487
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705791.png",
+      "sha256": "510fef515946f2b316927da60b6178611c09030f7645a9ccd679c682272c98ad",
+      "bytes": 429
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705792.png",
+      "sha256": "5c414bd0f9f5ea6815ee052dd15a732512a96c3680a5fa080a75889ec2bac568",
+      "bytes": 437
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705793.png",
+      "sha256": "62b3e405821570ed01e948a3a7f361ff19fa11f4508c772ffacbaa114a58477b",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705794.png",
+      "sha256": "fed65af03a3440f6577cdb9ac8f52e2f7cf5387c5d2fe26819370a4e4a29e723",
+      "bytes": 433
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixel-1793705795.png",
+      "sha256": "5d01411371bda4c1e3caadd459a453da4ad8520ebf89d87f890cde7a43ac3b10",
+      "bytes": 438
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\pixels-1793705788.kra",
+      "sha256": "8025081389fb3fea2fcda7dae7ca92b4f6fa78408b9e236acc97c33a5132134a",
+      "bytes": 21441
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\revision-after-17f95adb6ba44f2b8e93fb3d89f215e9.png",
+      "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f",
+      "bytes": 221
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\revision-preflight-717223e82b674b87897b8a939339fc05.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\revision-preflight-dc4620833e1844c7a7b07f7317628eb2.png",
+      "sha256": "dec3b2f4692e59803e4b50391ff6020b87a3795a09356e1f929cbaf9d1a454ac",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\revision-preflight-f245dcf35fd7488d9e80389447d2706e.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\scene-5.png",
+      "sha256": "8e687c15c9c01717fb7d9b057240397379cf23f4c6c821c37fad55a6f68f2157",
+      "bytes": 9677
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\80cf30c54efe420a80f29e6efdf2f243-5c5d0dc2624a4ceb92da518c2036bc43.kra",
+      "sha256": "9e48d78f1890c0611ed89374dcece36db60d48783ea5383c6b8e073ef7357b0b",
+      "bytes": 21613
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\bce965efa9cc43c5befb98059bc1e939-8b9d91c02d704e3fad3dc0301caf8739.kra",
+      "sha256": "2fff2893d1a9af439672318f927a7faa5ea05b9622fe0edaae9e1271020a2961",
+      "bytes": 21625
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\d23d6560b30a48599b8c0724e967514f-27373032512e4645a9b4b6881787c3b2.kra",
+      "sha256": "9641cd8db1c1dd987aa2883d62bd7d53befe677473d056d870e91653ecbc19e6",
+      "bytes": 31347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\d23d6560b30a48599b8c0724e967514f-64a970425cad45019d05807dfde01dd4.kra",
+      "sha256": "9641cd8db1c1dd987aa2883d62bd7d53befe677473d056d870e91653ecbc19e6",
+      "bytes": 31347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\eec15cd1f5b241ef8e1403b60b7bca49-52440f4e5b3e4411a864d822a89d071f.kra",
+      "sha256": "5fd3442185fce878eca6f21635ffdce2b940280945697f0adf237172cb56a1ab",
+      "bytes": 21421
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\recovered\\fa1eed8afd4c47dbb475483c851f157d-81475c67e0e14e17bd53046634d07eb2.kra",
+      "sha256": "36fbe331f8f7d88b80857017af049ce62b5c67d2d587cb1632f5b4180d8cda66",
+      "bytes": 21672
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\reference-fixture.png",
+      "sha256": "4f420e87c1e5e2e6a0c24f98a544edae4266efadadc21ca50291a9b0c69f540c",
+      "bytes": 79
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\region-1793705785.png",
+      "sha256": "02562fe7cd04ebe0c22dcab1bc7b28df41d8b05714b348ac5ce7f3f8ac9ad70c",
+      "bytes": 203
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\region.png",
+      "sha256": "73ff88f332149edeed55a41a5a742b8c3a0dd32ba3f82738e51412f701c8873a",
+      "bytes": 469
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\restart\\15d536c5772a45bfab9ccdf47628c149.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\restart\\8ac12e6545644d08abe0ce081dde9189.png",
+      "sha256": "69f45bb3491ffc36de386b604b0bbbe97d3f0b4db332985b7c37f8e81dc4df8f",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\restart\\c742267582584f878032d81a46efc91b.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\revisions\\reopened-ac68d778.kra",
+      "sha256": "991b67a227cc6d84c388cc3d9001a7dfe593cb217d53b57cab8a789da861c6f6",
+      "bytes": 31277
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\revisions\\revision-17f95adb6ba44f2b8e93fb3d89f215e9.kra",
+      "sha256": "991b67a227cc6d84c388cc3d9001a7dfe593cb217d53b57cab8a789da861c6f6",
+      "bytes": 31277
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\round2.kra",
+      "sha256": "2ffd6633bf99be5a1ce0baefd01ea19350c8fa74e8ed237b5163c3f3c6700887",
+      "bytes": 45563
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\round2.png",
+      "sha256": "45f5c5ea92132d8517fc2bdf23924bc106de8dad67fd7bccc6763d6905b36564",
+      "bytes": 1509
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\1a7527608e164d9494564353bcfe500c.kra",
+      "sha256": "d1036e584d54acf2abe2e7a7e19b6eec1b740ef45727758c78a32031bce3d973",
+      "bytes": 21477
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\3802ee9c3ab947dd95b129438109dd46.kra",
+      "sha256": "ffc4c27d1ddc36fbc2203ffc50428417fa80863acc886590997de996169e2cc1",
+      "bytes": 21473
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\6e30cf4051ff4d2aa279319d4a749d58.kra",
+      "sha256": "bc425fc43c62a3e89e11430cccd3442d420806a641e291ca06009b35bfc172cf",
+      "bytes": 21548
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\c8083fbea6be4ef3bfbd03e27c631bb9.kra",
+      "sha256": "e8a2f99e6633c7ac281992ce60a845e1ef87c96a7f530e161bb74f48efb55cd9",
+      "bytes": 21535
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\checkpoints\\db0a5ff1411042b9a2576e164c368644.kra",
+      "sha256": "9e89962737909f57cf15873e971a5bede1ea03a464e7700ce8d200ea3897c857",
+      "bytes": 31362
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\clips\\restart.kclip",
+      "sha256": "ceea3e115dadfaf83709e3b116677564f2d5a8fad680d8c6d5ec47885817a340",
+      "bytes": 180
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\clips\\safe-5e4a2862.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\clips\\safe-dec35e53.kclip",
+      "sha256": "8c0a8b2b47b8cd603cf9e93bc37fb8c499c4ed6599cb6052d76dc4199c0c0366",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\1c4f11cb17864c75b85541f22deeffd4.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\23102c23aff24779b068f52dd1255aa2.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\28e01682a622408188f5f6812ff6503b.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\326fffc0c2234591bd74dccb519ccaf9.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\470f4ded060e471699c7f335b1a52c6f.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\4e50278bf5c94a97949f74618bd376fb.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\510f8140b06c47ef9fb8c53d6bcb5e6b.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\62038bae6b3745c69c44d68354dfb1bd.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\725bf9bee96244f4a0f611b6e23233fc.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\abf725fd6b2846298ec361c570e97081.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\e29b52a60d1642968b86a1e4e44a4391.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\evidence\\f43487d0554c461899d93ff5166fccec.png",
+      "sha256": "a2a7894264c16f55f3caa533fc92bbbd7bd7c080d975591aa7d5ce3273d81279",
+      "bytes": 198
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\guard-before.png",
+      "sha256": "5e4f2689a6e2704aa2d2ca11cd5966f0d9597e9efa24947f8077bfe280e0acf6",
+      "bytes": 174
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\guard-goal.png",
+      "sha256": "f477dbb83f3f31aebee0f6773d345abb7608781fedf943470cd862bc9acc9881",
+      "bytes": 181
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\previews\\dock-b6bc7052bd6345c6bda90d7c009f5513.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\previews\\revision-preflight-5974ff778ae947fd895e15e1b7fe3049.png",
+      "sha256": "dec3b2f4692e59803e4b50391ff6020b87a3795a09356e1f929cbaf9d1a454ac",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\previews\\revision-preflight-63b49b192e2448cfbaddb184d4d809c0.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\previews\\revision-preflight-6540b59f89d54a7ba665a0ba37cf49a1.png",
+      "sha256": "6092a3246e9666896fa7b97b4d59204eec151e52fa4f58a36cd926d473da4b47",
+      "bytes": 192
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\previews\\revision-preflight-811e4dff42b54a0ca99b6c0971506f1a.png",
+      "sha256": "dec3b2f4692e59803e4b50391ff6020b87a3795a09356e1f929cbaf9d1a454ac",
+      "bytes": 191
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\recovered\\db0a5ff1411042b9a2576e164c368644-1aac91ae4b3a4c9196bdb10c6e3f1338.kra",
+      "sha256": "9e89962737909f57cf15873e971a5bede1ea03a464e7700ce8d200ea3897c857",
+      "bytes": 31362
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\recovered\\db0a5ff1411042b9a2576e164c368644-5efd57e9fbc64d1e96f6ec31e2759c9e.kra",
+      "sha256": "9e89962737909f57cf15873e971a5bede1ea03a464e7700ce8d200ea3897c857",
+      "bytes": 31362
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\restart\\0d7cc97411a941fba737a63810d5c654.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\restart\\1c8379e8870a4a7480c46bc5006c8657.png",
+      "sha256": "69f45bb3491ffc36de386b604b0bbbe97d3f0b4db332985b7c37f8e81dc4df8f",
+      "bytes": 345
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\restart\\7ba89f91418145ac99cb0ea4aad52c09.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\restart\\8013496a73c849029320b6df743a9265.png",
+      "sha256": "8764a8995f93082854e0b4ab04275308519789195037db85754dbd6c8148327f",
+      "bytes": 331
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\restart\\9ce9dd73f9354cefb17512d52eaab796.png",
+      "sha256": "44e99bb2f1bee6abebebbfdd73b4fbcaaa8ab44b323b3483c3fe10a289fa7e73",
+      "bytes": 312
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\supplement-5e4a2862.kra",
+      "sha256": "dfcab83fd42a838fb11605bce7bb86fbdf210d707ef94c5b1ab6c1d01c9f5564",
+      "bytes": 23045
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\supplement-dec35e53.kra",
+      "sha256": "c32fba193d746e54f0216669886c9437be05e3603ea69e53500c46a252636955",
+      "bytes": 23050
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793707487\\transactions\\cross-session.kra",
+      "sha256": "02002dd8ec36d9f1f148c92ccf0e41a7fc913c3e869f2dd6df20ad0b5cf7ec19",
+      "bytes": 31286
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-after_save-9d510bc1\\checkpoints\\02c8b84791334d439c0d6ab30706c3c1.kra",
+      "sha256": "46b087229900a9d12f2ab5a0bb7bc82a64ac081e2037245521f28a2c54710c14",
+      "bytes": 39347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-after_save-9d510bc1\\recovered\\02c8b84791334d439c0d6ab30706c3c1-5b8def0bf89348039135e19605efa6a4.kra",
+      "sha256": "46b087229900a9d12f2ab5a0bb7bc82a64ac081e2037245521f28a2c54710c14",
+      "bytes": 39347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-after_save-9d510bc1\\recovered\\02c8b84791334d439c0d6ab30706c3c1-a9ac2b1f05b3416ea0c5cea239308bc3.kra",
+      "sha256": "46b087229900a9d12f2ab5a0bb7bc82a64ac081e2037245521f28a2c54710c14",
+      "bytes": 39347
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-after_save-9d510bc1\\restored.png",
+      "sha256": "1c333e3a1390b1cd330b80b63f94e66198c854281a4687fdc9142936ea9ad6b6",
+      "bytes": 411
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-during_stroke-d43522c9\\checkpoints\\16f8cfa3ca0549a9a3f43df8306cfa76.kra",
+      "sha256": "5a34e7f1f5b062560fb2a6fd33cdadd956fb31f30b6bb62b5b089e4e6efb20e6",
+      "bytes": 39352
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-during_stroke-d43522c9\\recovered\\16f8cfa3ca0549a9a3f43df8306cfa76-6523428d89ef42e2b12880af81b09f00.kra",
+      "sha256": "5a34e7f1f5b062560fb2a6fd33cdadd956fb31f30b6bb62b5b089e4e6efb20e6",
+      "bytes": 39352
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-during_stroke-d43522c9\\recovered\\16f8cfa3ca0549a9a3f43df8306cfa76-ef2ba57317c14a478ff7cbf45fed13f3.kra",
+      "sha256": "5a34e7f1f5b062560fb2a6fd33cdadd956fb31f30b6bb62b5b089e4e6efb20e6",
+      "bytes": 39352
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-during_stroke-d43522c9\\restored.png",
+      "sha256": "1c333e3a1390b1cd330b80b63f94e66198c854281a4687fdc9142936ea9ad6b6",
+      "bytes": 411
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-after_save-c6aef541\\checkpoints\\3052ada374db40fc831ffb49a98b07ff.kra",
+      "sha256": "fb1e881bf21c319447e0928e7463f4fb3d1f030917dbfee6688ac4c90a4d4e23",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-after_save-c6aef541\\recovered\\3052ada374db40fc831ffb49a98b07ff-858dc645d6c24d6b9307d7d52b1a4784.kra",
+      "sha256": "fb1e881bf21c319447e0928e7463f4fb3d1f030917dbfee6688ac4c90a4d4e23",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-after_save-c6aef541\\recovered\\3052ada374db40fc831ffb49a98b07ff-e3d887a5337149458985dadeb7773fb7.kra",
+      "sha256": "fb1e881bf21c319447e0928e7463f4fb3d1f030917dbfee6688ac4c90a4d4e23",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-after_save-c6aef541\\restored.png",
+      "sha256": "576a257da2814bfaa8ae4b1a912b4efab7d8aa7da47a9b0639231ab9e1965b04",
+      "bytes": 411
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-during_stroke-6e3ebeef\\checkpoints\\e58ee09579f246febdae0a95a4a49ffc.kra",
+      "sha256": "18bbf47a1d854b8333a19220b1cd00f31ee6d780c001d5d51382be9f221c4488",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-during_stroke-6e3ebeef\\recovered\\e58ee09579f246febdae0a95a4a49ffc-19ab3ee397474b61b73627f2f45a7b20.kra",
+      "sha256": "18bbf47a1d854b8333a19220b1cd00f31ee6d780c001d5d51382be9f221c4488",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-during_stroke-6e3ebeef\\recovered\\e58ee09579f246febdae0a95a4a49ffc-48e35eb14f4e488196393b71c7d1cf4c.kra",
+      "sha256": "18bbf47a1d854b8333a19220b1cd00f31ee6d780c001d5d51382be9f221c4488",
+      "bytes": 39325
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt6-during_stroke-6e3ebeef\\restored.png",
+      "sha256": "576a257da2814bfaa8ae4b1a912b4efab7d8aa7da47a9b0639231ab9e1965b04",
+      "bytes": 411
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-after_save-a98bcb4c\\checkpoints\\a23bf96016104caebbbe23029cad5cf8.kra",
+      "sha256": "142975d8a39decde8e1ed3fb2657bdba197fc93dd23893a3dbd681ba0d5e6347",
+      "bytes": 30615
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-after_save-a98bcb4c\\recovered\\a23bf96016104caebbbe23029cad5cf8-61eacbb7bcac45e89829fc1cc6b42471.kra",
+      "sha256": "142975d8a39decde8e1ed3fb2657bdba197fc93dd23893a3dbd681ba0d5e6347",
+      "bytes": 30615
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-after_save-a98bcb4c\\recovered\\a23bf96016104caebbbe23029cad5cf8-852c779d72f44f749793f9df60dcd4f0.kra",
+      "sha256": "142975d8a39decde8e1ed3fb2657bdba197fc93dd23893a3dbd681ba0d5e6347",
+      "bytes": 30615
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-after_save-a98bcb4c\\restored.png",
+      "sha256": "1c333e3a1390b1cd330b80b63f94e66198c854281a4687fdc9142936ea9ad6b6",
+      "bytes": 411
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-during_stroke-121507b8\\checkpoints\\cafbdbc0a5954bf6abfad9e9b6851032.kra",
+      "sha256": "3ab511f188f7d42b68c3a3645b2d68b82223b72c62999277da8a9e9bb97e05ae",
+      "bytes": 30611
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-during_stroke-121507b8\\recovered\\cafbdbc0a5954bf6abfad9e9b6851032-1e0aaea1e168495b8016af529f1fc06a.kra",
+      "sha256": "3ab511f188f7d42b68c3a3645b2d68b82223b72c62999277da8a9e9bb97e05ae",
+      "bytes": 30611
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-during_stroke-121507b8\\recovered\\cafbdbc0a5954bf6abfad9e9b6851032-fea704599d324dbf9068c1bad228a0a7.kra",
+      "sha256": "3ab511f188f7d42b68c3a3645b2d68b82223b72c62999277da8a9e9bb97e05ae",
+      "bytes": 30611
+    },
+    {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-stable-during_stroke-121507b8\\restored.png",
+      "sha256": "1c333e3a1390b1cd330b80b63f94e66198c854281a4687fdc9142936ea9ad6b6",
+      "bytes": 411
+    }
+  ]
+}

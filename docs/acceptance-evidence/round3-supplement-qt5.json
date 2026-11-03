@@ -1,0 +1,42 @@
+[
+  {
+    "case": "filter_native_undo_selection_mask",
+    "ok": true,
+    "result": {
+      "undo_redo_pixel_equal": true,
+      "selection_mask_retained": true
+    }
+  },
+  {
+    "case": "storage_safety_final",
+    "ok": true,
+    "result": {
+      "tampered_history_refused": true,
+      "malicious_clips_refused": true,
+      "junction_denials": [
+        "Internal storage escaped the output sandbox",
+        "Internal storage escaped the output sandbox",
+        "Internal storage escaped the output sandbox",
+        "Internal storage escaped the output sandbox"
+      ]
+    }
+  },
+  {
+    "case": "revision_guard_final",
+    "ok": true,
+    "result": [
+      "Revision apply requires explicit --confirm",
+      "Target reference was modified after plan approval",
+      "Safe revision requires exactly one visible source paint layer",
+      "Source paint layer must be unlocked, normal blend, 100% opacity",
+      "Source paint layer must be unlocked, normal blend, 100% opacity",
+      "Source paint layer must be unlocked, normal blend, 100% opacity",
+      "Safe revision requires exactly one visible source paint layer",
+      "Live Krita projection differs from approved revision baseline",
+      "Invalid revision identity or rectangle",
+      "Krita document dimensions do not match plan",
+      "Manual checkpoint not allowed while a job is active",
+      "Pixel revision currently requires RGBA U8"
+    ]
+  }
+]

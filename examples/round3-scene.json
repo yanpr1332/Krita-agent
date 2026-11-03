@@ -57,7 +57,7 @@
     {
       "name": "Accent",
       "brush": {
-        "preset": "Basic-5 Size",
+        "preset": "b) Basic-5 Size",
         "size": 30,
         "color": "#aa5544",
         "pressure_enabled": true

@@ -1,0 +1,34 @@
+{
+  "pause": {
+    "id": "49cbdedb892642da9591c7ca7045486f",
+    "state": "paused",
+    "total": 400,
+    "done": 217,
+    "error": null,
+    "last_result": {
+      "name": "Revision guards",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": false
+  },
+  "resume": "UI running progress observed",
+  "cancel": {
+    "id": "49cbdedb892642da9591c7ca7045486f",
+    "state": "cancelled",
+    "total": 400,
+    "done": 217,
+    "error": null,
+    "last_result": {
+      "name": "Revision guards",
+      "width": 96,
+      "height": 96,
+      "active_layer": "Ink"
+    },
+    "cancel_requested": true
+  },
+  "actual_ui_clicks": true,
+  "qt_scale_factor": "1",
+  "layout": "Scrollable history/error/preview content; fixed controls; actual 8-job history inspected"
+}

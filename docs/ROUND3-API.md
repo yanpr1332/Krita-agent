@@ -1,6 +1,6 @@
-# Round 3 API / CLI user guide (NEW CODE, NOT YET RUNTIME VERIFIED)
+# Round 3 API / CLI user guide (installed-build acceptance: REPORT-009)
 
-All commands require the opt-in Krita Bridge enabled and launched with a random token on local loopback. Run `krita-agent --help` **only during a later validation turn**.
+All commands require the opt-in Krita Bridge enabled and launched with a random token on local loopback. Use `krita-agent --help` for command details. Executed build-specific acceptance is in REPORT-009.
 
 ## Example: safe resumable drawing
 
@@ -45,7 +45,7 @@ Clipboard filename is relative to output/clips with extension `.kclip`, saving o
 - `color.info`, `color.profiles`, `color.convert`: conversion first returns a dry-run plan; requires `confirm=true` and a matching verified current KRA checkpoint ID.
 - `brush.profile`, `brush.presets`: metadata, no promise of pressure effectiveness.
 
-All native APIs are version-dependent; these are **candidate implementations until actual build acceptance**.
+Native APIs remain version-dependent; the tested builds and behavioral limits are recorded in REPORT-009.
 
 ## Structured painting
 

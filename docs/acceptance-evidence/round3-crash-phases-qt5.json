@@ -1,0 +1,76 @@
+[
+  {
+    "phase": "before_save",
+    "ok": true,
+    "event": {
+      "phase": "before_save",
+      "pid": 35876
+    },
+    "interrupted": {
+      "id": "2c7b7a41b4c2465c89d8bd22cdcc5bc8",
+      "state": "interrupted",
+      "total": 400,
+      "done": 0,
+      "error": "Interrupted before clean completion; the last native step may have applied. Manual inspection required.",
+      "last_result": null,
+      "cancel_requested": false
+    },
+    "zero_auto_playback": true,
+    "instrumentation": "temporary fixture gate; during_stroke after 10 completed native paintLine segments"
+  },
+  {
+    "phase": "after_save",
+    "ok": true,
+    "event": {
+      "phase": "after_save",
+      "pid": 53008
+    },
+    "interrupted": {
+      "id": "589c3d2acb414a43bf43b6fea7e604d2",
+      "state": "interrupted",
+      "total": 400,
+      "done": 0,
+      "error": "Interrupted before clean completion; the last native step may have applied. Manual inspection required.",
+      "last_result": null,
+      "cancel_requested": false
+    },
+    "zero_auto_playback": true,
+    "instrumentation": "temporary fixture gate; during_stroke after 10 completed native paintLine segments"
+  },
+  {
+    "phase": "during_stroke",
+    "ok": true,
+    "event": {
+      "phase": "during_stroke",
+      "pid": 38056,
+      "paintLine_segments_completed": 10
+    },
+    "interrupted": {
+      "id": "f300de477fe24f52991c05772390d600",
+      "state": "interrupted",
+      "total": 400,
+      "done": 1,
+      "error": "Interrupted before clean completion; the last native step may have applied. Manual inspection required.",
+      "last_result": {
+        "schema": 1,
+        "id": "16f8cfa3ca0549a9a3f43df8306cfa76",
+        "created_at": "2026-11-03T12:00:41.258576+00:00",
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round3-crash-qt5-during_stroke-d43522c9\\checkpoints\\16f8cfa3ca0549a9a3f43df8306cfa76.kra",
+        "sha256": "5a34e7f1f5b062560fb2a6fd33cdadd956fb31f30b6bb62b5b089e4e6efb20e6",
+        "document_name": "Crash fixture",
+        "width": 128,
+        "height": 128,
+        "color_model": "RGBA",
+        "color_depth": "U8",
+        "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+        "job_id": "f300de477fe24f52991c05772390d600",
+        "after_step": 1,
+        "policy": "immutable snapshot; never overwrite or automatically replay",
+        "steps_sha256": "fe3f95bfbba0e98cd9b159712fd361b6fd0a6273d09ebab17d0deb0f84c21a80"
+      },
+      "cancel_requested": false
+    },
+    "zero_auto_playback": true,
+    "instrumentation": "temporary fixture gate; during_stroke after 10 completed native paintLine segments"
+  }
+]

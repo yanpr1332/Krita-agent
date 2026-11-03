@@ -1,0 +1,58 @@
+[
+  {
+    "case": "crash_restore_resume_cross_session_clip",
+    "ok": true,
+    "checkpoint": {
+      "after_step": 1,
+      "color_depth": "U8",
+      "color_model": "RGBA",
+      "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+      "created_at": "2026-11-03T12:15:48.763364+00:00",
+      "document_name": "Restart safety",
+      "height": 96,
+      "id": "c6548ebc0aca45f389c39f1463bf4382",
+      "job_id": "c8def2d633454671bb0e4666be037114",
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793708103\\checkpoints\\c6548ebc0aca45f389c39f1463bf4382.kra",
+      "policy": "immutable snapshot; never overwrite or automatically replay",
+      "schema": 1,
+      "sha256": "8afe17009ea9b3d7981d93d6e3a980daf0df3547c71e2c5bc2e351002f9a7c47",
+      "steps_sha256": "7f655a1ac43df9395e505ab8ea6a3e2151807a2f03065af487c67bccd2127af2",
+      "width": 96,
+      "integrity": "sha256_verified",
+      "remaining_steps": null,
+      "resume_possible": false,
+      "resume_blocked": "Recovery requires a stopped/interrupted job"
+    },
+    "interrupted": {
+      "id": "c8def2d633454671bb0e4666be037114",
+      "state": "interrupted",
+      "total": 400,
+      "done": 2,
+      "error": "Interrupted before clean completion; the last native step may have applied. Manual inspection required.",
+      "last_result": {
+        "mode": "line",
+        "warning": "Visual pressure response depends on active brush preset"
+      },
+      "cancel_requested": false
+    },
+    "resumed": {
+      "id": "00b0b0a77db9450d9dc5eb954b1165d2",
+      "state": "completed",
+      "total": 399,
+      "done": 399,
+      "error": null,
+      "last_result": {
+        "name": "Restart safety",
+        "width": 96,
+        "height": 96,
+        "active_layer": "Ink"
+      },
+      "cancel_requested": false
+    },
+    "from_step": 1,
+    "original_unchanged": true,
+    "clipboard_pixels": true,
+    "persisted_pixel_undo_redo": true,
+    "zero_auto_playback": true
+  }
+]

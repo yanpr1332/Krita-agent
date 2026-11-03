@@ -18,20 +18,20 @@ Status terms: **code authored** means committed source only; **offline passed** 
 - [x] 34 offline tests; 54 command/protection records and 8 pixel assertion groups per build.
 - [x] See [REPORT-006](REPORT-006.md) and [REPORT-007](REPORT-007.md) for limits and real results.
 
-## Round 3 — SOURCE AUTHORED, ACCEPTANCE PENDING
+## Round 3 — INSTALLED-BUILD ACCEPTANCE COMPLETED
 
-The following features have been committed to `feat/round3-reliable-creative-automation` but **none has been run or accepted** in this development turn.
+Executed offline and installed-build results are recorded in REPORT-009; earlier source completion remains in REPORT-008.
 
-- [ ] **R3-A:** SHA-bound KRA snapshots, step-boundary journal, deliberate restore to fresh copy and explicit suffix resumption.
-- [ ] **R3-B:** non-destructive transparency/selection/filter masks and filter layers.
-- [ ] **R3-C:** separate reversible pixel edit journal, clipboard artifact, selection algebra and feathering.
-- [ ] **R3-D:** structured layer/stroke scene planning and additional brush metadata.
-- [ ] **R3-E:** image difference and constrained reference-guided local revision with preflight projection.
-- [ ] **R3-F:** color model/ICC introspection and backup-required explicit conversion.
-- [ ] **R3-G:** SHA API inventory, Python AST, heuristic C++ header changes, manual capability provenance.
-- [ ] **R3-H:** Dock history/error/preview and project documentation/acceptance suite.
+- [x] **R3-A:** SHA-bound KRA snapshots, step-boundary journal, deliberate restore to fresh copy and explicit suffix resumption.
+- [x] **R3-B:** non-destructive transparency/selection/filter masks and filter layers.
+- [x] **R3-C:** separate reversible pixel edit journal, clipboard artifact, selection algebra and feathering.
+- [x] **R3-D:** structured layer/stroke scene planning and additional brush metadata.
+- [x] **R3-E:** image difference and constrained reference-guided local revision with preflight projection.
+- [x] **R3-F:** color model/ICC introspection and backup-required explicit conversion.
+- [x] **R3-G:** SHA API inventory, Python AST, heuristic C++ header changes, manual capability provenance.
+- [x] **R3-H:** Dock history/error/preview and project documentation/acceptance suite.
 
-See [REPORT-008](REPORT-008.md) for code completion and [ROUND3-ACCEPTANCE](ROUND3-ACCEPTANCE.md) for pending verification.
+See [REPORT-008](REPORT-008.md) for code completion and [ROUND3-ACCEPTANCE](ROUND3-ACCEPTANCE.md) for the executed checklist.
 
 ## Deferred (NOT Round 3 claims)
 

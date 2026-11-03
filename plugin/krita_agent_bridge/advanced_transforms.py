@@ -4,9 +4,9 @@ from krita import Krita
 from .advanced_utils import finite, find_node, integer
 
 try:
-    from PyQt5.QtCore import QPointF
+    from PyQt5.QtCore import QPointF, QCoreApplication
 except ImportError:
-    from PyQt6.QtCore import QPointF
+    from PyQt6.QtCore import QPointF, QCoreApplication
 
 COMMANDS = frozenset(("layer.scale", "layer.rotate", "history.undo", "history.redo"))
 
@@ -15,13 +15,16 @@ def execute(bridge, command, p):
     if command.startswith("history."):
         if bridge.active:
             raise RuntimeError("Cannot undo/redo while a drawing job is running or paused")
+        doc = bridge._doc()
+        doc.waitForDone()
+        QCoreApplication.sendPostedEvents()
         key = "edit_undo" if command == "history.undo" else "edit_redo"
         action = Krita.instance().action(key)
         if action is None or not action.isEnabled():
             raise RuntimeError("No enabled Krita action: " + key)
         action.trigger()
-        doc = bridge._doc()
         doc.waitForDone()
+        QCoreApplication.sendPostedEvents()
         doc.refreshProjection()
         doc.waitForDone()
         return {"action": key, "triggered": True}

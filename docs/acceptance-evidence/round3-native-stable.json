@@ -1,0 +1,510 @@
+[
+  {
+    "case": "runtime",
+    "ok": true,
+    "result": {
+      "krita_version": "5.3.4.1 (git bd6e8d0)",
+      "qt_version": "5.15.7",
+      "qt_binding": "PyQt5",
+      "python": "3.13.5",
+      "symbols": {
+        "Node.paintLine": true,
+        "Node.paintPolylineStroke": false,
+        "StrokePoint": false,
+        "Node.paintPath": true,
+        "Node.paintEllipse": true,
+        "Node.paintPolygon": true,
+        "Node.paintRectangle": true,
+        "View.brushPosition": false,
+        "View.setCurrentBrushPreset": true,
+        "Document.createTransparencyMask": true,
+        "Document.createFilterMask": true,
+        "Document.setColorSpace": true,
+        "Selection.feather": true,
+        "Node.setPixelData": true
+      },
+      "evidence": "present_in_build only; drawing untested"
+    }
+  },
+  {
+    "case": "pixel_transactions",
+    "ok": true,
+    "result": {
+      "transaction": "8bb43569f970456ab72f512ab8451114",
+      "denials": [
+        "Layer selector did not match exactly one node",
+        "Invalid color",
+        "Input path outside authorized root",
+        "Transaction restoration requires confirm=true",
+        "Target layer locked",
+        "Active document does not match pixel transaction"
+      ]
+    }
+  },
+  {
+    "case": "checkpoint_integrity_restore",
+    "ok": true,
+    "result": {
+      "seconds": 0.2382324999780394,
+      "bytes": 21421,
+      "sha256": "5fd3442185fce878eca6f21635ffdce2b940280945697f0adf237172cb56a1ab"
+    }
+  },
+  {
+    "case": "masks_pixels_kra",
+    "ok": true,
+    "result": {
+      "id": "{0e8a8d4a-ecbe-4181-a92e-820eab21d41b}",
+      "type": "transparencymask",
+      "parent": "Ink"
+    }
+  },
+  {
+    "case": "filters_pixels_kra",
+    "ok": true,
+    "result": {
+      "filter": "invert",
+      "mask": {
+        "id": "{8acc12f9-e4ce-4422-ae6a-24f664a44b9c}",
+        "type": "filtermask",
+        "filter": "invert"
+      }
+    }
+  },
+  {
+    "case": "selection_native",
+    "ok": true,
+    "result": [
+      {
+        "mode": "replace",
+        "alpha_mass": 400.0,
+        "bounds": [
+          20,
+          10,
+          40,
+          30
+        ]
+      },
+      {
+        "mode": "add",
+        "alpha_mass": 600.0,
+        "bounds": [
+          10,
+          10,
+          40,
+          30
+        ]
+      },
+      {
+        "mode": "subtract",
+        "alpha_mass": 200.0,
+        "bounds": [
+          10,
+          10,
+          20,
+          30
+        ]
+      },
+      {
+        "mode": "intersect",
+        "alpha_mass": 200.0,
+        "bounds": [
+          20,
+          10,
+          30,
+          30
+        ]
+      },
+      {
+        "mode": "xor",
+        "alpha_mass": 400.0,
+        "bounds": [
+          10,
+          10,
+          40,
+          30
+        ]
+      },
+      {
+        "mode": "feather",
+        "alpha_mass": 400.0,
+        "bounds": [
+          8,
+          8,
+          32,
+          32
+        ]
+      },
+      {
+        "mode": "grow",
+        "alpha_mass": 572.0,
+        "bounds": [
+          8,
+          8,
+          32,
+          32
+        ]
+      },
+      {
+        "mode": "shrink",
+        "alpha_mass": 256.0,
+        "bounds": [
+          12,
+          12,
+          28,
+          28
+        ]
+      },
+      {
+        "mode": "border",
+        "alpha_mass": 226.3372549019608,
+        "bounds": [
+          9,
+          9,
+          31,
+          31
+        ]
+      },
+      {
+        "mode": "invert",
+        "alpha_mass": 8816.0,
+        "bounds": [
+          0,
+          0,
+          96,
+          96
+        ]
+      },
+      {
+        "mode": "smooth",
+        "alpha_mass": 399.96862745098036,
+        "bounds": [
+          9,
+          9,
+          31,
+          31
+        ]
+      }
+    ]
+  },
+  {
+    "case": "color_conversion",
+    "ok": true,
+    "result": {
+      "before": {
+        "document": "Color",
+        "model": "RGBA",
+        "depth": "U8",
+        "profile": "sRGB-elle-V2-srgbtrc.icc",
+        "writable_rgba_u8_pixel_api": true,
+        "active_layer": {
+          "name": "Ink",
+          "model": "RGBA",
+          "depth": "U8",
+          "profile": "sRGB-elle-V2-srgbtrc.icc"
+        }
+      },
+      "conversions": [
+        {
+          "converted": true,
+          "before": {
+            "document": "Color",
+            "model": "RGBA",
+            "depth": "U16",
+            "profile": "ACEScg-elle-V4-g10.icc",
+            "writable_rgba_u8_pixel_api": false,
+            "active_layer": {
+              "name": "Ink",
+              "model": "RGBA",
+              "depth": "U16",
+              "profile": "ACEScg-elle-V4-g10.icc"
+            }
+          },
+          "after": {
+            "document": "Color",
+            "model": "GRAYA",
+            "depth": "U8",
+            "profile": "Gray-D50-elle-V2-g10.icc",
+            "writable_rgba_u8_pixel_api": false,
+            "active_layer": {
+              "name": "Ink",
+              "model": "GRAYA",
+              "depth": "U8",
+              "profile": "Gray-D50-elle-V2-g10.icc"
+            }
+          },
+          "backup_checkpoint": "6c3a6857e02f4959979fa2e3afa0a70e",
+          "notice": "This does not establish colorimetric accuracy for arbitrary ICC workflows"
+        },
+        {
+          "converted": true,
+          "before": {
+            "document": "Color",
+            "model": "GRAYA",
+            "depth": "U8",
+            "profile": "Gray-D50-elle-V2-g10.icc",
+            "writable_rgba_u8_pixel_api": false,
+            "active_layer": {
+              "name": "Ink",
+              "model": "GRAYA",
+              "depth": "U8",
+              "profile": "Gray-D50-elle-V2-g10.icc"
+            }
+          },
+          "after": {
+            "document": "Color",
+            "model": "RGBA",
+            "depth": "F32",
+            "profile": "ACEScg-elle-V4-g10.icc",
+            "writable_rgba_u8_pixel_api": false,
+            "active_layer": {
+              "name": "Ink",
+              "model": "RGBA",
+              "depth": "F32",
+              "profile": "ACEScg-elle-V4-g10.icc"
+            }
+          },
+          "backup_checkpoint": "016380e794394d6ebd667bc7700fab12",
+          "notice": "This does not establish colorimetric accuracy for arbitrary ICC workflows"
+        }
+      ],
+      "u16_profiles": {
+        "model": "RGBA",
+        "depth": "U16",
+        "supported": true,
+        "profiles": [
+          "ACEScg-elle-V4-g10.icc",
+          "ClayRGB-elle-V2-g22.icc",
+          "ClayRGB-elle-V4-srgbtrc.icc",
+          "High Dynamic Range UHDTV Wide Color Gamut Display (Rec. 2020) - SMPTE ST 2084 PQ EOTF",
+          "LargeRGB-elle-V2-g22.icc",
+          "Rec2020-elle-V4-g10.icc",
+          "WideRGB-elle-V2-g22.icc",
+          "krita-2.5, lcms sRGB built-in with linear gamma TRC",
+          "sRGB IEC61966-2.1",
+          "sRGB built-in",
+          "sRGB-elle-V2-g10.icc",
+          "sRGB-elle-V2-srgbtrc.icc",
+          "scRGB (linear)"
+        ]
+      },
+      "reference_pixel": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "converted_u16_pixel": [
+        255,
+        0,
+        0,
+        255
+      ]
+    }
+  },
+  {
+    "case": "brush_metadata",
+    "ok": true,
+    "result": {
+      "name": "b) Basic-5 Size",
+      "file": "b)_Basic-5_Size_default.kpp",
+      "selected": true,
+      "view_brush_size": 12.0,
+      "view_opacity": 1.0,
+      "pressure_disabled": true,
+      "capability": "resource_metadata_only",
+      "note": "True pressure-size and opacity mapping requires actual preset inspection/test"
+    }
+  },
+  {
+    "case": "reference_revision",
+    "ok": true,
+    "result": {
+      "job": {
+        "id": "5bce6f0ac6494500bd3715f0dff356e9",
+        "state": "queued",
+        "total": 5,
+        "done": 0,
+        "error": null,
+        "last_result": null,
+        "cancel_requested": false
+      },
+      "checkpoint": {
+        "schema": 1,
+        "id": "f480063be9c749b1a0d9940a53dbd6c5",
+        "created_at": "2026-11-03T11:37:42.629687+00:00",
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\checkpoints\\revision-before-17f95adb6ba44f2b8e93fb3d89f215e9.kra",
+        "sha256": "6f848698cb7f1a0c5a7c2739ba544e420b8f1917310f3d365a34e0d25067518f",
+        "document_name": "Revision",
+        "width": 96,
+        "height": 96,
+        "color_model": "RGBA",
+        "color_depth": "U8",
+        "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+        "job_id": null,
+        "after_step": null,
+        "policy": "immutable snapshot; never overwrite or automatically replay",
+        "steps_sha256": null
+      },
+      "output_png": "previews/revision-after-17f95adb6ba44f2b8e93fb3d89f215e9.png",
+      "terminal": {
+        "id": "5bce6f0ac6494500bd3715f0dff356e9",
+        "state": "completed",
+        "total": 5,
+        "done": 5,
+        "error": null,
+        "last_result": {
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\revisions\\revision-17f95adb6ba44f2b8e93fb3d89f215e9.kra",
+          "format": "kra"
+        },
+        "cancel_requested": false
+      },
+      "feedback": {
+        "first": {
+          "filename": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\goal.png",
+          "bytes": 201,
+          "sha256": "ba8fae4ced1200fe4d987ebd35f4c489f55f92e927fdbcbf8199d714feb7bc37"
+        },
+        "second": {
+          "filename": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793705742\\previews\\revision-after-17f95adb6ba44f2b8e93fb3d89f215e9.png",
+          "bytes": 221,
+          "sha256": "a219f45b96bb5137dab6a592fad74e0ff55f5e214a7542c2017ded857a99071f"
+        },
+        "identical_bytes": false,
+        "pixel_comparison": "computed",
+        "region": null,
+        "mean_absolute_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "changed_bbox": null
+      },
+      "goal_rgba_match": true
+    }
+  },
+  {
+    "case": "revision_safety_guards",
+    "ok": true,
+    "result": [
+      "Revision apply requires explicit --confirm",
+      "Target reference was modified after plan approval",
+      "Safe revision requires exactly one visible source paint layer",
+      "Source paint layer must be unlocked, normal blend, 100% opacity",
+      "Live Krita projection differs from approved revision baseline",
+      "Invalid revision identity or rectangle",
+      "Krita document dimensions do not match plan",
+      "Manual checkpoint not allowed while a job is active"
+    ]
+  },
+  {
+    "case": "malicious_storage",
+    "ok": true,
+    "result": {
+      "tampered_history_refused": true,
+      "malicious_clips_refused": true,
+      "junction_denials": [
+        "Internal storage escaped the output sandbox",
+        "Internal storage escaped the output sandbox",
+        "Internal storage escaped the output sandbox"
+      ]
+    }
+  },
+  {
+    "case": "filter_configuration_pixels",
+    "ok": true,
+    "result": {
+      "default_pixel": [
+        128,
+        128,
+        128,
+        255
+      ],
+      "max_pixel": [
+        255,
+        255,
+        255,
+        255
+      ]
+    }
+  },
+  {
+    "case": "revision_failure_recovery",
+    "ok": true,
+    "result": [
+      {
+        "phase": "after_duplicate",
+        "failed_job": {
+          "id": "06001174dcd340258d3bd799cb5edf2e",
+          "state": "failed",
+          "total": 2,
+          "done": 1,
+          "error": "Layer selector did not match exactly one node",
+          "last_result": {
+            "id": "{44c0c550-7de2-4a8c-a482-79769a18f7a3}",
+            "name": "Partial revision",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0
+          },
+          "cancel_requested": false
+        },
+        "restored_pixels_equal": true
+      },
+      {
+        "phase": "after_patch",
+        "failed_job": {
+          "id": "675f4813f2674a918209788cba42b4c3",
+          "state": "failed",
+          "total": 3,
+          "done": 2,
+          "error": "Layer selector did not match exactly one node",
+          "last_result": {
+            "id": "0538d09fcf8d43319a13c2f5a79a9839",
+            "state": "applied",
+            "before_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+            "after_sha256": "7a7bf454c5f3cb1b9d9a20f81417f98d976fe3b3dd52c1b9968f02e89e7e8a2f",
+            "native_undo": false
+          },
+          "cancel_requested": false
+        },
+        "restored_pixels_equal": true
+      },
+      {
+        "phase": "after_hide",
+        "failed_job": {
+          "id": "d39c6b204d2c4a138385c3dbc06c0333",
+          "state": "failed",
+          "total": 4,
+          "done": 3,
+          "error": "Layer selector did not match exactly one node",
+          "last_result": {
+            "id": "{14896989-c172-4388-a513-34837dff252d}",
+            "name": "Ink",
+            "type": "paintlayer",
+            "visible": false,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0
+          },
+          "cancel_requested": false
+        },
+        "restored_pixels_equal": true
+      }
+    ]
+  }
+]

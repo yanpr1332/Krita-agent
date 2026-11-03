@@ -6,7 +6,8 @@ import os
 import uuid
 import zlib
 from pathlib import Path
-from .advanced_utils import integer, word
+from .atomic_io import atomic_replace
+from .advanced_utils import integer, word, storage_root
 
 COMMANDS = frozenset(("clipboard.save", "clipboard.load", "clipboard.inspect"))
 MAX_CLIP_PIXELS = 4000000
@@ -16,8 +17,8 @@ def _path(bridge, name, for_read=False):
     stem = word(name, "clipboard filename", 220)
     if not stem.endswith(".kclip"):
         raise ValueError("Clipboard filename must end with .kclip")
-    target = (bridge.output_dir / "clips" / stem).resolve()
-    allowed = (bridge.output_dir / "clips").resolve()
+    allowed = storage_root(bridge, "clips")
+    target = (allowed / stem).resolve()
     if allowed not in target.parents or target == allowed:
         raise ValueError("Clipboard must stay inside output/clips")
     if for_read and not target.is_file():
@@ -57,10 +58,12 @@ def execute(bridge, command, p):
                 json.dump(record, stream, ensure_ascii=False)
                 stream.flush()
                 os.fsync(stream.fileno())
-            tmp.replace(path)
+            atomic_replace(tmp, path)
         finally:
             tmp.unlink(missing_ok=True)
         return {"path": str(path), "width": width, "height": height, "sha256": sha}
+    if path.stat().st_size > 24000000:
+        raise ValueError("Clipboard metadata too large")
     record = json.loads(path.read_text(encoding="utf-8"))
     if record.get("schema") != 1 or record.get("format") != "BGRA_U8":
         raise ValueError("Unsupported clipboard format")
