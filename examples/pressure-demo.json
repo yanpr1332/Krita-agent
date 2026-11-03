@@ -1,0 +1,28 @@
+{
+  "document": {"width": 1024, "height": 1024, "name": "Pressure Comparison"},
+  "layers": [
+    {"name": "Increasing Pressure", "brush": {"size": 32, "color": "#274B6D", "pressure_enabled": true},
+     "strokes": [{"mode": "auto", "points": [
+       {"x": 100, "y": 200, "pressure": 0.10, "time_ms": 0},
+       {"x": 250, "y": 180, "pressure": 0.35, "time_ms": 90},
+       {"x": 450, "y": 210, "pressure": 0.65, "time_ms": 180},
+       {"x": 700, "y": 230, "pressure": 0.95, "time_ms": 270}
+     ]}]},
+    {"name": "Thin Thick Thin", "brush": {"size": 48, "color": "#B14A52", "pressure_enabled": true},
+     "strokes": [{"mode": "auto", "points": [
+       {"x": 100, "y": 450, "pressure": 0.08, "time_ms": 0},
+       {"x": 300, "y": 360, "pressure": 0.65, "time_ms": 80},
+       {"x": 500, "y": 480, "pressure": 0.95, "time_ms": 160},
+       {"x": 750, "y": 400, "pressure": 0.45, "time_ms": 240},
+       {"x": 900, "y": 430, "pressure": 0.08, "time_ms": 320}
+     ]}]},
+    {"name": "Constant Pressure", "brush": {"size": 22, "color": "#3A6248", "pressure_enabled": true},
+     "strokes": [{"mode": "segmented", "points": [
+       {"x": 100, "y": 700, "pressure": 0.75},
+       {"x": 300, "y": 670, "pressure": 0.75},
+       {"x": 550, "y": 730, "pressure": 0.75},
+       {"x": 900, "y": 690, "pressure": 0.75}
+     ]}]}
+  ],
+  "output": {"kra": "examples/pressure-comparison.kra", "png": "examples/pressure-comparison.png"}
+}

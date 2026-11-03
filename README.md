@@ -2,51 +2,53 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Krita Agent is a planned local drawing automation project for Windows. An independent Python controller and a custom plugin running inside Krita will work together to use Krita's native brushes and produce reproducible, editable, layered artwork.
+Local Windows controller for Krita's **native** painting engine: Python CLI and SDK, authenticated loopback Bridge running inside Krita, editable-layer jobs, pressure-aware strokes, and upstream API change tracking.
 
-> **Status: early development.** An experimental read-only environment doctor is available; the Bridge, installer, and automated drawing are not implemented. Commands, protocols, and features shown in the documentation are proposals; their feasibility must be verified against the target Krita builds.
+**Development status (2026-11-03): first-round source implemented, NOT verified against either installed Krita build.** No tests, application launch, plugin deployment, painting or KRA acceptance were performed in this development round, as requested.
 
-## Goals
+Architecture: External controller → 127.0.0.1 JSON protocol with a random credential → Krita Python Extension on the Qt GUI thread → native Krita painting engine. The ordinary Python interpreter does not import Krita.
 
-- Draw with Krita's native painting engine rather than simply importing externally generated images.
-- Describe the canvas, layers, brush, trajectories, pressure, and outputs as structured tasks.
-- Save an editable layered `.kra` document and export preview images.
-- Probe the actual capabilities of stable and Next builds and select or fall back to a verified drawing path.
-- Track upstream Krita changes and produce traceable compatibility reports and candidate tests.
-- Optionally add natural-language planning and visual feedback later; the basic drawing pipeline should not depend on a cloud model.
+## Source layout
 
-```text
-User / external program → Windows Python CLI / SDK → controlled local IPC → Krita Python Bridge → native painting engine
-```
+- src/krita_agent: CLI, client, task validation, geometry, session management, upstream tracker
+- plugin/krita_agent_bridge: Qt5/Qt6-compatible import strategy, GUI dispatch, native painting and job queue
+- scripts/install_plugin.py: explicit, backup-first plugin deployment, dry-run by default
+- examples: structured pressure and multi-layer tasks
+- tests: offline Python and synthetic Git tests (present but not executed)
+- docs: architecture, design, milestone plan, acceptance checklist and development reports
 
-A normal external Python process cannot control another Krita process simply by importing `krita`. The proposed in-process plugin provides a controlled bridge. WSL2 is not an initial dependency.
+## Getting started (instructions, not verification results)
 
-## Technical direction
+From a native Windows PowerShell in the repository:
 
-The planned stack is Windows Python 3, Krita Python / LibKis API, a Krita Python Extension, the Qt / PyQt bindings supplied by the target build, local IPC, and JSON with a schema. Git, virtual environments, and pytest are proposed for development and testing. The CLI framework, transport, and version constraints remain to be decided after prototyping. Test Qt5 builds first, then verify Qt6 compatibility.
+~~~powershell
+python -m pip install -e .
+python scripts\install_plugin.py
+# Carefully check the shared Krita resources; then explicitly:
+python scripts\install_plugin.py --apply
+~~~
 
-Pressure-sensitive drawing will first investigate Next's continuous-stroke interface and a feasible segmented fallback for stable builds. An API appearing in source or documentation does not mean it exists in the installed build; brush response to pressure also requires separate validation.
+Enable Krita Agent Bridge in Krita's Python Plugin Manager, then restart the application. The Bridge is inert during ordinary Krita launches; it requires the controller-injected credential.
 
-## Documentation
+~~~powershell
+krita-agent doctor
+krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe"
+krita-agent connect
+krita-agent capabilities
+krita-agent draw demo --wait
+krita-agent job run --file ".\examples\pressure-demo.json" --wait
+~~~
 
-- [Full design](docs/DESIGN.md): feature inventory, technical approach, draft protocol, workflows, pressure, upstream tracking, and references.
-- [Roadmap and acceptance](docs/ROADMAP.md): milestones and real drawing acceptance criteria.
-- [Architecture and safety boundaries](docs/ARCHITECTURE.md): component responsibilities, capability verification, and deployment principles.
-- [Contributing](CONTRIBUTING.md): branching, review, validation, and bilingual README maintenance.
+Launch creates a local session file with a random authentication token. Connecting does not start Krita. Outputs are confined to a selected local directory (default: Pictures/KritaAgent) and overwriting is opt-in. Stable and Next may share user plugin resources; use care before installing.
 
-## Repository layout
+## Upstream feature tracker
 
-```text
-src/krita_agent/   Independent controller (placeholder)
-plugin/            Krita Bridge (placeholder)
-tests/             Tests (placeholder)
-examples/          Examples (placeholder)
-scripts/           Installation and maintenance scripts (placeholder)
-docs/              Design and roadmap
-```
+~~~powershell
+krita-agent upstream snapshot --repo "D:\computer\Krita\Krita-upstream"
+krita-agent upstream init --repo "D:\computer\Krita\Krita-upstream"
+krita-agent upstream check --repo "D:\computer\Krita\Krita-upstream" --write-report ".cache\upstream.md"
+~~~
 
-Krita installations, upstream source clones, personal resources, caches, and bulk artwork do not belong in this repository. Run the experimental doctor from the repository root with `python -m pip install -e .` and `krita-agent doctor --krita "C:\path\to\krita.exe"`. It runs the selected executable with `--version` and reports errors or timeouts; it does not detect runtime APIs. See the [first development report](docs/REPORT-001.md) for the separate in-Krita probe and limitations.
+By default it does not fetch remote changes or change a baseline. Source changes are candidates, not evidence of working installed APIs. Explicit --fetch and --update-baseline opt in to these operations.
 
-## License
-
-Original project content is licensed under the [MIT License](LICENSE), copyright Yan Pengrui. Krita and third-party components have their own licenses; review applicable obligations before implementing and distributing the plugin.
+See [Chinese guide](README.zh-CN.md), [acceptance checklist](docs/ACCEPTANCE.md), and [development report](docs/REPORT-003.md). Original project code is MIT-licensed; Krita and third-party components retain their own licenses.
