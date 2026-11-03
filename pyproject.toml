@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "krita-agent"
+version = "0.1.0.dev0"
+description = "Local Krita automation controller"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+[project.scripts]
+krita-agent = "krita_agent.cli:main"

@@ -4,7 +4,7 @@
 
 Krita Agent is a planned local drawing automation project for Windows. An independent Python controller and a custom plugin running inside Krita will work together to use Krita's native brushes and produce reproducible, editable, layered artwork.
 
-> **Status: planning.** This repository contains documentation and directory placeholders only. There is no working CLI, plugin, installer, or automated drawing implementation yet. Commands, protocols, and features shown in the documentation are proposals; their feasibility must be verified against the target Krita builds.
+> **Status: early development.** An experimental read-only environment doctor is available; the Bridge, installer, and automated drawing are not implemented. Commands, protocols, and features shown in the documentation are proposals; their feasibility must be verified against the target Krita builds.
 
 ## Goals
 
@@ -45,8 +45,9 @@ scripts/           Installation and maintenance scripts (placeholder)
 docs/              Design and roadmap
 ```
 
-Krita installations, upstream source clones, personal resources, caches, and bulk artwork do not belong in this repository. Installation and usage instructions will be added when a runnable version exists.
+Krita installations, upstream source clones, personal resources, caches, and bulk artwork do not belong in this repository. Run the experimental doctor from the repository root with `python -m pip install -e .` and `krita-agent doctor --krita "C:\path\to\krita.exe"`. It runs the selected executable with `--version` and reports errors or timeouts; it does not detect runtime APIs. See the [first development report](docs/REPORT-001.md) for the separate in-Krita probe and limitations.
 
 ## License
 
 Original project content is licensed under the [MIT License](LICENSE), copyright Yan Pengrui. Krita and third-party components have their own licenses; review applicable obligations before implementing and distributing the plugin.
+
