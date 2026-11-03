@@ -41,6 +41,7 @@ TASK_STEPS = COMMANDS.difference((
     "job.list", "job.pause", "job.resume", "job.cancel", "job.history", "job.recover",
     "checkpoint.list", "checkpoint.inspect", "checkpoint.restore", "checkpoint.resume",
     "pixel.transaction.undo", "pixel.transaction.redo", "pixel.transaction.inspect",
+    "pixel.transaction.reconcile",
     "clipboard.save", "clipboard.load", "clipboard.inspect",
     "document.close", "document.activate", "document.crop", "selection.cut",
     "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
@@ -298,7 +299,8 @@ class KritaAgentBridge(Extension):
             return {"krita_version": app.version(), "connected": True,
                     "active_document": bool(document),
                     "document": (document.name() if document else None),
-                    "jobs": len(self.jobs), "output_dir": str(self.output_dir)}
+                    "jobs": len(self.jobs), "output_dir": str(self.output_dir),
+                    "input_dir": str(Path(os.environ.get("KRITA_AGENT_INPUT_DIR") or self.output_dir).resolve())}
         if command == "capabilities":
             return self._capabilities()
         if command.startswith("job."):

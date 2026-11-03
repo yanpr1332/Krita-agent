@@ -118,6 +118,11 @@ def apply(client, plan, confirm=False, wait=True):
         raise TaskError("Revision apply requires explicit --confirm")
     if _file_sha(plan["target_file"]) != plan["target_file_sha256"]:
         raise TaskError("Target reference was modified after plan approval")
+    status = client.request("status")
+    source_root = Path(status["input_dir"]).resolve()
+    source_file = Path(plan["target_file"]).resolve()
+    if source_file != source_root and source_root not in source_file.parents:
+        raise TaskError("Revision target must reside in the Bridge authorized input directory")
     doc = client.request("document.info")
     info = client.request("color.info")
     if [doc["width"], doc["height"]] != plan["size"]:

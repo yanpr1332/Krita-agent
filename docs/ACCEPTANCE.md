@@ -1,6 +1,6 @@
-# Runtime acceptance procedure — executed 2026-11-03
+# Round 1 repeatable acceptance procedure — executed 2026-11-03
 
-Executed against Stable, Next Qt5 and Next Qt6. See REPORT-004.md for actual results, evidence and limitations. The checklist below remains the repeatable procedure.
+Round 1 was executed against Stable, Next Qt5 and Next Qt6. Round 2 was separately accepted in REPORT-006.md and REPORT-007.md. This page preserves the Round 1 repeatable procedure. **Round 3 is source-only and must use [ROUND3-ACCEPTANCE.md](ROUND3-ACCEPTANCE.md) when the user later authorizes verification.** See REPORT-004.md for the original acceptance evidence and limits.
 
 ## 0. Safety preparation
 

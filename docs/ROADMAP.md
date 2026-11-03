@@ -1,32 +1,38 @@
-# Project roadmap
+# Krita Agent roadmap — authoritative current status (2026-11-03)
 
-**Acceptance update (2026-11-03):** REPORT-006.md and REPORT-007.md record the installed-build native, pixel and Dock acceptance. The unchecked source-stage list below is retained as historical planning, not current acceptance status.
+Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
-## Verified first-round baseline (2026-11-03)
+## Round 1 — NATIVE ACCEPTED
 
-The actual local acceptance results are documented in [REPORT-004](REPORT-004.md), not inferred from this roadmap.
+- [x] Authenticated localhost Bridge and CLI, Stable/Next Qt5/Next Qt6 connectivity.
+- [x] Native paint layers, brush presets, pressure stroke and segmented fallback.
+- [x] KRA roundtrip, PNG export, job control and security rejection.
+- [x] 18 offline tests documented as passing. See [REPORT-004](REPORT-004.md).
 
-- [x] Krita Stable / Next Qt5 / Next Qt6 environment and Bridge connectivity acceptance.
-- [x] Native canvas, layers, brushes, pressure stroke (segmented or continuous by build).
-- [x] Editable KRA save and reopen, PNG export and overwrite/fault rejection.
-- [x] Job queue pause/resume/cancel at step checkpoints; 18 offline automated tests passed.
-- [x] Read-only upstream tracking baseline and controlled source-diff fixture.
+## Round 2 — NATIVE ACCEPTED
 
-## Second-round source implementation (unverified)
+- [x] Layer tree, grouping, duplication/reorder/transforms, document control.
+- [x] Reference/image import, selection copy/paste, region previews and pixel edits.
+- [x] Local feedback primitives, task journal/interruption markers, upstream evidence analysis.
+- [x] Qt5/Qt6 Dock actual button click and pixel comparison across three installed builds.
+- [x] 34 offline tests; 54 command/protection records and 8 pixel assertion groups per build.
+- [x] See [REPORT-006](REPORT-006.md) and [REPORT-007](REPORT-007.md) for limits and real results.
 
-The branch `feat/round2-advanced-workflow` contains staged code for:
+## Round 3 — SOURCE AUTHORED, ACCEPTANCE PENDING
 
-- [ ] **R2-A** Layer metadata, groups, stable node IDs, order, transforms and documents — code authored; runtime pending.
-- [ ] **R2-B** Selection, protected pixel region replacement, reference and editable image import — code authored; runtime pending.
-- [ ] **R2-C** Spline planning, smoothing, spacing, pressure/sensor interpolation — code authored; runtime pending.
-- [ ] **R2-D** Canvas/region/layer preview, digest and optional pixel-diff feedback — code authored; runtime pending.
-- [ ] **R2-E** Persistent journal, interrupted-job inspection, manual recovery safety — code authored; runtime pending.
-- [ ] **R2-F** Upstream change classification, test suggestions, build evidence matrix — code authored; runtime pending.
-- [ ] **R2-G** Modular advanced handlers, bilingual docs, manual CI workflow — code authored; runtime pending.
-- [ ] **R2-H** Optional Krita Qt Docker status/control panel — code authored; runtime pending.
+The following features have been committed to `feat/round3-reliable-creative-automation` but **none has been run or accepted** in this development turn.
 
-Unchecked means new runtime acceptance has **not** been performed, not that source is absent.
+- [ ] **R3-A:** SHA-bound KRA snapshots, step-boundary journal, deliberate restore to fresh copy and explicit suffix resumption.
+- [ ] **R3-B:** non-destructive transparency/selection/filter masks and filter layers.
+- [ ] **R3-C:** separate reversible pixel edit journal, clipboard artifact, selection algebra and feathering.
+- [ ] **R3-D:** structured layer/stroke scene planning and additional brush metadata.
+- [ ] **R3-E:** image difference and constrained reference-guided local revision with preflight projection.
+- [ ] **R3-F:** color model/ICC introspection and backup-required explicit conversion.
+- [ ] **R3-G:** SHA API inventory, Python AST, heuristic C++ header changes, manual capability provenance.
+- [ ] **R3-H:** Dock history/error/preview and project documentation/acceptance suite.
 
-## Future
+See [REPORT-008](REPORT-008.md) for code completion and [ROUND3-ACCEPTANCE](ROUND3-ACCEPTANCE.md) for pending verification.
 
-Advanced visual planning, non-destructive partial-pixel masks, durable KRA step snapshots, Qt6 polish, better access controls, optional monitoring and agentic iteration. No production-grade behavior is claimed for these unverified features.
+## Deferred (NOT Round 3 claims)
+
+Open-ended natural-language art planning, multimodal semantic critiques, generative inpainting, arbitrary multi-layer source-to-target compositing, automatic resume without a saved KRA, full high-bit-depth pixel edit implementations, general ICC correctness guarantee, scheduled monitoring and headless native painting on unsupported platforms.

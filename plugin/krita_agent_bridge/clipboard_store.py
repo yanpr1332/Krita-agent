@@ -33,8 +33,7 @@ def _decode(data, size):
     raw = decompressor.decompress(compressed, size + 1)
     if len(raw) > size or decompressor.unconsumed_tail:
         raise ValueError("Clipboard decompression limit exceeded")
-    raw += decompressor.flush(size + 1 - len(raw))
-    if len(raw) != size or not decompressor.eof:
+    if len(raw) != size or not decompressor.eof or decompressor.unused_data:
         raise ValueError("Clipboard payload is invalid")
     return raw
 

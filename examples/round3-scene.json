@@ -1,0 +1,103 @@
+{
+  "document": {
+    "width": 1024,
+    "height": 1024,
+    "name": "Round3 Structured Drawing"
+  },
+  "layers": [
+    {
+      "name": "Sketch",
+      "brush": {
+        "size": 18,
+        "color": "#305573",
+        "pressure_enabled": true
+      },
+      "elements": [
+        {
+          "kind": "bezier",
+          "controls": [
+            [
+              90,
+              600
+            ],
+            [
+              250,
+              150
+            ],
+            [
+              760,
+              800
+            ],
+            [
+              920,
+              430
+            ]
+          ],
+          "samples": 40,
+          "spacing": 3.8,
+          "pressure": [
+            0.12,
+            0.9,
+            0.1
+          ]
+        },
+        {
+          "kind": "rectangle",
+          "rect": [
+            80,
+            80,
+            864,
+            864
+          ],
+          "fill": "None"
+        }
+      ],
+      "preview": true
+    },
+    {
+      "name": "Accent",
+      "brush": {
+        "preset": "Basic-5 Size",
+        "size": 30,
+        "color": "#aa5544",
+        "pressure_enabled": true
+      },
+      "elements": [
+        {
+          "kind": "stroke",
+          "mode": "auto",
+          "smooth": true,
+          "spacing": 3,
+          "points": [
+            {
+              "x": 120,
+              "y": 800,
+              "pressure": 0.1,
+              "time_ms": 0
+            },
+            {
+              "x": 340,
+              "y": 700,
+              "pressure": 0.8,
+              "time_ms": 100
+            },
+            {
+              "x": 650,
+              "y": 835,
+              "pressure": 0.7,
+              "time_ms": 200
+            },
+            {
+              "x": 900,
+              "y": 760,
+              "pressure": 0.1,
+              "time_ms": 300
+            }
+          ]
+        }
+      ],
+      "preview": true
+    }
+  ],
+  "checkpoint": true
+}

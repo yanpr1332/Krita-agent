@@ -1,4 +1,4 @@
-# Round 2 API and CLI reference (source implemented; runtime unverified)
+# Round 2 API and CLI reference (accepted on three named Krita builds, 2026-11-03)
 
 **Acceptance update:** REPORT-007.md supersedes earlier unverified-status notes. Selection transfer uses a session-local RGBA U8 buffer, bounded to 4 million pixels. Paste composites source-over within the canvas; copy/cut must precede paste in the same Bridge session. Full-canvas-coordinate previews preserve alpha; layer previews require RGBA U8. Direct pixel edits are not promised as native undo transactions.
 
@@ -109,4 +109,4 @@ Only saved symbol presence is imported. Neither this report nor source changes e
 
 ## Optional Docker
 
-Set `--dock` at launch to register the Qt Krita Agent status Docker. It provides status and checkpoint pause/resume/cancel for the active job. Qt5 and Qt6 compatibility remains unverified for the new Dock.
+Set `--dock` at launch to register the Qt Krita Agent status Docker. It provides status and checkpoint pause/resume/cancel for the active job. **Round 2's actual Qt5/Qt6 UI-click acceptance is documented in REPORT-007.md.** The enhanced Round 3 Docker history/error/preview display remains unverified (see REPORT-008.md).

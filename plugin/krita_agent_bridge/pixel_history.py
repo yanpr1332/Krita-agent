@@ -17,7 +17,7 @@ except ImportError:
 
 COMMANDS = frozenset(("pixel.transaction.fill", "pixel.transaction.clear",
                       "pixel.transaction.undo", "pixel.transaction.redo",
-                      "pixel.transaction.inspect", "pixel.transaction.patch"))
+                      "pixel.transaction.inspect", "pixel.transaction.patch", "pixel.transaction.reconcile"))
 MAX_PIXELS = 500000
 
 
@@ -86,6 +86,23 @@ def execute(bridge, command, p):
         record, _ = _read(bridge, p.get("id"))
         return {key: record[key] for key in ("id", "state", "rect", "node_id", "document",
                                              "before_sha256", "after_sha256")}
+    if command == "pixel.transaction.reconcile":
+        if p.get("confirm") is not True or bridge.active:
+            raise ValueError("Reconciliation requires confirm=true and no active jobs")
+        record, path = _read(bridge, p.get("id"))
+        if record["state"] != "prepared":
+            raise ValueError("Only an interrupted prepared transaction can be reconciled")
+        doc, node = _target(bridge, record)
+        x, y, w, h = record["rect"]
+        digest = _sha(bytes(node.pixelData(x, y, w, h)))
+        if digest == record["after_sha256"]:
+            record["state"] = "applied"
+        elif digest == record["before_sha256"]:
+            record["state"] = "undone"
+        else:
+            raise ValueError("Neither saved pixel digest matches current layer; refuse")
+        _atomic(path, record)
+        return {"id": record["id"], "state": record["state"], "pixels_modified": False}
     if command in ("pixel.transaction.undo", "pixel.transaction.redo"):
         if bridge.active:
             raise RuntimeError("Cannot restore pixels during a drawing job")
