@@ -47,7 +47,7 @@ def execute(bridge, command, p):
                 raise ValueError("No unique matching brush preset")
             resource = matching[0]
             return {"name": resource.name(), "filename": resource.filename(),
-                    "valid": resource.valid(), "notice": "Pressure mapping depends on preset settings"}
+                    "valid": bool(resource.name() and resource.filename()), "notice": "Pressure mapping depends on preset settings"}
         query = p.get("query", "")
         if query:
             query = word(query, "query", 120).casefold()
