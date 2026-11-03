@@ -378,7 +378,7 @@ class KritaAgentBridge(Extension):
             b = QPointF(_number(p.get("x2"), "x2"), _number(p.get("y2"), "y2"))
             first = _number(p.get("pressure1", 1), "pressure1", 0, 1)
             last = _number(p.get("pressure2", 1), "pressure2", 0, 1)
-            node.paintLine(a, b, first, last)
+            node.paintLine(a.toPoint(), b.toPoint(), first, last)
             return {"mode": "line", "warning": "Visual pressure response depends on active brush preset"}
         if command == "draw.stroke":
             node = self._node()
@@ -410,12 +410,12 @@ class KritaAgentBridge(Extension):
                         "warning": "Brush must have appropriate pressure dynamics; visual result unverified"}
             if len(locations) == 1:
                 pressure = _number(raw[0].get("pressure", 1), "pressure", 0, 1)
-                node.paintLine(locations[0], locations[0], pressure, pressure)
+                node.paintLine(locations[0].toPoint(), locations[0].toPoint(), pressure, pressure)
             else:
                 for i in range(1, len(locations)):
                     p0 = _number(raw[i-1].get("pressure", 1), "pressure", 0, 1)
                     p1 = _number(raw[i].get("pressure", 1), "pressure", 0, 1)
-                    node.paintLine(locations[i-1], locations[i], p0, p1)
+                    node.paintLine(locations[i-1].toPoint(), locations[i].toPoint(), p0, p1)
             return {"mode": "segmented", "points": len(locations),
                     "warning": "Separate paintLine calls may have seams and distinct undo steps"}
         if command == "draw.shape":
@@ -457,8 +457,13 @@ class KritaAgentBridge(Extension):
             target = self._safe_path(p.get("path"), expected, p.get("overwrite", False))
             document = self._doc()
             document.waitForDone()
-            succeeded = (document.saveAs(target) if expected == ".kra"
-                         else document.exportImage(target, InfoObject()))
+            previous_batchmode = document.batchmode()
+            document.setBatchmode(True)
+            try:
+                succeeded = (document.saveAs(target) if expected == ".kra"
+                             else document.exportImage(target, InfoObject()))
+            finally:
+                document.setBatchmode(previous_batchmode)
             if not succeeded:
                 raise RuntimeError("Krita refused to write " + target)
             return {"path": target, "format": expected[1:]}

@@ -4,7 +4,7 @@
 
 Krita Agent 是 Windows 本地 Krita 原生绘画自动化控制器。包含 Python CLI/SDK、Krita 进程内 Bridge、回环 IPC、图层和笔刷命令、异步绘图任务、基础上游功能追踪。
 
-**2026-11-03 第一轮开发状态：代码已写入，尚未执行运行验证。** 不等于已确认 Krita Stable/Next 兼容、插件可加载或成功生成图片。按用户要求，本轮没有执行测试、部署插件或打开 Krita。
+**2026-11-03 状态：本机 Stable、Next Qt5 和 Next Qt6 运行验收已完成，18 项自动测试通过。** 已验证原生绘画、压感预设、KRA 重开、PNG 自动导出及异常与任务控制；范围和限制见 [验收报告](docs/REPORT-004.md)。
 
 ## 架构
 
@@ -13,9 +13,9 @@ Krita Agent 是 Windows 本地 Krita 原生绘画自动化控制器。包含 Pyt
 - Controller：src/krita_agent/cli.py、client.py、session.py、protocol.py、geometry.py
 - Bridge：plugin/krita_agent_bridge；支持 Qt5/Qt6 的导入分支，具体兼容性待测
 - Upstream：src/krita_agent/upstream.py；源代码差异候选、报告、基线
-- 纯 Python 测试：tests/；真实 Krita 验收尚未开始
+- 纯 Python 测试：tests/；真实 Krita 验收结果见 REPORT-004
 
-## 安装与首次启用（尚未执行）
+## 安装与首次启用
 
 先在 Windows PowerShell 进入仓库，然后使用原生 Windows Python：
 
@@ -71,10 +71,10 @@ init 创建本地基线；check 默认只读已有本地 Git，显式 --fetch �
 
 ## 首轮验收状态
 
-- 源码、JSON 协议、插画演示任务、任务控制、压感适配器、输出保护、上游报告：已编写，待验收。
-- 自动测试：已编写，未运行。
-- Bridge 安装/启用、真实 Krita 运行、压感笔触视觉效果、保存并重新打开 KRA：未验证。
-- 下一步手动验收参阅 docs/ACCEPTANCE.md 和 docs/REPORT-003.md。
+- 源码、JSON 协议、插画演示任务、任务控制、压感适配器、输出保护、上游报告：已完成本机功能验收，范围见 REPORT-004。
+- 自动测试：18 项通过。
+- Bridge 安装/启用、真实 Krita 运行、压感预设及 KRA 重开：三个本机构建已验证。
+- 复验步骤及结果参阅 docs/ACCEPTANCE.md 和 docs/REPORT-004.md。
 
 ## 许可
 

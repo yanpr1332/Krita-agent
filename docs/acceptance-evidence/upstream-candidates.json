@@ -1,0 +1,38 @@
+{
+  "repository": "C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\work\\upstream-fixture",
+  "baseline": "66875f06e2874b28daa8b449c4ff16569e5c2ab5",
+  "target": "efeeeb5fef71dca75143dae58578299b2a934265",
+  "changed_files": [
+    "libs/libkis/Node.h"
+  ],
+  "commits": [
+    "efeeeb5 feature"
+  ],
+  "candidates": [
+    {
+      "file": "libs/libkis/Node.h",
+      "kind": "signature_or_implementation_changed",
+      "symbol": "paintLine",
+      "line": "void paintLine(int x, int y);",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/efeeeb5fef71dca75143dae58578299b2a934265/libs/libkis/Node.h",
+      "before": "void paintLine(int x);",
+      "priority": "high",
+      "evidence": "source_seen",
+      "runtime": "not_probed",
+      "suggested_test": "Check API presence/signature on Stable and Next, then run isolated behavior test"
+    },
+    {
+      "file": "libs/libkis/Node.h",
+      "kind": "added",
+      "symbol": "paintPolylineStroke",
+      "line": "void paintPolylineStroke(int count);",
+      "source_url": "https://invent.kde.org/graphics/krita/-/blob/efeeeb5fef71dca75143dae58578299b2a934265/libs/libkis/Node.h",
+      "priority": "high",
+      "evidence": "source_seen",
+      "runtime": "not_probed",
+      "suggested_test": "Check API presence/signature on Stable and Next, then run isolated behavior test"
+    }
+  ],
+  "classification": "heuristic",
+  "caveat": "Source sightings and diff heuristics are not proof of runtime support."
+}

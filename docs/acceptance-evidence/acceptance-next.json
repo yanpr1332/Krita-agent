@@ -1,0 +1,124 @@
+{
+  "capabilities": {
+    "krita_version": "6.1.0-prealpha (git 2687e5d)",
+    "qt_version": "6.11.0",
+    "qt_binding": "PyQt6",
+    "python": "3.13.5",
+    "symbols": {
+      "Node.paintLine": true,
+      "Node.paintPolylineStroke": true,
+      "StrokePoint": true,
+      "Node.paintPath": true,
+      "Node.paintEllipse": true,
+      "Node.paintPolygon": true,
+      "Node.paintRectangle": true,
+      "View.brushPosition": true,
+      "View.setCurrentBrushPreset": true
+    },
+    "evidence": "present_in_build only; drawing untested"
+  },
+  "drawing": {
+    "id": "26a11347d54e496788536963a2e75c94",
+    "state": "completed",
+    "total": 12,
+    "done": 12,
+    "error": null,
+    "last_result": {
+      "path": "C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\next-final\\examples\\pressure-comparison.png",
+      "format": "png"
+    },
+    "cancel_requested": false
+  },
+  "reopen": {
+    "opened": "C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\next-final\\examples\\pressure-comparison.kra"
+  },
+  "layers": [
+    {
+      "name": "Background",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Increasing Pressure",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Thin Thick Thin",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Constant Pressure",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    }
+  ],
+  "denials": {
+    "overwrite": "Refusing to overwrite existing file: C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\next-final\\examples\\pressure-comparison.kra",
+    "outside": "Path traversal or invalid extension",
+    "unknown": "Unknown or denied command",
+    "missing_layer": "Expected exactly one paint layer named does-not-exist",
+    "invalid_stroke": "points must be a list of 1 to 2048 samples"
+  },
+  "wrong_token": "Unauthorized",
+  "pause": {
+    "id": "24dd9fe9adf943ab93b638dcba11d6cd",
+    "state": "paused",
+    "total": 400,
+    "done": 0,
+    "error": null,
+    "last_result": null,
+    "cancel_requested": false
+  },
+  "resume": {
+    "id": "24dd9fe9adf943ab93b638dcba11d6cd",
+    "state": "running",
+    "total": 400,
+    "done": 1,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": false
+  },
+  "cancel_request": {
+    "id": "24dd9fe9adf943ab93b638dcba11d6cd",
+    "state": "running",
+    "total": 400,
+    "done": 1,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": true
+  },
+  "cancel": {
+    "id": "24dd9fe9adf943ab93b638dcba11d6cd",
+    "state": "cancelled",
+    "total": 400,
+    "done": 2,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": true
+  }
+}

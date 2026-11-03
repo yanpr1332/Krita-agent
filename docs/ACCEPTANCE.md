@@ -1,6 +1,6 @@
-# First-round acceptance procedure — NOT EXECUTED
+# Runtime acceptance procedure — executed 2026-11-03
 
-The user explicitly requested implementation and a local Git commit without verification. Every item below is pending; no successful Krita run is claimed.
+Executed against Stable, Next Qt5 and Next Qt6. See REPORT-004.md for actual results, evidence and limitations. The checklist below remains the repeatable procedure.
 
 ## 0. Safety preparation
 

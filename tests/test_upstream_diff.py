@@ -38,3 +38,23 @@ class DiffTests(unittest.TestCase):
         matrix = capability_matrix({"Next": {"StrokePoint": True}})
         self.assertEqual(matrix["Next"]["StrokePoint"]["state"], "present_in_build")
         self.assertFalse(matrix["Next"]["StrokePoint"]["tested_working"])
+
+
+class FetchFailureTests(unittest.TestCase):
+    def test_failed_fetch_preserves_baseline_even_with_update(self):
+        from krita_agent.upstream import initialize, check
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            def git(*args):
+                return subprocess.run(["git", "-C", str(root), *args], check=True,
+                                      capture_output=True, text=True).stdout.strip()
+            git("init")
+            git("-c", "user.name=Test", "-c", "user.email=test@example.invalid",
+                "commit", "--allow-empty", "-m", "baseline")
+            git("remote", "add", "origin", str(root / "missing-remote.git"))
+            baseline = root / "baseline.json"
+            initialize(root, baseline)
+            before = baseline.read_bytes()
+            with self.assertRaises(subprocess.CalledProcessError):
+                check(root, baseline, fetch=True, update=True)
+            self.assertEqual(baseline.read_bytes(), before)

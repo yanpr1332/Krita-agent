@@ -4,7 +4,7 @@
 
 Local Windows controller for Krita's **native** painting engine: Python CLI and SDK, authenticated loopback Bridge running inside Krita, editable-layer jobs, pressure-aware strokes, and upstream API change tracking.
 
-**Development status (2026-11-03): first-round source implemented, NOT verified against either installed Krita build.** No tests, application launch, plugin deployment, painting or KRA acceptance were performed in this development round, as requested.
+**Development status (2026-11-03): runtime acceptance completed on installed Stable, Next Qt5 and Next Qt6; 18 automated tests pass.** Native drawing, pressure presets, KRA roundtrip, unattended PNG export and fault/job controls were exercised. See [acceptance results](docs/REPORT-004.md) for scope and known limits.
 
 Architecture: External controller → 127.0.0.1 JSON protocol with a random credential → Krita Python Extension on the Qt GUI thread → native Krita painting engine. The ordinary Python interpreter does not import Krita.
 
@@ -14,7 +14,7 @@ Architecture: External controller → 127.0.0.1 JSON protocol with a random cred
 - plugin/krita_agent_bridge: Qt5/Qt6-compatible import strategy, GUI dispatch, native painting and job queue
 - scripts/install_plugin.py: explicit, backup-first plugin deployment, dry-run by default
 - examples: structured pressure and multi-layer tasks
-- tests: offline Python and synthetic Git tests (present but not executed)
+- tests: offline Python and synthetic Git tests (18 passing tests)
 - docs: architecture, design, milestone plan, acceptance checklist and development reports
 
 ## Getting started (instructions, not verification results)
@@ -51,4 +51,4 @@ krita-agent upstream check --repo "D:\computer\Krita\Krita-upstream" --write-rep
 
 By default it does not fetch remote changes or change a baseline. Source changes are candidates, not evidence of working installed APIs. Explicit --fetch and --update-baseline opt in to these operations.
 
-See [Chinese guide](README.zh-CN.md), [acceptance checklist](docs/ACCEPTANCE.md), and [development report](docs/REPORT-003.md). Original project code is MIT-licensed; Krita and third-party components retain their own licenses.
+See [Chinese guide](README.zh-CN.md), [acceptance checklist](docs/ACCEPTANCE.md), and [development report](docs/REPORT-004.md). Original project code is MIT-licensed; Krita and third-party components retain their own licenses.
