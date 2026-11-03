@@ -1,15 +1,17 @@
-# 开发路线与验收
+# Roadmap and acceptance
 
-所有项目均待开发，顺序可随实测调整。
+All items remain to be developed; ordering may change as experiments provide evidence.
 
-- [ ] P0-A：探测稳定版和 Next 的版本、插件环境与实际可用 API，建立能力矩阵。
-- [ ] P0-B：实现本地 CLI 与插件的最小通信，报告结果和错误，不冻结界面。
-- [ ] P0-C：创建画布、图层和基本笔迹，保存可重新打开的分层 KRA。
-- [ ] P0-D：验证连续压力轨迹与笔刷压力响应，比较稳定版降级和 Next 的效果及撤销行为。
-- [ ] P0-E：补齐安装、日志、测试和可复现的基础任务。
-- [ ] P1：结构化绘画任务、笔刷配置、参考图、检查点、暂停与恢复。
-- [ ] P1-U：追踪上游 Git 变化，输出可追溯报告和能力矩阵，区分源码出现与实际可用。
-- [ ] P2：可插拔自然语言规划、视觉反馈和局部修订。
-- [ ] P2-U：生成候选兼容测试，隔离运行；定期检测须由用户启用。
+- [ ] **P0-A — Environment discovery:** report the actual stable and Next build versions, plugin environment, and available APIs; establish a capability matrix.
+- [ ] **P0-B — Minimal bridge:** exchange simple commands and success / failure results between CLI and plugin without freezing the GUI.
+- [ ] **P0-C — Basic drawing:** create a canvas, layers, and basic strokes; save and reopen a layered KRA document.
+- [ ] **P0-D — Pressure:** validate continuous pressure input and brush response separately; compare Next and a stable-build fallback, including undo behavior.
+- [ ] **P0-E — Delivery:** provide installation, logging, tests, and a reproducible basic task.
+- [ ] **P1 — Drawing workflow:** structured drawing tasks, brush settings, reference images, checkpoints, pause and resume.
+- [ ] **P1-U — Upstream tracking:** incremental Git changes, traceable reports, and a capability matrix distinguishing source presence from runtime behavior.
+- [ ] **P2 — Intelligent iteration:** optional natural-language planning, visual feedback, and local revisions.
+- [ ] **P2-U — Enhanced tracking:** generate candidate compatibility tests and run them in isolation; scheduled checks are opt-in.
 
-首轮真实验收：创建 2048×2048 画布及至少三个图层；使用响应压力的原生笔刷绘制等压、渐增压和细→粗→细曲线，检查线宽、纹理、接缝、撤销和性能；保存 PNG 与 KRA，重新打开确认图层，并验证不会覆盖用户作品。分别记录稳定版和 Next 的实际构建及结果。
+## First real drawing acceptance
+
+Create a 2048 × 2048 canvas with at least three layers. Select native brushes configured to respond to pressure and draw constant-pressure, increasing-pressure, and thin–thick–thin curves. Test pressure-to-size and pressure-to-opacity separately. Record the actual stable and Next builds and compare line width, seams, antialiasing, texture, performance, and undo behavior. Save PNG and KRA, reopen the KRA to verify layers, and repeat the task to check that user artwork is not overwritten and uncontrolled files are not left behind.

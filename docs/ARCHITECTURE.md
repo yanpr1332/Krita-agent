@@ -1,10 +1,12 @@
-# 架构与技术栈
+# Architecture and safety boundaries
 
-- 控制器：Windows Python CLI / SDK；协议和依赖选型待验证。
-- Bridge：Krita 内置 Python 插件，使用 Krita API 和目标构建对应的 Qt / Python 绑定。先验证 Qt5，后续测试 Qt6。
-- 通信：本地 IPC，具体传输方式待原型验证；仅允许预定义指令，任务携带 ID、超时及错误信息。
-- 绘制：原生笔刷、可编辑图层与结构化笔迹。Krita GUI 操作必须在合适线程执行。
-- 上游追踪：以 KDE 官方 Git 仓库为基准，记录提交与证据，区分源码可见、运行时存在和真实测试通过；不自动更新 Krita 或执行上游代码。
-- 测试：Python 单元测试、协议集成测试，以及隔离文档中的真实 Krita 验收。具体工具及版本待原型选定。
+All components below are planned and require prototyping and runtime verification.
 
-文件操作限制在授权范围，覆盖作品前须显式允许或备份；不接受任意 Python 或 shell 执行。暂停和恢复以笔画或任务步骤为检查点，不保证中断已执行的笔画。稳定版与 Next 可能共享配置及插件资源，部署前需备份并检查兼容性。
+- **Controller:** Windows Python CLI / SDK for task validation, scheduling, drawing plans, capability routing, and upstream analysis. The CLI framework and dependency versions are undecided.
+- **Bridge:** a custom Krita Python Extension in the application process. Use the Krita API and the Qt / Python bindings supplied by the target build. Validate Qt5 first and test Qt6 later.
+- **Transport:** controlled local IPC; select the transport after prototyping. Accept predefined commands only, with task IDs, timeouts, and structured errors. Do not execute arbitrary Python or shell input.
+- **Drawing:** native brushes, editable layers, and structured stroke samples. Execute Krita GUI operations in the appropriate Qt / GUI context.
+- **Upstream tracking:** use the official KDE Git repository as the baseline; retain commit-level evidence and distinguish source visibility, runtime availability, and successful real-world tests. Do not automatically upgrade Krita or execute upstream code.
+- **Testing:** Python unit tests, protocol integration tests, and real Krita acceptance tests using isolated documents. Select concrete tools and versions during prototyping.
+
+Restrict file operations to authorized locations and require explicit permission or backups before overwriting artwork. Pause and resume operate at stroke or task-step checkpoints; interrupting a stroke already in progress is not guaranteed. Stable and Next builds may share settings, plugins, and resources, so back up and check compatibility before deployment.

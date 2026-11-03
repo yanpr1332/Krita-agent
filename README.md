@@ -1,50 +1,52 @@
 # Krita Agent
 
-Krita Agent 是规划中的 Windows 本地绘画自动化项目。它计划使用独立 Python 控制器和 Krita 内的自研插件，调用 Krita 原生笔刷，生成可复现、可编辑的分层作品。
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-> **状态：规划阶段。** 当前仓库只有文档和目录占位，尚无可运行的 CLI、插件、安装程序或自动绘画功能。文档中的命令、协议和功能均为设计草案，具体接口须经目标 Krita 构建验证。
+Krita Agent is a planned local drawing automation project for Windows. An independent Python controller and a custom plugin running inside Krita will work together to use Krita's native brushes and produce reproducible, editable, layered artwork.
 
-## 项目目标
+> **Status: planning.** This repository contains documentation and directory placeholders only. There is no working CLI, plugin, installer, or automated drawing implementation yet. Commands, protocols, and features shown in the documentation are proposals; their feasibility must be verified against the target Krita builds.
 
-- 通过 Krita 原生绘画引擎绘制，而非仅导入外部生成的图片。
-- 用结构化任务描述画布、图层、笔刷、轨迹、压力和输出。
-- 保存可编辑的分层 `.kra`，并导出预览图。
-- 探测稳定版与 Next 的实际能力，按验证结果选择或降级绘制路径。
-- 追踪 Krita 上游接口变化，形成可追溯的兼容报告与候选测试。
-- 后续可选接入自然语言规划与视觉反馈；基础链路不依赖云模型。
+## Goals
 
-```text
-用户 / 外部程序 → Windows Python CLI / SDK → 本地受控通信 → Krita Python Bridge → 原生绘画引擎
-```
-
-普通外部 Python 进程不能直接通过 `import krita` 控制另一个 Krita 进程，因此计划以应用内插件提供受控桥接。WSL2 并非初期依赖。
-
-## 技术方向
-
-Windows Python 3、Krita Python / LibKis API、Krita Python Extension、目标构建自带的 Qt / PyQt、本地 IPC、JSON 与 Schema。Git、虚拟环境和 pytest 拟用于开发与测试；CLI 框架、通信实现及版本约束尚待原型确定。优先测试 Qt5 构建，后续验证 Qt6。
-
-压感绘制优先研究 Next 的连续笔触接口，并测试稳定版可行的分段降级路径。接口出现在源码或文档中并不代表当前安装的构建支持；笔刷是否响应压力也需要独立验证。
-
-## 文档导航
-
-- [完整设计方案](docs/DESIGN.md)：功能清单、技术方案、示例协议、工作流、压感、上游追踪与参考资料。
-- [开发路线与验收](docs/ROADMAP.md)：阶段任务及真实绘画验收。
-- [架构与安全边界](docs/ARCHITECTURE.md)：组件职责、能力验证和部署原则。
-- [贡献指南](CONTRIBUTING.md)：分支、评审与验证约定。
-
-## 仓库结构
+- Draw with Krita's native painting engine rather than simply importing externally generated images.
+- Describe the canvas, layers, brush, trajectories, pressure, and outputs as structured tasks.
+- Save an editable layered `.kra` document and export preview images.
+- Probe the actual capabilities of stable and Next builds and select or fall back to a verified drawing path.
+- Track upstream Krita changes and produce traceable compatibility reports and candidate tests.
+- Optionally add natural-language planning and visual feedback later; the basic drawing pipeline should not depend on a cloud model.
 
 ```text
-src/krita_agent/   独立控制器（占位）
-plugin/            Krita Bridge（占位）
-tests/             测试（占位）
-examples/          示例（占位）
-scripts/           安装和维护脚本（占位）
-docs/              设计与路线
+User / external program → Windows Python CLI / SDK → controlled local IPC → Krita Python Bridge → native painting engine
 ```
 
-Krita 安装文件、官方源码克隆、个人资源、缓存及批量作品不属于本仓库。安装和使用说明将在可运行版本实现后补充。
+A normal external Python process cannot control another Krita process simply by importing `krita`. The proposed in-process plugin provides a controlled bridge. WSL2 is not an initial dependency.
 
-## 许可证
+## Technical direction
 
-原创内容采用 [MIT License](LICENSE)，版权所有 Yan Pengrui。Krita 和第三方组件适用各自许可证；插件实际实现和分发前需检查相关许可义务。
+The planned stack is Windows Python 3, Krita Python / LibKis API, a Krita Python Extension, the Qt / PyQt bindings supplied by the target build, local IPC, and JSON with a schema. Git, virtual environments, and pytest are proposed for development and testing. The CLI framework, transport, and version constraints remain to be decided after prototyping. Test Qt5 builds first, then verify Qt6 compatibility.
+
+Pressure-sensitive drawing will first investigate Next's continuous-stroke interface and a feasible segmented fallback for stable builds. An API appearing in source or documentation does not mean it exists in the installed build; brush response to pressure also requires separate validation.
+
+## Documentation
+
+- [Full design](docs/DESIGN.md): feature inventory, technical approach, draft protocol, workflows, pressure, upstream tracking, and references.
+- [Roadmap and acceptance](docs/ROADMAP.md): milestones and real drawing acceptance criteria.
+- [Architecture and safety boundaries](docs/ARCHITECTURE.md): component responsibilities, capability verification, and deployment principles.
+- [Contributing](CONTRIBUTING.md): branching, review, validation, and bilingual README maintenance.
+
+## Repository layout
+
+```text
+src/krita_agent/   Independent controller (placeholder)
+plugin/            Krita Bridge (placeholder)
+tests/             Tests (placeholder)
+examples/          Examples (placeholder)
+scripts/           Installation and maintenance scripts (placeholder)
+docs/              Design and roadmap
+```
+
+Krita installations, upstream source clones, personal resources, caches, and bulk artwork do not belong in this repository. Installation and usage instructions will be added when a runnable version exists.
+
+## License
+
+Original project content is licensed under the [MIT License](LICENSE), copyright Yan Pengrui. Krita and third-party components have their own licenses; review applicable obligations before implementing and distributing the plugin.
