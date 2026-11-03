@@ -1,0 +1,32 @@
+{
+  "pause": {
+    "id": "577672c060c546e78b0cd772fef3e3a2",
+    "state": "paused",
+    "total": 400,
+    "done": 360,
+    "error": null,
+    "last_result": {
+      "name": "Dock Qt6",
+      "width": 128,
+      "height": 128,
+      "active_layer": "Background"
+    },
+    "cancel_requested": false
+  },
+  "resume_observed": "running 344/400",
+  "cancel": {
+    "id": "577672c060c546e78b0cd772fef3e3a2",
+    "state": "cancelled",
+    "total": 400,
+    "done": 360,
+    "error": null,
+    "last_result": {
+      "name": "Dock Qt6",
+      "width": 128,
+      "height": 128,
+      "active_layer": "Background"
+    },
+    "cancel_requested": true
+  },
+  "method": "actual sky UI button clicks and independent Bridge status"
+}

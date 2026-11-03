@@ -37,7 +37,8 @@ def load_session(path=None):
     return value
 
 
-def launch(krita, port=DEFAULT_PORT, output_dir=None, session_file=None):
+def launch(krita, port=DEFAULT_PORT, output_dir=None, session_file=None,
+           input_dir=None, dock=False):
     executable = Path(krita).expanduser().resolve()
     if not executable.is_file() or executable.suffix.lower() != ".exe":
         raise ValueError("Specify a local Krita .exe")
@@ -45,17 +46,23 @@ def launch(krita, port=DEFAULT_PORT, output_dir=None, session_file=None):
         raise ValueError("Invalid port")
     output = Path(output_dir or (Path.home() / "Pictures" / "KritaAgent")).expanduser().resolve()
     output.mkdir(parents=True, exist_ok=True)
+    source = Path(input_dir).expanduser().resolve() if input_dir else output
+    if not source.is_dir():
+        raise ValueError("Input directory does not exist: " + str(source))
     token = secrets.token_urlsafe(36)
     environment = os.environ.copy()
     environment.update(KRITA_AGENT_TOKEN=token, KRITA_AGENT_PORT=str(port),
-                       KRITA_AGENT_OUTPUT_DIR=str(output))
+                       KRITA_AGENT_OUTPUT_DIR=str(output),
+                       KRITA_AGENT_INPUT_DIR=str(source),
+                       KRITA_AGENT_DOCK="1" if dock else "0")
     # Bridge will start only if Krita's installed plugin is enabled.
     process = subprocess.Popen([str(executable)], cwd=str(executable.parent),
                                env=environment, close_fds=True)
     data = {"pid": process.pid, "port": port, "token": token,
             "krita": str(executable), "output_dir": str(output),
+            "input_dir": str(source), "dock": dock,
             "started_at": time.time()}
     location = save_session(data, session_file)
     return {"pid": process.pid, "port": port, "session": location,
-            "output_dir": str(output),
+            "output_dir": str(output), "input_dir": str(source), "dock": dock,
             "note": "Launched; Bridge availability is not established. Enable plugin then test status."}

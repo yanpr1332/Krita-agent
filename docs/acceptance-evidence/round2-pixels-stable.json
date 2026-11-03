@@ -1,0 +1,61 @@
+[
+  {
+    "check": "import_rgba",
+    "ok": true,
+    "detail": "RGBA channels and alpha match within 2/255"
+  },
+  {
+    "check": "selection_pixels",
+    "ok": true,
+    "detail": "copy/paste destination and cut source verified"
+  },
+  {
+    "check": "transform_pixels",
+    "ok": true,
+    "detail": {
+      "move": [
+        15,
+        27,
+        35,
+        37
+      ],
+      "scale": [
+        15,
+        27,
+        55,
+        47
+      ],
+      "rotate": [
+        25,
+        17,
+        45,
+        57
+      ]
+    }
+  },
+  {
+    "check": "undo_redo_pixels",
+    "ok": true,
+    "detail": "native stroke undo blank and redo byte-equivalent RGBA"
+  },
+  {
+    "check": "properties_clear",
+    "ok": true,
+    "detail": "visibility, opacity, restored pixels and clear"
+  },
+  {
+    "check": "previews_roundtrip",
+    "ok": true,
+    "detail": "region/canvas/layer previews, duplicate/delete, crop and KRA reopen match all RGBA pixels"
+  },
+  {
+    "check": "alpha_paste_blend",
+    "ok": true,
+    "detail": "semi-transparent selection source-over and multiply blending verified"
+  },
+  {
+    "check": "references_order",
+    "ok": true,
+    "detail": "linked file pixels and layer stacking order verified"
+  }
+]

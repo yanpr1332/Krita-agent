@@ -1,0 +1,26 @@
+{
+  "pause": {
+    "state": "paused",
+    "done": 366,
+    "total": 400
+  },
+  "resume": {
+    "state": "completed",
+    "done": 400
+  },
+  "cancel": {
+    "id": "a51a3c87ff3e4e318f5f60949755de86",
+    "state": "cancelled",
+    "total": 400,
+    "done": 1,
+    "error": null,
+    "last_result": {
+      "name": "Properties",
+      "width": 128,
+      "height": 128,
+      "active_layer": "Pixels"
+    },
+    "cancel_requested": true
+  },
+  "method": "actual sky UI button clicks, independent Bridge status verification"
+}

@@ -87,6 +87,7 @@ def check(repo, baseline_file, fetch=False, update=False):
     saved = json.loads(Path(baseline_file).read_text(encoding="utf-8"))
     target_ref = ("origin/" + saved["branch"]) if fetch and saved.get("branch") else "HEAD"
     result = compare(root, saved["commit"], target_ref)
+    result["checked_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
     result["baseline_file"] = str(baseline_file)
     if update:
         if result["baseline"] != result["target"]:
@@ -115,6 +116,18 @@ def markdown_report(result):
                   "- Priority: " + item["priority"],
                   "- Source: " + item["source_url"],
                   "- Line: " + item["line"], "- Suggested: " + item["suggested_test"], ""]
+    if result.get("impact"):
+        lines += ["", "## Impact candidates", ""]
+        for item in result["impact"]:
+            lines += ["### " + item["symbol"], "", "- Areas: " + ", ".join(item["areas"]),
+                      "- Priority: " + item["priority"], "- Evidence: source_seen",
+                      "- Candidate tests: " + "; ".join(item["suggested_tests"]), ""]
+    if result.get("capabilities_by_build"):
+        lines += ["", "## Build symbol matrix (not behavior verification)", ""]
+        for build, symbols in result["capabilities_by_build"].items():
+            lines += ["### " + build, ""]
+            for name, evidence in symbols.items():
+                lines += ["- " + name + ": " + evidence["state"]]
     lines += ["## Changed paths", ""] + ["- " + p for p in result.get("changed_files", [])]
     lines += ["", "## Relevant commits", ""] + ["- " + p for p in result.get("commits", [])]
     return "\n".join(lines) + "\n"

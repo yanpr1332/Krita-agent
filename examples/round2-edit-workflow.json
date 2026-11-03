@@ -1,0 +1,130 @@
+{
+  "steps": [
+    {
+      "command": "layer.create",
+      "parameters": {
+        "name": "Sketch-R2"
+      }
+    },
+    {
+      "command": "brush.configure",
+      "parameters": {
+        "preset": "Basic-5 Size",
+        "size": 20,
+        "color": "#365070",
+        "pressure_enabled": true
+      }
+    },
+    {
+      "command": "draw.stroke",
+      "parameters": {
+        "mode": "auto",
+        "smooth": true,
+        "spline": true,
+        "spacing": 5,
+        "points": [
+          {
+            "x": 70,
+            "y": 220,
+            "pressure": 0.1,
+            "time_ms": 0
+          },
+          {
+            "x": 230,
+            "y": 130,
+            "pressure": 0.6,
+            "time_ms": 70
+          },
+          {
+            "x": 390,
+            "y": 245,
+            "pressure": 1,
+            "time_ms": 140
+          },
+          {
+            "x": 530,
+            "y": 160,
+            "pressure": 0.3,
+            "time_ms": 210
+          },
+          {
+            "x": 720,
+            "y": 240,
+            "pressure": 0.1,
+            "time_ms": 280
+          }
+        ]
+      }
+    },
+    {
+      "command": "layer.create",
+      "parameters": {
+        "name": "Ink-R2"
+      }
+    },
+    {
+      "command": "brush.configure",
+      "parameters": {
+        "preset": "Basic-2 Opacity",
+        "size": 24,
+        "color": "#aa6142",
+        "pressure_enabled": true
+      }
+    },
+    {
+      "command": "draw.stroke",
+      "parameters": {
+        "mode": "auto",
+        "spacing": 4,
+        "points": [
+          {
+            "x": 100,
+            "y": 390,
+            "pressure": 0.2,
+            "time_ms": 0
+          },
+          {
+            "x": 300,
+            "y": 380,
+            "pressure": 0.9,
+            "time_ms": 80
+          },
+          {
+            "x": 500,
+            "y": 430,
+            "pressure": 0.9,
+            "time_ms": 160
+          },
+          {
+            "x": 800,
+            "y": 410,
+            "pressure": 0.2,
+            "time_ms": 240
+          }
+        ]
+      }
+    },
+    {
+      "command": "preview.canvas",
+      "parameters": {
+        "filename": "previews/round2-stage-001.png",
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "command": "document.save",
+      "parameters": {
+        "path": "round2/edited.kra",
+        "overwrite": false
+      }
+    },
+    {
+      "command": "document.export",
+      "parameters": {
+        "path": "round2/edited.png",
+        "overwrite": false
+      }
+    }
+  ]
+}

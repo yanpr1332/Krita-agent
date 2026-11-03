@@ -10,6 +10,8 @@ import threading
 import uuid
 from collections import deque
 from pathlib import Path
+from .advanced import ADVANCED_COMMANDS, dispatch_advanced
+from .job_journal import Journal
 
 import krita as krita_module
 from krita import Extension, InfoObject, Krita, ManagedColor
@@ -31,11 +33,14 @@ COMMANDS = frozenset((
     "layer.create", "layer.select", "layer.list", "brush.configure",
     "draw.line", "draw.stroke", "draw.shape",
     "document.save", "document.export",
-    "job.submit", "job.status", "job.list", "job.pause", "job.resume", "job.cancel"
-))
+    "job.submit", "job.status", "job.list", "job.pause", "job.resume", "job.cancel",
+    "job.history", "job.recover"
+)) | ADVANCED_COMMANDS
 TASK_STEPS = COMMANDS.difference((
     "status", "capabilities", "document.open", "job.submit", "job.status",
-    "job.list", "job.pause", "job.resume", "job.cancel"
+    "job.list", "job.pause", "job.resume", "job.cancel", "job.history", "job.recover",
+    "document.close", "document.activate", "document.crop", "selection.cut",
+    "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
 ))
 
 
@@ -85,6 +90,7 @@ class KritaAgentBridge(Extension):
         self.token = None
         self.output_dir = None
         self.jobs = {}
+        self.journal = None
         self.active = deque()
         self.recent = {}
         self.in_flight = set()
@@ -105,6 +111,8 @@ class KritaAgentBridge(Extension):
         self.output_dir = Path(os.environ.get(
             "KRITA_AGENT_OUTPUT_DIR", str(Path.home() / "Pictures" / "KritaAgent"))).resolve()
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.journal = Journal(self.output_dir / ".krita-agent-jobs")
+        self.jobs.update(self.journal.load())
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server.bind(("127.0.0.1", port))
@@ -467,6 +475,8 @@ class KritaAgentBridge(Extension):
             if not succeeded:
                 raise RuntimeError("Krita refused to write " + target)
             return {"path": target, "format": expected[1:]}
+        if command in ADVANCED_COMMANDS:
+            return dispatch_advanced(self, command, p)
         raise ValueError("Command not implemented or denied: " + command)
 
     def _job(self, command, p):
@@ -483,6 +493,7 @@ class KritaAgentBridge(Extension):
             self.jobs[identifier] = {
                 "id": identifier, "state": "queued", "total": len(steps), "done": 0,
                 "steps": steps, "error": None, "last_result": None, "cancel_requested": False}
+            self.journal.save(self.jobs[identifier])
             self.active.append(identifier)
             return self._describe(self.jobs[identifier])
         if command == "job.list":
@@ -493,6 +504,12 @@ class KritaAgentBridge(Extension):
             raise ValueError("Unknown job ID")
         if command == "job.status":
             return self._describe(job)
+        if command in ("job.history", "job.recover"):
+            record = self._describe(job)
+            record["remaining_steps"] = max(0, job["total"] - job["done"])
+            record["replay_safe"] = False
+            record["recovery_note"] = "Inspect the KRA and last step before any manual retry; automatic replay is disabled."
+            return record
         if command == "job.pause":
             if job["state"] in ("queued", "running"):
                 job["state"] = "paused"
@@ -504,6 +521,7 @@ class KritaAgentBridge(Extension):
                 job["cancel_requested"] = True
         else:
             raise ValueError("Unknown job operation")
+        self.journal.save(job)
         return self._describe(job)
 
     def _describe(self, job):
@@ -517,15 +535,18 @@ class KritaAgentBridge(Extension):
         job = self.jobs[identifier]
         if job["cancel_requested"]:
             job["state"] = "cancelled"
+            self.journal.save(job)
             self.active.popleft()
             return
         if job["state"] == "paused":
             return
         if job["done"] >= job["total"]:
             job["state"] = "completed"
+            self.journal.save(job)
             self.active.popleft()
             return
         job["state"] = "running"
+        self.journal.save(job)
         step = job["steps"][job["done"]]
         try:
             job["last_result"] = self._execute(step["command"], step.get("parameters", {}))
@@ -533,11 +554,17 @@ class KritaAgentBridge(Extension):
             if job["done"] == job["total"]:
                 job["state"] = "completed"
                 self.active.popleft()
+            self.journal.save(job)
         except Exception as exc:
             job["state"] = "failed"
             job["error"] = str(exc)
+            self.journal.save(job)
             self.active.popleft()
             # Partial artwork is preserved for inspection; no destructive rollback.
 
 
-Krita.instance().addExtension(KritaAgentBridge(Krita.instance()))
+BRIDGE_INSTANCE = KritaAgentBridge(Krita.instance())
+Krita.instance().addExtension(BRIDGE_INSTANCE)
+if os.environ.get("KRITA_AGENT_DOCK") == "1":
+    from .docker import register as register_docker
+    register_docker(BRIDGE_INSTANCE)

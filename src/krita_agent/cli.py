@@ -9,6 +9,11 @@ from pathlib import Path
 
 from .client import BridgeError, Client
 from .geometry import demo_task
+from .stroke_engine import plan_stroke
+from .workflow import compile_workflow
+from .feedback import compare as compare_previews
+from .task_store import archive_plan
+from .upstream_semantics import enrich, ingest_probes
 from .protocol import TERMINAL_STATES, TaskError, compile_task, points
 from .session import DEFAULT_PORT, launch, load_session
 from . import upstream as upstream_api
@@ -80,9 +85,17 @@ def parser_build():
     start.add_argument("--port", type=int, default=DEFAULT_PORT)
     start.add_argument("--output-dir")
     start.add_argument("--session")
+    start.add_argument("--input-dir")
+    start.add_argument("--dock", action="store_true")
 
     for command in ("connect", "status", "capabilities"):
         _connection(commands.add_parser(command))
+    invoke = commands.add_parser("invoke", help="Invoke an allowlisted Krita Bridge command")
+    _connection(invoke)
+    invoke.add_argument("name")
+    source = invoke.add_mutually_exclusive_group()
+    source.add_argument("--params", default="{}")
+    source.add_argument("--params-file")
 
     canvas = commands.add_parser("canvas")
     canvas_actions = canvas.add_subparsers(dest="action", required=True)
@@ -118,6 +131,9 @@ def parser_build():
     _connection(stroke)
     stroke.add_argument("--file", required=True, help="JSON list of points or object with points")
     stroke.add_argument("--mode", choices=("auto", "continuous", "segmented"), default="auto")
+    stroke.add_argument("--spacing", type=float)
+    stroke.add_argument("--smooth", action="store_true")
+    stroke.add_argument("--spline", action="store_true")
     line = draw_actions.add_parser("line")
     _connection(line)
     line.add_argument("--x1", type=float, required=True)
@@ -139,11 +155,21 @@ def parser_build():
     _connection(run)
     run.add_argument("--file", required=True)
     run.add_argument("--wait", action="store_true")
-    for action in ("status", "pause", "resume", "cancel"):
+    for action in ("status", "pause", "resume", "cancel", "history", "recover"):
         p = job_actions.add_parser(action)
         _connection(p)
         p.add_argument("id")
     _connection(job_actions.add_parser("list"))
+    workflow = commands.add_parser("workflow", help="Submit a validated drawing workflow")
+    _connection(workflow)
+    workflow.add_argument("--file", required=True)
+    workflow.add_argument("--wait", action="store_true")
+    workflow.add_argument("--archive-dir", help="Record the compiled plan before submission")
+    feedback = commands.add_parser("feedback", help="Compare local preview image files")
+    comparison = feedback.add_subparsers(dest="action", required=True).add_parser("compare")
+    comparison.add_argument("first")
+    comparison.add_argument("second")
+    comparison.add_argument("--region", nargs=4, type=int, metavar=("X","Y","W","H"))
 
     up = commands.add_parser("upstream", help="Read-only upstream inspection; writes only with explicit action")
     up.add_argument("--repo", default=r"D:\computer\Krita\Krita-upstream")
@@ -153,6 +179,7 @@ def parser_build():
     up.add_argument("--fetch", action="store_true")
     up.add_argument("--update-baseline", action="store_true")
     up.add_argument("--write-report")
+    up.add_argument("--probe", action="append", default=[], metavar="BUILD=FILE")
     up.add_argument("action", nargs="?", choices=("snapshot", "init", "check", "diff"),
                     default="snapshot")
     return parser
@@ -179,7 +206,8 @@ def main(argv=None):
             _show(result if len(result) > 1 or not args.krita else result["krita"])
             return 1 if any(entry["error"] for entry in result.values()) else 0
         if args.command == "launch":
-            _show(launch(args.krita, args.port, args.output_dir, args.session))
+            _show(launch(args.krita, args.port, args.output_dir, args.session,
+                         input_dir=args.input_dir, dock=args.dock))
             return 0
         if args.command == "upstream":
             if args.action == "snapshot":
@@ -193,11 +221,29 @@ def main(argv=None):
                 if not args.base:
                     raise ValueError("upstream diff requires --from-sha")
                 result = upstream_api.compare(args.repo, args.base, args.to_sha)
+            if args.action in ("check", "diff"):
+                probes = {}
+                for entry in args.probe:
+                    if "=" not in entry:
+                        raise ValueError("--probe requires BUILD=FILE")
+                    name, filename = entry.split("=", 1)
+                    if not name.strip():
+                        raise ValueError("Probe build name is empty")
+                    probes[name.strip()] = _read_json(filename)
+                result = enrich(result, ingest_probes(probes))
             if args.write_report:
                 result["report_file"] = upstream_api.write_report(result, args.write_report)
             _show(result)
             return 0
-        if args.command in ("connect", "status", "capabilities"):
+        if args.command == "feedback":
+            _show(compare_previews(args.first, args.second, args.region))
+            return 0
+        if args.command == "invoke":
+            params = _read_json(args.params_file) if args.params_file else json.loads(args.params)
+            if not isinstance(params, dict):
+                raise ValueError("Parameters must be a JSON object")
+            _show(_call(args, args.name, **params))
+        elif args.command in ("connect", "status", "capabilities"):
             _show(_call(args, "capabilities" if args.command == "capabilities" else "status"))
         elif args.command == "canvas":
             _show(_call(args, "canvas.create", width=args.width, height=args.height, name=args.name))
@@ -217,7 +263,15 @@ def main(argv=None):
             elif args.action == "stroke":
                 data = _read_json(args.file)
                 sample = data["points"] if isinstance(data, dict) else data
-                _show(_call(args, "draw.stroke", points=points(sample), mode=args.mode))
+                spec = dict(data) if isinstance(data, dict) else {"points": sample}
+                spec["points"] = sample
+                if args.spacing is not None:
+                    spec["spacing"] = args.spacing
+                if args.smooth:
+                    spec["smooth"] = True
+                if args.spline:
+                    spec["spline"] = True
+                _show(_call(args, "draw.stroke", points=plan_stroke(spec), mode=args.mode))
             else:
                 client = _client(args)
                 result = client.submit(compile_task(demo_task()))
@@ -228,12 +282,19 @@ def main(argv=None):
         elif args.command == "job":
             if args.action == "run":
                 client = _client(args)
-                result = client.submit(compile_task(_read_json(args.file)))
+                result = client.submit(compile_workflow(_read_json(args.file)))
                 _show(_wait_for_job(client, result["id"]) if args.wait else result)
             elif args.action == "list":
                 _show(_call(args, "job.list"))
             else:
                 _show(_call(args, "job." + args.action, id=args.id))
+        elif args.command == "workflow":
+            client = _client(args)
+            steps = compile_workflow(_read_json(args.file))
+            if args.archive_dir:
+                archive_plan(steps, args.archive_dir)
+            result = client.submit(steps)
+            _show(_wait_for_job(client, result["id"]) if args.wait else result)
         return 0
     except (BridgeError, TaskError, OSError, ValueError, KeyError,
             json.JSONDecodeError, subprocess.CalledProcessError) as exc:

@@ -1,0 +1,32 @@
+{
+  "pause": {
+    "id": "d8af8532aa834bda869aa1992c205641",
+    "state": "paused",
+    "total": 400,
+    "done": 343,
+    "error": null,
+    "last_result": {
+      "name": "Preview roundtrip",
+      "width": 128,
+      "height": 128,
+      "active_layer": "Pixels"
+    },
+    "cancel_requested": false
+  },
+  "resume_observed": "running 273/400 and 331/400",
+  "cancel": {
+    "id": "d8af8532aa834bda869aa1992c205641",
+    "state": "cancelled",
+    "total": 400,
+    "done": 343,
+    "error": null,
+    "last_result": {
+      "name": "Preview roundtrip",
+      "width": 128,
+      "height": 128,
+      "active_layer": "Pixels"
+    },
+    "cancel_requested": true
+  },
+  "method": "actual sky button clicks"
+}
