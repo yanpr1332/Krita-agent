@@ -39,6 +39,9 @@ COMMANDS = frozenset((
 TASK_STEPS = COMMANDS.difference((
     "status", "capabilities", "document.open", "job.submit", "job.status",
     "job.list", "job.pause", "job.resume", "job.cancel", "job.history", "job.recover",
+    "checkpoint.list", "checkpoint.inspect", "checkpoint.restore", "checkpoint.resume",
+    "pixel.transaction.undo", "pixel.transaction.redo", "pixel.transaction.inspect",
+    "clipboard.save", "clipboard.load", "clipboard.inspect",
     "document.close", "document.activate", "document.crop", "selection.cut",
     "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
 ))
@@ -91,6 +94,7 @@ class KritaAgentBridge(Extension):
         self.output_dir = None
         self.jobs = {}
         self.journal = None
+        self._current_job_id = None
         self.active = deque()
         self.recent = {}
         self.in_flight = set()
@@ -548,6 +552,7 @@ class KritaAgentBridge(Extension):
         job["state"] = "running"
         self.journal.save(job)
         step = job["steps"][job["done"]]
+        self._current_job_id = identifier
         try:
             job["last_result"] = self._execute(step["command"], step.get("parameters", {}))
             job["done"] += 1
@@ -561,6 +566,8 @@ class KritaAgentBridge(Extension):
             self.journal.save(job)
             self.active.popleft()
             # Partial artwork is preserved for inspection; no destructive rollback.
+        finally:
+            self._current_job_id = None
 
 
 BRIDGE_INSTANCE = KritaAgentBridge(Krita.instance())
