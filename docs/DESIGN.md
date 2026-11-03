@@ -285,7 +285,7 @@ krita-agent/
 ├── output/                  # 本地生成文件：默认不加入 Git
 ├── pyproject.toml
 ├── .gitignore
-└── README.md                # 未来仓库自己的 README；与本文件不同
+└── README.md                # 项目概览与文档导航
 ```
 
 ### Git 与 output 管理策略
@@ -359,7 +359,7 @@ __pycache__/
 **官方主仓库**：[https://invent.kde.org/graphics/krita]  
 **GitHub 镜像**：[https://github.com/KDE/krita]
 
-推荐将上游源码克隆为单独的 `D:\computer\Krita\krita-upstream` 目录，**仅作参考**，不嵌入自有 `krita-agent` 的 Git 历史。初期采用浅克隆以减小下载量：
+例如，可将上游源码克隆为独立的 `D:\computer\Krita\krita-upstream` 目录，**仅作参考**，不嵌入自有 `krita-agent` 的 Git 历史。初期采用浅克隆以减小下载量：
 
 ```powershell
 cd "D:\computer\Krita"
@@ -505,4 +505,5 @@ krita-agent/
 ---
 
 **设计原则**：Windows 单平台优先；原生笔刷优先；连续压感优先；能力探测优先于版本假设；上游变更优先转化为可追溯的能力矩阵和测试；确保真实可用后再扩展 AI 生成与复杂绘图。
+
 
