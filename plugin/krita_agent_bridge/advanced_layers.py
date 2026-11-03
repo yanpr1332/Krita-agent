@@ -19,7 +19,7 @@ def execute(bridge, command, p):
         parent = find_node(doc, {"id": p["parent_id"]}) if "parent_id" in p else root
         if parent != root and parent.type() != "grouplayer":
             raise ValueError("A group must be attached to root or another group")
-        group = doc.createGroupLayer(name)
+        group = doc.createNode(name, "grouplayer")
         if group is None or not parent.addChildNode(group, None):
             raise RuntimeError("Krita rejected group insertion")
         return describe(group)

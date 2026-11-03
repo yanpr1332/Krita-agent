@@ -131,7 +131,12 @@ def compile_task(task):
                 mode = stroke.get("mode", "auto")
                 if mode not in ("auto", "segmented", "continuous"):
                     raise TaskError("invalid stroke mode")
-                commands.append({"command": "draw.stroke", "parameters": {"points": points(stroke["points"]), "mode": mode}})
+                if any(key in stroke for key in ("spline", "smooth", "spacing")):
+                    from .stroke_engine import plan_stroke
+                    sample = plan_stroke(stroke)
+                else:
+                    sample = points(stroke["points"])
+                commands.append({"command": "draw.stroke", "parameters": {"points": sample, "mode": mode}})
             else:
                 shape = stroke.get("shape")
                 if shape not in ("rectangle", "ellipse", "polygon", "path"):

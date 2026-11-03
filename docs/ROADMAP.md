@@ -1,15 +1,30 @@
-# Roadmap and acceptance
+# Project roadmap
 
-**2026-11-03: first-round source implemented and locally committed; runtime acceptance deliberately deferred.** Boxes below indicate tested capability, not merely code being present.
+## Verified first-round baseline (2026-11-03)
 
-- [ ] P0-A — Environment discovery: executable doctor and Bridge symbol probe coded; real build evidence pending.
-- [ ] P0-B — Authenticated localhost Bridge: implemented in source; installation and live exchange pending.
-- [ ] P0-C — Canvas/layers/shapes/brush/KRA/PNG: code present; paint and file verification pending.
-- [ ] P0-D — Pressure: StrokePoint continuous candidate and paintLine segmented fallback coded; visual checks pending.
-- [ ] P0-E — Delivery: CLI, install helper, examples, tests, docs present; install and execution pending.
-- [ ] P1 — JSON task queue, progress/status, checkpoint pause/resume/cancel coded; runtime pending.
-- [ ] P1-U — Source diff candidates, incremental baseline, report and capability matrix foundation coded; runtime pending.
-- [ ] P2 — Natural language planning, visual feedback, automated local revision remain future work.
-- [ ] P2-U — Scheduled monitoring, advanced API-specific candidate tests remain future work.
+The actual local acceptance results are documented in [REPORT-004](REPORT-004.md), not inferred from this roadmap.
 
-See ACCEPTANCE.md for the complete manual validation protocol.
+- [x] Krita Stable / Next Qt5 / Next Qt6 environment and Bridge connectivity acceptance.
+- [x] Native canvas, layers, brushes, pressure stroke (segmented or continuous by build).
+- [x] Editable KRA save and reopen, PNG export and overwrite/fault rejection.
+- [x] Job queue pause/resume/cancel at step checkpoints; 18 offline automated tests passed.
+- [x] Read-only upstream tracking baseline and controlled source-diff fixture.
+
+## Second-round source implementation (unverified)
+
+The branch `feat/round2-advanced-workflow` contains staged code for:
+
+- [ ] **R2-A** Layer metadata, groups, stable node IDs, order, transforms and documents — code authored; runtime pending.
+- [ ] **R2-B** Selection, protected pixel region replacement, reference and editable image import — code authored; runtime pending.
+- [ ] **R2-C** Spline planning, smoothing, spacing, pressure/sensor interpolation — code authored; runtime pending.
+- [ ] **R2-D** Canvas/region/layer preview, digest and optional pixel-diff feedback — code authored; runtime pending.
+- [ ] **R2-E** Persistent journal, interrupted-job inspection, manual recovery safety — code authored; runtime pending.
+- [ ] **R2-F** Upstream change classification, test suggestions, build evidence matrix — code authored; runtime pending.
+- [ ] **R2-G** Modular advanced handlers, bilingual docs, manual CI workflow — code authored; runtime pending.
+- [ ] **R2-H** Optional Krita Qt Docker status/control panel — code authored; runtime pending.
+
+Unchecked means new runtime acceptance has **not** been performed, not that source is absent.
+
+## Future
+
+Advanced visual planning, non-destructive partial-pixel masks, durable KRA step snapshots, Qt6 polish, better access controls, optional monitoring and agentic iteration. No production-grade behavior is claimed for these unverified features.

@@ -2,80 +2,85 @@
 
 [English](README.md) | 简体中文
 
-Krita Agent 是 Windows 本地 Krita 原生绘画自动化控制器。包含 Python CLI/SDK、Krita 进程内 Bridge、回环 IPC、图层和笔刷命令、异步绘图任务、基础上游功能追踪。
+Krita Agent 是面向 Windows 的 Krita **原生绘图自动化控制器**：外部 Python CLI/SDK、Krita 内部插件、受控本机通信、可编辑分层绘图、压感轨迹，以及 KDE 上游功能追踪。
 
-**2026-11-03 状态：本机 Stable、Next Qt5 和 Next Qt6 运行验收已完成，18 项自动测试通过。** 已验证原生绘画、压感预设、KRA 重开、PNG 自动导出及异常与任务控制；范围和限制见 [验收报告](docs/REPORT-004.md)。
+## 当前状态
 
-## 架构
+- **第一轮已验收**：2026 年 11 月 3 日的验收报告记录了 Stable 5.3.4.1、Next Qt5 5.4.0-prealpha、Next Qt6 6.1.0-prealpha 三个构建，以及 18 项通过的离线测试。具体见 [REPORT-004](docs/REPORT-004.md)。
+- **第二轮已编写源码，尚未验证**：在 \`feat/round2-advanced-workflow\` 分支增加高级图层、素材导入、选区、预览、轨迹处理、持久化任务、上游追踪增强及可选 Dock 面板。**这些新增能力还不能称作“在 Krita 上运行通过”**。见 [REPORT-005](docs/REPORT-005.md)。
+- 第二轮不运行测试、不安装插件、不自动触发 GitHub Actions，也不合并主分支。
 
-外部 CLI → 本机 127.0.0.1 JSON（随机令牌）→ Krita Python Bridge（Qt GUI 线程）→ Krita 原生画布、图层、笔刷。
+## 工程结构
 
-- Controller：src/krita_agent/cli.py、client.py、session.py、protocol.py、geometry.py
-- Bridge：plugin/krita_agent_bridge；支持 Qt5/Qt6 的导入分支，具体兼容性待测
-- Upstream：src/krita_agent/upstream.py；源代码差异候选、报告、基线
-- 纯 Python 测试：tests/；真实 Krita 验收结果见 REPORT-004
+\`\`\`text
+src/krita_agent/             外部 Controller、CLI、轨迹、反馈、任务与源码追踪
+plugin/krita_agent_bridge/  Krita 内部 Bridge、图层/文档/素材/任务与 Dock
+tests/                      离线测试源代码；本轮新测试未运行
+examples/                   JSON 工作流和轨迹示例
+scripts/                    插件安装与辅助工具
+docs/                       架构、API、开发报告与路线图
+\`\`\`
 
-## 安装与首次启用
+控制链路：ChatGPT / Codex / VS Code → Windows Python → 仅限本机 127.0.0.1 的鉴权 IPC → Krita Python 插件 → 原生画布与图层。基础功能不依赖云端模型。
 
-先在 Windows PowerShell 进入仓库，然后使用原生 Windows Python：
+## 首次使用
 
-~~~powershell
+在 Windows PowerShell 中运行：
+
+\`\`\`powershell
 cd "D:\computer\Krita\Krita-agent"
 python -m pip install -e .
 python scripts\install_plugin.py
-~~~
+\`\`\`
 
-第二个命令只预览将安装的插件。确认共享的 Krita 用户资源目录及备份后，显式执行：
+安装脚本默认只预览；确认原有 Stable/Next 共享资源目录并做好备份后，再显式执行：
 
-~~~powershell
+\`\`\`powershell
 python scripts\install_plugin.py --apply
-~~~
+\`\`\`
 
-如果已有同名插件，需手动核实后加 --replace；安装器会先备份。Stable 与 Next 可能共用资源目录；不要盲目替换。进入 Krita 的 Settings → Configure Krita → Python Plugin Manager 启用 Krita Agent Bridge，重启 Krita。Bridge 仅在由 launch 注入令牌时启用，普通启动保持静默。
+在 Krita 的 **设置 → 配置 Krita → Python 插件管理器** 启用 Bridge 后重启。通过 Controller 显式启动指定 Krita：
 
-~~~powershell
-krita-agent doctor
-krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe"
+\`\`\`powershell
+krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe" --output-dir "D:\drawings\out" --input-dir "D:\drawings\references" --dock
 krita-agent connect
 krita-agent capabilities
-krita-agent canvas create --width 1024 --height 1024
-krita-agent layer add --name "Line Art"
-krita-agent brush set --size 24 --color "#AA5544" --pressure-enabled true
-krita-agent draw demo --wait
-~~~
+\`\`\`
 
-launch 只是启动一个 Krita 进程并创建本机用户配置目录中的会话凭据，不能证明 Bridge 已加载。若路径不同，先调整 exe 路径。不要同时启动 Stable/Next 并复用同一端口；需要并行时分别指定端口与会话文件。
+\`--dock\` 仅表示注册可选控制面板，**本轮未验证该面板兼容性**。
 
-任务运行：
+## 第一轮已验证的功能
 
-~~~powershell
-krita-agent job run --file ".\examples\pressure-demo.json" --wait
-krita-agent job list
-krita-agent job status JOB_ID
-krita-agent job pause JOB_ID
-krita-agent job resume JOB_ID
-krita-agent job cancel JOB_ID
-~~~
+新建画布、笔刷控制、图层、分段/连续笔触、压感预设、任务队列与阶段性暂停恢复、KRA 保存并重新打开、PNG 导出、基本安全拒绝等。具体版本和限制以第一轮验收报告为准。
 
-作业执行采取每一步的安全检查点；单条原生笔触执行中无法承诺立即中断。文件只能保存到 launch 所配置的输出目录中，默认用户 Pictures/KritaAgent，默认拒绝覆盖已有文件。失败后的部分画布保留以便检查。
+## 第二轮新增命令（源码已编写、未验证）
 
-## 上游追踪
+\`\`\`powershell
+# 查询递归图层树
+krita-agent invoke layer.tree --params "{}"
 
-~~~powershell
-krita-agent upstream snapshot --repo "D:\computer\Krita\Krita-upstream"
-krita-agent upstream init --repo "D:\computer\Krita\Krita-upstream"
-krita-agent upstream check --repo "D:\computer\Krita\Krita-upstream" --write-report ".cache\krita-upstream-report.md"
-~~~
+# 列举笔刷资源
+krita-agent invoke brush.list --params "{}"
 
-init 创建本地基线；check 默认只读已有本地 Git，显式 --fetch 才联网更新；更新基线需显式 --update-baseline。git diff 只产生源码候选，不能证明当前安装包具有对应 API。
+# 在已有文档上提交多步修改
+krita-agent workflow --file ".\examples\round2-edit-workflow.json" --wait
 
-## 首轮验收状态
+# 曲线插值、平滑、等距重采样
+krita-agent draw stroke --file ".\examples\stroke-control.json" --spline --smooth --spacing 3
 
-- 源码、JSON 协议、插画演示任务、任务控制、压感适配器、输出保护、上游报告：已完成本机功能验收，范围见 REPORT-004。
-- 自动测试：18 项通过。
-- Bridge 安装/启用、真实 Krita 运行、压感预设及 KRA 重开：三个本机构建已验证。
-- 复验步骤及结果参阅 docs/ACCEPTANCE.md 和 docs/REPORT-004.md。
+# 查询中断作业记录：不会自动重放
+krita-agent job recover YOUR_JOB_ID
 
-## 许可
+# 本地预览文件对比
+krita-agent feedback compare ".\before.png" ".\after.png"
+\`\`\`
 
-原创代码采用 MIT License；Krita 本体及第三方依赖仍遵循各自许可证。Bridge 发布前须复核 Krita GPL 兼容和实际分发安排。
+复杂参数建议写入 JSON 文件，用 \`krita-agent invoke 命令名 --params-file 文件路径\` 调用，避免 Windows shell 转义错误。
+
+**操作保护**：导入图片只能来自显式指定的输入目录；所有输出必须位于授权输出目录；默认禁止覆盖。删除、像素替换等破坏性操作要求明确确认。任务崩溃后不会自动重复落笔，作业日志并不等于可直接恢复的 KRA 快照。
+
+**上游追踪**：支持从 Git 差异分析中分类出变更候选，并与保存的运行时符号记录关联；“源码出现”不意味着安装版本能用，真实行为仍需独立测试。
+
+参阅 [第二轮 API 说明](docs/ROUND2-API.md)、[开发路线](docs/ROADMAP.md)、[架构](docs/ARCHITECTURE.md)、[第一轮验收](docs/REPORT-004.md)、[第二轮实现报告](docs/REPORT-005.md)。
+
+原创部分采用 MIT License。Krita 和第三方依赖另按各自许可使用。

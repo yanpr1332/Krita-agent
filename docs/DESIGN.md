@@ -1,6 +1,8 @@
 # Krita Agent — Drawing Automation Design
 
-> Planning and technical design draft, not a list of implemented features. Target: Windows 11 x64, with stable Krita and Krita Next builds. All APIs, commands, and behaviors must be validated in the actual target build.
+> Historical architecture and feature design, not a current implementation checklist. See [ROADMAP](ROADMAP.md), [REPORT-004](REPORT-004.md) and [REPORT-005](REPORT-005.md) for verified first-round results and unverified second-round source status.
+>
+> Original planning statement: Planning and technical design draft, not a list of implemented features. Target: Windows 11 x64, with stable Krita and Krita Next builds. All APIs, commands, and behaviors must be validated in the actual target build.
 
 ## 1. Purpose and scope
 
