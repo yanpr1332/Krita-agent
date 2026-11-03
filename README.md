@@ -50,4 +50,3 @@ Krita installations, upstream source clones, personal resources, caches, and bul
 ## License
 
 Original project content is licensed under the [MIT License](LICENSE), copyright Yan Pengrui. Krita and third-party components have their own licenses; review applicable obligations before implementing and distributing the plugin.
-
