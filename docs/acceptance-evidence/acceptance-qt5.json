@@ -1,0 +1,124 @@
+{
+  "capabilities": {
+    "krita_version": "5.4.0-prealpha (git 2687e5d)",
+    "qt_version": "5.15.7",
+    "qt_binding": "PyQt5",
+    "python": "3.13.5",
+    "symbols": {
+      "Node.paintLine": true,
+      "Node.paintPolylineStroke": true,
+      "StrokePoint": true,
+      "Node.paintPath": true,
+      "Node.paintEllipse": true,
+      "Node.paintPolygon": true,
+      "Node.paintRectangle": true,
+      "View.brushPosition": true,
+      "View.setCurrentBrushPreset": true
+    },
+    "evidence": "present_in_build only; drawing untested"
+  },
+  "drawing": {
+    "id": "f6551a9b9f374408a8312313dce43d5d",
+    "state": "completed",
+    "total": 12,
+    "done": 12,
+    "error": null,
+    "last_result": {
+      "path": "C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\qt5-final\\examples\\pressure-comparison.png",
+      "format": "png"
+    },
+    "cancel_requested": false
+  },
+  "reopen": {
+    "opened": "C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\qt5-final\\examples\\pressure-comparison.kra"
+  },
+  "layers": [
+    {
+      "name": "Background",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Increasing Pressure",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Thin Thick Thin",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    },
+    {
+      "name": "Constant Pressure",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "depth": 0
+    }
+  ],
+  "denials": {
+    "overwrite": "Refusing to overwrite existing file: C:\\Users\\LENOVO\\Documents\\Codex\\2026-11-03\\new-chat-3\\outputs\\qt5-final\\examples\\pressure-comparison.kra",
+    "outside": "Path traversal or invalid extension",
+    "unknown": "Unknown or denied command",
+    "missing_layer": "Expected exactly one paint layer named does-not-exist",
+    "invalid_stroke": "points must be a list of 1 to 2048 samples"
+  },
+  "wrong_token": "Unauthorized",
+  "pause": {
+    "id": "cfa6bc819faf4ebda7c4a2910a79869f",
+    "state": "paused",
+    "total": 400,
+    "done": 0,
+    "error": null,
+    "last_result": null,
+    "cancel_requested": false
+  },
+  "resume": {
+    "id": "cfa6bc819faf4ebda7c4a2910a79869f",
+    "state": "running",
+    "total": 400,
+    "done": 1,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": false
+  },
+  "cancel_request": {
+    "id": "cfa6bc819faf4ebda7c4a2910a79869f",
+    "state": "running",
+    "total": 400,
+    "done": 1,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": true
+  },
+  "cancel": {
+    "id": "cfa6bc819faf4ebda7c4a2910a79869f",
+    "state": "cancelled",
+    "total": 400,
+    "done": 2,
+    "error": null,
+    "last_result": {
+      "name": "Pressure Comparison",
+      "width": 1024,
+      "height": 1024,
+      "active_layer": "Constant Pressure"
+    },
+    "cancel_requested": true
+  }
+}

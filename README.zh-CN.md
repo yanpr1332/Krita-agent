@@ -1,53 +1,81 @@
 # Krita Agent
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+[English](README.md) | 简体中文
 
-Krita Agent 是规划中的 Windows 本地绘画自动化项目。它计划使用独立 Python 控制器和 Krita 内的自研插件，调用 Krita 原生笔刷，生成可复现、可编辑的分层作品。
+Krita Agent 是 Windows 本地 Krita 原生绘画自动化控制器。包含 Python CLI/SDK、Krita 进程内 Bridge、回环 IPC、图层和笔刷命令、异步绘图任务、基础上游功能追踪。
 
-> **状态：规划阶段。** 当前仓库只有文档和目录占位，尚无可运行的 CLI、插件、安装程序或自动绘画功能。文档中的命令、协议和功能均为设计草案，具体接口须经目标 Krita 构建验证。
+**2026-11-03 状态：本机 Stable、Next Qt5 和 Next Qt6 运行验收已完成，18 项自动测试通过。** 已验证原生绘画、压感预设、KRA 重开、PNG 自动导出及异常与任务控制；范围和限制见 [验收报告](docs/REPORT-004.md)。
 
-## 项目目标
+## 架构
 
-- 通过 Krita 原生绘画引擎绘制，而非仅导入外部生成的图片。
-- 用结构化任务描述画布、图层、笔刷、轨迹、压力和输出。
-- 保存可编辑的分层 `.kra`，并导出预览图。
-- 探测稳定版与 Next 的实际能力，按验证结果选择或降级绘制路径。
-- 追踪 Krita 上游接口变化，形成可追溯的兼容报告与候选测试。
-- 后续可选接入自然语言规划与视觉反馈；基础链路不依赖云模型。
+外部 CLI → 本机 127.0.0.1 JSON（随机令牌）→ Krita Python Bridge（Qt GUI 线程）→ Krita 原生画布、图层、笔刷。
 
-```text
-用户 / 外部程序 → Windows Python CLI / SDK → 本地受控通信 → Krita Python Bridge → 原生绘画引擎
-```
+- Controller：src/krita_agent/cli.py、client.py、session.py、protocol.py、geometry.py
+- Bridge：plugin/krita_agent_bridge；支持 Qt5/Qt6 的导入分支，具体兼容性待测
+- Upstream：src/krita_agent/upstream.py；源代码差异候选、报告、基线
+- 纯 Python 测试：tests/；真实 Krita 验收结果见 REPORT-004
 
-普通外部 Python 进程不能直接通过 `import krita` 控制另一个 Krita 进程，因此计划以应用内插件提供受控桥接。WSL2 并非初期依赖。
+## 安装与首次启用
 
-## 技术方向
+先在 Windows PowerShell 进入仓库，然后使用原生 Windows Python：
 
-Windows Python 3、Krita Python / LibKis API、Krita Python Extension、目标构建自带的 Qt / PyQt、本地 IPC、JSON 与 Schema。Git、虚拟环境和 pytest 拟用于开发与测试；CLI 框架、通信实现及版本约束尚待原型确定。优先测试 Qt5 构建，后续验证 Qt6。
+~~~powershell
+cd "D:\computer\Krita\Krita-agent"
+python -m pip install -e .
+python scripts\install_plugin.py
+~~~
 
-压感绘制优先研究 Next 的连续笔触接口，并测试稳定版可行的分段降级路径。接口出现在源码或文档中并不代表当前安装的构建支持；笔刷是否响应压力也需要独立验证。
+第二个命令只预览将安装的插件。确认共享的 Krita 用户资源目录及备份后，显式执行：
 
-## 文档导航
+~~~powershell
+python scripts\install_plugin.py --apply
+~~~
 
-- [完整设计方案](docs/DESIGN.md)：功能清单、技术方案、示例协议、工作流、压感、上游追踪与参考资料。
-- [开发路线与验收](docs/ROADMAP.md)：阶段任务及真实绘画验收。
-- [架构与安全边界](docs/ARCHITECTURE.md)：组件职责、能力验证和部署原则。
-- [贡献指南](CONTRIBUTING.md)：分支、评审、验证及双语 README 维护约定。
+如果已有同名插件，需手动核实后加 --replace；安装器会先备份。Stable 与 Next 可能共用资源目录；不要盲目替换。进入 Krita 的 Settings → Configure Krita → Python Plugin Manager 启用 Krita Agent Bridge，重启 Krita。Bridge 仅在由 launch 注入令牌时启用，普通启动保持静默。
 
-## 仓库结构
+~~~powershell
+krita-agent doctor
+krita-agent launch --krita "D:\computer\Krita\Krita_Next\bin\krita.exe"
+krita-agent connect
+krita-agent capabilities
+krita-agent canvas create --width 1024 --height 1024
+krita-agent layer add --name "Line Art"
+krita-agent brush set --size 24 --color "#AA5544" --pressure-enabled true
+krita-agent draw demo --wait
+~~~
 
-```text
-src/krita_agent/   独立控制器（占位）
-plugin/            Krita Bridge（占位）
-tests/             测试（占位）
-examples/          示例（占位）
-scripts/           安装和维护脚本（占位）
-docs/              设计与路线
-```
+launch 只是启动一个 Krita 进程并创建本机用户配置目录中的会话凭据，不能证明 Bridge 已加载。若路径不同，先调整 exe 路径。不要同时启动 Stable/Next 并复用同一端口；需要并行时分别指定端口与会话文件。
 
-Krita 安装文件、官方源码克隆、个人资源、缓存及批量作品不属于本仓库。安装和使用说明将在可运行版本实现后补充。
+任务运行：
 
-## 许可证
+~~~powershell
+krita-agent job run --file ".\examples\pressure-demo.json" --wait
+krita-agent job list
+krita-agent job status JOB_ID
+krita-agent job pause JOB_ID
+krita-agent job resume JOB_ID
+krita-agent job cancel JOB_ID
+~~~
 
-原创内容采用 [MIT License](LICENSE)，版权所有 Yan Pengrui。Krita 和第三方组件适用各自许可证；插件实际实现和分发前需检查相关许可义务。
+作业执行采取每一步的安全检查点；单条原生笔触执行中无法承诺立即中断。文件只能保存到 launch 所配置的输出目录中，默认用户 Pictures/KritaAgent，默认拒绝覆盖已有文件。失败后的部分画布保留以便检查。
 
+## 上游追踪
+
+~~~powershell
+krita-agent upstream snapshot --repo "D:\computer\Krita\Krita-upstream"
+krita-agent upstream init --repo "D:\computer\Krita\Krita-upstream"
+krita-agent upstream check --repo "D:\computer\Krita\Krita-upstream" --write-report ".cache\krita-upstream-report.md"
+~~~
+
+init 创建本地基线；check 默认只读已有本地 Git，显式 --fetch 才联网更新；更新基线需显式 --update-baseline。git diff 只产生源码候选，不能证明当前安装包具有对应 API。
+
+## 首轮验收状态
+
+- 源码、JSON 协议、插画演示任务、任务控制、压感适配器、输出保护、上游报告：已完成本机功能验收，范围见 REPORT-004。
+- 自动测试：18 项通过。
+- Bridge 安装/启用、真实 Krita 运行、压感预设及 KRA 重开：三个本机构建已验证。
+- 复验步骤及结果参阅 docs/ACCEPTANCE.md 和 docs/REPORT-004.md。
+
+## 许可
+
+原创代码采用 MIT License；Krita 本体及第三方依赖仍遵循各自许可证。Bridge 发布前须复核 Krita GPL 兼容和实际分发安排。

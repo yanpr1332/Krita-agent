@@ -1,0 +1,70 @@
+{
+  "b-size-continuous": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "continuous",
+      "points": 101,
+      "warning": "Brush must have appropriate pressure dynamics; visual result unverified"
+    },
+    "seconds": 0.08672210003715008,
+    "undo_steps": 1,
+    "undo_restores_blank": true
+  },
+  "b-size-segmented": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "segmented",
+      "points": 101,
+      "warning": "Separate paintLine calls may have seams and distinct undo steps"
+    },
+    "seconds": 0.6110102999955416,
+    "undo_steps": 100,
+    "undo_restores_blank": true
+  },
+  "b-opacity-continuous": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "continuous",
+      "points": 101,
+      "warning": "Brush must have appropriate pressure dynamics; visual result unverified"
+    },
+    "seconds": 0.04882440000073984,
+    "undo_steps": 1,
+    "undo_restores_blank": true
+  },
+  "b-opacity-segmented": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "segmented",
+      "points": 101,
+      "warning": "Separate paintLine calls may have seams and distinct undo steps"
+    },
+    "seconds": 0.43261489999713376,
+    "undo_steps": 100,
+    "undo_restores_blank": true
+  },
+  "c-texture-continuous": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "continuous",
+      "points": 101,
+      "warning": "Brush must have appropriate pressure dynamics; visual result unverified"
+    },
+    "seconds": 0.06116819998715073,
+    "undo_steps": 1,
+    "undo_restores_blank": true
+  },
+  "c-texture-segmented": {
+    "paintAbility": "PAINT",
+    "stroke": {
+      "mode": "segmented",
+      "points": 101,
+      "warning": "Separate paintLine calls may have seams and distinct undo steps"
+    },
+    "seconds": 0.36475619999691844,
+    "undo_steps": 100,
+    "undo_restores_blank": true
+  },
+  "locked": "Select an unlocked paint layer",
+  "missing": "Select an unlocked paint layer"
+}

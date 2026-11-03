@@ -1,17 +1,15 @@
 # Roadmap and acceptance
 
-All items remain to be developed; ordering may change as experiments provide evidence.
+**2026-11-03: first-round source implemented and locally committed; runtime acceptance deliberately deferred.** Boxes below indicate tested capability, not merely code being present.
 
-- [ ] **P0-A — Environment discovery:** report the actual stable and Next build versions, plugin environment, and available APIs; establish a capability matrix.
-- [ ] **P0-B — Minimal bridge:** exchange simple commands and success / failure results between CLI and plugin without freezing the GUI.
-- [ ] **P0-C — Basic drawing:** create a canvas, layers, and basic strokes; save and reopen a layered KRA document.
-- [ ] **P0-D — Pressure:** validate continuous pressure input and brush response separately; compare Next and a stable-build fallback, including undo behavior.
-- [ ] **P0-E — Delivery:** provide installation, logging, tests, and a reproducible basic task.
-- [ ] **P1 — Drawing workflow:** structured drawing tasks, brush settings, reference images, checkpoints, pause and resume.
-- [ ] **P1-U — Upstream tracking:** incremental Git changes, traceable reports, and a capability matrix distinguishing source presence from runtime behavior.
-- [ ] **P2 — Intelligent iteration:** optional natural-language planning, visual feedback, and local revisions.
-- [ ] **P2-U — Enhanced tracking:** generate candidate compatibility tests and run them in isolation; scheduled checks are opt-in.
+- [ ] P0-A — Environment discovery: executable doctor and Bridge symbol probe coded; real build evidence pending.
+- [ ] P0-B — Authenticated localhost Bridge: implemented in source; installation and live exchange pending.
+- [ ] P0-C — Canvas/layers/shapes/brush/KRA/PNG: code present; paint and file verification pending.
+- [ ] P0-D — Pressure: StrokePoint continuous candidate and paintLine segmented fallback coded; visual checks pending.
+- [ ] P0-E — Delivery: CLI, install helper, examples, tests, docs present; install and execution pending.
+- [ ] P1 — JSON task queue, progress/status, checkpoint pause/resume/cancel coded; runtime pending.
+- [ ] P1-U — Source diff candidates, incremental baseline, report and capability matrix foundation coded; runtime pending.
+- [ ] P2 — Natural language planning, visual feedback, automated local revision remain future work.
+- [ ] P2-U — Scheduled monitoring, advanced API-specific candidate tests remain future work.
 
-## First real drawing acceptance
-
-Create a 2048 × 2048 canvas with at least three layers. Select native brushes configured to respond to pressure and draw constant-pressure, increasing-pressure, and thin–thick–thin curves. Test pressure-to-size and pressure-to-opacity separately. Record the actual stable and Next builds and compare line width, seams, antialiasing, texture, performance, and undo behavior. Save PNG and KRA, reopen the KRA to verify layers, and repeat the task to check that user artwork is not overwritten and uncontrolled files are not left behind.
+See ACCEPTANCE.md for the complete manual validation protocol.
