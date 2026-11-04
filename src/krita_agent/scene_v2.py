@@ -27,10 +27,14 @@ def compile_plan(scene):
             raise TaskError("Invalid canvas")
         steps.extend(compile_scene({"document":doc,"layers":[{"name":"Placeholder","elements":[]} ]})[:1])
     diagnostics=[]
+    used_names=set()
     for index,layer in enumerate(layers):
         if not isinstance(layer,dict):
             raise TaskError("Layer must be an object")
         name=label(layer.get("name"),"name")
+        if name in used_names:
+            raise TaskError("Duplicate layer name would make edits ambiguous: "+name)
+        used_names.add(name)
         role=layer.get("role","custom")
         if role not in ROLES:
             raise TaskError("Unsupported layer role")

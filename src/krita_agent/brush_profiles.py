@@ -83,6 +83,13 @@ def find_profiles(directory, build=None, category=None, min_confidence=0):
                 continue
             if p.get("confidence",0)<min_confidence:
                 continue
+            # A profile may only be selected while its manually reviewed
+            # evidence file remains unchanged and accessible.
+            evidence=Path(p.get("evidence_path",""))
+            if not evidence.is_file() or evidence.stat().st_size>5000000:
+                continue
+            if hashlib.sha256(evidence.read_bytes()).hexdigest()!=p.get("evidence_sha256"):
+                continue
             profiles.append(p)
         except (ValueError,OSError,TypeError):
             continue
