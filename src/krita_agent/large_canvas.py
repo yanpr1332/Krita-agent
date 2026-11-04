@@ -66,7 +66,10 @@ def plan_overlay(before, target, graph, tile_size=512, max_changed_tiles=128):
         for x,y,w,h in tiles(*a_meta["size"], tile_size):
             box = (x, y, x+w, y+h)
             a, b = image_a.crop(box).convert("RGBA"), image_b.crop(box).convert("RGBA")
-            diff = ImageChops.difference(a, b)
+            delta = ImageChops.difference(a, b)
+            channels = delta.split()
+            diff = ImageChops.lighter(ImageChops.lighter(channels[0],channels[1]),
+                                     ImageChops.lighter(channels[2],channels[3]))
             bounds = diff.getbbox()
             if bounds is None:
                 continue
