@@ -8,9 +8,9 @@ Base main: 0e48612e2914723ce9710aa4478ab3f5a5ab24fc
 
 R4-A/B: Native document graph with hierarchy and stable-ID rebind proposals; bounded Krita projection tile snapshots; conservative opaque-only goal overlays on a NEW editable top-level layer. Live graph and tile hash preflight, safe output paths and confirmed KRA snapshot precede canvas mutations. Source nodes are left intact.
 
-R4-C/E: Long-workflow coordinator serializes up to 10,000 raw steps into bounded existing Bridge jobs, with a checkpoint at each batch boundary, atomic ledger writes and no retry on uncertain remote effects. 512–1024px ROI tiles and pyramid layout metadata support planning for 4096x4096 workloads without copying the entire image through the JSON IPC.
+R4-C/E: Optional offline Pillow pyramid PNG generation supplements bounded previews. Long-workflow coordinator serializes up to 10,000 raw steps into bounded existing Bridge jobs, with a checkpoint at each batch boundary, atomic ledger writes and no retry on uncertain remote effects. 512–1024px ROI tiles and pyramid layout metadata support planning for 4096x4096 workloads without copying the entire image through the JSON IPC.
 
-R4-D: Manual, build-specific, SHA-backed brush calibration record and preferred-preset selection; plan generator only, never manufactured evidence.
+R4-D: Manual, build-specific, SHA-backed brush calibration record and preferred-preset selection (including optional ScenePlan v2 selection); plan generator only, never manufactured evidence. Long-stroke segmentation requires allow_seams=true and changes native stroke/Undo semantics.
 
 R4-F/G: ScenePlan v2 semantic layer planning and deterministic sample compiler; local alpha-aware difference review with finite, explicitly approved revisions. No LLM, image generation, semantic critic or automatic multi-round actions are invoked.
 

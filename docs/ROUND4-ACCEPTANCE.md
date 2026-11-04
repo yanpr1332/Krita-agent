@@ -30,6 +30,7 @@ Previously passing Round 3 tests do not imply any Round 4 feature passes.
 - [ ] Simulate response lost after a potentially accepted job: ledger becomes unknown_needs_review and there is exactly zero automatic retry.
 - [ ] Test pause/resume/cancel, wrong-port/reconnect, limited disk space and partial journal failure; do not kill unrelated processes.
 - [ ] Compare a continuous 2048-point stroke and explicitly segmented long trajectory for timing, visible seam and Undo granularity.
+- [ ] Test explicit long-stroke splitting of >2048 samples, endpoint overlap, global nondecreasing timestamps, seams and multiple Undo steps; unapproved splitting must fail.
 
 ## 4. R4-D Brush calibration
 - [ ] Generate calibration workflows for three installed presets per build; inspect actual pressure/size and opacity effects.
@@ -38,7 +39,7 @@ Previously passing Round 3 tests do not imply any Round 4 feature passes.
 
 ## 5. R4-E Tile and large canvas
 - [ ] Run 4096x4096 fixture using 512x512 previews and compare every tile origin, dimensions and pixel hash.
-- [ ] Check tile edges, pyramid metadata, memory/disk budgets, 32MP input cap and IPC size restrictions.
+- [ ] Check tile edges, offline Pillow pyramid PNG artifacts/ICC metadata, memory/disk budgets, 32MP input cap and IPC size restrictions.
 - [ ] Test alpha-only changes and fully transparent output, which must not silently pass an opaque-overlay revision.
 - [ ] Confirm profile/bit-depth probes, unsupported RGBA-U16 pixel write rejection and no unapproved color conversion.
 

@@ -33,6 +33,19 @@ Each batch submits via existing authenticated v1 IPC and ends in an actual KRA c
 
 Only a real inspected output should be recorded as a calibrated brush. Scene-v2 is deterministic JSON; no free-text commands or model invocation.
 
+## Offline large-canvas preview pyramid and long strokes
+
+    krita-agent pyramid build --image ".\images\full.png" --output-dir ".\preview-tiles" --tile-size 512
+    krita-agent pyramid inspect --manifest ".\preview-tiles\manifest.json"
+
+ScenePlan v2 optionally accepts a long_stroke element with allow_seams=true and
+segment_points <=2048, which emits separate native strokes (possible texture
+seams and multiple Undo operations). Without allow_seams it refuses.
+
+ScenePlan v2 can choose a manually reviewed brush by category when invoked with
+--profiles-directory and --build. Build-specific evidence must match the actual
+preset; missing profiles are refused.
+
 ## Feedback, projects and metrics
 
     krita-agent feedback-v2 review --current ".\current.png" --goal ".\goal.png" --graph ".\plans\graph.json" --round 0 --max-rounds 3 --output ".\plans\review.json"
