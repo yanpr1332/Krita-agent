@@ -71,8 +71,10 @@ def execute(bridge, command, p):
             raise ValueError("Overlay requires RGBA U8 document")
         from .checkpoints import _manifest
         record = _manifest(bridge, p.get("checkpoint_id"))
+        from pathlib import Path
         if (record["document_name"] != doc.name()
                 or [record["width"], record["height"]] != [doc.width(), doc.height()]
+                or Path(doc.fileName()).resolve() != Path(record["path"]).resolve()
                 or doc.modified()):
             raise ValueError("Document differs from checkpoint; refuse overlay creation")
         if not record.get("sha256"):

@@ -69,10 +69,24 @@ def apply(client, plan, confirm=False, wait=True, timeout=1800):
     if plan["status"]=="no_change":
         return {"state":"no_change","mutated":False}
     from .large_canvas import image_metadata
+    try:
+        identifier=uuid.UUID(plan["id"]).hex
+    except (ValueError,KeyError,TypeError):
+        raise TaskError("Invalid revision ID")
+    if identifier!=plan["id"]:
+        raise TaskError("Revision ID must be canonical hex")
     if image_metadata(plan["source"]["path"])["sha256"]!=plan["source"]["sha256"]:
         raise TaskError("Baseline reference changed since approval")
     if image_metadata(plan["target"]["path"])["sha256"]!=plan["target"]["sha256"]:
         raise TaskError("Goal reference changed since approval")
+    # Recompute the approved tile plan from immutable referenced files;
+    # edited JSON cannot inject arbitrary pixel writes or bypass alpha checks.
+    graph_file=json.loads(Path(plan["graph_file"]).read_text(encoding="utf-8"))
+    expected=plan_overlay(plan["source"]["path"],plan["target"]["path"],
+                          graph_file,tile_size=plan["tile_size"])
+    if (expected["changes"]!=plan["changes"] or
+            expected["graph_sha256"]!=plan["graph_sha256"]):
+        raise TaskError("Revision plan changed after approval")
     info=client.request("status")
     input_root=Path(info["input_dir"]).resolve()
     target=Path(plan["target"]["path"]).resolve()
