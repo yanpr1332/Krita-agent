@@ -14,7 +14,7 @@ ROLES={"background","lineart","base_color","shadow","highlight","texture",
        "foreground","reference","effects","custom"}
 
 
-def compile_plan(scene):
+def compile_plan(scene, profile_dir=None, build=None):
     if not isinstance(scene,dict) or scene.get("schema")!=SCHEMA:
         raise TaskError("Expected ScenePlan v2 object")
     layers=scene.get("layers")
@@ -38,9 +38,29 @@ def compile_plan(scene):
         role=layer.get("role","custom")
         if role not in ROLES:
             raise TaskError("Unsupported layer role")
+        brush=dict(layer.get("brush",{}))
+        if "brush_category" in layer:
+            if not profile_dir or not build:
+                raise TaskError("Brush category requires explicit profile directory and build")
+            from .brush_profiles import choose
+            selected=choose(profile_dir,build,layer["brush_category"])
+            brush["preset"]=selected["preset"]
+            brush["pressure_enabled"]=bool(selected["pressure_size"] or selected["pressure_opacity"])
+        elements=[]
+        for element in layer.get("elements",[]):
+            if isinstance(element,dict) and element.get("kind")=="long_stroke":
+                from .long_strokes import as_steps
+                segments,report=as_steps(element.get("points"),
+                    element.get("segment_points",1500),
+                    element.get("mode","auto"),element.get("allow_seams",False))
+                for segment in segments:
+                    elements.append({"kind":"stroke",
+                        "mode":segment["parameters"]["mode"],
+                        "points":segment["parameters"]["points"]})
+            else:
+                elements.append(element)
         stages=compile_scene({"layers":[{
-            "name":name,"brush":layer.get("brush",{}),
-            "elements":layer.get("elements",[])}]})
+            "name":name,"brush":brush,"elements":elements}]})
         steps.extend(stages)
         if "opacity" in layer or "visible" in layer:
             props={}
@@ -56,7 +76,9 @@ def compile_plan(scene):
             steps.append({"command":"preview.canvas","parameters":{
                 "filename":"scene-v2/preview-"+str(index)+".png",
                 "width":512,"height":512}})
-        diagnostics.append({"name":name,"role":role,"elements":len(layer.get("elements",[]))})
+        diagnostics.append({"name":name,"role":role,"elements":len(layer.get("elements",[])),
+                            "compiled_elements":len(elements),
+                            "seams_possible":any(e.get("kind")=="long_stroke" for e in layer.get("elements",[]) if isinstance(e,dict))})
     if len(steps)>10000:
         raise TaskError("Scene exceeds max 10000 steps")
     # Each command is individually rechecked. Large plans are submitted with

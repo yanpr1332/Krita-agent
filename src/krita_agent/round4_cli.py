@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from . import document_graph, large_canvas, layered_revision
 from . import scheduler, brush_profiles, feedback_v2, scene_v2, projects
-from . import performance
+from . import performance, pyramid
 
 
 def _read(path):
@@ -70,12 +70,23 @@ def register(commands,connection):
         p.add_argument("--category")
         p.add_argument("--min-confidence",type=float,default=.8)
 
+    pyr=commands.add_parser("pyramid",help="Build offline tile pyramid from a source image")
+    pa=pyr.add_subparsers(dest="action",required=True)
+    pb=pa.add_parser("build")
+    pb.add_argument("--image",required=True)
+    pb.add_argument("--output-dir",required=True)
+    pb.add_argument("--tile-size",type=int,default=512)
+    pi=pa.add_parser("inspect")
+    pi.add_argument("--manifest",required=True)
+
     scene=commands.add_parser("scene-v2",help="Human-reviewable structured painting")
     sa=scene.add_subparsers(dest="action",required=True)
     for action in ("compile","submit"):
         p=sa.add_parser(action)
         p.add_argument("--file",required=True)
         p.add_argument("--output")
+        p.add_argument("--profiles-directory")
+        p.add_argument("--build")
         if action=="submit":
             connection(p)
             p.add_argument("--ledger-dir",default=".cache/long-jobs")
@@ -142,8 +153,11 @@ def execute(args,get_client):
         if not (args.build and args.category):
             raise ValueError("Brush choice requires --build and --category")
         return brush_profiles.choose(args.directory,args.build,args.category,args.min_confidence)
+    if cmd=="pyramid":
+        return (pyramid.build(args.image,args.output_dir,args.tile_size)
+                if args.action=="build" else pyramid.inspect(args.manifest))
     if cmd=="scene-v2":
-        plan=scene_v2.compile_plan(_read(args.file))
+        plan=scene_v2.compile_plan(_read(args.file),args.profiles_directory,args.build)
         if args.output:
             _dump(plan,args.output)
         if args.action=="compile":

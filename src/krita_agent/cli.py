@@ -247,7 +247,7 @@ def _wait_for_job(client, job_id):
 def main(argv=None):
     try:
         args = parser_build().parse_args(argv)
-        if args.command in ("graph","overlay","longjob","brushcal","scene-v2","feedback-v2","project","performance"):
+        if args.command in ("graph","overlay","longjob","brushcal","scene-v2","feedback-v2","project","performance","pyramid"):
             _show(round4_cli.execute(args,_client))
             return 0
         if args.command == "doctor":
