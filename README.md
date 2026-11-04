@@ -4,15 +4,16 @@ English | [简体中文](README.zh-CN.md)
 
 Krita Agent is a Windows-native Python/Qt automation system for **real editable Krita painting**. An authenticated loopback IPC channel connects an external Controller to a Krita Python Extension running on the GUI thread. The project deliberately separates source implementation, offline test results and actual installed-build acceptance.
 
-## Project status (2026-11-03)
+## Project status (2026-11-04)
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
 | Round 1: Native painting and basic tasks | **Accepted** on Stable and both Next builds | [REPORT-004](docs/REPORT-004.md) |
 | Round 2: Editable workflow, previews, images and Dock | **Accepted**, 34 offline tests passed and pixel/Dock real-build checks recorded | [REPORT-006](docs/REPORT-006.md), [REPORT-007](docs/REPORT-007.md) |
 | Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Accepted on the three installed builds; 57 offline tests passed** | [REPORT-009](docs/REPORT-009.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
+| Round 4: Layer-aware painting, large jobs, brush profiles and ScenePlan v2 | **SOURCE IMPLEMENTED — NOT TESTED** | [REPORT-010](docs/REPORT-010.md), [ROUND4-ACCEPTANCE](docs/ROUND4-ACCEPTANCE.md) |
 
-Acceptance covers three specific builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha. They are not blanket future-version guarantees. Round 3 native, crash-recovery, pixel and actual Dock acceptance is recorded in [REPORT-009](docs/REPORT-009.md). No CI was triggered.
+Prior acceptance covers specific Stable/Next builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha, not newer features automatically. Round 3 results are in [REPORT-009](docs/REPORT-009.md). Round 4 test and GUI acceptance has **not** been run; no CI was triggered.
 
 ## Main architecture
 
@@ -23,7 +24,7 @@ src/krita_agent/              External Controller, task protocol, geometry,
 plugin/krita_agent_bridge/    Krita Python Extension, native nodes/brush,
                               masks, checkpoints, per-pixel reversible history,
                               compressed clips, optional local Dock
-tests/                        Offline regression tests (57 passed)
+tests/                        Round 1-3: 57 offline tests reported passed; Round 4 source unexecuted
 scripts/                      Dry-run plugin installer, acceptance helpers
 examples/                     JSON geometry / workflow examples
 docs/                         Milestone reports, architecture, acceptance
@@ -80,8 +81,26 @@ An interrupted job is never replayed on startup. The restoration process verifie
 
 Optional image-difference planning requires `pip install -e ".[feedback]"`. The core Controller has no required cloud API or generative model.
 
+
+## Round 4 new source commands (NOT runtime verified)
+
+    krita-agent graph capture --output ".\plans\graph.json"
+    krita-agent overlay plan --before ".\images\before.png" --target ".\references\goal.png" --graph ".\plans\graph.json" --output ".\plans\overlay.json"
+    krita-agent overlay apply --plan ".\plans\overlay.json" --confirm
+    krita-agent longjob plan --file ".\examples\round4-longjob.json"
+    krita-agent longjob run --file ".\examples\round4-longjob.json"
+    krita-agent brushcal generate --preset "Basic-5 Size" --output ".\plans\calibration.json"
+    krita-agent scene-v2 compile --file ".\examples\round4-scene-v2.json"
+    krita-agent feedback-v2 review --current ".\images\current.png" --goal ".\references\goal.png" --graph ".\plans\graph.json" --output ".\plans\review.json"
+
+The multi-layer workflow creates an independent top-level editable overlay only
+for fully opaque target changes. It does not reverse arbitrary blending/masks.
+The long-job scheduler submits bounded native jobs serially and stops if any
+response has uncertain effects, rather than blindly retrying. ScenePlan v2 is
+deterministic JSON; no LLM or third-party Krita plugin is installed.
+
 ## Documentation and contribution
 
-[Round 3 API](docs/ROUND3-API.md) · [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) · [Current roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Round 3 implementation report](docs/REPORT-008.md) · [Contributing](CONTRIBUTING.md).
+[Round 4 API](docs/ROUND4-API.md) · [Round 4 acceptance checklist](docs/ROUND4-ACCEPTANCE.md) · [Round 4 report](docs/REPORT-010.md) · [Release notes](docs/RELEASE.md) · [Round 3 API](docs/ROUND3-API.md) · [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) · [Current roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Round 3 implementation report](docs/REPORT-008.md) · [Contributing](CONTRIBUTING.md).
 
 The project-authored code is MIT-licensed. Krita and all third-party dependencies retain their own licensing terms.

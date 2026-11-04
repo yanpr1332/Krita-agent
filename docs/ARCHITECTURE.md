@@ -2,7 +2,7 @@
 
 ## Runtime-proven foundation
 
-**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. A feature's availability always refers to a concrete build and test.
+**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. **Round 4 is source-only; no new installed-build verification has happened.** A feature's availability always refers to a concrete build and test.
 
 ```text
 CLI / SDK (Windows Python)
@@ -51,8 +51,30 @@ Krita Plugin, in-process Qt GUI context
 - **Revision:** deterministic target reference diff, explicitly approved bounded rectangle, verified live projection, one visible fully opaque normal paint layer. General multilayer semantic image edits are deferred.
 - **Upstream:** read-only local Git inventory and reviewed runtime evidence. Source_seen never silently becomes tested_working.
 
+
+## Round 4 source extensions (NOT runtime verified)
+
+- External: document_graph.py, large_canvas.py, layered_revision.py,
+  scheduler.py, brush_profiles.py, scene_v2.py, feedback_v2.py,
+  projects.py, performance.py, protocol_v2.py, compatibility.py,
+  round4_cli.py.
+- Krita plugin: round4_layers.py (graph, bounded tiles, safe overlay),
+  round4_diagnostics.py (build limits, timing), and additive routing
+  in advanced.py plus GUI-step metrics in the main Bridge.
+- IPC remains authenticated 127.0.0.1 v1 JSON with the existing wire
+  limits. v2 DTO classes do not change the transport or add remote execution.
+- Safe overlay: approved opaque target ROI + live tile/graph hashes +
+  KRA snapshot + NEW editable paint layer; never rewrite original layers.
+  This is not universal reverse compositing for arbitrary masks/blend modes.
+- Long tasks: serial sub-jobs, bounded IPC requests, KRA checkpoint after
+  each batch, atomic local intent ledger. Unknown effects are never retried.
+- Image input remains constrained by the configured local sandbox; no
+  direct cloud/LLM calls, and project manifests intentionally omit secrets.
+- Full native behavior and performance on the three installed builds are
+  pending the fourth-round acceptance checklist.
+
 ## Status maintenance
 
-Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 3 status. Manual-only GitHub workflow remains opt-in; no CI or desktop test was launched while authoring this round.
+Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 4 status. Manual-only GitHub workflow remains opt-in; no CI or desktop test was launched while authoring this round.
 
 Round 3 acceptance completed with 57 offline tests and native, pixel, controlled-crash and actual Dock evidence; see REPORT-009. Atomic metadata replacement has bounded Windows sharing-lock retries; integrity and root bounds are checked before recovery writes.
