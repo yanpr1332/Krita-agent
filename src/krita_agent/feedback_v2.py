@@ -15,9 +15,11 @@ def assess(before, goal, graph, max_error=0.005):
         # Conversion and metrics on explicit images; no semantic inference.
         aa=a.convert("RGBA")
         bb=b.convert("RGBA")
-        diff=ImageChops.difference(aa,bb).convert("RGB")
-        mean=ImageStat.Stat(diff).mean
-        error=sum(mean)/(3*255)
+        delta=ImageChops.difference(aa,bb)
+        mean=ImageStat.Stat(delta).mean
+        error=sum(mean)/(4*255)
+        c=delta.split()
+        diff=ImageChops.lighter(ImageChops.lighter(c[0],c[1]),ImageChops.lighter(c[2],c[3]))
         return {"error_normalized":round(error,8),
                 "pixel_goal_met":error<=max_error,
                 "difference_bbox":list(diff.getbbox()) if diff.getbbox() else None,

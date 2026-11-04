@@ -20,6 +20,7 @@ from . import upstream as upstream_api
 from . import upstream3
 from . import revisions
 from .creative_plans import compile_scene
+from . import round4_cli
 
 
 def inspect(path, timeout=10):
@@ -231,6 +232,7 @@ def parser_build():
                           choices=("source_seen", "present_in_build", "not_supported", "tested_working"))
     writecmd.add_argument("--evidence", required=True)
     writecmd.add_argument("--confirm-reviewed", action="store_true")
+    round4_cli.register(commands,_connection)
     return parser
 
 
@@ -245,6 +247,9 @@ def _wait_for_job(client, job_id):
 def main(argv=None):
     try:
         args = parser_build().parse_args(argv)
+        if args.command in ("graph","overlay","longjob","brushcal","scene-v2","feedback-v2","project","performance"):
+            _show(round4_cli.execute(args,_client))
+            return 0
         if args.command == "doctor":
             options = [(key, getattr(args, key)) for key in ("krita", "stable", "next")
                        if getattr(args, key)]

@@ -60,7 +60,7 @@ def _goal_tile_matches(preview_file, target_file, box):
         goal=target.crop((x,y,x+w,y+h)).convert("RGBA")
         if current.size!=goal.size:
             return False
-        return ImageChops.difference(current,goal).getbbox() is None
+        return current.tobytes()==goal.tobytes()
 
 
 def apply(client, plan, confirm=False, wait=True, timeout=1800):
