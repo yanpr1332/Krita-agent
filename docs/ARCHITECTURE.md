@@ -2,7 +2,7 @@
 
 ## Runtime-proven foundation
 
-**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. **Round 4 is source-only; no new installed-build verification has happened.** A feature's availability always refers to a concrete build and test.
+**Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. Round 4 installed-build acceptance and repairs are recorded in REPORT-011. A feature's availability always refers to a concrete build and test.
 
 ```text
 CLI / SDK (Windows Python)
@@ -52,7 +52,7 @@ Krita Plugin, in-process Qt GUI context
 - **Upstream:** read-only local Git inventory and reviewed runtime evidence. Source_seen never silently becomes tested_working.
 
 
-## Round 4 source extensions (NOT runtime verified)
+## Round 4 extensions
 
 - External: document_graph.py, large_canvas.py, layered_revision.py,
   scheduler.py, brush_profiles.py, scene_v2.py, feedback_v2.py,
@@ -70,11 +70,10 @@ Krita Plugin, in-process Qt GUI context
   each batch, atomic local intent ledger. Unknown effects are never retried.
 - Image input remains constrained by the configured local sandbox; no
   direct cloud/LLM calls, and project manifests intentionally omit secrets.
-- Full native behavior and performance on the three installed builds are
-  pending the fourth-round acceptance checklist.
+- REPORT-011 records native results and sampled performance on the three installed builds.
 
 ## Status maintenance
 
-Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 4 status. Manual-only GitHub workflow remains opt-in; no CI or desktop test was launched while authoring this round.
+Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 4 status. The manual GitHub workflow remains opt-in.
 
 Round 3 acceptance completed with 57 offline tests and native, pixel, controlled-crash and actual Dock evidence; see REPORT-009. Atomic metadata replacement has bounded Windows sharing-lock retries; integrity and root bounds are checked before recovery writes.

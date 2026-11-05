@@ -1,0 +1,29 @@
+[
+  {
+    "build": "stable",
+    "collision_refused": true,
+    "graph_unchanged": true,
+    "existing_file_unchanged": true,
+    "no_checkpoint_before_refusal": true,
+    "successful_after_collision_removed": true,
+    "reopened_kra_sha256": "a60c8d36f76ecfd65cdd0788c314ec44835da567f7535c735df199448c586fce"
+  },
+  {
+    "build": "qt5",
+    "collision_refused": true,
+    "graph_unchanged": true,
+    "existing_file_unchanged": true,
+    "no_checkpoint_before_refusal": true,
+    "successful_after_collision_removed": true,
+    "reopened_kra_sha256": "c6ef845be608cd76e39d37bc8cd608e96fea8be0f713f92c26a84eb3109857e7"
+  },
+  {
+    "build": "qt6",
+    "collision_refused": true,
+    "graph_unchanged": true,
+    "existing_file_unchanged": true,
+    "no_checkpoint_before_refusal": true,
+    "successful_after_collision_removed": true,
+    "reopened_kra_sha256": "376ce14f7329dbd454a8a6b97160c714fe772e7d3a9fab4510e222085be316a2"
+  }
+]

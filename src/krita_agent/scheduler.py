@@ -69,7 +69,14 @@ class Ledger:
                 json.dump(value,f,ensure_ascii=False,allow_nan=False,indent=2)
                 f.flush()
                 os.fsync(f.fileno())
-            os.replace(temp,self.path)
+            for attempt in range(8):
+                try:
+                    os.replace(temp,self.path)
+                    break
+                except PermissionError:
+                    if attempt == 7:
+                        raise
+                    time.sleep(.05)
         finally:
             temp.unlink(missing_ok=True)
 
@@ -117,7 +124,10 @@ def run(client, spec, ledger_dir, batch_steps=120, poll_interval=0.3,
                     on_progress({"batch":index+1,"total_batches":len(batches),"job":status})
                 if status["state"]=="completed":
                     record["completed"].append({"index":index,"job_id":result["id"],
-                                                "checkpoint":status.get("last_result")})
+                                                "checkpoint":status.get("last_result"),
+                                                "batch_sha256":_digest(batch),
+                                                "steps":len(batch),
+                                                "elapsed_seconds":round(time.monotonic()-started,6)})
                     record["next_batch"]=index+1
                     record["current"]=None
                     record["state"]="ready_for_next_batch"
@@ -129,7 +139,10 @@ def run(client, spec, ledger_dir, batch_steps=120, poll_interval=0.3,
         except Exception as exc:
             record["state"]="unknown_needs_review"
             record["error"]=str(exc)
-            ledger.write(record)
+            try:
+                ledger.write(record)
+            except OSError as storage_error:
+                record["ledger_write_error"] = str(storage_error)
             return {"state":record["state"],"ledger":str(ledger.path),
                     "completed_batches":len(record["completed"]),"error":str(exc)}
     record["state"]="completed"

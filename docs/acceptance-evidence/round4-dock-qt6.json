@@ -1,0 +1,46 @@
+{
+  "actual_ui_clicks": true,
+  "pause": {
+    "id": "d33b0ad5873e4a0fafe88d853366de7f",
+    "state": "paused",
+    "total": 400,
+    "done": 264,
+    "error": null,
+    "last_result": {
+      "name": "Round4 integrated",
+      "width": 4096,
+      "height": 4096,
+      "active_layer": "1200 Strokes"
+    },
+    "cancel_requested": false
+  },
+  "cancel": {
+    "id": "d33b0ad5873e4a0fafe88d853366de7f",
+    "state": "cancelled",
+    "total": 400,
+    "done": 264,
+    "error": null,
+    "last_result": {
+      "name": "Round4 integrated",
+      "width": 4096,
+      "height": 4096,
+      "active_layer": "1200 Strokes"
+    },
+    "cancel_requested": true
+  },
+  "metrics": {
+    "id": "d33b0ad5873e4a0fafe88d853366de7f",
+    "state": "cancelled",
+    "completed_steps": 264,
+    "total_steps": 400,
+    "metrics": {
+      "total_step_ms": 403.165,
+      "max_step_ms": 23.588,
+      "last_step_ms": 23.588
+    },
+    "note": "Step timing is measured on GUI thread, not image quality."
+  },
+  "layout": "history, error, preview and step timing inspected; controls accessible",
+  "scale_configuration": 1.5,
+  "full_thumbnail_observed_after_scrolling": true
+}

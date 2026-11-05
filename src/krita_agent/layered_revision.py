@@ -88,6 +88,13 @@ def apply(client, plan, confirm=False, wait=True, timeout=1800):
             expected["graph_sha256"]!=plan["graph_sha256"]):
         raise TaskError("Revision plan changed after approval")
     info=client.request("status")
+    output = Path("layered-revisions") / (identifier + ".kra")
+    output_root = Path(info["output_dir"]).resolve()
+    destination = (output_root / output).resolve()
+    if output_root not in destination.parents:
+        raise TaskError("Revision output must be inside the authorized output directory")
+    if destination.exists():
+        raise TaskError("Revision output already exists")
     input_root=Path(info["input_dir"]).resolve()
     target=Path(plan["target"]["path"]).resolve()
     if target!=input_root and input_root not in target.parents:
@@ -108,22 +115,23 @@ def apply(client, plan, confirm=False, wait=True, timeout=1800):
                    filename="previews/overlay-preflight-"+uuid.uuid4().hex+".png")
         if _rgba_sha(result["path"])!=item["preflight_sha256"]:
             raise TaskError("Stale live canvas tile: "+str(index))
-    checkpoint=client.request("checkpoint.create")
-    overlay=client.request("revision.overlay.begin",confirm=True,checkpoint_id=checkpoint["id"],
-                           name="AgentOverlay-"+plan["id"][:12])
+    overlay_name = "AgentOverlay-" + identifier[:12]
     steps=[]
     for entry in plan["changes"]:
         x,y,w,h=entry["rect"]
         steps.append({"command":"pixel.transaction.patch","parameters":{
-            "name":overlay["name"],"path":str(target),
+            "name":overlay_name,"path":str(target),
             "x":x,"y":y,"width":w,"height":h,
             "source_x":x,"source_y":y,"confirm":True}})
     # A new KRA avoids changing the original file. The checkpoint pre-dates
     # overlay creation, so rollback always has the original full KRA.
     steps.append({"command":"document.save","parameters":{
-        "path":"layered-revisions/"+plan["id"]+".kra","overwrite":False}})
+        "path":output.as_posix(),"overwrite":False}})
     if len(json.dumps({"steps":steps},ensure_ascii=False).encode())>MAX_WIRE_BYTES:
         raise TaskError("Revision request exceeds IPC limit")
+    checkpoint=client.request("checkpoint.create")
+    overlay=client.request("revision.overlay.begin",confirm=True,checkpoint_id=checkpoint["id"],
+                           name=overlay_name)
     try:
         job=client.submit(steps)
     except Exception:

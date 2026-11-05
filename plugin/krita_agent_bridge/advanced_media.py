@@ -19,6 +19,17 @@ COMMANDS = frozenset((
 ))
 
 
+def _root_anchor(doc):
+    node = doc.activeNode()
+    root = doc.rootNode()
+    while node is not None and node != root:
+        parent = node.parentNode()
+        if parent == root:
+            return node
+        node = parent
+    return None
+
+
 def _save(bridge, image, filename):
     target = bridge._safe_path(word(filename, "preview filename", 240), ".png", False)
     if image.isNull() or not image.save(target, "PNG"):
@@ -61,7 +72,7 @@ def execute(bridge, command, p):
     if command == "reference.import":
         source = safe_input(bridge, p.get("path"))
         layer = doc.createFileLayer(word(p.get("name", source.stem)), str(source), "None")
-        if layer is None or not doc.rootNode().addChildNode(layer, doc.activeNode()):
+        if layer is None or not doc.rootNode().addChildNode(layer, _root_anchor(doc)):
             raise RuntimeError("Could not add file reference layer")
         return {"name": layer.name(), "type": layer.type(), "source": str(source)}
     if command == "image.import":
@@ -90,7 +101,7 @@ def execute(bridge, command, p):
         layer = doc.createNode(word(p.get("name", source.stem)), "paintlayer")
         if layer is None or not layer.setPixelData(QByteArray(pixel_bytes), x, y, width, height):
             raise RuntimeError("Krita rejected RGBA pixels")
-        if not doc.rootNode().addChildNode(layer, doc.activeNode()):
+        if not doc.rootNode().addChildNode(layer, _root_anchor(doc)):
             raise RuntimeError("Krita rejected imported layer")
         doc.setActiveNode(layer)
         return {"name": layer.name(), "width": width, "height": height, "type": "paintlayer"}

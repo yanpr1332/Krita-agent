@@ -1,4 +1,4 @@
-"""Offline ScenePlan v2, feedback and manual brush profile tests; NOT RUN."""
+"""Offline ScenePlan v2, feedback and manual brush profile tests."""
 import json
 import pytest
 from krita_agent.scene_v2 import compile_plan,load_ai_candidate

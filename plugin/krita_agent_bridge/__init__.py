@@ -306,7 +306,7 @@ class KritaAgentBridge(Extension):
                     "input_dir": str(Path(os.environ.get("KRITA_AGENT_INPUT_DIR") or self.output_dir).resolve())}
         if command == "capabilities":
             return self._capabilities()
-        if command.startswith("job."):
+        if command.startswith("job.") and command not in ADVANCED_COMMANDS:
             return self._job(command, p)
         if command == "canvas.create":
             w = _int(p.get("width"), "width", 1, 8192)

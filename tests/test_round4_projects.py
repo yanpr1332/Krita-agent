@@ -1,4 +1,4 @@
-"""Offline project provenance and immutable artifact tests; NOT RUN."""
+"""Offline project provenance and immutable artifact tests."""
 from pathlib import Path
 import pytest
 from krita_agent.projects import init,show,add,audit

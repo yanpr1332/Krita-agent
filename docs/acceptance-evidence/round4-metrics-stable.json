@@ -1,0 +1,28 @@
+{
+  "build": "stable",
+  "document": {
+    "name": "Round4 integrated",
+    "width": 4096,
+    "height": 4096,
+    "active_layer": "1200 Strokes"
+  },
+  "rpc_status_ms": [
+    29.76369997486472,
+    52.2913999739103,
+    40.03729997202754,
+    46.3420000160113,
+    46.47400003159419,
+    47.80430003302172,
+    45.01550004351884,
+    46.542299969587475
+  ],
+  "mean_status_ms": 44.28381250181701,
+  "memory_at_sample": {
+    "Id": 32780,
+    "WorkingSet64": 1164931072,
+    "PeakWorkingSet64": 1315512320,
+    "CPU": 15.53125
+  },
+  "storage_bytes_at_sample": 17392544,
+  "scope": "Single-session observations; memory sampled during acceptance, not a statistical benchmark"
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "case": "overlay_stale_and_budget_rejections",
+    "ok": true,
+    "result": {
+      "graph_and_bytes": {
+        "byte_equal_original_node_counts": [
+          14,
+          15
+        ],
+        "rebind_nodes": 17
+      },
+      "denials": [
+        "Baseline reference changed since approval",
+        "Goal reference changed since approval",
+        "Live Krita layer tree changed since plan creation",
+        "Stale live canvas tile: 0",
+        "Invalid revision ID",
+        "Revision plan changed after approval",
+        "Changed region contains translucent target pixels; opaque overlay would not reproduce target",
+        "Changed tile exceeds pixel transaction area"
+      ]
+    }
+  },
+  {
+    "case": "long_stroke_execution",
+    "ok": true,
+    "result": {
+      "samples": 4097,
+      "segments": 66,
+      "seconds": 23.928244299953803,
+      "continuous_2048_seconds": 0.27536899998085573,
+      "continuous_supported": true
+    }
+  },
+  {
+    "case": "scene_v2_project_audit",
+    "ok": true,
+    "result": {
+      "scene_sha256": "bc312aabe6be18ccf1de32cc74d1d205f7a40f780b1fed97654aec85c20a03e8",
+      "job": {
+        "id": "e69eef1afe534768a1e7aa45b5ed56e1",
+        "state": "completed",
+        "total": 26,
+        "done": 26,
+        "error": null,
+        "last_result": {
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793754365\\scene-v2\\preview-7.png",
+          "width": 512,
+          "height": 512,
+          "sha256": "5e3ab727169bb27dcc45ef4cb7901e22d2b9dd938b7ca5811b6b6edc94862473"
+        },
+        "cancel_requested": false
+      },
+      "project_audit": {
+        "project": "e7a3fb0584514df1b7a4c87039284dd2",
+        "artifacts": [
+          {
+            "kind": "kra",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793754365\\project\\art.kra",
+            "valid": true
+          },
+          {
+            "kind": "scene_plan",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793754365\\project\\scene.json",
+            "valid": true
+          }
+        ],
+        "all_valid": true
+      }
+    }
+  }
+]

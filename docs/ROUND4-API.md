@@ -1,6 +1,6 @@
-# Round 4 command guide — source implemented, NOT RUNTIME VERIFIED
+# Round 4 command guide
 
-These examples are for a future acceptance round. Do not treat them as tested.
+See [REPORT-011](REPORT-011.md) for the local acceptance evidence and build-specific limits.
 First install/enable the local Krita Bridge explicitly in a disposable test profile and launch with authorized input/output directories.
 
 ## Graph capture and layered overlay
@@ -24,7 +24,7 @@ Each batch submits via existing authenticated v1 IPC and ends in an actual KRA c
 
 ## Brush calibration and ScenePlan v2
 
-    krita-agent brushcal generate --preset "Basic-5 Size" --size 24 --output ".\plans\brush-calibration.json"
+    krita-agent brushcal generate --preset "b) Basic-5 Size" --size 24 --output ".\plans\brush-calibration.json"
     krita-agent brushcal record --data ".\plans\calibration-reviewed.json" --evidence ".\evidence\brush-output.png" --directory ".\profiles"
     krita-agent brushcal choose --directory ".\profiles" --build "Next Qt5" --category ink
 

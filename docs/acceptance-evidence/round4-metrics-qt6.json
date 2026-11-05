@@ -1,0 +1,28 @@
+{
+  "build": "qt6",
+  "document": {
+    "name": "Round4 integrated",
+    "width": 4096,
+    "height": 4096,
+    "active_layer": "1200 Strokes"
+  },
+  "rpc_status_ms": [
+    40.62709998106584,
+    50.03189999843016,
+    49.782700021751225,
+    51.33909999858588,
+    33.1791999633424,
+    48.995799967087805,
+    50.757699995301664,
+    47.07039997447282
+  ],
+  "mean_status_ms": 46.472987487504724,
+  "memory_at_sample": {
+    "Id": 6092,
+    "WorkingSet64": 1249546240,
+    "PeakWorkingSet64": 1404911616,
+    "CPU": 15.75
+  },
+  "storage_bytes_at_sample": 18871808,
+  "scope": "Single-session observations; memory sampled during acceptance, not a statistical benchmark"
+}

@@ -1,4 +1,4 @@
-"""Offline tiling, alpha and difference-plan gates; NOT RUN this round."""
+"""Offline tiling, alpha and difference-plan gates."""
 import pytest
 from krita_agent.large_canvas import plan_overlay,tiles,pyramid_layout
 
@@ -43,3 +43,32 @@ def test_pyramid_and_tile_count():
     assert levels[-1]["width"]<=512
     with pytest.raises(ValueError):
         tiles(4096,4096,8)
+
+
+
+def test_existing_revision_output_is_refused_before_native_mutation(tmp_path):
+    import json
+    from unittest.mock import Mock
+
+    from krita_agent import layered_revision
+    from krita_agent.protocol import TaskError
+
+    image = pytest.importorskip("PIL.Image")
+    before, goal = tmp_path / "before.png", tmp_path / "goal.png"
+    image.new("RGBA", (128, 128), "white").save(before)
+    image.new("RGBA", (128, 128), "black").save(goal)
+    graph_file = tmp_path / "graph.json"
+    graph_file.write_text(json.dumps(graph(128, 128)), encoding="utf-8")
+    plan = layered_revision.create_plan(before, goal, graph_file, tmp_path / "plan.json")
+    destination = tmp_path / "layered-revisions" / (plan["id"] + ".kra")
+    destination.parent.mkdir()
+    destination.write_bytes(b"existing")
+    client = Mock()
+    client.request.return_value = {"input_dir": str(tmp_path), "output_dir": str(tmp_path)}
+
+    with pytest.raises(TaskError, match="already exists"):
+        layered_revision.apply(client, plan, confirm=True)
+
+    client.request.assert_called_once_with("status")
+    client.submit.assert_not_called()
+    assert destination.read_bytes() == b"existing"

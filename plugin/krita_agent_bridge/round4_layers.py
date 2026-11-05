@@ -88,6 +88,7 @@ def execute(bridge, command, p):
             raise RuntimeError("Krita rejected overlay layer")
         if layer.type() != "paintlayer":
             raise RuntimeError("Krita did not return a paint layer")
+        # Krita childNodes is bottom-to-top: the last child is visually topmost.
         # Ensure overlay is above all original paint/group/mask nodes.
         # Reordering preserves the relative order of every original child.
         layer.setVisible(True)
@@ -95,12 +96,12 @@ def execute(bridge, command, p):
         layer.setBlendingMode("normal")
         siblings = list(root.childNodes())
         layer_id = str(layer.uniqueId().toString())
-        if not siblings or str(siblings[0].uniqueId().toString()) != layer_id:
-            reordered = [layer] + [child for child in siblings
-                                     if str(child.uniqueId().toString()) != layer_id]
+        if not siblings or str(siblings[-1].uniqueId().toString()) != layer_id:
+            reordered = [child for child in siblings
+                         if str(child.uniqueId().toString()) != layer_id] + [layer]
             root.setChildNodes(reordered)
         final_children = list(root.childNodes())
-        if not final_children or str(final_children[0].uniqueId().toString()) != layer_id:
+        if not final_children or str(final_children[-1].uniqueId().toString()) != layer_id:
             raise RuntimeError("Cannot guarantee overlay is topmost; no pixels were patched")
         doc.setActiveNode(layer)
         doc.refreshProjection()

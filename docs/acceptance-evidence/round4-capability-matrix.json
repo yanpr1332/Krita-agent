@@ -1,0 +1,186 @@
+{
+  "registry": {
+    "entries": [
+      {
+        "build": "stable",
+        "symbol": "document.graph",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-stable.json",
+        "evidence_sha256": "7312f1dd2e4ffe10e8304a430f75fc999d10126d4fef5a8d5a0d59957b4ead5f"
+      },
+      {
+        "build": "stable",
+        "symbol": "preview.tile",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-stable.json",
+        "evidence_sha256": "7312f1dd2e4ffe10e8304a430f75fc999d10126d4fef5a8d5a0d59957b4ead5f"
+      },
+      {
+        "build": "stable",
+        "symbol": "layered_revision",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-stable.json",
+        "evidence_sha256": "7312f1dd2e4ffe10e8304a430f75fc999d10126d4fef5a8d5a0d59957b4ead5f"
+      },
+      {
+        "build": "stable",
+        "symbol": "longjob.scheduler",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-stable.json",
+        "evidence_sha256": "7312f1dd2e4ffe10e8304a430f75fc999d10126d4fef5a8d5a0d59957b4ead5f"
+      },
+      {
+        "build": "qt5",
+        "symbol": "document.graph",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt5.json",
+        "evidence_sha256": "fcbd30c0f266a7bc8227ad7f8a9df807eee71dbfad45ba5b08c777b4a3c59349"
+      },
+      {
+        "build": "qt5",
+        "symbol": "preview.tile",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt5.json",
+        "evidence_sha256": "fcbd30c0f266a7bc8227ad7f8a9df807eee71dbfad45ba5b08c777b4a3c59349"
+      },
+      {
+        "build": "qt5",
+        "symbol": "layered_revision",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt5.json",
+        "evidence_sha256": "fcbd30c0f266a7bc8227ad7f8a9df807eee71dbfad45ba5b08c777b4a3c59349"
+      },
+      {
+        "build": "qt5",
+        "symbol": "longjob.scheduler",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt5.json",
+        "evidence_sha256": "fcbd30c0f266a7bc8227ad7f8a9df807eee71dbfad45ba5b08c777b4a3c59349"
+      },
+      {
+        "build": "qt6",
+        "symbol": "document.graph",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt6.json",
+        "evidence_sha256": "7cee5f2ccd5b2e1c40f8b20196035c24fffd9ea5e7b3027d30c8d39c5dbe5187"
+      },
+      {
+        "build": "qt6",
+        "symbol": "preview.tile",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt6.json",
+        "evidence_sha256": "7cee5f2ccd5b2e1c40f8b20196035c24fffd9ea5e7b3027d30c8d39c5dbe5187"
+      },
+      {
+        "build": "qt6",
+        "symbol": "layered_revision",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt6.json",
+        "evidence_sha256": "7cee5f2ccd5b2e1c40f8b20196035c24fffd9ea5e7b3027d30c8d39c5dbe5187"
+      },
+      {
+        "build": "qt6",
+        "symbol": "longjob.scheduler",
+        "state": "tested_working",
+        "reviewer_confirmed": true,
+        "evidence_path": "docs/acceptance-evidence/round4-native-qt6.json",
+        "evidence_sha256": "7cee5f2ccd5b2e1c40f8b20196035c24fffd9ea5e7b3027d30c8d39c5dbe5187"
+      }
+    ]
+  },
+  "matrix": {
+    "schema": "krita-agent-capabilities/2",
+    "builds": {
+      "stable": {
+        "document.graph": {
+          "symbol": "document.graph",
+          "build": "stable",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "preview.tile": {
+          "symbol": "preview.tile",
+          "build": "stable",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "layered_revision": {
+          "symbol": "layered_revision",
+          "build": "stable",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "longjob.scheduler": {
+          "symbol": "longjob.scheduler",
+          "build": "stable",
+          "evidence": "tested_working",
+          "verified": true
+        }
+      },
+      "qt5": {
+        "document.graph": {
+          "symbol": "document.graph",
+          "build": "qt5",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "preview.tile": {
+          "symbol": "preview.tile",
+          "build": "qt5",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "layered_revision": {
+          "symbol": "layered_revision",
+          "build": "qt5",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "longjob.scheduler": {
+          "symbol": "longjob.scheduler",
+          "build": "qt5",
+          "evidence": "tested_working",
+          "verified": true
+        }
+      },
+      "qt6": {
+        "document.graph": {
+          "symbol": "document.graph",
+          "build": "qt6",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "preview.tile": {
+          "symbol": "preview.tile",
+          "build": "qt6",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "layered_revision": {
+          "symbol": "layered_revision",
+          "build": "qt6",
+          "evidence": "tested_working",
+          "verified": true
+        },
+        "longjob.scheduler": {
+          "symbol": "longjob.scheduler",
+          "build": "qt6",
+          "evidence": "tested_working",
+          "verified": true
+        }
+      }
+    },
+    "source_evidence_is_not_runtime_proof": true
+  }
+}

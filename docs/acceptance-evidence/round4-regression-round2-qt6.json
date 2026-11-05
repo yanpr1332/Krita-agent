@@ -1,0 +1,2619 @@
+[
+  {
+    "command": "capabilities",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "krita_version": "6.1.0-prealpha (git 2687e5d)",
+      "qt_version": "6.11.0",
+      "qt_binding": "PyQt6",
+      "python": "3.13.5",
+      "symbols": {
+        "Node.paintLine": true,
+        "Node.paintPolylineStroke": true,
+        "StrokePoint": true,
+        "Node.paintPath": true,
+        "Node.paintEllipse": true,
+        "Node.paintPolygon": true,
+        "Node.paintRectangle": true,
+        "View.brushPosition": true,
+        "View.setCurrentBrushPreset": true,
+        "Document.createTransparencyMask": true,
+        "Document.createFilterMask": true,
+        "Document.setColorSpace": true,
+        "Selection.feather": true,
+        "Node.setPixelData": true
+      },
+      "evidence": "present_in_build only; drawing untested"
+    }
+  },
+  {
+    "command": "canvas.create",
+    "parameters": {
+      "width": 256,
+      "height": 256,
+      "name": "Round2 acceptance"
+    },
+    "ok": true,
+    "result": {
+      "width": 256,
+      "height": 256,
+      "name": "Round2 acceptance"
+    }
+  },
+  {
+    "command": "layer.create",
+    "parameters": {
+      "name": "Paint"
+    },
+    "ok": true,
+    "result": {
+      "name": "Paint",
+      "type": "paintlayer"
+    }
+  },
+  {
+    "command": "layer.tree",
+    "parameters": {},
+    "ok": true,
+    "result": [
+      {
+        "id": "{fea0e449-73e0-49a4-847b-fea5a3ff1aa9}",
+        "name": "Background",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+        "name": "Paint",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      }
+    ]
+  },
+  {
+    "command": "layer.inspect",
+    "parameters": {
+      "name": "Paint"
+    },
+    "ok": true,
+    "result": {
+      "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+      "name": "Paint",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 1.0,
+      "blending_mode": "normal",
+      "position": [
+        0,
+        0
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.rename",
+    "parameters": {
+      "name": "Paint",
+      "new_name": "Ink"
+    },
+    "ok": true,
+    "result": {
+      "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+      "name": "Ink",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 1.0,
+      "blending_mode": "normal",
+      "position": [
+        0,
+        0
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.set",
+    "parameters": {
+      "name": "Ink",
+      "properties": {
+        "opacity": 0.65,
+        "visible": true,
+        "locked": false,
+        "alpha_locked": false,
+        "color_label": 2,
+        "blending_mode": "normal"
+      }
+    },
+    "ok": true,
+    "result": {
+      "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+      "name": "Ink",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6509803921568628,
+      "blending_mode": "normal",
+      "position": [
+        0,
+        0
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "pixel.fill",
+    "parameters": {
+      "name": "Ink",
+      "x": 10,
+      "y": 10,
+      "width": 80,
+      "height": 80,
+      "color": "#ffcc88",
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "region": [
+        10,
+        10,
+        80,
+        80
+      ],
+      "layer_id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}"
+    }
+  },
+  {
+    "command": "layer.move",
+    "parameters": {
+      "name": "Ink",
+      "dx": 3,
+      "dy": 4
+    },
+    "ok": true,
+    "result": {
+      "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+      "name": "Ink",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6509803921568628,
+      "blending_mode": "normal",
+      "position": [
+        3,
+        4
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.duplicate",
+    "parameters": {
+      "name": "Ink",
+      "new_name": "Copy"
+    },
+    "ok": true,
+    "result": {
+      "id": "{242d0902-6311-4298-b2dc-c0df7cca7e32}",
+      "name": "Copy",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6509803921568628,
+      "blending_mode": "normal",
+      "position": [
+        3,
+        4
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.group",
+    "parameters": {
+      "name": "Group"
+    },
+    "ok": true,
+    "result": {
+      "id": "{640ade47-ef9c-430f-9b01-b3877ab249ef}",
+      "name": "Group",
+      "type": "grouplayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 1.0,
+      "blending_mode": "normal",
+      "position": [
+        0,
+        0
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.reorder",
+    "parameters": {
+      "name": "Copy",
+      "index": 0
+    },
+    "ok": true,
+    "result": {
+      "id": "{242d0902-6311-4298-b2dc-c0df7cca7e32}",
+      "name": "Copy",
+      "type": "paintlayer",
+      "visible": true,
+      "locked": false,
+      "opacity": 0.6509803921568628,
+      "blending_mode": "normal",
+      "position": [
+        3,
+        4
+      ],
+      "depth": 0,
+      "children": 0
+    }
+  },
+  {
+    "command": "layer.scale",
+    "parameters": {
+      "name": "Copy",
+      "width": 64,
+      "height": 64,
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "layer": "Copy",
+      "scale": [
+        64,
+        64
+      ],
+      "origin": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "command": "layer.rotate",
+    "parameters": {
+      "name": "Copy",
+      "degrees": 15,
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "layer": "Copy",
+      "degrees": 15.0
+    }
+  },
+  {
+    "command": "selection.rectangle",
+    "parameters": {
+      "x": 10,
+      "y": 10,
+      "width": 30,
+      "height": 30
+    },
+    "ok": true,
+    "result": {
+      "selection": [
+        10,
+        10,
+        30,
+        30
+      ]
+    }
+  },
+  {
+    "command": "selection.info",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "selected": true,
+      "rect": [
+        10,
+        10,
+        30,
+        30
+      ]
+    }
+  },
+  {
+    "command": "layer.select",
+    "parameters": {
+      "name": "Ink"
+    },
+    "ok": true,
+    "result": {
+      "selected": "Ink"
+    }
+  },
+  {
+    "command": "selection.copy",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "copied": true,
+      "cut": false,
+      "width": 30,
+      "height": 30
+    }
+  },
+  {
+    "command": "selection.cut",
+    "parameters": {
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "copied": true,
+      "cut": true,
+      "width": 30,
+      "height": 30
+    }
+  },
+  {
+    "command": "selection.paste",
+    "parameters": {
+      "x": 100,
+      "y": 100
+    },
+    "ok": true,
+    "result": {
+      "pasted": [
+        100,
+        100
+      ],
+      "width": 30,
+      "height": 30
+    }
+  },
+  {
+    "command": "selection.clear",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "cleared": true
+    }
+  },
+  {
+    "command": "brush.list",
+    "parameters": {
+      "query": "Basic",
+      "limit": 10
+    },
+    "ok": true,
+    "result": {
+      "total": 14,
+      "presets": [
+        {
+          "name": "b) Basic-1",
+          "key": "b) Basic-1"
+        },
+        {
+          "name": "b) Basic-2 Opacity",
+          "key": "b) Basic-2 Opacity"
+        },
+        {
+          "name": "b) Basic-3 Flow",
+          "key": "b) Basic-3 Flow"
+        },
+        {
+          "name": "b) Basic-4 Flow Opacity",
+          "key": "b) Basic-4 Flow Opacity"
+        },
+        {
+          "name": "b) Basic-5 Size",
+          "key": "b) Basic-5 Size"
+        },
+        {
+          "name": "b) Basic-5 Size Opacity",
+          "key": "b) Basic-5 Size Opacity"
+        },
+        {
+          "name": "b) Basic-6 Details",
+          "key": "b) Basic-6 Details"
+        },
+        {
+          "name": "j) WaterC Basic Lines-Dry",
+          "key": "j) WaterC Basic Lines-Dry"
+        },
+        {
+          "name": "j) WaterC Basic Lines-Wet",
+          "key": "j) WaterC Basic Lines-Wet"
+        },
+        {
+          "name": "j) WaterC Basic Lines-Wet-Pattern",
+          "key": "j) WaterC Basic Lines-Wet-Pattern"
+        }
+      ],
+      "truncated": true
+    }
+  },
+  {
+    "command": "brush.inspect",
+    "parameters": {
+      "name": "b) Basic-5 Size"
+    },
+    "ok": true,
+    "result": {
+      "name": "b) Basic-5 Size",
+      "filename": "b)_Basic-5_Size_default.kpp",
+      "valid": true,
+      "notice": "Pressure mapping depends on preset settings"
+    }
+  },
+  {
+    "command": "image.import",
+    "parameters": {
+      "path": "input.png",
+      "name": "Imported"
+    },
+    "ok": true,
+    "result": {
+      "name": "Imported",
+      "width": 24,
+      "height": 24,
+      "type": "paintlayer"
+    }
+  },
+  {
+    "command": "reference.import",
+    "parameters": {
+      "path": "input.png",
+      "name": "Reference"
+    },
+    "ok": true,
+    "result": {
+      "name": "Reference",
+      "type": "filelayer",
+      "source": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\input.png"
+    }
+  },
+  {
+    "command": "preview.canvas",
+    "parameters": {
+      "name": "Ink",
+      "x": 0,
+      "y": 0,
+      "width": 128,
+      "height": 128,
+      "filename": "canvas.png"
+    },
+    "ok": true,
+    "result": {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\canvas.png",
+      "width": 128,
+      "height": 128,
+      "sha256": "f1fcd8124801d047736f18255088ba4d1cd0f7e30f85667b36c880dbebd49618"
+    }
+  },
+  {
+    "command": "preview.layer",
+    "parameters": {
+      "name": "Ink",
+      "x": 0,
+      "y": 0,
+      "width": 128,
+      "height": 128,
+      "filename": "layer.png"
+    },
+    "ok": true,
+    "result": {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\layer.png",
+      "width": 128,
+      "height": 128,
+      "sha256": "e7a8f11b4e04aa3c2f7d3d75560b407040a945ceac9462e4ea8277d5ace0bebe"
+    }
+  },
+  {
+    "command": "preview.region",
+    "parameters": {
+      "name": "Ink",
+      "x": 0,
+      "y": 0,
+      "width": 128,
+      "height": 128,
+      "filename": "region.png"
+    },
+    "ok": true,
+    "result": {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\region.png",
+      "width": 128,
+      "height": 128,
+      "sha256": "7c148755edc660520a18cefdc2a06fc8126cd03db44f6bfafdbbf1eefc039fd2"
+    }
+  },
+  {
+    "command": "pixel.clear",
+    "parameters": {
+      "name": "Ink",
+      "x": 10,
+      "y": 10,
+      "width": 10,
+      "height": 10,
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "region": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "layer_id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}"
+    }
+  },
+  {
+    "command": "history.undo",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "action": "edit_undo",
+      "triggered": true
+    }
+  },
+  {
+    "command": "history.redo",
+    "parameters": {},
+    "ok": true,
+    "result": {
+      "action": "edit_redo",
+      "triggered": true
+    }
+  },
+  {
+    "command": "document.list",
+    "parameters": {},
+    "ok": true,
+    "result": [
+      {
+        "index": 0,
+        "name": "Round2 acceptance",
+        "width": 256,
+        "height": 256,
+        "modified": true,
+        "active": false
+      }
+    ]
+  },
+  {
+    "command": "document.activate",
+    "parameters": {
+      "index": 0
+    },
+    "ok": true,
+    "result": {
+      "active": "Round2 acceptance"
+    }
+  },
+  {
+    "command": "document.crop",
+    "parameters": {
+      "x": 0,
+      "y": 0,
+      "width": 200,
+      "height": 200,
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "crop": [
+        0,
+        0,
+        200,
+        200
+      ]
+    }
+  },
+  {
+    "command": "layer.delete",
+    "parameters": {
+      "name": "Copy",
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "removed_id": "{242d0902-6311-4298-b2dc-c0df7cca7e32}",
+      "name": "Copy"
+    }
+  },
+  {
+    "command": "document.save",
+    "parameters": {
+      "path": "round2.kra"
+    },
+    "ok": true,
+    "result": {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\round2.kra",
+      "format": "kra"
+    }
+  },
+  {
+    "command": "document.export",
+    "parameters": {
+      "path": "round2.png"
+    },
+    "ok": true,
+    "result": {
+      "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\round2.png",
+      "format": "png"
+    }
+  },
+  {
+    "command": "document.close",
+    "parameters": {
+      "index": 0,
+      "confirm": true
+    },
+    "ok": true,
+    "result": {
+      "closed": true
+    }
+  },
+  {
+    "command": "document.open",
+    "parameters": {
+      "path": "round2.kra"
+    },
+    "ok": true,
+    "result": {
+      "opened": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\round2.kra"
+    }
+  },
+  {
+    "command": "layer.tree",
+    "parameters": {},
+    "ok": true,
+    "result": [
+      {
+        "id": "{fea0e449-73e0-49a4-847b-fea5a3ff1aa9}",
+        "name": "Background",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+        "name": "Ink",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 0.6509803921568628,
+        "blending_mode": "normal",
+        "position": [
+          3,
+          4
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{f5b65435-a801-4e00-a1ea-4f5a21798f5f}",
+        "name": "Imported",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{cbb88fb3-27dd-455d-be85-5509da67c935}",
+        "name": "Reference",
+        "type": "filelayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{640ade47-ef9c-430f-9b01-b3877ab249ef}",
+        "name": "Group",
+        "type": "grouplayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      {
+        "id": "{29f1a817-a3f7-4737-b65f-082136675e17}",
+        "name": "Selection Mask",
+        "type": "selectionmask",
+        "visible": true,
+        "locked": false,
+        "opacity": 1.0,
+        "blending_mode": "normal",
+        "position": [
+          0,
+          0
+        ],
+        "depth": 0,
+        "children": 0
+      }
+    ]
+  },
+  {
+    "command": "job.submit",
+    "parameters": {
+      "steps": [
+        {
+          "command": "layer.rename",
+          "parameters": {
+            "name": "Ink",
+            "new_name": "Final Ink"
+          }
+        },
+        {
+          "command": "layer.inspect",
+          "parameters": {
+            "name": "Final Ink"
+          }
+        }
+      ]
+    },
+    "ok": true,
+    "result": {
+      "id": "6a973116e4184525ac320c0b75964c03",
+      "state": "queued",
+      "total": 2,
+      "done": 0,
+      "error": null,
+      "last_result": null,
+      "cancel_requested": false
+    }
+  },
+  {
+    "command": "job.status",
+    "parameters": {
+      "id": "6a973116e4184525ac320c0b75964c03"
+    },
+    "ok": true,
+    "result": {
+      "id": "6a973116e4184525ac320c0b75964c03",
+      "state": "completed",
+      "total": 2,
+      "done": 2,
+      "error": null,
+      "last_result": {
+        "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+        "name": "Final Ink",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 0.6509803921568628,
+        "blending_mode": "normal",
+        "position": [
+          3,
+          4
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      "cancel_requested": false
+    }
+  },
+  {
+    "command": "job.history",
+    "parameters": {
+      "id": "6a973116e4184525ac320c0b75964c03"
+    },
+    "ok": true,
+    "result": {
+      "id": "6a973116e4184525ac320c0b75964c03",
+      "state": "completed",
+      "total": 2,
+      "done": 2,
+      "error": null,
+      "last_result": {
+        "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+        "name": "Final Ink",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 0.6509803921568628,
+        "blending_mode": "normal",
+        "position": [
+          3,
+          4
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      "cancel_requested": false,
+      "remaining_steps": 0,
+      "replay_safe": false,
+      "recovery_note": "Inspect the KRA and last step before any manual retry; automatic replay is disabled."
+    }
+  },
+  {
+    "command": "job.recover",
+    "parameters": {
+      "id": "6a973116e4184525ac320c0b75964c03"
+    },
+    "ok": true,
+    "result": {
+      "id": "6a973116e4184525ac320c0b75964c03",
+      "state": "completed",
+      "total": 2,
+      "done": 2,
+      "error": null,
+      "last_result": {
+        "id": "{d04a1953-5f8a-4701-b691-7b432b53d5cf}",
+        "name": "Final Ink",
+        "type": "paintlayer",
+        "visible": true,
+        "locked": false,
+        "opacity": 0.6509803921568628,
+        "blending_mode": "normal",
+        "position": [
+          3,
+          4
+        ],
+        "depth": 0,
+        "children": 0
+      },
+      "cancel_requested": false,
+      "remaining_steps": 0,
+      "replay_safe": false,
+      "recovery_note": "Inspect the KRA and last step before any manual retry; automatic replay is disabled."
+    }
+  },
+  {
+    "command": "job.submit",
+    "parameters": {
+      "steps": [
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        },
+        {
+          "command": "document.info",
+          "parameters": {}
+        }
+      ]
+    },
+    "ok": true,
+    "result": {
+      "id": "39d46e6653c548208808d2cbc53d32e3",
+      "state": "queued",
+      "total": 400,
+      "done": 0,
+      "error": null,
+      "last_result": null,
+      "cancel_requested": false
+    }
+  },
+  {
+    "command": "job.pause",
+    "parameters": {
+      "id": "39d46e6653c548208808d2cbc53d32e3"
+    },
+    "ok": true,
+    "result": {
+      "id": "39d46e6653c548208808d2cbc53d32e3",
+      "state": "paused",
+      "total": 400,
+      "done": 0,
+      "error": null,
+      "last_result": null,
+      "cancel_requested": false
+    }
+  },
+  {
+    "command": "job.resume",
+    "parameters": {
+      "id": "39d46e6653c548208808d2cbc53d32e3"
+    },
+    "ok": true,
+    "result": {
+      "id": "39d46e6653c548208808d2cbc53d32e3",
+      "state": "running",
+      "total": 400,
+      "done": 1,
+      "error": null,
+      "last_result": {
+        "name": "Round2 acceptance",
+        "width": 200,
+        "height": 200,
+        "active_layer": "Reference"
+      },
+      "cancel_requested": false
+    }
+  },
+  {
+    "command": "job.cancel",
+    "parameters": {
+      "id": "39d46e6653c548208808d2cbc53d32e3"
+    },
+    "ok": true,
+    "result": {
+      "id": "39d46e6653c548208808d2cbc53d32e3",
+      "state": "running",
+      "total": 400,
+      "done": 1,
+      "error": null,
+      "last_result": {
+        "name": "Round2 acceptance",
+        "width": 200,
+        "height": 200,
+        "active_layer": "Reference"
+      },
+      "cancel_requested": true
+    }
+  },
+  {
+    "command": "layer.delete",
+    "expected_denial": true,
+    "ok": true,
+    "error": "Delete requires confirm=true"
+  },
+  {
+    "command": "pixel.fill",
+    "expected_denial": true,
+    "ok": true,
+    "error": "Pixel changes require confirm=true"
+  },
+  {
+    "command": "image.import",
+    "expected_denial": true,
+    "ok": true,
+    "error": "Input path outside authorized root"
+  },
+  {
+    "command": "preview.canvas",
+    "expected_denial": true,
+    "ok": true,
+    "error": "Path traversal or invalid extension"
+  },
+  {
+    "command": "document.save",
+    "expected_denial": true,
+    "ok": true,
+    "error": "Refusing to overwrite existing file: D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793754633\\round2.kra"
+  }
+]

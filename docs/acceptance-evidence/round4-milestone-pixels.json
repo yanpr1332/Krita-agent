@@ -1,0 +1,77 @@
+[
+  {
+    "build": "stable",
+    "painted_centers": 1200,
+    "max_rgb_channel_error": 4,
+    "minimum_alpha": 255,
+    "checkpoint_sha256": "01d1518ba9e8fd3d1109d7c031d06ed76a7a94e451ba1c5cd925b9a2b3e10980",
+    "verified_checkpoint_hashes": 11,
+    "seconds": 74.604434900044,
+    "native_strokes_per_second": 16.084834656381698,
+    "checkpoint_bytes": 5205593,
+    "native_done_counts": [
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      11
+    ],
+    "native_jobs_and_checkpoint_hashes_match_ledger": true
+  },
+  {
+    "build": "qt5",
+    "painted_centers": 1200,
+    "max_rgb_channel_error": 4,
+    "minimum_alpha": 255,
+    "checkpoint_sha256": "233a17b463173fc005471ef25b35bb15e36a0f479690630091bc418e21b520f6",
+    "verified_checkpoint_hashes": 11,
+    "seconds": 78.79699140001321,
+    "native_strokes_per_second": 15.229007842548146,
+    "checkpoint_bytes": 5300663,
+    "native_done_counts": [
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      11
+    ],
+    "native_jobs_and_checkpoint_hashes_match_ledger": true
+  },
+  {
+    "build": "qt6",
+    "painted_centers": 1200,
+    "max_rgb_channel_error": 4,
+    "minimum_alpha": 255,
+    "checkpoint_sha256": "0883d69ffb11639d8bb223b34bdad40f8685468f819be4b03d80847a04345fec",
+    "verified_checkpoint_hashes": 11,
+    "seconds": 78.96068899997044,
+    "native_strokes_per_second": 15.1974357771935,
+    "checkpoint_bytes": 5304811,
+    "native_done_counts": [
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      120,
+      11
+    ],
+    "native_jobs_and_checkpoint_hashes_match_ledger": true
+  }
+]

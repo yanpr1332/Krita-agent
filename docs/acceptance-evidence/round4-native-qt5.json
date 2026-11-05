@@ -1,0 +1,1475 @@
+[
+  {
+    "case": "runtime",
+    "ok": true,
+    "result": {
+      "krita_version": "5.4.0-prealpha (git 2687e5d)",
+      "qt_version": "5.15.7",
+      "qt_binding": "PyQt5",
+      "python": "3.13.5",
+      "symbols": {
+        "Node.paintLine": true,
+        "Node.paintPolylineStroke": true,
+        "StrokePoint": true,
+        "Node.paintPath": true,
+        "Node.paintEllipse": true,
+        "Node.paintPolygon": true,
+        "Node.paintRectangle": true,
+        "View.brushPosition": true,
+        "View.setCurrentBrushPreset": true,
+        "Document.createTransparencyMask": true,
+        "Document.createFilterMask": true,
+        "Document.setColorSpace": true,
+        "Selection.feather": true,
+        "Node.setPixelData": true
+      },
+      "evidence": "present_in_build only; drawing untested"
+    }
+  },
+  {
+    "case": "brush_calibration",
+    "ok": true,
+    "result": [
+      {
+        "preset": "b) Basic-5 Size",
+        "profile": {
+          "schema": "krita-agent-brush-profile/1",
+          "preset": "b) Basic-5 Size",
+          "build": "5.4.0-prealpha (git 2687e5d)",
+          "category": "ink",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "confidence": 0.95,
+          "evidence_sha256": "754639037c047ea11cd992c505afb1caab6d90a85f0e299d1fa69aa39492668f",
+          "evidence_path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\brush-calibration\\6b6f92f1e0b84ec482eb44b92a108a74.png",
+          "status": "manually_reviewed",
+          "id": "3d5329e687bb4b0182f50740ba0f48cb"
+        },
+        "measurements": [
+          {
+            "bbox": [
+              0,
+              39,
+              420,
+              40
+            ],
+            "difference": 0.42500000000000004
+          },
+          {
+            "bbox": [
+              0,
+              39,
+              420,
+              41
+            ],
+            "difference": 6.694434523809523
+          },
+          {
+            "bbox": [
+              0,
+              35,
+              420,
+              44
+            ],
+            "difference": 52.69026785714286
+          },
+          {
+            "bbox": [
+              0,
+              30,
+              420,
+              50
+            ],
+            "difference": 129.72488095238094
+          }
+        ]
+      },
+      {
+        "preset": "b) Basic-2 Opacity",
+        "profile": {
+          "schema": "krita-agent-brush-profile/1",
+          "preset": "b) Basic-2 Opacity",
+          "build": "5.4.0-prealpha (git 2687e5d)",
+          "category": "paint",
+          "pressure_size": false,
+          "pressure_opacity": true,
+          "confidence": 0.95,
+          "evidence_sha256": "23658b60f5b6901a1a0f564635356433e37bafe98a9ab0b558dac7a4df4ebd08",
+          "evidence_path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\brush-calibration\\11da8e04e8eb4cd3a5dddebd438b509f.png",
+          "status": "manually_reviewed",
+          "id": "fbb8fe86d83245ae9c7f8bc11400028a"
+        },
+        "measurements": [
+          {
+            "bbox": [
+              0,
+              28,
+              420,
+              52
+            ],
+            "difference": 15.798214285714286
+          },
+          {
+            "bbox": [
+              0,
+              28,
+              420,
+              52
+            ],
+            "difference": 45.72559523809524
+          },
+          {
+            "bbox": [
+              0,
+              28,
+              420,
+              52
+            ],
+            "difference": 91.94767857142857
+          },
+          {
+            "bbox": [
+              0,
+              28,
+              420,
+              52
+            ],
+            "difference": 138.4165476190476
+          }
+        ]
+      },
+      {
+        "preset": "c) Pencil-2",
+        "profile": {
+          "schema": "krita-agent-brush-profile/1",
+          "preset": "c) Pencil-2",
+          "build": "5.4.0-prealpha (git 2687e5d)",
+          "category": "sketch",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "confidence": 0.95,
+          "evidence_sha256": "5bb3ee5c92fb740cf886392a9b9d78c88ad16041c5da4a4f7ce55c62665af007",
+          "evidence_path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\brush-calibration\\6e70943dde8c41a2a94f094c5817ddd4.png",
+          "status": "manually_reviewed",
+          "id": "e131c63283d44957b02e87c10d1bb8d6"
+        },
+        "measurements": [
+          {
+            "bbox": null,
+            "difference": 0.5097321428571429
+          },
+          {
+            "bbox": [
+              0,
+              34,
+              420,
+              46
+            ],
+            "difference": 10.034285714285716
+          },
+          {
+            "bbox": [
+              0,
+              31,
+              420,
+              49
+            ],
+            "difference": 47.546636904761904
+          },
+          {
+            "bbox": [
+              0,
+              29,
+              420,
+              51
+            ],
+            "difference": 82.22282738095238
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "case": "integrated_fixture_graph",
+    "ok": true,
+    "result": {
+      "graph": {
+        "schema": "krita-agent-document-graph/1",
+        "document": {
+          "name": "Round4 integrated",
+          "width": 4096,
+          "height": 4096,
+          "model": "RGBA",
+          "depth": "U8",
+          "profile": "sRGB-elle-V2-srgbtrc.icc"
+        },
+        "nodes": [
+          {
+            "id": "{c809e595-bcab-439f-9e4e-a2988c1a5839}",
+            "name": "Background",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 0,
+            "path": [
+              0
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              4096,
+              4096
+            ]
+          },
+          {
+            "id": "{d41be94e-1b8c-41e1-9883-be0353863dba}",
+            "name": "Paint0",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 1,
+            "path": [
+              1
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              100,
+              93,
+              205,
+              14
+            ]
+          },
+          {
+            "id": "{62fd2e6e-bcb0-477a-8339-1d0064cc558d}",
+            "name": "Paint1",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 0.5019607843137255,
+            "blending_mode": "multiply",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 2,
+            "path": [
+              2
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              93,
+              192,
+              214,
+              16
+            ]
+          },
+          {
+            "id": "{43dacdf2-cac3-4e58-b814-8beb26af666a}",
+            "name": "Paint2",
+            "type": "paintlayer",
+            "visible": false,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 3,
+            "path": [
+              3
+            ],
+            "effective_visible": false,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{b86c0244-3e12-4023-af99-fd75e6c556b3}",
+            "name": "Paint3",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 1,
+            "parent_id": null,
+            "sibling_index": 4,
+            "path": [
+              4
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              96,
+              292,
+              209,
+              16
+            ]
+          },
+          {
+            "id": "{ae3bbd09-f9fd-4f63-99ab-58763312056f}",
+            "name": "Alpha",
+            "type": "transparencymask",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 1,
+            "children": 0,
+            "parent_id": "{b86c0244-3e12-4023-af99-fd75e6c556b3}",
+            "sibling_index": 0,
+            "path": [
+              4,
+              0
+            ],
+            "effective_visible": true,
+            "color_model": "A",
+            "color_depth": "U8",
+            "bounds": [
+              96,
+              292,
+              209,
+              16
+            ]
+          },
+          {
+            "id": "{ea80d675-f5cf-46ad-a065-3761b063782a}",
+            "name": "Paint4",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 1,
+            "parent_id": null,
+            "sibling_index": 5,
+            "path": [
+              5
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{9f873ea0-50b1-4783-9b41-053647adccf4}",
+            "name": "Invert",
+            "type": "filtermask",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "copy",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 1,
+            "children": 0,
+            "parent_id": "{ea80d675-f5cf-46ad-a065-3761b063782a}",
+            "sibling_index": 0,
+            "path": [
+              5,
+              0
+            ],
+            "effective_visible": true,
+            "color_model": "A",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{88293f16-2b26-46af-9010-602a30f181e6}",
+            "name": "Reference",
+            "type": "filelayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 6,
+            "path": [
+              6
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              8,
+              8
+            ]
+          },
+          {
+            "id": "{a527bbf4-a6ac-428f-b29f-6157a1595162}",
+            "name": "Paint5",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 7,
+            "path": [
+              7
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{69031553-cb7e-4f16-a313-5e3d5b57e4c4}",
+            "name": "Paint6",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 8,
+            "path": [
+              8
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{f9e89e72-b0eb-469e-abae-940280cbdfd3}",
+            "name": "Final Paint",
+            "type": "paintlayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 0.7490196078431373,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 0,
+            "parent_id": null,
+            "sibling_index": 9,
+            "path": [
+              9
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{c74b1b29-9ddb-4db7-9e9b-62d6c0c3f24a}",
+            "name": "Group",
+            "type": "grouplayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 0,
+            "children": 1,
+            "parent_id": null,
+            "sibling_index": 10,
+            "path": [
+              10
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "{4596bd88-e6b4-443b-92f1-0649b05ebd7f}",
+            "name": "Nested",
+            "type": "grouplayer",
+            "visible": true,
+            "locked": false,
+            "opacity": 1.0,
+            "blending_mode": "normal",
+            "position": [
+              0,
+              0
+            ],
+            "depth": 1,
+            "children": 0,
+            "parent_id": "{c74b1b29-9ddb-4db7-9e9b-62d6c0c3f24a}",
+            "sibling_index": 0,
+            "path": [
+              10,
+              0
+            ],
+            "effective_visible": true,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "bounds": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "note": "Native node IDs may change after KRA reopening; path/type fallback requires explicit reconciliation."
+      },
+      "before": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\acceptance\\2941c02a685c46fba486784424ad9181.png",
+      "nodes": 14
+    }
+  },
+  {
+    "case": "two_approved_layered_revisions",
+    "ok": true,
+    "result": [
+      {
+        "revision": 0,
+        "seconds": 6.62386890000198,
+        "result": {
+          "state": "completed",
+          "job_id": "aff5d5e76b054725b0a1bb7a1f922220",
+          "overlay": {
+            "id": "{f3880172-37b7-4704-bda1-ea6da4ab26cc}",
+            "name": "AgentOverlay-431272145df7",
+            "checkpoint_id": "a50425d689d04f9f95d0aad78a94a61f",
+            "original_layers_modified": false,
+            "warning": "Overlay must be visually verified for exact output; opaque changed pixels only"
+          },
+          "checkpoint": {
+            "schema": 1,
+            "id": "a50425d689d04f9f95d0aad78a94a61f",
+            "created_at": "2026-11-05T05:01:25.069820+00:00",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\a50425d689d04f9f95d0aad78a94a61f.kra",
+            "sha256": "c20812657aa267b0eddb29698e29ca48254d9e1165e4f112de6f4704e2f62a6b",
+            "document_name": "Round4 integrated",
+            "width": 4096,
+            "height": 4096,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+            "job_id": null,
+            "after_step": null,
+            "policy": "immutable snapshot; never overwrite or automatically replay",
+            "steps_sha256": null
+          },
+          "changed_tiles": 1,
+          "job": {
+            "id": "aff5d5e76b054725b0a1bb7a1f922220",
+            "state": "completed",
+            "total": 2,
+            "done": 2,
+            "error": null,
+            "last_result": {
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\layered-revisions\\431272145df74c43b968783814b9d109.kra",
+              "format": "kra"
+            },
+            "cancel_requested": false
+          },
+          "changed_tile_pixel_match": true,
+          "changed_tiles_verified": 1,
+          "warning": "Non-target tiles are unchanged only if the overlay was actually topmost and transparent outside patch; inspect KRA"
+        }
+      },
+      {
+        "revision": 1,
+        "seconds": 6.650448000000324,
+        "result": {
+          "state": "completed",
+          "job_id": "346616ec8d5d4ad3bb21669a107b8254",
+          "overlay": {
+            "id": "{d2ec759b-f20e-4e3b-9898-86ba2bd2cb1f}",
+            "name": "AgentOverlay-0db10970a586",
+            "checkpoint_id": "371eab1d7fe24d569807a0a240eff418",
+            "original_layers_modified": false,
+            "warning": "Overlay must be visually verified for exact output; opaque changed pixels only"
+          },
+          "checkpoint": {
+            "schema": 1,
+            "id": "371eab1d7fe24d569807a0a240eff418",
+            "created_at": "2026-11-05T05:01:37.223816+00:00",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\371eab1d7fe24d569807a0a240eff418.kra",
+            "sha256": "62292176252b2dc0824d58c9d1a86ae5d0a2a421b6dabe2e6a9ce3aafa24d39d",
+            "document_name": "Round4 integrated",
+            "width": 4096,
+            "height": 4096,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+            "job_id": null,
+            "after_step": null,
+            "policy": "immutable snapshot; never overwrite or automatically replay",
+            "steps_sha256": null
+          },
+          "changed_tiles": 1,
+          "job": {
+            "id": "346616ec8d5d4ad3bb21669a107b8254",
+            "state": "completed",
+            "total": 2,
+            "done": 2,
+            "error": null,
+            "last_result": {
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\layered-revisions\\0db10970a58645e9925749646d5eee3e.kra",
+              "format": "kra"
+            },
+            "cancel_requested": false
+          },
+          "changed_tile_pixel_match": true,
+          "changed_tiles_verified": 1,
+          "warning": "Non-target tiles are unchanged only if the overlay was actually topmost and transparent outside patch; inspect KRA"
+        }
+      }
+    ]
+  },
+  {
+    "case": "4096_tiles_pyramid",
+    "ok": true,
+    "result": {
+      "tiles": [
+        {
+          "origin": [
+            0,
+            0
+          ],
+          "sha256": "79f19714725a3dcc9e1d53428ae8e5acce4dc89dfec6f6b751628ebaaa1b3e40"
+        },
+        {
+          "origin": [
+            512,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            0
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            512
+          ],
+          "sha256": "8d760cc71b0e489bc3a689a6d10e1ce3f0b0e1e7a37daf1af0cc37ba0c089036"
+        },
+        {
+          "origin": [
+            1024,
+            512
+          ],
+          "sha256": "e87e966af322c4882198898cc783c72e428751345b5594b96b681db4ca5e5fae"
+        },
+        {
+          "origin": [
+            1536,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            512
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            1024
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            1536
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            2048
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            2560
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            3072
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            0,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            512,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1024,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            1536,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2048,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            2560,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3072,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        },
+        {
+          "origin": [
+            3584,
+            3584
+          ],
+          "sha256": "7e02d676e85f232ffb6116e8bae70f014c96a3f4ee0875720587880e57436060"
+        }
+      ],
+      "pyramid": {
+        "root": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\pyramid-0f95cd5e",
+        "manifest": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\pyramid-0f95cd5e\\manifest.json",
+        "levels": 4,
+        "tile_count": 85
+      }
+    }
+  },
+  {
+    "case": "1200_native_steps_checkpoints",
+    "ok": true,
+    "result": {
+      "result": {
+        "state": "completed",
+        "ledger": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\ledgers\\long-job-8633b3e7f9004bc8ba0ed5bfde448411.json",
+        "batches": 11
+      },
+      "seconds": 78.79699140001321,
+      "ledger": {
+        "schema": "krita-agent-long-job/1",
+        "id": "8633b3e7f9004bc8ba0ed5bfde448411",
+        "state": "completed",
+        "source_sha256": "bbc152604790028b2704e6948754288cd1ddd4379063319df7aac97633589d54",
+        "batch_count": 11,
+        "next_batch": 11,
+        "completed": [
+          {
+            "index": 0,
+            "job_id": "6eaac91f864d4056b1007d3b2c505607",
+            "checkpoint": {
+              "schema": 1,
+              "id": "570527f81ca341eea9c65fc0fc269c1a",
+              "created_at": "2026-11-05T05:02:01.328515+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\570527f81ca341eea9c65fc0fc269c1a.kra",
+              "sha256": "47ed642da0c00ac136631469e271538ce89f0d0e1c34b58af1331610cb6175f7",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "6eaac91f864d4056b1007d3b2c505607",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "7765e404b67ee3c4a4bfe9a9f2b4b718de4b3347f80361c140ebddb823f3f927"
+            },
+            "batch_sha256": "1a2c12d625e6d869e02ab3e9d501ed6c2f2efcdc19d0e87d3d88df778b9f77bf",
+            "steps": 120,
+            "elapsed_seconds": 7.639571
+          },
+          {
+            "index": 1,
+            "job_id": "b5dd8012d8194967abfdef90c4ddaf88",
+            "checkpoint": {
+              "schema": 1,
+              "id": "b33d9e179a624e02b2f9ff9907c02c1b",
+              "created_at": "2026-11-05T05:02:08.922002+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\b33d9e179a624e02b2f9ff9907c02c1b.kra",
+              "sha256": "251fb899c9ae78a8e3a12bab8d52d1d560f5e009682bcb8196c365750f57dfe2",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "b5dd8012d8194967abfdef90c4ddaf88",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "3162dd21e29543a2f0853407e1914da9f76718536e76faa75146907ba8100b74"
+            },
+            "batch_sha256": "086946bc4dedcbacc3087c301a2e81926031be1de11ba1c1170e4b78e69b66e9",
+            "steps": 120,
+            "elapsed_seconds": 7.552074
+          },
+          {
+            "index": 2,
+            "job_id": "f197cbfb81274cfebcbae09612256c9d",
+            "checkpoint": {
+              "schema": 1,
+              "id": "e846c4a9e2b44bc1bb568e37174c7c9a",
+              "created_at": "2026-11-05T05:02:16.506691+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\e846c4a9e2b44bc1bb568e37174c7c9a.kra",
+              "sha256": "ec00043ca5dd29eff6f9181379841f1ec5e544fac264fbdd1dcffd0112ef441a",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "f197cbfb81274cfebcbae09612256c9d",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "bcbb3b223a43ea454edd1ac0486c9a9f481c0e025b958c679760469bef1bf3a3"
+            },
+            "batch_sha256": "d7ad14ac4b9218a04455df9968c183ea0ca953676dedcc3e76d4cf4821417dfa",
+            "steps": 120,
+            "elapsed_seconds": 7.537046
+          },
+          {
+            "index": 3,
+            "job_id": "b7c43e1b5249445fa5658d172be68873",
+            "checkpoint": {
+              "schema": 1,
+              "id": "ad71d78e5d4d4c68a22fb6b5906d1b7a",
+              "created_at": "2026-11-05T05:02:24.150091+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\ad71d78e5d4d4c68a22fb6b5906d1b7a.kra",
+              "sha256": "52b184ba29b0551b831b77cd6a42b4effd685989edd3dd84499393040f770e80",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "b7c43e1b5249445fa5658d172be68873",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "9f6b8519b6a6fbdf223da9f1d0b5f646e374282cd3a0947c756ad2a42183ebc0"
+            },
+            "batch_sha256": "0ddb11039fc5e3a0215cec1676a6e4d35981af406d388339e513136433d1b19a",
+            "steps": 120,
+            "elapsed_seconds": 7.499275
+          },
+          {
+            "index": 4,
+            "job_id": "3dd0c7c63819487eb4b22011580a4b2d",
+            "checkpoint": {
+              "schema": 1,
+              "id": "bfb75db656b2400f968bfa4c3942901a",
+              "created_at": "2026-11-05T05:02:31.781502+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\bfb75db656b2400f968bfa4c3942901a.kra",
+              "sha256": "9687b57611f32ea96900692fbdf2d645afae1bb13878a27523cc713ecedc0829",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "3dd0c7c63819487eb4b22011580a4b2d",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "dc528ce6fe7a87deb6b9ec685898c0083683d0e2cd5ffd039d8e2733cb5cb4e8"
+            },
+            "batch_sha256": "174e6faa4e69b48789f4aaa5ea71850d0c88a36cb0ee8e9e136cf4e4bc959bc0",
+            "steps": 120,
+            "elapsed_seconds": 7.595217
+          },
+          {
+            "index": 5,
+            "job_id": "345f2f6843c440faa60fda73455e80bf",
+            "checkpoint": {
+              "schema": 1,
+              "id": "e9d8c265d7f84a2d994ea95415d7dbf3",
+              "created_at": "2026-11-05T05:02:39.357394+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\e9d8c265d7f84a2d994ea95415d7dbf3.kra",
+              "sha256": "9900c6bf244a22e07d1e6dc5cd2151309bee9fb74de71d73fb7dec4c6f6489fe",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "345f2f6843c440faa60fda73455e80bf",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "3ed4ca052b1d779bb10482e25420555d4bfc0107f78e209399b07b1e8dc7de2e"
+            },
+            "batch_sha256": "af6b1edbf4ca34d59345cc2cba903068c5773becdd7dbfe4b545a0de74050897",
+            "steps": 120,
+            "elapsed_seconds": 7.530483
+          },
+          {
+            "index": 6,
+            "job_id": "46f0e2a4787a411880846f9c6d3065e5",
+            "checkpoint": {
+              "schema": 1,
+              "id": "8679e5fe0a584d999232e2e14dde8910",
+              "created_at": "2026-11-05T05:02:46.985755+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\8679e5fe0a584d999232e2e14dde8910.kra",
+              "sha256": "a2fe31747e4d678146a17670ad499bf86864e981a396c1692a568eb92fa51648",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "46f0e2a4787a411880846f9c6d3065e5",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "9ec012a25329537582e037187c4a3b87721152b9126778d44f4e375ee392ce95"
+            },
+            "batch_sha256": "9f794fbd2ac72e2dea4fc8d9953f06dcdf065e08d0f0179930d2420ce10b3999",
+            "steps": 120,
+            "elapsed_seconds": 7.568973
+          },
+          {
+            "index": 7,
+            "job_id": "a3c14aa03acc435794892b3e1d5e58eb",
+            "checkpoint": {
+              "schema": 1,
+              "id": "f179433494ef4fbc9602131920025461",
+              "created_at": "2026-11-05T05:02:54.629983+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\f179433494ef4fbc9602131920025461.kra",
+              "sha256": "2fdd36dd741e6be61002feac0d7816426516cac87f9ee5201b93dc537184225c",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "a3c14aa03acc435794892b3e1d5e58eb",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "8be381277bc9b70ec463a716dc98608a8f3b683fac776ab3097ed5bbc17fd01a"
+            },
+            "batch_sha256": "1d4431027d5680de5f004609f47725f8d0746d519c6e9cf3b11d45624b361181",
+            "steps": 120,
+            "elapsed_seconds": 7.644109
+          },
+          {
+            "index": 8,
+            "job_id": "6443ec9136d84a4dbf49c56931d877fe",
+            "checkpoint": {
+              "schema": 1,
+              "id": "8f764a86250c412fb7b9bf312eaa1c92",
+              "created_at": "2026-11-05T05:03:02.266695+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\8f764a86250c412fb7b9bf312eaa1c92.kra",
+              "sha256": "cb551150c897f066bb1d538b9e6113b09d7d5f54ac660351c2a7210e86d48de2",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "6443ec9136d84a4dbf49c56931d877fe",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "b1cac42a00e5dd7a909a879bc273b4132e5e20079656043bcd15dd91553ccc95"
+            },
+            "batch_sha256": "f3c97676f9cdc31d46921c4e5a05fe8b6a171159659b9f84c1f8bf7fbbaec4ea",
+            "steps": 120,
+            "elapsed_seconds": 7.544297
+          },
+          {
+            "index": 9,
+            "job_id": "1a1b83c1812c4289bbc1d376b42f5eab",
+            "checkpoint": {
+              "schema": 1,
+              "id": "192d113572a44f44a4de54d67a3f6ffc",
+              "created_at": "2026-11-05T05:03:09.819341+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\192d113572a44f44a4de54d67a3f6ffc.kra",
+              "sha256": "2b19d32454464cdc9333b2f4d58db98aaad87766c42fda42a99d7b917fc16e0c",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "1a1b83c1812c4289bbc1d376b42f5eab",
+              "after_step": 120,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "b2c27c0143d983902a959baa70858849f07746bd868390cfb20da8f6c8a433dd"
+            },
+            "batch_sha256": "2601e82636eac07e7fc96bb61a6d869b22eeabec22ffea0e26c19f5da3a159c5",
+            "steps": 120,
+            "elapsed_seconds": 7.499726
+          },
+          {
+            "index": 10,
+            "job_id": "4c5c68a31a29467289934049b45fee78",
+            "checkpoint": {
+              "schema": 1,
+              "id": "2728e5dad4f74399895d0d65177f7857",
+              "created_at": "2026-11-05T05:03:12.170718+00:00",
+              "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\2728e5dad4f74399895d0d65177f7857.kra",
+              "sha256": "233a17b463173fc005471ef25b35bb15e36a0f479690630091bc418e21b520f6",
+              "document_name": "Round4 integrated",
+              "width": 4096,
+              "height": 4096,
+              "color_model": "RGBA",
+              "color_depth": "U8",
+              "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+              "job_id": "4c5c68a31a29467289934049b45fee78",
+              "after_step": 11,
+              "policy": "immutable snapshot; never overwrite or automatically replay",
+              "steps_sha256": "545447ba41c994da80387e7a7349c37fee1d56c09ee2881b6a926f9056600489"
+            },
+            "batch_sha256": "090862df4f5f13dfffa3bfe50f00c1343f959d3c08bd51b88deed0424ea72c85",
+            "steps": 11,
+            "elapsed_seconds": 2.327123
+          }
+        ],
+        "current": null,
+        "policy": "no auto replay of uncertain native effects"
+      }
+    }
+  }
+]

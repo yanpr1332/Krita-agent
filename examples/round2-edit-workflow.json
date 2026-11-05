@@ -9,7 +9,7 @@
     {
       "command": "brush.configure",
       "parameters": {
-        "preset": "Basic-5 Size",
+        "preset": "b) Basic-5 Size",
         "size": 20,
         "color": "#365070",
         "pressure_enabled": true

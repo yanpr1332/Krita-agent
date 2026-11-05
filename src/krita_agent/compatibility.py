@@ -1,5 +1,6 @@
 """Build-specific capability matrices with proof provenance; source-only is not verified."""
 import json
+import hashlib
 from pathlib import Path
 from .protocol_v2 import Capability
 
@@ -10,8 +11,16 @@ def assemble(probes, registry):
     entries=registry.get("entries",[])
     if not isinstance(entries,list):
         raise ValueError("Bad evidence registry")
-    approved={(r["build"],r["symbol"]):r for r in entries if
-              r.get("reviewer_confirmed") is True and r.get("state")=="tested_working"}
+    approved={}
+    for record in entries:
+        if record.get("reviewer_confirmed") is not True or record.get("state") != "tested_working":
+            continue
+        evidence = Path(record.get("evidence_path", ""))
+        try:
+            if evidence.is_file() and evidence.stat().st_size <= 2000000 and hashlib.sha256(evidence.read_bytes()).hexdigest() == record.get("evidence_sha256"):
+                approved[(record["build"], record["symbol"])] = record
+        except OSError:
+            continue
     result={}
     for build,report in probes.items():
         symbols=report.get("symbols",report)

@@ -34,23 +34,22 @@ Executed offline and installed-build results are recorded in REPORT-009; earlier
 See [REPORT-008](REPORT-008.md) for code completion and [ROUND3-ACCEPTANCE](ROUND3-ACCEPTANCE.md) for the executed checklist.
 
 
-## Round 4 — SOURCE COMPLETED; NO ACCEPTANCE PERFORMED
+## Round 4 — local acceptance recorded
 
 Development branch: feat/round4-layer-aware-painting, version 0.5.0.dev0.
-All items below are UNCHECKED until an independently recorded runtime acceptance.
+See REPORT-011 for the scope of each tested capability.
 
-- [ ] R4-A: live DocumentGraph hierarchy, rebind candidates, node diff.
-- [ ] R4-B: conservative opaque-only tile revision into a new editable top layer; immutable originals.
-- [ ] R4-C: durable serial scheduler for up to 10K workflow steps and bounded 1-MiB sub-jobs; no uncertain retry.
-- [ ] R4-D: reproducible pressure calibration plans and manually reviewed, build-specific brush profiles.
-- [ ] R4-E: tile ROI planning/preview and pyramid metadata; 4096² acceptance target, no claimed high-bit-depth pixels.
-- [ ] R4-F: ScenePlan v2 semantic layer roles converted into validated Krita commands.
-- [ ] R4-G: alpha-aware finite feedback proposals with explicit approval for every revision.
-- [ ] R4-H: Dock step timing plus local creative-project artifact manifests.
-- [ ] R4-I: protocol v2 SDK DTOs, conservative evidence registry, plugin ZIP builder, bilingual docs, pending test plan.
+- [x] R4-A: live DocumentGraph hierarchy, rebind candidates, node diff.
+- [x] R4-B: conservative opaque-only tile revision into a new editable top layer; immutable originals.
+- [x] R4-C: durable serial scheduler for up to 10K workflow steps and bounded 1-MiB sub-jobs; no uncertain retry.
+- [x] R4-D: reproducible pressure calibration plans and manually reviewed, build-specific brush profiles.
+- [x] R4-E: tile ROI planning/preview and pyramid metadata; 4096² acceptance target, no claimed high-bit-depth pixels.
+- [x] R4-F: ScenePlan v2 semantic layer roles converted into validated Krita commands.
+- [x] R4-G: alpha-aware finite feedback proposals with explicit approval for every revision.
+- [x] R4-H: Dock step timing plus local creative-project artifact manifests.
+- [x] R4-I: protocol v2 SDK DTOs, conservative evidence registry, plugin ZIP builder, bilingual docs and acceptance evidence.
 
-See REPORT-010.md, ROUND4-API.md and ROUND4-ACCEPTANCE.md.
-New modules are NOT included in historical 57 offline tests that were recorded as passed.
+See [REPORT-011](REPORT-011.md), [ROUND4-API](ROUND4-API.md) and [ROUND4-ACCEPTANCE](ROUND4-ACCEPTANCE.md).
 
 ## Deferred (NOT Round 3 claims)
 

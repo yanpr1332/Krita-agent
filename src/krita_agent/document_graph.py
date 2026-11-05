@@ -36,13 +36,19 @@ def rebind(before, after):
         raise ValueError("Canvas dimensions differ")
     def key(node):
         return (tuple(node["path"]), node["name"], node["type"])
-    old = {key(n): n for n in before["nodes"]}
-    new = {key(n): n for n in after["nodes"]}
+    old = {}
+    for node in before["nodes"]:
+        old.setdefault(key(node), []).append(node)
+    new = {}
+    for node in after["nodes"]:
+        new.setdefault(key(node), []).append(node)
     proposals = []
-    for entry, node in old.items():
-        match = new.get(entry)
-        proposals.append({"old_id": node["id"], "new_id": match["id"] if match else None,
-                          "path": node["path"], "status": "candidate" if match else "ambiguous_or_missing"})
+    for entry, old_nodes in old.items():
+        matches = new.get(entry, [])
+        match = matches[0] if len(matches) == 1 and len(old_nodes) == 1 else None
+        for node in old_nodes:
+            proposals.append({"old_id": node["id"], "new_id": match["id"] if match else None,
+                              "path": node["path"], "status": "candidate" if match else "ambiguous_or_missing"})
     return {"mapping": proposals, "note": "Review before using mappings for destructive edits."}
 
 
