@@ -68,7 +68,8 @@ def execute(bridge, command, p):
                 "rect": [selection.x(), selection.y(), selection.width(), selection.height()]
                 if selection is not None else None}
     if command == "selection.clear":
-        doc.setSelection(Selection())
+        doc.setSelection(None)
+        doc.waitForDone()
         return {"cleared": True}
     if command == "selection.rectangle":
         x = integer(p.get("x"), "x", 0, doc.width()-1)

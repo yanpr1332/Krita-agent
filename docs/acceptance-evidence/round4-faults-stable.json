@@ -1,0 +1,138 @@
+[
+  {
+    "case": "durable_completed_batch_metadata",
+    "ok": true,
+    "ledger": {
+      "schema": "krita-agent-long-job/1",
+      "id": "a3179f6d27cc404784c851ebb629c534",
+      "state": "completed",
+      "source_sha256": "1aa5d68d07fdedea3f2e6d120f12cc2434f8ff78b4b1c173563cd26f1d77b622",
+      "batch_count": 2,
+      "next_batch": 2,
+      "completed": [
+        {
+          "index": 0,
+          "job_id": "53f8bf6023e5425bb9c3b38bbaae6a88",
+          "checkpoint": {
+            "schema": 1,
+            "id": "ed7bbaaaa86c41a4b5fe333f39da3ba1",
+            "created_at": "2026-11-05T04:59:38.890410+00:00",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\checkpoints\\ed7bbaaaa86c41a4b5fe333f39da3ba1.kra",
+            "sha256": "cc4ddac54f4b1edfc5108322061bd37a44a748d70310c1f2934dba78d9c55151",
+            "document_name": "Round4 integrated",
+            "width": 4096,
+            "height": 4096,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+            "job_id": "53f8bf6023e5425bb9c3b38bbaae6a88",
+            "after_step": 2,
+            "policy": "immutable snapshot; never overwrite or automatically replay",
+            "steps_sha256": "9bd670f68afdbbb00e40cbdaa9a921be4447d161d970ac0837de54c7b6b575fd"
+          },
+          "batch_sha256": "971d906a32c7b3ad7f155f2007411f5dbc8ce9b03401ca3ca7671fd50bc38efd",
+          "steps": 2,
+          "elapsed_seconds": 1.602701
+        },
+        {
+          "index": 1,
+          "job_id": "28f5ae8b87c141b1a0111a33e33a5884",
+          "checkpoint": {
+            "schema": 1,
+            "id": "ace320404d934c2883c6ef35787a2478",
+            "created_at": "2026-11-05T04:59:40.515843+00:00",
+            "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\checkpoints\\ace320404d934c2883c6ef35787a2478.kra",
+            "sha256": "e962af172ae56e903284223b361445a5ce364c85f0751570ffca7606ff7ede7f",
+            "document_name": "Round4 integrated",
+            "width": 4096,
+            "height": 4096,
+            "color_model": "RGBA",
+            "color_depth": "U8",
+            "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+            "job_id": "28f5ae8b87c141b1a0111a33e33a5884",
+            "after_step": 2,
+            "policy": "immutable snapshot; never overwrite or automatically replay",
+            "steps_sha256": "9bd670f68afdbbb00e40cbdaa9a921be4447d161d970ac0837de54c7b6b575fd"
+          },
+          "batch_sha256": "971d906a32c7b3ad7f155f2007411f5dbc8ce9b03401ca3ca7671fd50bc38efd",
+          "steps": 2,
+          "elapsed_seconds": 1.572934
+        }
+      ],
+      "current": null,
+      "policy": "no auto replay of uncertain native effects"
+    }
+  },
+  {
+    "case": "accepted_reply_lost",
+    "ok": true,
+    "submit_calls": 1,
+    "ledger": {
+      "state": "unknown_needs_review",
+      "ledger": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\lost-reply-d6e04beb343d4c538bd4d3d91988673b\\long-job-b95ae9fed86243099c1894b2bb786523.json",
+      "completed_batches": 0,
+      "error": "Injected loss AFTER native acceptance"
+    },
+    "actual_job": {
+      "id": "c35b09d155534c17b956a8784f443176",
+      "state": "completed",
+      "total": 2,
+      "done": 2,
+      "error": null,
+      "last_result": {
+        "schema": 1,
+        "id": "8b49492480484261a859d3dbb44104e8",
+        "created_at": "2026-11-05T04:59:42.235888+00:00",
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\checkpoints\\8b49492480484261a859d3dbb44104e8.kra",
+        "sha256": "cce731e134658ad2bdb9fc85a877a092ed9932f84378de398cea2901b58ddc16",
+        "document_name": "Round4 integrated",
+        "width": 4096,
+        "height": 4096,
+        "color_model": "RGBA",
+        "color_depth": "U8",
+        "color_profile": "sRGB-elle-V2-srgbtrc.icc",
+        "job_id": "c35b09d155534c17b956a8784f443176",
+        "after_step": 2,
+        "policy": "immutable snapshot; never overwrite or automatically replay",
+        "steps_sha256": "9bd670f68afdbbb00e40cbdaa9a921be4447d161d970ac0837de54c7b6b575fd"
+      },
+      "cancel_requested": false
+    }
+  },
+  {
+    "case": "after_overlay_before_patch",
+    "ok": true,
+    "checkpoint": "f1aa995814784caaa4cc7fbcda958532",
+    "zero_auto_replay": true,
+    "rgba_equal": true,
+    "original_checkpoint_unchanged": true,
+    "graph_nodes": 17
+  },
+  {
+    "case": "after_patch_before_save",
+    "ok": true,
+    "checkpoint": "7f710a3387c1485295a281fef9865e39",
+    "zero_auto_replay": true,
+    "rgba_equal": true,
+    "original_checkpoint_unchanged": true,
+    "graph_nodes": 17
+  },
+  {
+    "case": "v1_limits_unchanged",
+    "ok": true,
+    "limits": {
+      "protocol": 1,
+      "max_frame": 1048576,
+      "max_steps": 400,
+      "max_stroke_points": 2048,
+      "max_tile_area": 1048576,
+      "document": {
+        "width": 4096,
+        "height": 4096,
+        "model": "RGBA",
+        "depth": "U8"
+      },
+      "continuous_stroke": false
+    }
+  }
+]

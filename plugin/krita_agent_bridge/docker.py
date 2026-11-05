@@ -26,6 +26,8 @@ class AgentStatusDocker(DockWidget):
         layout = QVBoxLayout(container)
         self.connection = QLabel("Krita Agent: not connected")
         self.progress = QLabel("No active job")
+        self.resources = QLabel("Queues / checkpoints: none")
+        self.metrics = QLabel("Step timing: unavailable")
         self.history = QListWidget()
         self.history.setMaximumHeight(140)
         self.error = QLabel("No recorded error")
@@ -35,6 +37,8 @@ class AgentStatusDocker(DockWidget):
         self.preview.setMinimumHeight(80)
         layout.addWidget(self.connection)
         layout.addWidget(self.progress)
+        layout.addWidget(self.resources)
+        layout.addWidget(self.metrics)
         layout.addWidget(QLabel("Recent jobs"))
         layout.addWidget(self.history)
         layout.addWidget(self.error)
@@ -79,6 +83,12 @@ class AgentStatusDocker(DockWidget):
             self.progress.setText("{} · {}/{}".format(active["state"], active["done"], active["total"]))
         else:
             self.progress.setText("No active job")
+        self.resources.setText("Queue: {} active / {} total jobs".format(len(bridge.active),len(bridge.jobs)))
+        if active and active.get("metrics"):
+            metric=active["metrics"]
+            self.metrics.setText("Step: {} ms; total: {} ms".format(metric.get("last_step_ms","?"),metric.get("total_step_ms","?")))
+        else:
+            self.metrics.setText("Step timing: unavailable")
         recent = list(bridge.jobs.values())[-8:]
         rows = tuple("{} {} {}/{}".format(j["id"][:8], j["state"], j["done"], j["total"])
                      for j in reversed(recent))

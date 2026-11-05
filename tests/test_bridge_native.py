@@ -42,3 +42,13 @@ def test_export_restores_batchmode_even_on_failure(failure):
     else:
         assert execute(bridge, "document.export", {"path": "test.png"})["format"] == "png"
     assert [c.args for c in doc.setBatchmode.call_args_list] == [(True,), (False,)]
+
+
+def test_job_metrics_reaches_advanced_dispatch_instead_of_legacy_job_router():
+    advanced = Mock(return_value={"metrics": {"last_step_ms": 1}})
+    execute = dispatcher({"Krita": SimpleNamespace(instance=lambda: None),
+                          "ADVANCED_COMMANDS": {"job.metrics"},
+                          "dispatch_advanced": advanced})
+    bridge = SimpleNamespace(_job=Mock(side_effect=AssertionError("legacy router used")))
+    assert execute(bridge, "job.metrics", {"id": "job"})["metrics"]["last_step_ms"] == 1
+    advanced.assert_called_once_with(bridge, "job.metrics", {"id": "job"})

@@ -1,0 +1,24 @@
+[
+  {
+    "build": "stable",
+    "pyramid_tiles_exact": 85,
+    "icc_present": false,
+    "icc_bytes_equal": true
+  },
+  {
+    "build": "qt5",
+    "pyramid_tiles_exact": 85,
+    "icc_present": true,
+    "icc_bytes_equal": true
+  },
+  {
+    "build": "qt6",
+    "pyramid_tiles_exact": 85,
+    "icc_present": true,
+    "icc_bytes_equal": true
+  },
+  {
+    "explicit_icc_fixture": true,
+    "oversized_32mp_refused": true
+  }
+]

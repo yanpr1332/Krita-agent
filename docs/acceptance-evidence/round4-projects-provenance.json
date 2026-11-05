@@ -1,0 +1,110 @@
+[
+  {
+    "build": "stable",
+    "calibrated_scene_sha256": "ac64fdf2238f0b6b72f19e3a61583352de391bd22c7d1b11fa3700aaa5acf944",
+    "project_audit": {
+      "project": "b1ef09c933a2489daf64585c3b4d4d90",
+      "artifacts": [
+        {
+          "kind": "scene_plan",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\integrated-project-db5c3a65\\scene-plan.json",
+          "valid": true
+        },
+        {
+          "kind": "kra",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\checkpoints\\1bef0192f8744172b7b3d3432d0a340c.kra",
+          "valid": true
+        },
+        {
+          "kind": "reference",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\goal-1.png",
+          "valid": true
+        },
+        {
+          "kind": "layer_graph",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\graph-1.json",
+          "valid": true
+        },
+        {
+          "kind": "job_ledger",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-stable-1793854636\\ledgers\\long-job-9e9b279825c64540880f655ff7944118.json",
+          "valid": true
+        }
+      ],
+      "all_valid": true
+    },
+    "changed_artifact_refused": true
+  },
+  {
+    "build": "qt5",
+    "calibrated_scene_sha256": "ac64fdf2238f0b6b72f19e3a61583352de391bd22c7d1b11fa3700aaa5acf944",
+    "project_audit": {
+      "project": "a526e0a963ff42039e6b9ace9cdd0013",
+      "artifacts": [
+        {
+          "kind": "scene_plan",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\integrated-project-1b6cc56b\\scene-plan.json",
+          "valid": true
+        },
+        {
+          "kind": "kra",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\checkpoints\\2728e5dad4f74399895d0d65177f7857.kra",
+          "valid": true
+        },
+        {
+          "kind": "reference",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\goal-1.png",
+          "valid": true
+        },
+        {
+          "kind": "layer_graph",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\graph-1.json",
+          "valid": true
+        },
+        {
+          "kind": "job_ledger",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt5-1793854825\\ledgers\\long-job-8633b3e7f9004bc8ba0ed5bfde448411.json",
+          "valid": true
+        }
+      ],
+      "all_valid": true
+    },
+    "changed_artifact_refused": true
+  },
+  {
+    "build": "qt6",
+    "calibrated_scene_sha256": "ac64fdf2238f0b6b72f19e3a61583352de391bd22c7d1b11fa3700aaa5acf944",
+    "project_audit": {
+      "project": "a5e981e9cc344412a04607ede285d7eb",
+      "artifacts": [
+        {
+          "kind": "scene_plan",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793855056\\integrated-project-8ef88c4f\\scene-plan.json",
+          "valid": true
+        },
+        {
+          "kind": "kra",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793855056\\checkpoints\\adf9a1cb2dc84e0090a75f1301439c0a.kra",
+          "valid": true
+        },
+        {
+          "kind": "reference",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793855056\\goal-1.png",
+          "valid": true
+        },
+        {
+          "kind": "layer_graph",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793855056\\graph-1.json",
+          "valid": true
+        },
+        {
+          "kind": "job_ledger",
+          "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round2\\visual-qt6-1793855056\\ledgers\\long-job-c4a83c53e9d240739a70fc01135ae9bc.json",
+          "valid": true
+        }
+      ],
+      "all_valid": true
+    },
+    "changed_artifact_refused": true
+  }
+]

@@ -1,0 +1,178 @@
+{
+  "schema": "krita-agent-scene/2",
+  "document": {
+    "width": 512,
+    "height": 512,
+    "name": "Round4 scene example"
+  },
+  "layers": [
+    {
+      "name": "Scene Background",
+      "role": "background",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            20,
+            20,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Lineart",
+      "role": "lineart",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            44,
+            44,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Base Color",
+      "role": "base_color",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            68,
+            68,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Shadow",
+      "role": "shadow",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            92,
+            92,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Highlight",
+      "role": "highlight",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            116,
+            116,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Texture",
+      "role": "texture",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            140,
+            140,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Foreground",
+      "role": "foreground",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            164,
+            164,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": false
+    },
+    {
+      "name": "Scene Effects",
+      "role": "effects",
+      "brush": {
+        "preset": "b) Basic-5 Size",
+        "size": 8,
+        "color": "#305070"
+      },
+      "elements": [
+        {
+          "kind": "rectangle",
+          "rect": [
+            188,
+            188,
+            48,
+            48
+          ]
+        }
+      ],
+      "preview": true
+    }
+  ]
+}

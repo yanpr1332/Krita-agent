@@ -1,0 +1,13 @@
+{
+  "install_replacement_matches_source": true,
+  "rollback_matches_previous_source": true,
+  "disposable_resource_directory": "D:\\computer\\Krita\\Krita-agent\\.cache\\round4-install-fixture-4df7fa161945412b8bc4245dffadaf9f\\pykrita",
+  "bundle": {
+    "archive": "D:\\computer\\Krita\\Krita-agent\\.cache\\round4-final-plugin-b11a61e7bd9641388d5e2ca6d96720c0.zip",
+    "sha256": "742c14f179aef017e988dbf95a0a0d7a1f50bec41ec9a9f79d0f4592d7d41568",
+    "files": 22,
+    "install_required": true,
+    "note": "Inspect files and back up shared Krita user resources before deploying"
+  },
+  "live_user_resources_not_rolled_back": true
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "case": "auth",
+    "ok": true,
+    "error": "Unauthorized"
+  },
+  {
+    "case": "allowlist",
+    "ok": true,
+    "error": "Unknown or denied command"
+  },
+  {
+    "case": "duplicate_request",
+    "ok": true
+  },
+  {
+    "case": "nonloopback_refused",
+    "ok": true
+  },
+  {
+    "case": "nonloopback_refused",
+    "ok": true
+  },
+  {
+    "case": "listener_owner_loopback",
+    "ok": true
+  }
+]

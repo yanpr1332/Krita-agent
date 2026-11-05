@@ -1,4 +1,4 @@
-# Krita Agent roadmap — authoritative current status (2026-11-03)
+# Krita Agent roadmap — authoritative current status (2026-11-04)
 
 Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
@@ -32,6 +32,24 @@ Executed offline and installed-build results are recorded in REPORT-009; earlier
 - [x] **R3-H:** Dock history/error/preview and project documentation/acceptance suite.
 
 See [REPORT-008](REPORT-008.md) for code completion and [ROUND3-ACCEPTANCE](ROUND3-ACCEPTANCE.md) for the executed checklist.
+
+
+## Round 4 — local acceptance recorded
+
+Development branch: feat/round4-layer-aware-painting, version 0.5.0.dev0.
+See REPORT-011 for the scope of each tested capability.
+
+- [x] R4-A: live DocumentGraph hierarchy, rebind candidates, node diff.
+- [x] R4-B: conservative opaque-only tile revision into a new editable top layer; immutable originals.
+- [x] R4-C: durable serial scheduler for up to 10K workflow steps and bounded 1-MiB sub-jobs; no uncertain retry.
+- [x] R4-D: reproducible pressure calibration plans and manually reviewed, build-specific brush profiles.
+- [x] R4-E: tile ROI planning/preview and pyramid metadata; 4096² acceptance target, no claimed high-bit-depth pixels.
+- [x] R4-F: ScenePlan v2 semantic layer roles converted into validated Krita commands.
+- [x] R4-G: alpha-aware finite feedback proposals with explicit approval for every revision.
+- [x] R4-H: Dock step timing plus local creative-project artifact manifests.
+- [x] R4-I: protocol v2 SDK DTOs, conservative evidence registry, plugin ZIP builder, bilingual docs and acceptance evidence.
+
+See [REPORT-011](REPORT-011.md), [ROUND4-API](ROUND4-API.md) and [ROUND4-ACCEPTANCE](ROUND4-ACCEPTANCE.md).
 
 ## Deferred (NOT Round 3 claims)
 

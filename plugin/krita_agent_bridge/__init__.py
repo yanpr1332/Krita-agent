@@ -7,6 +7,7 @@ import secrets
 import socket
 import sys
 import threading
+import time
 import uuid
 from collections import deque
 from pathlib import Path
@@ -44,6 +45,8 @@ TASK_STEPS = COMMANDS.difference((
     "pixel.transaction.reconcile",
     "clipboard.save", "clipboard.load", "clipboard.inspect",
     "document.close", "document.activate", "document.crop", "selection.cut",
+    "document.graph", "preview.tile", "runtime.limits", "job.metrics", "brush.calibration.support",
+    "revision.overlay.begin", "revision.overlay.inspect",
     "selection.paste", "pixel.fill", "pixel.clear", "layer.delete", "layer.reorder"
 ))
 
@@ -303,7 +306,7 @@ class KritaAgentBridge(Extension):
                     "input_dir": str(Path(os.environ.get("KRITA_AGENT_INPUT_DIR") or self.output_dir).resolve())}
         if command == "capabilities":
             return self._capabilities()
-        if command.startswith("job."):
+        if command.startswith("job.") and command not in ADVANCED_COMMANDS:
             return self._job(command, p)
         if command == "canvas.create":
             w = _int(p.get("width"), "width", 1, 8192)
@@ -559,10 +562,16 @@ class KritaAgentBridge(Extension):
         job["state"] = "running"
         self.journal.save(job)
         step = job["steps"][job["done"]]
+        step_started = time.perf_counter()
         self._current_job_id = identifier
         try:
             job["last_result"] = self._execute(step["command"], step.get("parameters", {}))
             job["done"] += 1
+            step_ms = round((time.perf_counter()-step_started)*1000, 3)
+            metrics = job.setdefault("metrics", {"total_step_ms":0, "max_step_ms":0})
+            metrics["last_step_ms"] = step_ms
+            metrics["total_step_ms"] = round(metrics["total_step_ms"] + step_ms, 3)
+            metrics["max_step_ms"] = max(metrics["max_step_ms"], step_ms)
             if job["done"] == job["total"]:
                 job["state"] = "completed"
                 self.active.popleft()
@@ -570,6 +579,7 @@ class KritaAgentBridge(Extension):
         except Exception as exc:
             job["state"] = "failed"
             job["error"] = str(exc)
+            job.setdefault("metrics", {})["last_failed_step_ms"] = round((time.perf_counter()-step_started)*1000, 3)
             self.journal.save(job)
             self.active.popleft()
             # Partial artwork is preserved for inspection; no destructive rollback.

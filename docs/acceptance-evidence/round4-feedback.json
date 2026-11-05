@@ -1,0 +1,75 @@
+{
+  "alpha_only_difference": {
+    "error_normalized": 6.104e-05,
+    "pixel_goal_met": false,
+    "difference_bbox": [
+      2,
+      3,
+      3,
+      4
+    ],
+    "threshold": 0
+  },
+  "translucent_and_fully_transparent_changed_goals_refused": true,
+  "finite_iteration_limit": true,
+  "local_proposal_only": {
+    "round": 1,
+    "max_rounds": 2,
+    "evaluation": {
+      "error_normalized": 0.27941176,
+      "pixel_goal_met": false,
+      "difference_bbox": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "threshold": 0
+    },
+    "next": "manual_approval_required",
+    "proposal": {
+      "schema": "krita-agent-overlay/1",
+      "source": {
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round4-feedback-0f7d757bbec1492bbbfc49ed087772aa\\before.png",
+        "size": [
+          64,
+          64
+        ],
+        "mode": "RGBA",
+        "sha256": "57f20c7a4f4ce7a4bf70753f75f3a3e7938b931f671eb14ef13bbdd8af388b14"
+      },
+      "target": {
+        "path": "D:\\computer\\Krita\\Krita-agent\\.cache\\round4-feedback-0f7d757bbec1492bbbfc49ed087772aa\\goal.png",
+        "size": [
+          64,
+          64
+        ],
+        "mode": "RGBA",
+        "sha256": "4366fc6606247f45065d2df278f6ad13aa4488790da3ba847bf5919767221605"
+      },
+      "graph_sha256": "e3e91b98a12fbcb1ebb97228f70b18d9aaaa758bef4535dbde859610346732bd",
+      "changes": [
+        {
+          "rect": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "preflight_sha256": "dd075a3447180fa2dd587604ef2489432468a277ef417700f709e6616e7b1e21",
+          "tile": [
+            0,
+            0,
+            64,
+            64
+          ],
+          "target_opaque": true
+        }
+      ],
+      "tile_size": 512,
+      "status": "requires_approval",
+      "semantics": "top-level opaque overlay, originals untouched; no arbitrary blend inverse"
+    },
+    "note": "You must inspect and explicitly approve each new revision. No automatic loop."
+  }
+}

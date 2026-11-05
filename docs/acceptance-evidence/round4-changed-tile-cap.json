@@ -1,0 +1,7 @@
+{
+  "changed_tiles": 129,
+  "limit": 128,
+  "tile_size": 128,
+  "rejected": true,
+  "reason": "Too many changed tiles for this revision"
+}

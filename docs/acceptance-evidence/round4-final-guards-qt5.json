@@ -1,0 +1,20 @@
+[
+  {
+    "case": "independent_layer_order_staleness",
+    "ok": true,
+    "error": "Live Krita layer tree changed since plan creation"
+  },
+  {
+    "case": "unauthorized_goal_path",
+    "ok": true,
+    "error": "Goal file must be inside the authorized input directory"
+  },
+  {
+    "case": "image_graph_depth_and_no_change_guards",
+    "ok": true
+  },
+  {
+    "case": "wire_budget_wrong_port_reconnect",
+    "ok": true
+  }
+]

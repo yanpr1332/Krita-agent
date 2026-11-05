@@ -78,3 +78,29 @@ def test_dock_registration_supports_qt5_and_qt6_enum_layout(scoped):
     namespace['register'](object())
     factory.assert_called_once_with('krita_agent_status', 7, widget)
     app.addDockWidgetFactory.assert_called_once_with('factory')
+
+
+def test_clear_selection_removes_the_global_selection_instead_of_selecting_zero_pixels():
+    bridge, node, selection = fixture()
+    handler()(bridge, "selection.clear", {})
+    bridge._doc().setSelection.assert_called_once_with(None)
+    bridge._doc().waitForDone.assert_called_once()
+
+
+
+def test_import_root_anchor_uses_the_ancestor_of_a_nested_selection():
+    path = Path(__file__).parents[1] / "plugin/krita_agent_bridge/advanced_media.py"
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    anchor = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "_root_anchor")
+    namespace = {}
+    exec(compile(ast.Module(body=[anchor], type_ignores=[]), str(path), "exec"), namespace)
+    root, group, paint, mask, doc = (Mock() for _ in range(5))
+    doc.rootNode.return_value = root
+    doc.activeNode.return_value = mask
+    mask.parentNode.return_value = paint
+    paint.parentNode.return_value = group
+    group.parentNode.return_value = root
+
+    assert namespace["_root_anchor"](doc) is group
+    doc.activeNode.return_value = None
+    assert namespace["_root_anchor"](doc) is None

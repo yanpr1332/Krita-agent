@@ -1,0 +1,145 @@
+[
+  {
+    "command": [
+      "--help"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "29d782189c28c5e1460ed9d5dbd974d3321efa5309f215a4816efbaa881c4ec0"
+  },
+  {
+    "command": [
+      "graph",
+      "capture"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "d2e5829c6518deeca62310835df3bcffe1f59501747f7ca4c9bc4cfb18e2ba20"
+  },
+  {
+    "command": [
+      "graph",
+      "diff"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "1ecd866acb45fb7c502db4737a5b4f03b3c74b1de93a4dc16fafe3308a077009"
+  },
+  {
+    "command": [
+      "graph",
+      "rebind"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "49b8afb3b8cec6af9440b012945f2871d839844d750c54be16a7afbbcebf9a2e"
+  },
+  {
+    "command": [
+      "overlay",
+      "plan"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "48d56b67003aea43b4c96c8ebba540570c52e6dd15314fab9062d99301d597c9"
+  },
+  {
+    "command": [
+      "overlay",
+      "apply"
+    ],
+    "ok": true,
+    "exit_code": 1,
+    "stdout_sha256": "650ac64ca22a09e578656fea71c05154b2e9958e9e2e44bfd9802c405a94ca46"
+  },
+  {
+    "command": [
+      "longjob",
+      "plan"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "e02acc92b555d6ca50aa79b58889c6bc0e941a3fa755bbc66f8576fe99c13a35"
+  },
+  {
+    "command": [
+      "longjob",
+      "inspect"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "1ec3592e53d66d7d10fcbf75d8d65b4c24b2dd0eb69a1398d3fca0c7afbe2618"
+  },
+  {
+    "command": [
+      "brushcal",
+      "generate"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "cd38c69ae5814b38930a4c4fb9559b717d9f6540142a8c88762bdd0202967deb"
+  },
+  {
+    "command": [
+      "brushcal",
+      "choose"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "74b4b27a0b855128ad21a1c26bd22e15f1d39e8796c141d20ef1ec53a6b6f3e8"
+  },
+  {
+    "command": [
+      "scene-v2",
+      "compile"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "bdc777938dce9d38178f13d940b3edfa13bb6aba0d47f4674a3c909f3711ecc9"
+  },
+  {
+    "command": [
+      "pyramid",
+      "inspect"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "7ac2c169c64f76ba100b48223e7450760204775629fa203094446e4e5ef117c0"
+  },
+  {
+    "command": [
+      "feedback-v2",
+      "review"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "1f8ef325e54b4aac9e26cf839233fedfeafaceb33ffb42c732ecd30e2aa1b8c8"
+  },
+  {
+    "command": [
+      "project",
+      "audit"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "3fd933b0794c18fbd4ef217072d94d91cf0cf5b4b57a7e46adbe957531e796e0"
+  },
+  {
+    "command": [
+      "performance",
+      "ledger"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "2e2dfb3da97205a4c048e86ce78f853606a2f0dd78e058c3b1226f83f99688fb"
+  },
+  {
+    "command": [
+      "performance",
+      "job"
+    ],
+    "ok": true,
+    "exit_code": 0,
+    "stdout_sha256": "532d1e3d8c4b4328e7e53e3c56e8e4f34354accbe945590e8f4fc8754763a495"
+  }
+]

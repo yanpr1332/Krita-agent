@@ -1,0 +1,7 @@
+{
+  "invalid_json": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+  "unsupported_role": "Unsupported layer role",
+  "unsafe_command_and_path": "Unsupported scene element kind",
+  "oversized_scene": "Workflow requires 1..400 steps",
+  "preview_paths_are_compiler_owned": true
+}
