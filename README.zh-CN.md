@@ -1,5 +1,7 @@
 # Krita Agent
 
+**完整作品验收新规定（R4.5）：** 命令数、笔触数和图层数不能替代完整插画验收。必须实际查看仓库中的[示例图与创作契约](docs/ARTWORK-ACCEPTANCE.md)，将最终 KRA、PNG、阶段预览和审核证据留在本地 `artwork-results/`。本地 Agent 请先阅读 [AGENTS.md](AGENTS.md)。
+
 [English](README.md) | 简体中文
 
 Krita Agent 是 Windows 环境下的 **Krita 原生绘画自动化系统**：外部 Python Controller 通过仅限本机的鉴权 IPC 连接到 Krita 内部 Python 插件，在真实可编辑的 KRA 文档、图层及笔刷上操作。项目明确区分源码实现、离线测试和真实 Krita 构建验收。
