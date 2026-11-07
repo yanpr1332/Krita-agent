@@ -1,41 +1,82 @@
-# Independent artwork visual-model review — evaluator instruction
+# Independent artwork visual-model review — evaluator instruction (v2)
 
-**You are assessing a finished, coherent illustration — NOT measuring the number of Krita commands.**
+**Assess the rendered artwork, not the number of Krita commands.** The review must be performed against the exact local run and must describe visible evidence for every required object and spatial relationship.
 
-Required image inputs to load *as images*:
-1. the original benchmark reference image in \`benchmarks/artwork/reference/sunset_alpine_lake.jpg\`,
-2. the actual complete \`artwork-results/<run-id>/artwork.png\`,
-3. the three actual stage previews and optional Krita screenshot.
-Also read the fixed JSON contract. If any image is missing or cannot be opened visually, return \`fail\` or \`insufficient_evidence\`. Never infer image content from file names, logs, or layer names.
+## Images and source data to open
 
-Ask:
-- Is this an actual cohesive landscape illustration, not a grid of rectangles, short strokes, or arbitrary patches?
-- Are sky, sun, volumetric clouds, mountains with distinct depth, forest, lake, sunset reflections and foreground flowers/rocks each *recognizable* in the finished actual PNG?
-- Do the listed spatial relations make sense? Are the scene's major regions meaningfully composed, rather than icons scattered independently?
-- Are there obvious unfinished/blank regions, generic repeated test strokes, clipping defects, abrupt pasted reference artifacts, or incoherent proportions?
-- Are visual quality and style at least broadly comparable in **complexity** to the supplied benchmark? Do not require photorealism, the exact pixels, identical painterly style, or direct tracing.
-- Do stages show progression toward the final scene? Visual progress alone does not establish authenticity; verify execution logs, Krita screenshot and editable-layer evidence separately.
+Load these files as actual images, not as filenames or metadata:
 
-Output a JSON object \`reviews/visual-model.json\` with:
-\`\`\`json
+1. The locked benchmark reference at `benchmarks/artwork/reference/sunset_alpine_lake.jpg`.
+2. The final exported `artwork-results/<run-id>/artwork.png`.
+3. All three stage previews: `stages/01-layout.png`, `stages/02-color.png`, and `stages/03-final.png`.
+4. The Krita screenshot, when useful for verifying the actual application context.
+
+Read the immutable scene contract and inspect the KRA layer graph and execution provenance separately. If an image is missing, cannot be opened, or is not actually visible to the reviewer, do not infer its contents: return `fail` or `insufficient_evidence`.
+
+## Required visual questions
+
+- Is the final result a cohesive landscape illustration rather than a grid of rectangles, short strokes, or arbitrary patches?
+- Are sky, sun, volumetric clouds, mountains with distinct depth, forest, lake, reflection, and foreground elements recognizable?
+- Do all six spatial relationships in the contract hold in the actual image?
+- Are there unfinished blank regions, repeated test marks, clipping defects, abrupt pasted-reference artifacts, or incoherent proportions?
+- Is the result broadly comparable to the reference in compositional complexity? Do not require pixel identity, photorealism, or tracing.
+- Do the three stages show a plausible progression toward the final composition?
+
+A model score, object name, layer name, prompt, or execution log is never visual evidence by itself.
+
+## Required output: `reviews/visual-model.json`
+
+Use schema `krita-agent-artwork-vlm/2`:
+
+```json
 {
-  "schema": "krita-agent-artwork-vlm/1",
+  "schema": "krita-agent-artwork-vlm/2",
   "model": "ACTUAL_MODEL_IDENTIFIER",
   "reviewed_at": "ISO_8601_TIME",
-  "reference_sha256": "EXACT_REFERENCE_FILE_SHA256",
+  "reference_sha256": "EXACT_LOCKED_REFERENCE_SHA256",
   "artwork_png_sha256": "EXACT_FINAL_PNG_SHA256",
+  "reviewed_inputs": {
+    "artwork_kra_sha256": "EXACT_EDITABLE_KRA_SHA256",
+    "stage_previews": {
+      "stages/01-layout.png": "EXACT_SHA256",
+      "stages/02-color.png": "EXACT_SHA256",
+      "stages/03-final.png": "EXACT_SHA256"
+    }
+  },
   "decision": "pass_or_fail",
   "coherent_full_scene": false,
   "objects": {
-    "sky": false, "sun": false, "clouds": false, "mountains": false,
-    "forest": false, "lake": false, "reflection": false, "foreground": false
+    "sky": false,
+    "sun": false,
+    "clouds": false,
+    "mountains": false,
+    "forest": false,
+    "lake": false,
+    "reflection": false,
+    "foreground": false
+  },
+  "object_evidence": {
+    "sky": "Describe the visible sky evidence.",
+    "sun": "Describe the visible sun evidence.",
+    "clouds": "Describe the visible cloud evidence.",
+    "mountains": "Describe the visible mountain evidence.",
+    "forest": "Describe the visible forest evidence.",
+    "lake": "Describe the visible lake evidence.",
+    "reflection": "Describe the visible reflection evidence.",
+    "foreground": "Describe the visible foreground evidence."
   },
   "relations": [
-    {"description": "one contract relationship", "passes": false, "evidence": "what is actually visible"}
+    {
+      "description": "sun visible in sky above distant ridge",
+      "passes": false,
+      "evidence": "Describe what is directly visible."
+    }
   ],
   "failure_modes": [],
-  "notes": "concrete observations about the ACTUAL painting"
+  "notes": "Concrete observations about the actual final image and stage progression."
 }
-\`\`\`
+```
 
-For an artwork \`pass\`, every required object and relation must be supported by directly visible evidence and \`coherent_full_scene\` must be true. Do not award points for eight names in a layer tree. If unsure, set \`decision\` to \`fail\` and explain. A separate human reviewer must still approve the actual image; the model's verdict alone is insufficient.
+Include one relation row for every required relation in the fixed contract. Each required object and relation needs a concrete visual observation; a boolean alone is insufficient. A passing review must have no unresolved failure modes. Record the actual image hashes from the local files, not values copied from another run.
+
+The artifact auditor checks that this review is bound to the exact reference, KRA, final PNG, and stage-preview hashes. It cannot verify that the model truly saw the images or that its visual judgement is correct. A separate human reviewer must still inspect the result and approve it.

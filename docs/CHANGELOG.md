@@ -20,3 +20,12 @@ native Qt5/Qt6 results). Previous reports preserve their original evidence.
 ## Round 2 / Round 1
 
 Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
+
+
+## 0.6.0.dev0 — Round 5 source implementation
+
+- Add explicit long-job continuation from verified, completed KRA checkpoint boundaries; unknown/in-flight effects remain non-replayable.
+- Add offline ScenePlan v2 structural preflight and a CLI validation command.
+- Bind artwork visual-model and human review v2 records to the exact reference, final PNG, editable KRA and stage-preview hashes.
+- Add Windows GitHub Actions CI for Python 3.10 and 3.13.
+- Native full-artwork acceptance remains pending and is not inferred from source or CI checks.

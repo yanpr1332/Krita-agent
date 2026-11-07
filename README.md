@@ -6,7 +6,7 @@ English | [简体中文](README.zh-CN.md)
 
 Krita Agent is a Windows-native Python/Qt automation system for **real editable Krita painting**. An authenticated loopback IPC channel connects an external Controller to a Krita Python Extension running on the GUI thread. The project deliberately separates source implementation, offline test results and actual installed-build acceptance.
 
-## Project status (2026-11-04)
+## Project status (2026-11-07)
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -14,6 +14,7 @@ Krita Agent is a Windows-native Python/Qt automation system for **real editable 
 | Round 2: Editable workflow, previews, images and Dock | **Accepted**, 34 offline tests passed and pixel/Dock real-build checks recorded | [REPORT-006](docs/REPORT-006.md), [REPORT-007](docs/REPORT-007.md) |
 | Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Accepted on the three installed builds; 57 offline tests passed** | [REPORT-009](docs/REPORT-009.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
 | Round 4: Layer-aware painting, large jobs, brush profiles and ScenePlan v2 | **LOCAL ACCEPTANCE RECORDED** | [REPORT-011](docs/REPORT-011.md), [ROUND4-ACCEPTANCE](docs/ROUND4-ACCEPTANCE.md) |
+| Round 5: Safe long-job continuation, ScenePlan preflight and hash-bound artwork reviews | **SOURCE IMPLEMENTED; CI / NATIVE ACCEPTANCE PENDING** | [ROUND5-API](docs/ROUND5-API.md), [ROUND5-ACCEPTANCE](docs/ROUND5-ACCEPTANCE.md) |
 
 Prior acceptance covers specific Stable/Next builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha, not newer features automatically. Round 3 results are in [REPORT-009](docs/REPORT-009.md). Round 4 local tests and installed-build acceptance are documented in [REPORT-011](docs/REPORT-011.md).
 
@@ -100,6 +101,18 @@ for fully opaque target changes. It does not reverse arbitrary blending/masks.
 The long-job scheduler submits bounded native jobs serially and stops if any
 response has uncertain effects, rather than blindly retrying. ScenePlan v2 is
 deterministic JSON; no LLM or third-party Krita plugin is installed.
+
+## Round 5 commands (source implementation; acceptance pending)
+
+~~~powershell
+# Offline structural preflight; no Krita connection or document mutation
+krita-agent scene-v2 validate --file ".\plans\landscape.json" --min-painted-layers 8
+
+# Explicitly continue only from a verified KRA checkpoint boundary
+krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\logs\long-job-ID.json" --confirm
+~~~
+
+The visual and human artwork-review records are now hash-bound to the exact reference, final PNG, editable KRA and stage previews. This improves evidence integrity; it does not automatically judge artistic quality or claim that a complete illustration has been accepted. See [Artwork review v2](docs/ARTWORK-VLM-REVIEW.md).
 
 ## Documentation and contribution
 

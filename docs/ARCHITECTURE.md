@@ -77,3 +77,11 @@ Krita Plugin, in-process Qt GUI context
 Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 4 status. The manual GitHub workflow remains opt-in.
 
 Round 3 acceptance completed with 57 offline tests and native, pixel, controlled-crash and actual Dock evidence; see REPORT-009. Atomic metadata replacement has bounded Windows sharing-lock retries; integrity and root bounds are checked before recovery writes.
+
+
+## Round 5 controller and evidence extensions
+
+- scheduler.py supports explicit continuation only from prepared or ready_for_next_batch ledgers with no in-flight operation. The workflow digest, completed prefix, batch digests and latest KRA checkpoint SHA must all match. Unknown effects are intentionally not recoverable by automatic replay.
+- scene_quality.py performs offline structural preflight through the same ScenePlan v2 compiler used by submission. It reports geometry and operation metrics but does not infer semantic image quality.
+- artwork_review.py validates review records against the exact run PNG, KRA, benchmark and stage-preview hashes. It verifies completeness and provenance fields, not the truth of a visual judgement.
+- GitHub Actions runs the offline Python suite on supported Windows Python versions. Native Krita GUI acceptance and complete-artwork review remain separate manual gates.

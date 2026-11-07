@@ -4,6 +4,8 @@ from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from krita_agent.artwork_review import validate_human_review, validate_visual_review
 
 def sha(path):
     h=hashlib.sha256()
@@ -30,12 +32,18 @@ def audit(directory):
         test("artifact_"+rel,run in target.parents and target.is_file() and target.stat().st_size>0,
              "Missing/empty artifact: "+rel)
     final=run/"artwork.png"
+    kra_path=run/"artwork.kra"
     final_sha=sha(final) if final.is_file() else None
+    kra_sha=sha(kra_path) if kra_path.is_file() else None
+    stage_paths=("stages/01-layout.png","stages/02-color.png","stages/03-final.png")
+    stage_sha={rel:sha(run/rel) for rel in stage_paths if (run/rel).is_file()}
     size=None
     try:
         with Image.open(final) as im:
             size=(im.width,im.height)
             aspect=im.width/im.height
+            test("image_pixel_budget",im.width*im.height<=64000000,
+                 "Final artwork exceeds the 64-megapixel audit budget")
             test("image_size",im.width>=contract["output"]["minimum_width"]
                  and im.height>=contract["output"]["minimum_height"],"Final artwork too small")
             test("aspect_ratio",abs(aspect/(16/9)-1)<=contract["output"]["aspect_relative_tolerance"],
@@ -78,32 +86,27 @@ def audit(directory):
         test("not_reference_copy",execution.get("imported_reference_as_final_artwork") is False,
              "Flattened reference import shortcut not ruled out")
     except Exception as exc:test("execution",False,str(exc))
+    required=[o["key"] for o in contract["subject"]["required_objects"]]
     try:
         review=load(run/"reviews/visual-model.json")
-        required=[o["key"] for o in contract["subject"]["required_objects"]]
-        relations={r.get("description"):r.get("passes") for r in review.get("relations",[])}
-        valid=(review.get("schema")=="krita-agent-artwork-vlm/1" and
-               review.get("decision")=="pass" and review.get("coherent_full_scene") is True and
-               bool(str(review.get("model","")).strip()) and
-               review.get("reference_sha256")==contract["reference"]["sha256"] and
-               review.get("artwork_png_sha256")==final_sha and
-               all(review.get("objects",{}).get(k) is True for k in required) and
-               all(relations.get(k) is True for k in contract["subject"]["required_relations"]))
-        test("independent_visual_review",valid,"Visual review incomplete, negative or not bound to actual pixels")
-    except Exception as exc:test("independent_visual_review",False,str(exc))
+        result=validate_visual_review(
+            review, required, contract["subject"]["required_relations"],
+            contract["reference"]["sha256"], final_sha, kra_sha, stage_sha,
+        )
+        test("independent_visual_review",result["valid"],
+             "; ".join(result["errors"]) if result["errors"] else "Visual review is bound to the exact run artifacts")
+    except Exception as exc:
+        test("independent_visual_review",False,str(exc))
     try:
         human=load(run/"reviews/human.json")
-        valid=(human.get("schema")=="krita-agent-artwork-human/1" and
-               human.get("decision")=="pass" and human.get("artwork_png_sha256")==final_sha and
-               human.get("coherent_full_scene") is True and
-               human.get("all_required_objects_recognizable") is True and
-               human.get("kra_reopened_and_viewed") is True and
-               bool(str(human.get("reviewer","")).strip()) and
-               len(str(human.get("observations","")).strip())>=20)
-        test("independent_human_review",valid,"Human review incomplete or negative")
-    except Exception as exc:test("independent_human_review",False,str(exc))
-    report={"schema":"krita-agent-artwork-audit/1","run_id":run.name,
-            "artwork_sha256":final_sha,"status":"pass" if not errors else "fail",
+        result=validate_human_review(human,final_sha,kra_sha,required)
+        test("independent_human_review",result["valid"],
+             "; ".join(result["errors"]) if result["errors"] else "Human review is bound to the exact run artifacts")
+    except Exception as exc:
+        test("independent_human_review",False,str(exc))
+    report={"schema":"krita-agent-artwork-audit/2","run_id":run.name,
+            "artwork_sha256":final_sha,"artwork_kra_sha256":kra_sha,
+            "stage_preview_sha256":stage_sha,"status":"pass" if not errors else "fail",
             "checks":checks,"errors":errors,
             "note":"Only artifact consistency; a reviewer must actually inspect the painting"}
     tmp=run/("audit."+uuid.uuid4().hex+".tmp")

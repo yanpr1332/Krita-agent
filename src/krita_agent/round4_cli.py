@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from . import document_graph, large_canvas, layered_revision
 from . import scheduler, brush_profiles, feedback_v2, scene_v2, projects
-from . import performance, pyramid
+from . import performance, pyramid, scene_quality
 
 
 def _read(path):
@@ -43,13 +43,18 @@ def register(commands,connection):
 
     longjob=commands.add_parser("longjob",help="Serial checkpointed batches (no auto replay)")
     la=longjob.add_subparsers(dest="action",required=True)
-    for action in ("plan","run"):
+    for action in ("plan","run","resume"):
         p=la.add_parser(action)
-        if action=="run":
+        if action in ("run","resume"):
             connection(p)
         p.add_argument("--file",required=True)
-        p.add_argument("--batch-size",type=int,default=120)
-        p.add_argument("--ledger-dir",default=".cache/long-jobs")
+        if action=="resume":
+            p.add_argument("--ledger",required=True)
+            p.add_argument("--confirm",action="store_true",
+                           help="Explicitly continue from a verified completed-batch checkpoint")
+        else:
+            p.add_argument("--batch-size",type=int,default=120)
+            p.add_argument("--ledger-dir",default=".cache/long-jobs")
     li=la.add_parser("inspect")
     li.add_argument("--file",required=True)
 
@@ -81,16 +86,19 @@ def register(commands,connection):
 
     scene=commands.add_parser("scene-v2",help="Human-reviewable structured painting")
     sa=scene.add_subparsers(dest="action",required=True)
-    for action in ("compile","submit"):
+    for action in ("compile","submit","validate"):
         p=sa.add_parser(action)
         p.add_argument("--file",required=True)
-        p.add_argument("--output")
-        p.add_argument("--profiles-directory")
-        p.add_argument("--build")
+        if action != "validate":
+            p.add_argument("--output")
+            p.add_argument("--profiles-directory")
+            p.add_argument("--build")
         if action=="submit":
             connection(p)
             p.add_argument("--ledger-dir",default=".cache/long-jobs")
             p.add_argument("--batch-size",type=int,default=120)
+        if action=="validate":
+            p.add_argument("--min-painted-layers",type=int,default=1)
 
     review=commands.add_parser("feedback-v2",help="Bounded human-reviewed revisions")
     rv=review.add_subparsers(dest="action",required=True).add_parser("review")
@@ -137,12 +145,17 @@ def execute(args,get_client):
     if cmd=="longjob":
         if args.action=="inspect":
             return scheduler.inspect_ledger(args.file)
-        batches=scheduler.split_workflow(_read(args.file),args.batch_size)
+        spec = _read(args.file)
+        if args.action == "resume":
+            return scheduler.resume(
+                get_client(args), spec, args.ledger, confirm=args.confirm
+            )
+        batches=scheduler.split_workflow(spec,args.batch_size)
         if args.action=="plan":
             return {"batches":len(batches),"total_steps":sum(len(b)-1 for b in batches),
                     "max_batch_steps":max(map(len,batches)),
                     "run_required":"Explicit longjob run"}
-        return scheduler.run(get_client(args),_read(args.file),args.ledger_dir,args.batch_size)
+        return scheduler.run(get_client(args),spec,args.ledger_dir,args.batch_size)
     if cmd=="brushcal":
         if args.action=="generate":
             return {"saved":_dump(brush_profiles.calibration_task(args.preset,args.size),args.output)}
@@ -157,7 +170,12 @@ def execute(args,get_client):
         return (pyramid.build(args.image,args.output_dir,args.tile_size)
                 if args.action=="build" else pyramid.inspect(args.manifest))
     if cmd=="scene-v2":
-        plan=scene_v2.compile_plan(_read(args.file),args.profiles_directory,args.build)
+        spec = _read(args.file)
+        if args.action == "validate":
+            return scene_quality.validate(
+                spec, min_painted_layers=args.min_painted_layers
+            )
+        plan=scene_v2.compile_plan(spec,args.profiles_directory,args.build)
         if args.output:
             _dump(plan,args.output)
         if args.action=="compile":

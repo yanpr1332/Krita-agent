@@ -57,4 +57,15 @@ Open-ended natural-language art planning, multimodal semantic critiques, generat
 
 ## R4.5 artwork acceptance correction (policy, not a drawing acceptance)
 
-An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change. Round 5 implementation is on hold pending user instruction.
+An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change. ## Round 5 — source implementation on GitHub; acceptance pending
+
+Development branch: feat/round5-autonomous-creative-workflow. Package version: 0.6.0.dev0.
+
+- [x] R5-A: Explicit long-job continuation from a known safe batch boundary only; verifies workflow/batch digests and the latest KRA checkpoint SHA. Unknown or in-flight effects remain blocked.
+- [x] R5-B: Offline ScenePlan v2 preflight with layer/role/stroke/shape/point metrics, empty-layer checks and off-canvas warnings.
+- [x] R5-C: Artwork review schema v2 binds visual and human decisions to the exact PNG/KRA and visual inputs; requires object and relation evidence.
+- [x] R5-D: Automatic Windows GitHub Actions CI for Python 3.10 and 3.13 on feature pushes and pull requests.
+- [ ] R5-E: Native full-artwork benchmark on a real Krita session, with actual KRA/PNG, stages, contributing layers and independent reviews.
+- [ ] R5-F: Generative image planning/inpainting, arbitrary multilayer compositing, high-bit-depth editing and general ICC correctness remain deferred pending separate design and native validation.
+
+See ROUND5-API.md and ROUND5-ACCEPTANCE.md. Source implementation does not imply CI success or native/artwork acceptance.
