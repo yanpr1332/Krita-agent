@@ -30,7 +30,7 @@ Neither gate substitutes for the other. "Technically passed" and "Artwork passed
 5. Capture a real \`layer-graph.json\`; at least eight editable paint layers must **contribute visible content**. Layer names alone are not evidence.
 6. Independently present benchmark image, contract, actual final PNG, selected stage previews and KRA layer data to the visual model. Record a structured \`reviews/visual-model.json\` with explicit object and relation findings, failure evidence, model identity and actual image hashes.
 7. A human must see the rendered result (not merely a model-generated score), record \`reviews/human.json\`, and explicitly accept or reject. A missing, ambiguous or negative review is failure / pending, not pass.
-8. Run \`python scripts/artwork_acceptance_audit.py --run-dir artwork-results/<run-id>\` only AFTER the local run and independent reviews. It validates artifact integrity and recorded review decisions, **not the truth of semantic artistic quality**; the human remains the final judge.
+8. Record a layer-contributions.json file with a layers array of node_id, visible_contribution=true and a concrete description, based on actual layer inspection. Run \`python scripts/artwork_acceptance_audit.py --run-dir artwork-results/<run-id>\` only AFTER the local run and independent reviews. It validates artifact integrity and recorded review decisions, **not the truth of semantic artistic quality**; the human remains the final judge.
 
 ## Local output contract (cannot be omitted)
 
@@ -42,6 +42,7 @@ D:\computer\Krita\Krita-agent\artwork-results\<run-id>\
   scene-plan.json             submitted scene plan / workflow stages
   execution.json              actual native operation log / provenance
   layer-graph.json            full final Krita layer hierarchy
+  layer-contributions.json    independently reviewed evidence for 8+ substantive painted layers
   stages\01-layout.png        composition stage preview
   stages\02-color.png         color / objects stage preview
   stages\03-final.png         final painting stage preview

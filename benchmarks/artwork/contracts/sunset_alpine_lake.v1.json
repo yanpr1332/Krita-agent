@@ -19,6 +19,7 @@
       "scene-plan.json",
       "execution.json",
       "layer-graph.json",
+      "layer-contributions.json",
       "stages/01-layout.png",
       "stages/02-color.png",
       "stages/03-final.png",
