@@ -109,7 +109,7 @@ krita-agent scene-v2 validate --file ".\plans\landscape.json" --min-painted-laye
 krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\logs\long-job-ID.json" --confirm
 ~~~
 
-完整作品审核记录现在绑定到准确的参考图、最终 PNG、可编辑 KRA 和三个阶段预览的 SHA-256，并要求逐个对象及空间关系提供可见证据。这只提升证据完整性，不会自动判断艺术质量，也不代表完整插画已经通过验收。详见[作品审核 v2](docs/ARTWORK-VLM-REVIEW.md)。
+长任务续跑会先将已验证的检查点恢复为新的 KRA 副本，并核对文件哈希与文档身份；恢复结果不明确时会停止，不会继续提交。完整作品审核记录现在绑定到准确的参考图、最终 PNG、可编辑 KRA 和三个阶段预览的 SHA-256，并要求逐个对象及空间关系提供可见证据。这只提升证据完整性，不会自动判断艺术质量，也不代表完整插画已经通过验收。详见[作品审核 v2](docs/ARTWORK-VLM-REVIEW.md)。
 
 ## 文档与项目管理
 

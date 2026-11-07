@@ -7,6 +7,8 @@ Round 5 code changes are not a new native Krita acceptance report. Use three ind
 - [ ] New ledger persists the workflow digest, batch size/count, completed prefix and verified checkpoint metadata.
 - [ ] Resume requires explicit confirmation and a safe ledger state.
 - [ ] Resume refuses changed source, non-contiguous batch history, missing/modified KRA checkpoint, and old ledger schema.
+- [ ] Restore the latest checkpoint to a fresh KRA copy before submitting the suffix; verify returned file SHA and document identity.
+- [ ] Inject a lost restore reply and verify the ledger becomes unknown_needs_review, with no suffix submission and no repeated restore.
 - [ ] Inject a lost reply and verify zero automatic retry; unknown states remain blocked.
 - [ ] Verify continuation submits only the first not-yet-completed batch.
 

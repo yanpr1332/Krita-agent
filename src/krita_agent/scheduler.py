@@ -39,18 +39,31 @@ def _verified_checkpoint(value):
     """Return a normalized checkpoint record or refuse continuation."""
     if not isinstance(value, dict):
         raise ValueError("Completed batch has no checkpoint result")
+    identifier = value.get("id")
     filename = value.get("path")
     expected = value.get("sha256")
+    document_name = value.get("document_name")
+    if not isinstance(identifier, str) or not re.fullmatch(r"[0-9a-f]{32}", identifier):
+        raise ValueError("Checkpoint ID is missing or invalid")
     if not isinstance(filename, str) or not filename.strip():
         raise ValueError("Checkpoint path is missing")
     if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
         raise ValueError("Checkpoint SHA-256 is invalid")
+    if not isinstance(document_name, str) or not document_name.strip():
+        raise ValueError("Checkpoint document identity is missing")
     path = Path(filename).expanduser().resolve()
     if path.suffix.lower() != ".kra" or not path.is_file():
         raise ValueError("Checkpoint KRA is missing")
     if _file_digest(path) != expected:
         raise ValueError("Checkpoint KRA SHA-256 mismatch")
-    return {"path": str(path), "sha256": expected}
+    return {
+        "id": identifier,
+        "path": str(path),
+        "sha256": expected,
+        "document_name": document_name,
+        "width": value.get("width"),
+        "height": value.get("height"),
+    }
 
 
 def split_workflow(spec, batch_steps=120):
@@ -211,10 +224,11 @@ def run(client, spec, ledger_dir, batch_steps=120, poll_interval=0.3,
 
 def resume(client, spec, ledger_path, confirm=False, poll_interval=0.3,
            terminal_timeout=1800, on_progress=None):
-    """Continue only from a known checkpoint boundary after explicit approval.
+    """Restore the latest verified KRA checkpoint, then continue a safe suffix.
 
-    Ledgers left in submitting/running/unknown states are deliberately refused.
-    They require manual inspection because a native effect may have happened.
+    Only known completed-batch boundaries are eligible. The restore request is
+    itself journaled before it is sent; an ambiguous restore is never repeated.
+    Ledgers left in submitting/running/unknown states require manual inspection.
     """
     if confirm is not True:
         raise ValueError("Continuation requires explicit --confirm")
@@ -222,8 +236,8 @@ def resume(client, spec, ledger_path, confirm=False, poll_interval=0.3,
     record = json.loads(path.read_text(encoding="utf-8"))
     if record.get("schema") != LEDGER_SCHEMA:
         raise ValueError("Not a recognized long-job ledger")
-    if record.get("state") not in ("prepared", "ready_for_next_batch"):
-        raise ValueError("Ledger is not at a known safe boundary; inspect manually, never replay")
+    if record.get("state") != "ready_for_next_batch":
+        raise ValueError("Ledger is not at a known completed-batch boundary; inspect manually")
     if record.get("current") is not None:
         raise ValueError("Ledger has an unresolved current batch; automatic continuation is refused")
     if record.get("source_sha256") != _digest(spec):
@@ -238,8 +252,8 @@ def resume(client, spec, ledger_path, confirm=False, poll_interval=0.3,
     next_batch = record.get("next_batch")
     if not isinstance(completed, list) or type(next_batch) is not int:
         raise ValueError("Ledger completion metadata is malformed")
-    if next_batch != len(completed) or not 0 <= next_batch <= len(batches):
-        raise ValueError("Ledger does not describe a contiguous completed prefix")
+    if next_batch != len(completed) or not 0 < next_batch <= len(batches):
+        raise ValueError("Ledger does not describe a non-empty completed prefix")
     for index, item in enumerate(completed):
         if not isinstance(item, dict) or item.get("index") != index:
             raise ValueError("Completed batches are not a contiguous prefix")
@@ -247,19 +261,67 @@ def resume(client, spec, ledger_path, confirm=False, poll_interval=0.3,
             raise ValueError("A completed batch no longer matches the original workflow")
         if item.get("steps") != len(batches[index]):
             raise ValueError("Completed batch step count mismatch")
-    if completed:
-        _verified_checkpoint(completed[-1].get("checkpoint"))
+    checkpoint = _verified_checkpoint(completed[-1].get("checkpoint"))
     identifier = record.get("id")
     ledger = Ledger(path.parent, identifier)
     if ledger.path != path:
         raise ValueError("Ledger filename does not match its embedded ID")
     record["resume_count"] = int(record.get("resume_count", 0)) + 1
     record["last_resumed_at"] = datetime.now(timezone.utc).isoformat()
-    ledger.write(record)
+
+    # All batches are already confirmed complete; no restore or new submission
+    # is needed even if the final completion marker was not persisted.
     if next_batch == len(batches):
         record["state"] = "completed"
+        record["current"] = None
         ledger.write(record)
         return {"state": "completed", "ledger": str(ledger.path), "batches": len(batches)}
+
+    # Persist intent before opening a recovery copy. If the reply is lost, this
+    # state prevents a second restore from creating duplicate open documents.
+    record["state"] = "restoring_checkpoint"
+    record["restore_attempt"] = {
+        "checkpoint_id": checkpoint["id"],
+        "checkpoint_sha256": checkpoint["sha256"],
+        "state": "unknown",
+    }
+    ledger.write(record)
+    try:
+        result = client.request(
+            "checkpoint.restore", id=checkpoint["id"], confirm=True
+        )
+        restored = result.get("restored") if isinstance(result, dict) else None
+        restored_path = restored.get("path") if isinstance(restored, dict) else None
+        restored_document = restored.get("document") if isinstance(restored, dict) else None
+        if not isinstance(restored_path, str) or not Path(restored_path).is_file():
+            raise ValueError("Krita did not confirm a restored KRA copy")
+        if _file_digest(restored_path) != checkpoint["sha256"]:
+            raise ValueError("Restored KRA copy does not match the checkpoint SHA-256")
+        if restored_document != checkpoint["document_name"]:
+            raise ValueError("Restored document identity differs from the checkpoint")
+        record["restored_checkpoint"] = {
+            "id": checkpoint["id"],
+            "path": str(Path(restored_path).resolve()),
+            "sha256": checkpoint["sha256"],
+            "document_name": restored_document,
+        }
+        record["restore_attempt"]["state"] = "confirmed"
+        record["state"] = "ready_for_next_batch"
+        ledger.write(record)
+    except Exception as exc:
+        record["state"] = "unknown_needs_review"
+        record["error"] = "Checkpoint restore result is uncertain: " + str(exc)
+        try:
+            ledger.write(record)
+        except OSError as storage_error:
+            record["ledger_write_error"] = str(storage_error)
+        return {
+            "state": record["state"],
+            "ledger": str(ledger.path),
+            "completed_batches": len(record["completed"]),
+            "error": record["error"],
+        }
+
     return _execute_batches(
         client, batches, ledger, record, next_batch,
         poll_interval=poll_interval, terminal_timeout=terminal_timeout,

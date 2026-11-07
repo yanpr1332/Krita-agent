@@ -61,7 +61,7 @@ An original visual benchmark, fixed scene contract and mandatory local-result ev
 
 Development branch: feat/round5-autonomous-creative-workflow. Package version: 0.6.0.dev0.
 
-- [x] R5-A: Explicit long-job continuation from a known safe batch boundary only; verifies workflow/batch digests and the latest KRA checkpoint SHA. Unknown or in-flight effects remain blocked.
+- [x] R5-A: Explicit long-job continuation from a known safe batch boundary only; verifies workflow/batch digests, restores the latest KRA checkpoint to a fresh copy and checks its SHA/document identity before continuing. Ambiguous restore replies and other unknown effects remain blocked.
 - [x] R5-B: Offline ScenePlan v2 preflight with layer/role/stroke/shape/point metrics, empty-layer checks and off-canvas warnings.
 - [x] R5-C: Artwork review schema v2 binds visual and human decisions to the exact PNG/KRA and visual inputs; requires object and relation evidence.
 - [x] R5-D: Automatic Windows GitHub Actions CI for Python 3.10 and 3.13 on feature pushes and pull requests.

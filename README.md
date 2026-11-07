@@ -112,7 +112,7 @@ krita-agent scene-v2 validate --file ".\plans\landscape.json" --min-painted-laye
 krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\logs\long-job-ID.json" --confirm
 ~~~
 
-The visual and human artwork-review records are now hash-bound to the exact reference, final PNG, editable KRA and stage previews. This improves evidence integrity; it does not automatically judge artistic quality or claim that a complete illustration has been accepted. See [Artwork review v2](docs/ARTWORK-VLM-REVIEW.md).
+Long-job continuation first opens a fresh copy of the verified checkpoint KRA; an ambiguous restore reply blocks further submissions. The visual and human artwork-review records are now hash-bound to the exact reference, final PNG, editable KRA and stage previews. This improves evidence integrity; it does not automatically judge artistic quality or claim that a complete illustration has been accepted. See [Artwork review v2](docs/ARTWORK-VLM-REVIEW.md).
 
 ## Documentation and contribution
 

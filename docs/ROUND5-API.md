@@ -18,12 +18,15 @@ krita-agent longjob inspect --file ".\logs\long-job-LEDGER_ID.json"
 krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\logs\long-job-LEDGER_ID.json" --confirm
 ```
 
+Before the next batch is submitted, the scheduler sends an explicit checkpoint.restore request. Krita opens a new recovery copy; the returned file hash and document identity are verified. The restore intent is persisted before the request, so a lost restore reply becomes unknown_needs_review and is never repeated automatically. A prepared ledger with no completed checkpoint is not resumable.
+
 Continuation is refused unless all of these are true:
 
 - `--confirm` is present.
 - The ledger is in `prepared` or `ready_for_next_batch` state and has no current in-flight batch.
 - The supplied workflow hash, batch size, batch count, completed-prefix indices and batch hashes match the ledger.
-- The most recent completed KRA checkpoint exists and matches its SHA-256.
+- The most recent completed KRA checkpoint exists and matches its SHA-256, including its checkpoint ID and document identity.
+- Krita confirms a fresh recovery copy was opened and its file hash/document identity match before any remaining batch is submitted.
 
 Ledgers in `submitting`, `running`, or `unknown_needs_review` are not resumable. A missing job ID, lost response, ambiguous native effect, old ledger without batch metadata, or modified checkpoint is a hard refusal. Inspect the artwork and recover manually using the existing checkpoint workflow; never rerun the uncertain batch.
 
