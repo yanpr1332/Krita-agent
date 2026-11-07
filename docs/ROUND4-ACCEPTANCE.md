@@ -1,3 +1,6 @@
+
+> **Important retrospective scope:** This historical fourth-round checklist validates native drawing, workflow and technical limits. Its 1,200-stroke grid / rectangles are NOT a complete illustration. For all future full-artwork claims, separately follow [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) with the actual visual benchmark, real KRA/PNG and independent visual + human review.
+
 # Round 4 acceptance checklist
 
 Local results and build-specific limits are recorded in [REPORT-011](REPORT-011.md). The run used disposable documents and installed Stable, Next Qt5 and Next Qt6 builds.

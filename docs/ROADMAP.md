@@ -54,3 +54,7 @@ See [REPORT-011](REPORT-011.md), [ROUND4-API](ROUND4-API.md) and [ROUND4-ACCEPTA
 ## Deferred (NOT Round 3 claims)
 
 Open-ended natural-language art planning, multimodal semantic critiques, generative inpainting, arbitrary multi-layer source-to-target compositing, automatic resume without a saved KRA, full high-bit-depth pixel edit implementations, general ICC correctness guarantee, scheduled monitoring and headless native painting on unsupported platforms.
+
+## R4.5 artwork acceptance correction (policy, not a drawing acceptance)
+
+An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change. Round 5 implementation is on hold pending user instruction.

@@ -1,0 +1,107 @@
+{
+  "schema": "krita-agent-artwork-contract/1",
+  "id": "sunset-alpine-lake-v1",
+  "title_zh": "黄昏山间湖泊：完整作品级验收",
+  "mode": "scene_completeness_not_pixel_copy",
+  "reference": {
+    "path": "benchmarks/artwork/reference/sunset_alpine_lake.jpg",
+    "sha256": "12019dbb93c27f4cc58a174a7438e2acbd7931561c97eb1058acb8e4f66c8db4",
+    "width": 1600,
+    "height": 900,
+    "role": "visual complexity and spatial relationship reference; do not import as the final artwork"
+  },
+  "output": {
+    "repository_local_root": "artwork-results",
+    "required_filenames": [
+      "artwork.kra",
+      "artwork.png",
+      "krita-screen.png",
+      "scene-plan.json",
+      "execution.json",
+      "layer-graph.json",
+      "layer-contributions.json",
+      "stages/01-layout.png",
+      "stages/02-color.png",
+      "stages/03-final.png",
+      "reviews/visual-model.json",
+      "reviews/human.json"
+    ],
+    "minimum_width": 1600,
+    "minimum_height": 900,
+    "aspect_ratio": "16:9",
+    "aspect_relative_tolerance": 0.045,
+    "min_nonempty_editable_paint_layers": 8
+  },
+  "subject": {
+    "required_objects": [
+      {
+        "key": "sky",
+        "description_zh": "连续天空背景，具有清晰的晚霞色彩层次",
+        "region": "upper"
+      },
+      {
+        "key": "sun",
+        "description_zh": "可辨认的低角度夕阳与暖色光照",
+        "region": "left_upper"
+      },
+      {
+        "key": "clouds",
+        "description_zh": "有体积和形态差异的云层而非单一重复椭圆",
+        "region": "upper"
+      },
+      {
+        "key": "mountains",
+        "description_zh": "近远山峰及雪线/山脊细节，可辨认透视层次",
+        "region": "upper_middle"
+      },
+      {
+        "key": "forest",
+        "description_zh": "沿湖岸的针叶林与远近树木",
+        "region": "middle"
+      },
+      {
+        "key": "lake",
+        "description_zh": "具有连续水面、水平纹理及岸线的湖泊",
+        "region": "lower"
+      },
+      {
+        "key": "reflection",
+        "description_zh": "夕阳和山体在湖水中有合理映射/反射",
+        "region": "lower"
+      },
+      {
+        "key": "foreground",
+        "description_zh": "前景植物、岩石与野花至少两类可辨认细节",
+        "region": "bottom"
+      }
+    ],
+    "required_relations": [
+      "sun visible in sky above distant ridge",
+      "distant mountains behind near evergreen forest",
+      "lake beneath ridge and forest",
+      "water reflects warm sunset light",
+      "foreground plants or rocks overlap part of water boundary",
+      "visual depth from foreground through midground to background"
+    ],
+    "forbidden_shortcuts": [
+      "repeating lines or rectangles as the primary image",
+      "blank 8-layer KRA with painted pixels only on 1-2 test layers",
+      "copying or importing supplied reference image as finished background",
+      "adapting the benchmark criteria after seeing the generated result",
+      "counting successful commands or drawing strokes as proof of coherent artwork"
+    ]
+  },
+  "acceptance": {
+    "technical_and_artwork_independent": true,
+    "requires_visual_model_review": true,
+    "requires_independent_human_review": true,
+    "missing_review": "fail_closed",
+    "review_must_reference_png_sha256": true,
+    "reference_not_pixel_ground_truth": true,
+    "human_verdict_values": [
+      "pass",
+      "fail"
+    ],
+    "native_krita_provenance": "must show Krita-owned editing process, actual visible layer contributions and real KRA roundtrip"
+  }
+}

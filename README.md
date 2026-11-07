@@ -1,5 +1,7 @@
 # Krita Agent
 
+**Artwork acceptance policy (R4.5):** native drawing command tests do not prove a complete illustration. The original visual reference, fixed contract, required local KRA/PNG artifacts and independent reviews are documented in [Artwork Acceptance](docs/ARTWORK-ACCEPTANCE.md). Local agent instructions: [AGENTS.md](AGENTS.md).
+
 English | [简体中文](README.zh-CN.md)
 
 Krita Agent is a Windows-native Python/Qt automation system for **real editable Krita painting**. An authenticated loopback IPC channel connects an external Controller to a Krita Python Extension running on the GUI thread. The project deliberately separates source implementation, offline test results and actual installed-build acceptance.
