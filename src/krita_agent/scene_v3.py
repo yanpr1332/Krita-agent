@@ -1,0 +1,194 @@
+"""ScenePlan v3: bounded semantic objects compiled into real Krita native operations.
+
+The model never emits IPC commands, paths, code, plugins or arbitrary API calls.
+All actual actions are compiled through the existing ScenePlan v2 allowlist.
+"""
+import hashlib
+import json
+import re
+
+from .protocol import TaskError, brush_settings, integer, label, number, points
+from .scene_v2 import compile_plan as compile_v2
+
+SCHEMA = "krita-agent-scene/3"
+KINDS = frozenset({
+    "sky", "sun", "cloud", "mountain", "forest", "tree", "lake",
+    "water", "reflection", "rock", "plant", "flower", "ground",
+    "building", "object", "custom"
+})
+ROLES = {
+    "sky": "background", "sun": "highlight", "cloud": "background",
+    "mountain": "base_color", "forest": "foreground", "tree": "foreground",
+    "lake": "base_color", "water": "base_color", "reflection": "effects",
+    "rock": "foreground", "plant": "foreground", "flower": "foreground",
+    "ground": "base_color", "building": "base_color", "object": "custom",
+    "custom": "custom",
+}
+PAINT_KINDS = frozenset({"stroke", "bezier"})
+ELEMENT_KINDS = frozenset({"stroke", "bezier", "rectangle", "ellipse", "polygon", "path"})
+MAX_OBJECTS = 32
+MAX_ELEMENTS = 6000
+
+
+def _box(value, width, height):
+    if not isinstance(value, list) or len(value) != 4:
+        raise TaskError("object bounds require [x,y,width,height]")
+    x, y, w, h = [number(v, "object bound", 0, 8192) for v in value]
+    if w <= 0 or h <= 0 or x + w > width or y + h > height:
+        raise TaskError("object bounds must remain on the canvas")
+    return [x, y, w, h]
+
+
+def _geometry_element(value, width, height, box, object_kind):
+    if not isinstance(value, dict) or value.get("kind") not in ELEMENT_KINDS:
+        raise TaskError("Unsupported semantic drawing element")
+    kind = value["kind"]
+    element = dict(value)
+    x, y, w, h = box
+    if kind in PAINT_KINDS:
+        if kind == "bezier":
+            controls = element.get("controls")
+            if not isinstance(controls, list) or len(controls) != 4:
+                raise TaskError("Bezier requires exactly four control points")
+            for control in controls:
+                if not isinstance(control, (list, tuple)) or len(control) != 2:
+                    raise TaskError("Bezier control must contain x,y")
+                number(control[0], "bezier x", 0, width)
+                number(control[1], "bezier y", 0, height)
+            element["samples"] = integer(element.get("samples", 48), "samples", 4, 256)
+        else:
+            raw_points = element.get("points", [])
+            coords = points(raw_points)
+            if not all(0 <= p["x"] <= width and 0 <= p["y"] <= height for p in coords):
+                raise TaskError("Stroke coordinates must be within the canvas")
+            from .strategies_v3 import PRESSURE
+            initial, peak, final = PRESSURE[object_kind]
+            for index, (raw, point) in enumerate(zip(raw_points, coords)):
+                if "pressure" not in raw:
+                    t = index / max(1, len(coords) - 1)
+                    point["pressure"] = round(
+                        initial + (peak-initial)*2*t if t <= .5
+                        else peak + (final-peak)*2*(t-.5), 5
+                    )
+            element["points"] = coords
+    elif kind in ("rectangle", "ellipse"):
+        element["rect"] = _box(element.get("rect"), width, height)
+    else:
+        coords = points(element.get("points", []))
+        if len(coords) < 2 or not all(0 <= p["x"] <= width and 0 <= p["y"] <= height for p in coords):
+            raise TaskError("Polygon/path requires valid on-canvas points")
+        element["points"] = coords
+    # No other element-level command or file path is carried through.
+    return {key: element[key] for key in (
+        "kind", "points", "controls", "samples", "pressure", "spacing",
+        "mode", "rect", "fill", "allow_seams"
+    ) if key in element}
+
+
+def validate_scene(candidate):
+    if not isinstance(candidate, dict) or candidate.get("schema") != SCHEMA:
+        raise TaskError("Expected ScenePlan v3")
+    doc = candidate.get("document")
+    if not isinstance(doc, dict):
+        raise TaskError("ScenePlan v3 needs a document")
+    width = integer(doc.get("width"), "width", 1, 8192)
+    height = integer(doc.get("height"), "height", 1, 8192)
+    if width * height > 32000000:
+        raise TaskError("Canvas exceeds 32M pixels")
+    title = label(doc.get("name", "Creative Workflow"), "document name")
+    objects = candidate.get("objects")
+    if not isinstance(objects, list) or not 1 <= len(objects) <= MAX_OBJECTS:
+        raise TaskError("ScenePlan v3 needs 1..32 semantic objects")
+    result = []
+    ids = set()
+    count = 0
+    for value in objects:
+        if not isinstance(value, dict):
+            raise TaskError("Each semantic object must be a JSON object")
+        oid = value.get("id")
+        if not isinstance(oid, str) or not re.fullmatch(r"[a-z][a-z0-9_-]{0,31}", oid):
+            raise TaskError("Invalid semantic object ID")
+        if oid in ids:
+            raise TaskError("Duplicate semantic object ID")
+        ids.add(oid)
+        kind = value.get("kind")
+        if kind not in KINDS:
+            raise TaskError("Unknown semantic object kind")
+        name = label(value.get("name", oid), "object name", 80)
+        box = _box(value.get("bounds"), width, height)
+        depth = number(value.get("depth", 0.5), "depth", 0, 1)
+        brush = brush_settings(value.get("brush", {}))
+        elements = value.get("elements")
+        if not isinstance(elements, list) or not 1 <= len(elements) <= 240:
+            raise TaskError("Each semantic object needs 1..240 drawing elements")
+        compiled = [_geometry_element(e, width, height, box, kind) for e in elements]
+        count += len(compiled)
+        if count > MAX_ELEMENTS:
+            raise TaskError("Scene exceeds 6000 elements")
+        if not any(e["kind"] in PAINT_KINDS for e in compiled):
+            raise TaskError("Each semantic object must contain actual brush strokes")
+        parent = value.get("parent")
+        if parent is not None and not isinstance(parent, str):
+            raise TaskError("Parent object ID must be text")
+        result.append({
+            "id": oid, "name": name, "kind": kind, "bounds": box,
+            "depth": depth, "parent": parent, "brush": brush,
+            "elements": compiled,
+        })
+    for item in result:
+        if item["parent"] is not None and (item["parent"] == item["id"] or item["parent"] not in ids):
+            raise TaskError("Invalid parent object reference")
+    by_id = {item["id"]: item for item in result}
+    for item in result:
+        seen = {item["id"]}
+        current = item
+        while current["parent"] is not None:
+            parent = current["parent"]
+            if parent in seen:
+                raise TaskError("Semantic object parent cycle")
+            seen.add(parent)
+            current = by_id[parent]
+    return {
+        "schema": SCHEMA,
+        "document": {"width": width, "height": height, "name": title},
+        "style": label(candidate.get("style", "illustration"), "style", 160),
+        "objects": sorted(result, key=lambda item: (item["depth"], item["id"])),
+    }
+
+
+def digest(value):
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False).encode("utf-8")
+    ).hexdigest()
+
+
+def compile_scene_v3(candidate, profile_directory=None, build=None):
+    """Compile only to already-whitelisted ScenePlan v2 Krita steps."""
+    from .strategies_v3 import brush_for_object, strokes_for_object
+    scene = validate_scene(candidate)
+    layers = []
+    for item in scene["objects"]:
+        brush = brush_for_object(item, profile_directory, build)
+        elements = strokes_for_object(item)
+        layers.append({
+            "name": item["id"] + " - " + item["name"],
+            "role": ROLES[item["kind"]],
+            "brush": brush,
+            "elements": elements,
+            "preview": False,
+        })
+    plan_v2 = compile_v2({"schema": "krita-agent-scene/2",
+                           "document": scene["document"], "layers": layers})
+    return {
+        "schema": "krita-agent-scene-compiled/3",
+        "source_sha256": digest(scene),
+        "native_steps_sha256": plan_v2["sha256"],
+        "document": scene["document"],
+        "objects": [{"id": o["id"], "kind": o["kind"], "name": o["name"],
+                     "bounds": o["bounds"], "depth": o["depth"],
+                     "layer_name": o["id"] + " - " + o["name"],
+                     "elements": len(o["elements"])} for o in scene["objects"]],
+        "steps": plan_v2["steps"],
+        "requires_native_approval": True,
+        "not_artwork_acceptance": True,
+    }

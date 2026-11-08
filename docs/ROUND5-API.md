@@ -23,7 +23,7 @@ Before the next batch is submitted, the scheduler sends an explicit checkpoint.r
 Continuation is refused unless all of these are true:
 
 - `--confirm` is present.
-- The ledger is in `prepared` or `ready_for_next_batch` state and has no current in-flight batch.
+- The ledger is in `ready_for_next_batch` state, contains at least one completed batch, and has no current in-flight batch.
 - The supplied workflow hash, batch size, batch count, completed-prefix indices and batch hashes match the ledger.
 - The most recent completed KRA checkpoint exists and matches its SHA-256, including its checkpoint ID and document identity.
 - Krita confirms a fresh recovery copy was opened and its file hash/document identity match before any remaining batch is submitted.
