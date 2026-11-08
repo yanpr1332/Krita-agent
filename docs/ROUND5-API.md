@@ -1,4 +1,4 @@
-# Round 5 API — safe continuation and scene preflight
+# Round 5 API — autonomous creative workflow, safety and evidence
 
 Round 5 adds offline controller-side capabilities. It does not add remote execution, cloud image generation, or new Krita-native drawing APIs. The current Bridge remains authenticated localhost IPC.
 
@@ -59,3 +59,63 @@ The audit checks files, hashes, KRA/PNG consistency, image readability, editable
 - Existing Krita Bridge IPC remains v1.
 - Round 4 commands and ledger files are not silently replayed or migrated.
 - Old ledgers without `batch_steps` metadata are inspection-only.
+
+## 4. Full Creative Workflow CLI (R5-A through R5-F)
+
+The Round 5 engine composes existing Krita native commands; the model cannot write arbitrary IPC commands. A model provider is **optional**: user-supplied ScenePlan v3 JSON can be compiled offline. A model-enabled run requires an explicitly configured OpenAI-compatible HTTPS chat-completions endpoint and a JSON-capable model. Model compatibility must be checked against your chosen provider.
+
+Install optional image support: `python -m pip install -e ".[feedback]"`.
+
+A creative brief can be a UTF-8 text file or JSON:
+```json
+{
+  "prompt": "Draw an evening mountain lake with varied clouds and snow peaks, reflections, pine forest and detailed foreground.",
+  "width": 1600,
+  "height": 900,
+  "title": "Evening Alpine Lake",
+  "style": "layered painterly illustration"
+}
+```
+
+Start with `krita-agent creative init --directory artwork-results/run-001 --brief-file brief.json`.
+For a model-enabled run set the environment variable `KRITA_AGENT_MODEL_API_KEY` locally (never commit credentials). `KRITA_AGENT_CHAT_COMPLETIONS_URL` optionally specifies an HTTPS endpoint; the default adapter uses `https://api.openai.com/v1/chat/completions`. The model receives the user brief, and a reference image **only when you explicitly pass `--reference`**.
+
+```powershell
+# Plan from a JSON-producing model (requires explicit external model credentials)
+krita-agent creative plan --directory artwork-results/run-001 --model YOUR_JSON_MODEL --reference benchmarks/artwork/reference/sunset_alpine_lake.jpg
+
+# Or plan entirely offline from a human-authored ScenePlan v3 JSON
+krita-agent creative plan --directory artwork-results/run-001 --candidate proposed-scene-v3.json
+
+# Inspect creative-proposal.json and compiled-scene.json BEFORE approving
+krita-agent creative approve --directory artwork-results/run-001 --confirm
+
+# Run against an explicit already-authorized local Krita Bridge session
+krita-agent creative paint --directory artwork-results/run-001 --session SESSION.json
+krita-agent creative export --directory artwork-results/run-001 --session SESSION.json
+
+# Model sees the actual PNG bytes, not the filename or object labels alone
+krita-agent creative critique --directory artwork-results/run-001 --model YOUR_VISION_MODEL --reference benchmarks/artwork/reference/sunset_alpine_lake.jpg
+
+# When Critic reports a problem, plan and approve localized native strokes
+krita-agent creative revision-plan --directory artwork-results/run-001 --object-id clouds --model YOUR_VISION_MODEL
+krita-agent creative revision-approve --directory artwork-results/run-001 --confirm
+krita-agent creative revise --directory artwork-results/run-001 --session SESSION.json --confirm
+krita-agent creative export --directory artwork-results/run-001 --session SESSION.json
+krita-agent creative critique --directory artwork-results/run-001 --model YOUR_VISION_MODEL
+
+# Only after internal critique has no unresolved issue
+krita-agent creative deliver --directory artwork-results/run-001
+krita-agent creative status --directory artwork-results/run-001
+```
+
+At each step inspect the actual JSON reports. You can give `creative revision-plan` a reviewed `--candidate PATCH.json --issue-id issue-1` instead of contacting a model. Revising always paints into an additional editable layer. Never delete or overwrite previous versions. The final `artwork.kra` and `artwork.png` are prepared for independent human and model acceptance; `deliver` **does not** mark artwork accepted.
+
+State flow: initialized → planned → plan_approved → painting_unknown (while submitting) → awaiting_export → awaiting_critique → ready_for_delivery, or awaiting_revision_proposal → revision_proposed → revision_approved → revision_unknown → awaiting_export → critique again. Unknown reply states cannot be automatically replayed. Images and intermediate plans reside inside the supplied run directory.
+
+**Current limits:** Planner quality depends on the configured model producing meaningful object-specific brush trajectories; Krita native brush availability depends on each installed build; tests do not guarantee attractive output. The vision and revision models require user-supplied credentials and send selected actual artwork pixels off-device. Do not send confidential artwork without review. The code does not run an unattended infinite AI loop and does not install any third-party Krita painting plugin.
+
+
+### Stronger object-by-object visual critique
+
+The critic sends the actual complete exported PNG and up to three bounded real-pixel crops for the most relevant semantic regions (for example clouds, mountain faces and water). The optional benchmark is sent only when explicitly selected. The model must return a separate `object_findings` entry for **every** scene object, with `recognizable`, `quality` and at least one concrete pixel-grounded `evidence` string. A missing object finding or a contradictory overall pass is a hard failure. The response records crop SHA-256 hashes, the actual full-artwork PNG SHA-256 and the model ID. It still cannot establish that the external model actually observed images or replace independent visual and human acceptance.

@@ -4,6 +4,7 @@ This is iterative CREATIVE feedback, never independent final artwork
 acceptance. Passing this critic does not create a human/VLM acceptance record.
 """
 import hashlib
+import tempfile
 from pathlib import Path
 
 from .model_provider import image_payload
@@ -20,6 +21,10 @@ unintended clipping. Return ONLY JSON:
 {
  "decision":"pass"|"needs_revision"|"insufficient_evidence",
  "observations":"Detailed observations of visible artwork",
+ "object_findings":{"object_id":{
+   "recognizable":true,"quality":"good"|"needs_revision"|"missing",
+   "evidence":"Concrete directly visible details"
+ }},
  "issues":[{
    "object_id":"id from semantic scene",
    "severity":"minor"|"major"|"critical",
@@ -29,6 +34,9 @@ unintended clipping. Return ONLY JSON:
  }]
 }
 No claims about actual KRA editability or human acceptance.
+Evaluate EVERY semantic object and provide independent directly visible
+evidence for it. A missing or defective object must block an overall pass.
+Additional images may contain actual localized crops; use those for detail.
 Do not hallucinate unseen images or claim to have inspected a region not supplied.
 Do not offer paste/composite of the reference as a solution."""
 
@@ -89,15 +97,38 @@ def critique(scene, artwork_png, provider, reference=None, max_round=3, round_in
     ]
     import json
     prompt = (
-        "Image 1 is the actual artwork, never a mockup. "
+        "Image 1 is the actual full artwork, never a mockup. "
         + ("Image 2 is a complexity-only reference, not a pixel target. " if ref else "")
-        + "Check each semantic object against actual pixels. "
-        + "Scene objects (for identification, NOT visual proof): "
+        + "Check every semantic object against actual pixels and provide "
+        + "an object_findings entry with detailed direct visual evidence for EACH object. "
+        + "Scene object locations (for identification, NOT visual proof): "
         + json.dumps(object_description, ensure_ascii=False)
-        + "\nReturn grounded localized issues. Round {} of {}.".format(round_index, max_round)
+        + "\\nReturn grounded localized issues. Round {} of {}.".format(round_index, max_round)
     )
     inputs = [artwork_png] + ([reference] if reference else [])
-    output = provider.complete_json(SYSTEM, prompt, image_paths=inputs)
+    crop_hashes = {}
+    with tempfile.TemporaryDirectory(prefix="krita-agent-critic-") as temp:
+        priorities = {"cloud": 0, "mountain": 1, "lake": 2, "water": 2,
+                      "reflection": 3, "forest": 4, "tree": 4, "plant": 5}
+        ordered = sorted(
+            spec["objects"],
+            key=lambda obj: (priorities.get(obj["kind"], 10), obj["id"])
+        )[:3]
+        with Image.open(artwork_png) as image:
+            for index, item in enumerate(ordered):
+                x, y, w, h = item["bounds"]
+                crop = image.crop((
+                    int(x), int(y), min(image.width, int(x+w+1)),
+                    min(image.height, int(y+h+1)),
+                ))
+                path = Path(temp) / ("object-{:02d}.png".format(index))
+                crop.save(path, "PNG")
+                crop_hashes[item["id"]] = hashlib.sha256(path.read_bytes()).hexdigest()
+                inputs.append(path)
+                prompt += "\\nImage {} is a pixel crop of object {} ({}).".format(
+                    len(inputs), item["id"], item["kind"]
+                )
+        output = provider.complete_json(SYSTEM, prompt, image_paths=inputs)
     decision = output.get("decision")
     if decision not in ("pass", "needs_revision", "insufficient_evidence"):
         raise TaskError("Critic decision is invalid")
@@ -108,10 +139,36 @@ def critique(scene, artwork_png, provider, reference=None, max_round=3, round_in
     if not isinstance(raw, list) or len(raw) > 20:
         raise TaskError("Critic supports up to 20 localized issues")
     objects = {o["id"] for o in spec["objects"]}
+    findings = output.get("object_findings")
+    if not isinstance(findings, dict) or set(findings) != objects:
+        raise TaskError("Critic must inspect every planned object")
+    reviewed = {}
+    for oid in sorted(objects):
+        item = findings[oid]
+        if not isinstance(item, dict):
+            raise TaskError("Critic object finding must be an object")
+        good = item.get("quality")
+        if good not in ("good", "needs_revision", "missing"):
+            raise TaskError("Critic object quality invalid")
+        evidence = item.get("evidence")
+        if not isinstance(evidence, str) or len(evidence.strip()) < 20:
+            raise TaskError("Critic object lacks visible evidence")
+        if type(item.get("recognizable")) is not bool:
+            raise TaskError("Critic object recognizability must be boolean")
+        if good == "good" and item["recognizable"] is not True:
+            raise TaskError("Unrecognizable object cannot have good quality")
+        reviewed[oid] = {
+            "quality": good,
+            "recognizable": item["recognizable"],
+            "evidence": evidence.strip()[:1200],
+        }
     issues = [_issue(row, objects, spec["document"]["width"],
                      spec["document"]["height"], i) for i, row in enumerate(raw)]
-    if (decision == "pass" and issues) or (decision == "needs_revision" and not issues):
-        raise TaskError("Critic decision and issues contradict")
+    has_problem = any(item["quality"] != "good" for item in reviewed.values())
+    if (decision == "pass" and (issues or has_problem)) or (
+        decision == "needs_revision" and (not issues or not has_problem)
+    ):
+        raise TaskError("Critic decision contradicts its object evidence and issues")
     return {
         "schema": SCHEMA,
         "model": getattr(provider, "model", "external"),
@@ -121,6 +178,8 @@ def critique(scene, artwork_png, provider, reference=None, max_round=3, round_in
         "decision": decision,
         "observations": observation.strip()[:4000],
         "issues": issues,
+        "object_findings": reviewed,
+        "crop_sha256": crop_hashes,
         "side_effects": "none; human review required before revisions",
         "independent_artwork_acceptance": False,
     }

@@ -57,15 +57,18 @@ Open-ended natural-language art planning, multimodal semantic critiques, generat
 
 ## R4.5 artwork acceptance correction (policy, not a drawing acceptance)
 
-An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change. ## Round 5 — source implementation on GitHub; acceptance pending
+An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change.
 
-Development branch: feat/round5-autonomous-creative-workflow. Package version: 0.6.0.dev0.
+## Round 5 — autonomous creative workflow source implemented, real-art acceptance pending
 
-- [x] R5-A: Explicit long-job continuation from a known safe batch boundary only; verifies workflow/batch digests, restores the latest KRA checkpoint to a fresh copy and checks its SHA/document identity before continuing. Ambiguous restore replies and other unknown effects remain blocked.
-- [x] R5-B: Offline ScenePlan v2 preflight with layer/role/stroke/shape/point metrics, empty-layer checks and off-canvas warnings.
-- [x] R5-C: Artwork review schema v2 binds visual and human decisions to the exact PNG/KRA and visual inputs; requires object and relation evidence.
-- [x] R5-D: Automatic Windows GitHub Actions CI for Python 3.10 and 3.13 on feature pushes and pull requests.
-- [ ] R5-E: Native full-artwork benchmark on a real Krita session, with actual KRA/PNG, stages, contributing layers and independent reviews.
-- [ ] R5-F: Generative image planning/inpainting, arbitrary multilayer compositing, high-bit-depth editing and general ICC correctness remain deferred pending separate design and native validation.
+Branch: `feat/round5-autonomous-creative-workflow`; Python package: `0.6.0.dev0`.
 
-See ROUND5-API.md and ROUND5-ACCEPTANCE.md. Source implementation does not imply CI success or native/artwork acceptance.
+- [x] **R5-A / Engine:** Persistent creative run state, explicit plan/revision approval, stage artifacts, versioned native KRA/PNG archive and fail-closed unknown effects. Long-job continuation verifies the prior KRA and restores it to a fresh copy before any suffix.
+- [x] **R5-B / Planner:** Opt-in HTTPS JSON model adapter and user-provided ScenePlan v3 candidate; validates object IDs, bounds, depth, parent cycles, real brush strokes, canvas and compiler commands. No arbitrary generated IPC commands.
+- [x] **R5-C / Painting Strategist:** Object-aware brush category, pressure envelopes, sizes and optional manually reviewed build-specific preset selection, compiled through ScenePlan v2 and existing native Bridge.
+- [x] **R5-D / Visual Critic:** Uses the real full PNG and up to three actual region crops as multimodal input, requires concrete findings for every object and returns bounded observations and ROIs; no claim of independent final artwork acceptance.
+- [x] **R5-E / Reviser:** Critique-bound new-layer native stroke proposal, ROI containment, source PNG hash, explicit human approval and live baseline preflight before drawing. No silent overwrite of original layers.
+- [x] **R5-F / Integration:** CLI `creative` lifecycle, versioned artwork collection, delivery artifacts, safety tests, Windows CI and bilingual docs.
+- [ ] **Native acceptance:** Stable / Next Qt5 / Next Qt6 validation, real artwork re-open and independent VLM plus human review are still required.
+
+Deferred: generative inpainting, arbitrary reverse compositing, unattended model loops, arbitrary-code plugins, high-bit-depth editing and a fully live native Dock workflow dashboard. Source-level CLI integration does not imply end-to-end real-image quality. See [ROUND5-API](ROUND5-API.md) and [ROUND5-ACCEPTANCE](ROUND5-ACCEPTANCE.md).

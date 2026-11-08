@@ -28,11 +28,19 @@ def issue():
 class FakeCritic:
     model = "stub-vision"
     def complete_json(self, system, prompt, image_paths=()):
-        assert len(image_paths) == 1
-        assert Path(image_paths[0]).exists()
+        assert len(image_paths) >= 2
+        assert all(Path(p).exists() for p in image_paths)
         return {
             "decision": "needs_revision",
             "observations": "The cloud region is visibly repeated while the rest of the landscape is legible.",
+            "object_findings": {
+                "sky": {"quality": "good", "recognizable": True,
+                        "evidence": "The evening sky is visible above the mountain ridge."},
+                "clouds": {"quality": "needs_revision", "recognizable": True,
+                           "evidence": "Clouds appear as mechanical repetitions instead of distinct volumes."},
+                "mountain": {"quality": "good", "recognizable": True,
+                             "evidence": "The mountain ridge is visible against the dusk sky."}
+            },
             "issues": [issue()],
         }
 
@@ -94,3 +102,15 @@ def test_revision_rejects_unapproved_roi_and_stale_source(tmp_path):
     Image.new("RGB", (512, 384), "red").save(image)
     with pytest.raises(TaskError, match="stale"):
         validate_revision(sample_scene(), observed, image, candidate, "issue-1")
+
+
+
+def test_critic_requires_independent_findings_for_each_object(tmp_path):
+    image = make_image(tmp_path)
+    class ShallowReview(FakeCritic):
+        def complete_json(self, *args, **kwargs):
+            result = super().complete_json(*args, **kwargs)
+            del result["object_findings"]["mountain"]
+            return result
+    with pytest.raises(TaskError, match="every planned object"):
+        critique(sample_scene(), image, ShallowReview())

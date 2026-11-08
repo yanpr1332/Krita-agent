@@ -31,3 +31,10 @@ Never claim the finished artwork exists unless the PNG is visibly shown and the 
 ## Publishing
 
 Raw acceptance runs stay under artwork-results and are ignored by Git to prevent accidental leaks and massive commits; they are STILL present locally. Only after real visual and human acceptance, run scripts/prepare_artwork_publish.py to stage a small curated preview and public metadata. That script never performs git push. Review privacy/licenses, then explicitly commit curated files if authorized. Full KRA needs separate LFS/Release approval.
+
+
+## Round 5 autonomous creative workflow
+
+The `creative` CLI is an orchestrator, not a substitute for the real Krita-native painting acceptance. Inspect and approve a full ScenePlan v3 before `creative paint`. Natural-language planning and visual critique require explicit user-configured model credentials; no silent cloud calls. The visual critic's internal `decision=pass` is NOT independent artwork approval. A final artwork still requires both independent reviewer files, KRA reopen evidence, all stage images, object recognizability and real contributing paint layers.
+
+Do not use model responses as arbitrary commands. Revised strokes must stay inside approved ROIs on newly created layers. If a native step, export, checkpoint restore or revision has unknown effects, never retry automatically. Do not commit raw artwork, local credentials, or run-state files into GitHub. Store output versions under the requested local run directory and keep older versions intact.

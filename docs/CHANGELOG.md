@@ -29,3 +29,7 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Bind artwork visual-model and human review v2 records to the exact reference, final PNG, editable KRA and stage-preview hashes.
 - Add Windows GitHub Actions CI for Python 3.10 and 3.13.
 - Native full-artwork acceptance remains pending and is not inferred from source or CI checks.
+
+- Add object-level ScenePlan v3, natural-language planning via optional JSON-capable model adapter, and distinct brush strategies.
+- Add pixel-grounded visual critique, bounded and human-approved native revisions, and durable multi-stage creative lifecycle with versioned KRA/PNG delivery.
+- Add Round 5 CLI lifecycle and offline regression suite. Native Krita acceptance remains separate and pending.

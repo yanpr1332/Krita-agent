@@ -69,13 +69,19 @@ def test_critique_creates_internal_report_not_fake_human_acceptance(tmp_path, mo
     class PassingCritic:
         model = "test-only"
         def complete_json(self, system, prompt, image_paths=()):
-            assert len(image_paths) == 1
+            assert len(image_paths) >= 2
             return {
                 "decision": "pass",
                 "observations": (
                     "Actual PNG pixels were reviewed in this stub test. "
                     "This is not an independent real artistic review."
                 ),
+                "object_findings": {
+                    oid: {
+                        "quality": "good", "recognizable": True,
+                        "evidence": "A visible native artwork component is present for this object.",
+                    } for oid in ("sky", "clouds", "mountain")
+                },
                 "issues": [],
             }
 

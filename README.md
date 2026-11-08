@@ -102,7 +102,7 @@ The long-job scheduler submits bounded native jobs serially and stops if any
 response has uncertain effects, rather than blindly retrying. ScenePlan v2 is
 deterministic JSON; no LLM or third-party Krita plugin is installed.
 
-## Round 5 commands (source implementation; acceptance pending)
+## Round 5 autonomous creative workflow (source implementation; native acceptance pending)
 
 ~~~powershell
 # Offline structural preflight; no Krita connection or document mutation
@@ -113,6 +113,8 @@ krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\l
 ~~~
 
 Long-job continuation first opens a fresh copy of the verified checkpoint KRA; an ambiguous restore reply blocks further submissions. The visual and human artwork-review records are now hash-bound to the exact reference, final PNG, editable KRA and stage previews. This improves evidence integrity; it does not automatically judge artistic quality or claim that a complete illustration has been accepted. See [Artwork review v2](docs/ARTWORK-VLM-REVIEW.md).
+
+R5 now implements an explicit creative lifecycle: natural-language (opt-in JSON-capable model) or human-provided ScenePlan v3 → semantic objects and brush strategies → approved Krita native painting → real exported PNG critique → approved ROI-limited new-layer revision → versioned KRA/PNG delivery. The external model never gets direct Bridge command authority; native drawing is never silently retried. The internal VLM critique does not count as independent artwork acceptance. See [Round 5 API](docs/ROUND5-API.md) for all `krita-agent creative` commands. No new Krita third-party plugin is required.
 
 ## Documentation and contribution
 
