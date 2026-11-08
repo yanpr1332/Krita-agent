@@ -33,3 +33,5 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Add object-level ScenePlan v3, natural-language planning via optional JSON-capable model adapter, and distinct brush strategies.
 - Add pixel-grounded visual critique, bounded and human-approved native revisions, and durable multi-stage creative lifecycle with versioned KRA/PNG delivery.
 - Add Round 5 CLI lifecycle and offline regression suite. Native Krita acceptance remains separate and pending.
+
+- Cloud offline evidence: source compilation and 129 tests passed on Python 3.10 and 3.13 for the Round 5 code revision 689535a. Native/visual acceptance is NOT implied.

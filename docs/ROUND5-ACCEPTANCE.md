@@ -31,10 +31,12 @@ Round 5 code changes are not a new native Krita acceptance report. Use three ind
 
 ## R5-D — Automated CI
 
-- [ ] Run offline tests automatically on pushes to feature branches and pull requests to main.
-- [ ] Cover Python 3.10 and 3.13 on Windows.
-- [ ] Compile source, plugin, scripts and tests before running pytest.
-- [ ] Keep native Krita acceptance separate; CI runners do not claim to host a supported interactive Krita session.
+- [x] Run offline tests automatically on pushes to feature branches and pull requests to main.
+- [x] Cover Python 3.10 and 3.13 on Windows.
+- [x] Compile source, plugin, scripts and tests before running pytest.
+- [x] Keep native Krita acceptance separate; CI runners do not claim to host a supported interactive Krita session.
+
+Cloud evidence: [GitHub Actions run 42468603707](https://github.com/yanpr1332/Krita-agent/actions/runs/42468603707), code revision `689535a`: 129 pytest cases and compileall on each of Windows Python 3.10 and 3.13. Real native Krita/artwork checks below remain unchecked.
 
 ## R5-E — ScenePlan v3 and model provider
 

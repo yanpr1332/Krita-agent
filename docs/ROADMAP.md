@@ -72,3 +72,7 @@ Branch: `feat/round5-autonomous-creative-workflow`; Python package: `0.6.0.dev0`
 - [ ] **Native acceptance:** Stable / Next Qt5 / Next Qt6 validation, real artwork re-open and independent VLM plus human review are still required.
 
 Deferred: generative inpainting, arbitrary reverse compositing, unattended model loops, arbitrary-code plugins, high-bit-depth editing and a fully live native Dock workflow dashboard. Source-level CLI integration does not imply end-to-end real-image quality. See [ROUND5-API](ROUND5-API.md) and [ROUND5-ACCEPTANCE](ROUND5-ACCEPTANCE.md).
+
+## Round 5 cloud offline validation
+
+At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/yanpr1332/Krita-agent/actions/runs/42468603707) passed 129 offline pytest cases and source compilation on each of Windows Python 3.10 and 3.13. This is not native installed-Krita acceptance or independent finished-artwork review. A prior Python setup failure was caused by GitHub's Python artifact server returning HTTP 504; it did not run project tests.

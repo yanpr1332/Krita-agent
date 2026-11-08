@@ -6,7 +6,7 @@
 
 Krita Agent 是 Windows 环境下的 **Krita 原生绘画自动化系统**：外部 Python Controller 通过仅限本机的鉴权 IPC 连接到 Krita 内部 Python 插件，在真实可编辑的 KRA 文档、图层及笔刷上操作。项目明确区分源码实现、离线测试和真实 Krita 构建验收。
 
-## 项目状态（2026-11-07）
+## 项目状态（2026-11-08）
 
 | 阶段 | 状态 | 证据 |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Krita Agent 是 Windows 环境下的 **Krita 原生绘画自动化系统**：外
 | 第二轮：可编辑工作流、预览、导入及 Dock | **已验收**：34 项离线测试及真实像素/Dock 验收 | [REPORT-006](docs/REPORT-006.md)、[REPORT-007](docs/REPORT-007.md) |
 | 第三轮：安全检查点、非破坏性蒙版、局部修订与上游证据登记 | **三个本机构建已验收，57 项离线测试通过** | [REPORT-009](docs/REPORT-009.md)、[第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) |
 | 第四轮：多图层修订、长任务、笔刷档案、ScenePlan v2 | **已记录本地验收** | [REPORT-011](docs/REPORT-011.md)、[第四轮验收清单](docs/ROUND4-ACCEPTANCE.md) |
-| 第五轮：安全续跑、ScenePlan 预检、作品审核哈希绑定 | **源码已实现；CI／原生验收待完成** | [第五轮 API](docs/ROUND5-API.md)、[第五轮验收清单](docs/ROUND5-ACCEPTANCE.md) |
+| 第五轮：自主创作 Workflow、语义场景规划、视觉评审和局部修订 | **源码已实现；Python 3.10/3.13 各 129 项离线测试通过；真实作品验收待完成** | [第五轮 API](docs/ROUND5-API.md)、[第五轮验收清单](docs/ROUND5-ACCEPTANCE.md) |
 
 第四轮本地验收覆盖 Stable 5.3.4.1、Next Qt5 5.4.0-prealpha 和 Next Qt6 6.1.0-prealpha。功能范围与限制见 [REPORT-011](docs/REPORT-011.md)。
 
