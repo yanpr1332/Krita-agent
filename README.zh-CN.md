@@ -111,7 +111,7 @@ krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\l
 
 长任务续跑会先将已验证的检查点恢复为新的 KRA 副本，并核对文件哈希与文档身份；恢复结果不明确时会停止，不会继续提交。完整作品审核记录现在绑定到准确的参考图、最终 PNG、可编辑 KRA 和三个阶段预览的 SHA-256，并要求逐个对象及空间关系提供可见证据。这只提升证据完整性，不会自动判断艺术质量，也不代表完整插画已经通过验收。详见[作品审核 v2](docs/ARTWORK-VLM-REVIEW.md)。
 
-第五轮现已新增完整的 `krita-agent creative` 命令链路：可选模型自然语言规划或人工 ScenePlan v3 → 按对象选择笔刷及压力策略 → 审批后执行 Krita 原生绘画 → 根据实际 PNG 像素进行视觉检查 → 生成限定区域的新增图层修订 → 保留各版本 KRA/PNG 供独立验收。模型输出不能直接执行任意 Bridge 命令；任务结果不明确时不会盲目重试。内部 Critic 的「通过」不等于最终艺术作品验收通过。详见[第五轮 API](docs/ROUND5-API.md)。本轮不要求安装新的 Krita 第三方插件。
+第五轮现已新增完整的 `krita-agent creative` 命令链路：可选模型自然语言规划或人工 ScenePlan v3 → 按对象选择笔刷及压力策略 → 审批后执行 Krita 原生绘画 → 根据实际 PNG 像素进行视觉检查 → 生成限定区域的新增图层修订 → 保留各版本 KRA/PNG 供独立验收。模型输出不能直接执行任意 Bridge 命令；任务结果不明确时不会盲目重试。内部 Critic 的「通过」不等于最终艺术作品验收通过。详见[第五轮 API](docs/ROUND5-API.md)。本轮可保存三张 Krita 实际阶段预览，并生成本地只读 HTML 进度页面；实时 Dock 仍留待后续。无需安装新的 Krita 第三方插件。
 
 ## 文档与项目管理
 

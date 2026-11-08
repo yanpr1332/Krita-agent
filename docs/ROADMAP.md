@@ -68,7 +68,7 @@ Branch: `feat/round5-autonomous-creative-workflow`; Python package: `0.6.0.dev0`
 - [x] **R5-C / Painting Strategist:** Object-aware brush category, pressure envelopes, sizes and optional manually reviewed build-specific preset selection, compiled through ScenePlan v2 and existing native Bridge.
 - [x] **R5-D / Visual Critic:** Uses the real full PNG and up to three actual region crops as multimodal input, requires concrete findings for every object and returns bounded observations and ROIs; no claim of independent final artwork acceptance.
 - [x] **R5-E / Reviser:** Critique-bound new-layer native stroke proposal, ROI containment, source PNG hash, explicit human approval and live baseline preflight before drawing. No silent overwrite of original layers.
-- [x] **R5-F / Integration:** CLI `creative` lifecycle, versioned artwork collection, delivery artifacts, safety tests, Windows CI and bilingual docs.
+- [x] **R5-F / Integration:** CLI `creative` lifecycle, versioned artwork collection, three run-scoped native stage snapshots, read-only HTML status dashboard, delivery artifacts, safety tests, Windows CI and bilingual docs.
 - [ ] **Native acceptance:** Stable / Next Qt5 / Next Qt6 validation, real artwork re-open and independent VLM plus human review are still required.
 
 Deferred: generative inpainting, arbitrary reverse compositing, unattended model loops, arbitrary-code plugins, high-bit-depth editing and a fully live native Dock workflow dashboard. Source-level CLI integration does not imply end-to-end real-image quality. See [ROUND5-API](ROUND5-API.md) and [ROUND5-ACCEPTANCE](ROUND5-ACCEPTANCE.md).

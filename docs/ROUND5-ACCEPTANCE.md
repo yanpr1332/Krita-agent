@@ -54,7 +54,7 @@ Round 5 code changes are not a new native Krita acceptance report. Use three ind
 - [ ] Verify revisions paint only on a NEW editable layer, with pre-revision KRA checkpoint.
 - [ ] Inject lost reply during native painting, export and revision. No double submission or automatic replay.
 - [ ] Run creative init → plan → approve → paint → export → critique → revise → export → deliver and retain every version of editable KRA and PNG.
-- [ ] Check `creative status` and human-readable documentation for missing/unknown state and security boundaries.
+- [ ] Check `creative status` and the escaped, read-only `creative dashboard` for current stage, retained PNG versions, actual native stage previews, history, missing/unknown state and security boundaries.
 - [ ] No model credential or artwork data appears in committed GitHub evidence.
 
 ## R5-E — Native full-artwork milestone (pending)
@@ -62,7 +62,8 @@ Round 5 code changes are not a new native Krita acceptance report. Use three ind
 - [ ] Run the immutable sunset-alpine-lake benchmark in an owned disposable Krita session.
 - [ ] Save the real KRA, its matching PNG export, actual Krita screenshot, execution provenance and layer graph.
 - [ ] Verify at least eight genuinely contributing editable paint layers.
-- [ ] Save three full-scene stages and obtain image-bound visual-model and human reviews.
+- [ ] Save three real Krita full-canvas stage snapshots (layout/color/final) at object-group boundaries; verify their output SHA values and archive them under the run directory.
+- [ ] Save independent visual-model and human reviews bound to real PNG/KRA/stage hashes.
 - [ ] Reopen the KRA and rerun the artifact auditor.
 - [ ] Retain failed runs and all forensic evidence. Do not create synthetic evidence or mark this gate passed from source/CI tests.
 

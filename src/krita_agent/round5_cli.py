@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from .creative_workflow import CreativeWorkflow
+from .creative_dashboard import render as render_dashboard
 from .model_provider import ChatJSONProvider
 
 
@@ -27,7 +28,7 @@ def register(commands, connection):
     initial.add_argument("--brief-file", required=True,
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
-        "status", "plan", "approve", "paint", "export",
+        "status", "dashboard", "plan", "approve", "paint", "export",
         "record", "critique", "revision-plan", "revision-approve",
         "revise", "deliver",
     ):
@@ -40,6 +41,9 @@ def register(commands, connection):
         if name in ("plan", "critique", "revision-plan"):
             p.add_argument("--model", help="Opt-in OpenAI-compatible JSON model ID")
             p.add_argument("--endpoint", help="Optional HTTPS chat-completions endpoint")
+        if name == "dashboard":
+            p.add_argument("--output", help="HTML output inside the run directory")
+            p.add_argument("--replace", action="store_true")
         if name == "plan":
             p.add_argument("--candidate", help="Explicit user-authored ScenePlan v3 JSON")
             p.add_argument("--reference", help="Actual reference image, optional")
@@ -76,6 +80,8 @@ def execute(args, get_client):
     flow = CreativeWorkflow(args.directory)
     if args.action == "status":
         return flow.read()
+    if args.action == "dashboard":
+        return render_dashboard(flow, args.output, replace=args.replace)
     if args.action == "plan":
         candidate = _json(args.candidate) if args.candidate else None
         return flow.plan(

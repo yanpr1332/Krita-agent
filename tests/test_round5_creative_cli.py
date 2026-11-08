@@ -39,3 +39,12 @@ def test_creative_review_and_delivery_cli():
         "creative", "deliver", "--directory", "artwork-results/run-1",
     ])
     assert finished.action == "deliver"
+
+
+def test_readonly_creative_dashboard_cli():
+    args = parser_build().parse_args([
+        "creative", "dashboard", "--directory", "artwork-results/run-1",
+        "--replace",
+    ])
+    assert args.action == "dashboard"
+    assert args.replace is True

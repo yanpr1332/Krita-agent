@@ -38,3 +38,6 @@ Raw acceptance runs stay under artwork-results and are ignored by Git to prevent
 The `creative` CLI is an orchestrator, not a substitute for the real Krita-native painting acceptance. Inspect and approve a full ScenePlan v3 before `creative paint`. Natural-language planning and visual critique require explicit user-configured model credentials; no silent cloud calls. The visual critic's internal `decision=pass` is NOT independent artwork approval. A final artwork still requires both independent reviewer files, KRA reopen evidence, all stage images, object recognizability and real contributing paint layers.
 
 Do not use model responses as arbitrary commands. Revised strokes must stay inside approved ROIs on newly created layers. If a native step, export, checkpoint restore or revision has unknown effects, never retry automatically. Do not commit raw artwork, local credentials, or run-state files into GitHub. Store output versions under the requested local run directory and keep older versions intact.
+
+
+Round 5's optional stage snapshots must come from actual Krita `preview.canvas` commands, not from offline generated substitutes. The local static dashboard is a status/evidence browser, not proof of a completed painting or a substitute for real review.

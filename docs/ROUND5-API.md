@@ -119,3 +119,18 @@ State flow: initialized → planned → plan_approved → painting_unknown (whil
 ### Stronger object-by-object visual critique
 
 The critic sends the actual complete exported PNG and up to three bounded real-pixel crops for the most relevant semantic regions (for example clouds, mountain faces and water). The optional benchmark is sent only when explicitly selected. The model must return a separate `object_findings` entry for **every** scene object, with `recognizable`, `quality` and at least one concrete pixel-grounded `evidence` string. A missing object finding or a contradictory overall pass is a hard failure. The response records crop SHA-256 hashes, the actual full-artwork PNG SHA-256 and the model ID. It still cannot establish that the external model actually observed images or replace independent visual and human acceptance.
+
+
+## 5. Native stage evidence and read-only dashboard
+
+When a creative run compiles a ScenePlan v3 with at least three separately painted objects, the controller schedules three real Krita `preview.canvas` commands at early, middle and final layer boundaries. Preview dimensions are aspect-preserving and limited to Krita's 2-megapixel snapshot budget (up to 2048 px per side). Their output paths are namespaced under `r5-runs/<run-id>/stages/` to avoid collisions. `creative export` collects actual PNG files from the authorized Bridge output directory, verifies their hashes and saves them in `artwork-results/<run-id>/stages/`. These are real native previews, not an invented testing montage. Runs with too few painted objects do not claim to provide three meaningful stages.
+
+A readable local dashboard can be generated with:
+
+```powershell
+krita-agent creative dashboard --directory artwork-results/run-001
+# To refresh after stages change:
+krita-agent creative dashboard --directory artwork-results/run-001 --replace
+```
+
+The static `dashboard.html` shows current stage, actual archived artwork PNG, native stage previews and history events. It uses escaped text, no JavaScript, no cloud access and no direct Krita control. This is not a live Krita Dock widget. Final human and independent VLM review still occur separately.

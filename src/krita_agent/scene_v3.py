@@ -162,7 +162,7 @@ def digest(value):
     ).hexdigest()
 
 
-def compile_scene_v3(candidate, profile_directory=None, build=None):
+def compile_scene_v3(candidate, profile_directory=None, build=None, preview_prefix=None):
     """Compile only to already-whitelisted ScenePlan v2 Krita steps."""
     from .strategies_v3 import brush_for_object, strokes_for_object
     scene = validate_scene(candidate)
@@ -179,16 +179,58 @@ def compile_scene_v3(candidate, profile_directory=None, build=None):
         })
     plan_v2 = compile_v2({"schema": "krita-agent-scene/2",
                            "document": scene["document"], "layers": layers})
+    native_steps = list(plan_v2["steps"])
+    stage_paths = []
+    if preview_prefix is not None:
+        # Unique run-scoped native snapshots. The reference benchmark and
+        # actual artwork are not synthesized or inserted as drawing commands.
+        if not isinstance(preview_prefix, str) or not re.fullmatch(
+            r"r5-runs/[0-9a-f]{32}", preview_prefix
+        ):
+            raise TaskError("Preview prefix must be a unique run ID")
+        from math import sqrt
+        width, height = scene["document"]["width"], scene["document"]["height"]
+        scale = min(1.0, 2048 / width, 2048 / height,
+                    sqrt(2000000 / (width * height)))
+        preview_w = max(1, int(width * scale))
+        preview_h = max(1, int(height * scale))
+        markers = sorted({max(0, (len(layers) + 2)//3-1),
+                          max(0, (2*len(layers)+2)//3-1),
+                          len(layers)-1})
+        step_with_stages = []
+        layer_index = -1
+        names = ("01-layout.png", "02-color.png", "03-final.png")
+        for index, step in enumerate(native_steps):
+            if step["command"] == "layer.create":
+                layer_index += 1
+            step_with_stages.append(step)
+            last_step_of_layer = layer_index >= 0 and (
+                index + 1 == len(native_steps) or
+                native_steps[index+1]["command"] == "layer.create"
+            )
+            if last_step_of_layer and layer_index in markers:
+                label_index = markers.index(layer_index)
+                filename = preview_prefix + "/stages/" + names[label_index]
+                snapshot = {"command": "preview.canvas", "parameters": {
+                    "filename": filename, "width": preview_w, "height": preview_h
+                }}
+                from .workflow import compile_workflow
+                step_with_stages.extend(compile_workflow({"steps": [snapshot]}))
+                stage_paths.append(filename)
+        native_steps = step_with_stages
+    if len(native_steps) > 10000:
+        raise TaskError("Scene with stage previews exceeds 10000 native steps")
     return {
         "schema": "krita-agent-scene-compiled/3",
         "source_sha256": digest(scene),
-        "native_steps_sha256": plan_v2["sha256"],
+        "native_steps_sha256": digest(native_steps),
+        "stage_preview_paths": stage_paths,
         "document": scene["document"],
         "objects": [{"id": o["id"], "kind": o["kind"], "name": o["name"],
                      "bounds": o["bounds"], "depth": o["depth"],
                      "layer_name": o["id"] + " - " + o["name"],
                      "elements": len(o["elements"])} for o in scene["objects"]],
-        "steps": plan_v2["steps"],
+        "steps": native_steps,
         "requires_native_approval": True,
         "not_artwork_acceptance": True,
     }

@@ -73,10 +73,10 @@ def propose(brief, provider, reference_image=None):
     }
 
 
-def compile_approved(proposal, profile_directory=None, build=None):
+def compile_approved(proposal, profile_directory=None, build=None, preview_prefix=None):
     if not isinstance(proposal, dict) or proposal.get("schema") != "krita-agent-creative-proposal/1":
         raise TaskError("Unknown creative proposal format")
     scene = validate_scene(proposal.get("scene"))
     if digest(scene) != proposal.get("scene_sha256"):
         raise TaskError("Creative proposal content changed after planning")
-    return compile_scene_v3(scene, profile_directory, build)
+    return compile_scene_v3(scene, profile_directory, build, preview_prefix)

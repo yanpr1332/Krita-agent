@@ -116,7 +116,10 @@ class CreativeWorkflow:
                 "scene_sha256": digest(scene), "provider_model": "human_supplied",
                 "approval": "required", "side_effects": "none",
             }
-        compiled = compile_approved(proposal, profile_directory, build)
+        compiled = compile_approved(
+            proposal, profile_directory, build,
+            preview_prefix="r5-runs/" + record["id"],
+        )
         _write_new(self.root / "scene-plan-v3.json", proposal["scene"])
         _write_new(self.root / "creative-proposal.json", proposal)
         _write_new(self.root / "compiled-scene.json", compiled)
@@ -192,6 +195,41 @@ class CreativeWorkflow:
             # The KRA may have been saved despite a lost reply. The manifest
             # remains export_unknown; no automatic second save/export.
             raise
+        # The full-composition stage previews are real Krita pixel snapshots.
+        # They are collected by run ID from the owned Bridge output sandbox.
+        compiled = json.loads(
+            (self.root / "compiled-scene.json").read_text(encoding="utf-8")
+        )
+        stage_names = compiled.get("stage_preview_paths", [])
+        if stage_names:
+            info = client.request("status")
+            if not isinstance(info, dict) or not info.get("output_dir"):
+                raise TaskError("Bridge output directory unavailable for stage collection")
+            native_root = Path(info["output_dir"]).resolve()
+            dest = self.root / "stages"
+            dest.mkdir(exist_ok=True)
+            stage_records = {}
+            from PIL import Image
+            for filename in stage_names:
+                source = (native_root / filename).resolve()
+                if (native_root not in source.parents or not source.is_file()
+                        or source.suffix.lower() != ".png"):
+                    raise TaskError("Native stage preview missing or escaped its sandbox")
+                if source.stat().st_size > 256 * 1024 * 1024:
+                    raise TaskError("Native stage preview too large")
+                with Image.open(source) as im:
+                    im.verify()
+                target = dest / Path(filename).name
+                if target.exists():
+                    raise FileExistsError("Stage evidence already exists")
+                shutil.copy2(source, target)
+                if _sha(target) != _sha(source):
+                    raise TaskError("Native stage preview copy changed")
+                stage_records[target.name] = {
+                    "path": str(target.relative_to(self.root)),
+                    "sha256": _sha(target),
+                }
+            record["artifacts"]["stage_previews"] = stage_records
         record["status"] = "awaiting_export"
         self._save(record, "native_export_both_confirmed")
         return self.record_artwork(*paths)
