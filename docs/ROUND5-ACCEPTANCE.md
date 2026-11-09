@@ -83,5 +83,5 @@ Open-ended natural-language image generation, generative inpainting, arbitrary m
 - [x] Source path blocks critique/delivery on strict mismatch while reporting explicit minor RGB tolerance separately.
 - [x] Source path supports an explicitly approved repaired candidate as a new preserved version.
 - [x] Offline test doubles cover exact reopening, five-pixel drift, export mismatch, immutable repair version and lost Bridge reply.
-- [ ] Re-run on real Stable, Next Qt5 and Next Qt6 Krita installations with fresh copies and inspect output evidence.
+- [x] Re-run on real Stable, Next Qt5 and Next Qt6 Krita installations with fresh copies and inspect output evidence. See [three-build report](ROUND5-REOPEN-NATIVE.md).
 - [ ] Isolate and fix the original Qt6 five-pixel rendering difference at its actual root cause; a correction layer is not a root-cause fix.

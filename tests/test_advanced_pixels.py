@@ -104,3 +104,48 @@ def test_import_root_anchor_uses_the_ancestor_of_a_nested_selection():
     assert namespace["_root_anchor"](doc) is group
     doc.activeNode.return_value = None
     assert namespace["_root_anchor"](doc) is None
+
+
+
+def test_document_list_compares_underlying_document_identity():
+    class Document:
+        def __init__(self, identity):
+            self.identity = identity
+
+        def __eq__(self, other):
+            return isinstance(other, Document) and self.identity == other.identity
+
+        def name(self): return "Document"
+        def width(self): return 20
+        def height(self): return 10
+        def fileName(self): return "document.kra"
+        def colorModel(self): return "RGBA"
+        def colorDepth(self): return "U8"
+        def colorProfile(self): return "profile"
+        def modified(self): return False
+
+    app = SimpleNamespace(activeDocument=lambda: Document(1),
+                          documents=lambda: [Document(1), Document(2)])
+    execute = handler()
+    execute.__globals__["Krita"] = SimpleNamespace(instance=lambda: app)
+    documents = execute(None, "document.list", {})
+    assert [document["active"] for document in documents] == [True, False]
+
+
+def test_document_activate_reuses_existing_view():
+    class Document:
+        def __eq__(self, other):
+            return isinstance(other, Document)
+
+        def name(self): return "Document"
+
+    document = Document()
+    view = SimpleNamespace(document=lambda: Document())
+    window = Mock()
+    window.views.return_value = [view]
+    app = SimpleNamespace(documents=lambda: [document], activeWindow=lambda: window)
+    execute = handler()
+    execute.__globals__["Krita"] = SimpleNamespace(instance=lambda: app)
+    execute(None, "document.activate", {"index": 0})
+    window.showView.assert_called_once_with(view)
+    window.addView.assert_not_called()

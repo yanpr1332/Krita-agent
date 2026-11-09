@@ -1,0 +1,79 @@
+{
+  "tested_revision": "447e418 plus document identity and showView fixes",
+  "local_run": "artwork-results/round5-reopen-native-20261109-175531",
+  "builds": [
+    {
+      "build": "stable",
+      "krita_version": "5.3.4.1 (git bd6e8d0)",
+      "qt_version": "5.15.7",
+      "qt_binding": "PyQt5",
+      "python": "3.13.5",
+      "outcome": "pass",
+      "checks": {
+        "export_status": "pass",
+        "reopen_status": "pass",
+        "reopen_pixels": 0,
+        "active_document_count": 1,
+        "active_name": "Real strokes",
+        "stages": [
+          "01-layout.png",
+          "02-color.png",
+          "03-final.png"
+        ],
+        "returned_state": "awaiting_critique"
+      }
+    },
+    {
+      "build": "qt5",
+      "krita_version": "5.4.0-prealpha (git 2687e5d)",
+      "qt_version": "5.15.7",
+      "qt_binding": "PyQt5",
+      "python": "3.13.5",
+      "outcome": "pass",
+      "checks": {
+        "export_status": "pass",
+        "reopen_status": "pass",
+        "reopen_pixels": 0,
+        "active_document_count": 1,
+        "active_name": "Real strokes",
+        "stages": [
+          "01-layout.png",
+          "02-color.png",
+          "03-final.png"
+        ],
+        "returned_state": "awaiting_critique"
+      }
+    },
+    {
+      "build": "qt6",
+      "krita_version": "6.1.0-prealpha (git 2687e5d)",
+      "qt_version": "6.11.0",
+      "qt_binding": "PyQt6",
+      "python": "3.13.5",
+      "outcome": "pass",
+      "checks": {
+        "export_status": "pass",
+        "reopen_status": "pass",
+        "reopen_pixels": 0,
+        "active_document_count": 1,
+        "active_name": "Real strokes",
+        "stages": [
+          "01-layout.png",
+          "02-color.png",
+          "03-final.png"
+        ],
+        "returned_state": "awaiting_critique",
+        "old_failure": {
+          "status": "fail",
+          "pixels": 5,
+          "max": 1
+        },
+        "repair": {
+          "new_version": 2,
+          "reopen_status": "pass",
+          "retained_original": true
+        }
+      }
+    }
+  ]
+}

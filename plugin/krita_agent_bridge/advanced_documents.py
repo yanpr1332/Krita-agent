@@ -31,7 +31,7 @@ def execute(bridge, command, p):
         return [{"index": i, "name": d.name(), "width": d.width(), "height": d.height(),
                  "file_path": d.fileName(), "color_model": d.colorModel(),
                  "color_depth": d.colorDepth(), "color_profile": d.colorProfile(),
-                 "modified": d.modified(), "active": d is active}
+                 "modified": d.modified(), "active": d == active}
                 for i, d in enumerate(app.documents())]
     if command == "document.activate":
         document = _lookup(app, p)
@@ -39,11 +39,11 @@ def execute(bridge, command, p):
         if window is None:
             raise RuntimeError("No active Krita window")
         views = window.views()
-        view = next((v for v in views if v.document() is document), None)
+        view = next((v for v in views if v.document() == document), None)
         if view is None:
             window.addView(document)
         else:
-            window.activateView(view)
+            window.showView(view)
         return {"active": document.name()}
     if command == "document.close":
         document = _lookup(app, p)
