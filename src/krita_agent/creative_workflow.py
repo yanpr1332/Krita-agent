@@ -200,8 +200,6 @@ class CreativeWorkflow:
         record["status"] = "awaiting_export"
         self._save(record, "native_export_both_confirmed")
         archived = self.record_artwork(*paths)
-        if archived["status"] != "awaiting_reopen":
-            return archived
         record = self.read()
         # The full-composition stage previews are real Krita pixel snapshots.
         # They are collected by run ID from the owned Bridge output sandbox.
@@ -248,6 +246,8 @@ class CreativeWorkflow:
                 }
             record["artifacts"]["stage_previews"] = stage_records
         self._save(record, "native_stage_evidence_archived")
+        if archived["status"] != "awaiting_reopen":
+            return archived  # Preserve stage evidence even if the export itself failed.
         return self.verify_reopen(client)
 
     def record_artwork(self, kra_path, png_path, confirm_new_version=False):
