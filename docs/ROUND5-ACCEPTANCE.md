@@ -75,3 +75,13 @@ Cloud evidence: [GitHub Actions run 42468603707](https://github.com/yanpr1332/Kr
 ## Explicitly deferred
 
 Open-ended natural-language image generation, generative inpainting, arbitrary multilayer reverse compositing, high-bit-depth pixel writes, general ICC correctness, unattended cloud model calls, and headless native painting remain deferred. These require separate design, dependency/security review and native evidence.
+
+## R5-G — Export Integrity and fresh-reopen default gate
+
+- [x] Source path archives real original KRA/PNG before any comparison, including failures, without overwrite.
+- [x] Source path separates embedded-composite Export Integrity from fresh-Krita Reopen Stability; records pixel/alpha maxima, counts and profile data.
+- [x] Source path blocks critique/delivery on strict mismatch while reporting explicit minor RGB tolerance separately.
+- [x] Source path supports an explicitly approved repaired candidate as a new preserved version.
+- [x] Offline test doubles cover exact reopening, five-pixel drift, export mismatch, immutable repair version and lost Bridge reply.
+- [ ] Re-run on real Stable, Next Qt5 and Next Qt6 Krita installations with fresh copies and inspect output evidence.
+- [ ] Isolate and fix the original Qt6 five-pixel rendering difference at its actual root cause; a correction layer is not a root-cause fix.

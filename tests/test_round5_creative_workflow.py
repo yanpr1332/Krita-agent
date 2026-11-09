@@ -2,6 +2,7 @@
 import io
 import json
 import zipfile
+from pathlib import Path
 
 import pytest
 from krita_agent import creative_workflow as module
@@ -26,6 +27,62 @@ def native_fixture(tmp_path):
         archive.writestr("maindoc.xml", "<DOC/>")
         archive.writestr("mergedimage.png", image.read_bytes())
     return kra, image
+
+
+class ReopenStub:
+    """Offline Bridge double only; NOT evidence of a real Krita reopen."""
+    def __init__(self, root, altered_pixels=0):
+        from PIL import Image
+        self.Image = Image
+        self.root = root / "bridge-output"
+        self.root.mkdir(exist_ok=True)
+        self.altered_pixels = altered_pixels
+        self.opened = None
+        self.active = 0
+        self.requests = []
+
+    def request(self, command, **params):
+        self.requests.append(command)
+        if command == "status":
+            return {"output_dir": str(self.root)}
+        if command == "document.list":
+            rows = [{"index": 0, "name": "Original painting", "active": self.active == 0,
+                     "file_path": str(self.root / "original.kra")}]
+            if self.opened is not None:
+                rows.append({"index": 1, "name": "Fresh copy",
+                             "active": self.active == 1,
+                             "file_path": str(self.opened)})
+            return rows
+        if command == "document.open":
+            path = (self.root / params["path"]).resolve()
+            assert path.is_file() and self.opened is None
+            self.opened = path
+            self.active = 1
+            return {"opened": str(path), "index": 1}
+        if command == "document.activate":
+            assert params["index"] in (0, 1)
+            self.active = params["index"]
+            return {"active": "Original painting" if self.active == 0 else "Fresh copy"}
+        if command == "document.export":
+            assert self.active == 1 and self.opened is not None
+            path = (self.root / params["path"]).resolve()
+            with zipfile.ZipFile(self.opened) as archive:
+                pixels = archive.read("mergedimage.png")
+            import io
+            with self.Image.open(io.BytesIO(pixels)) as original:
+                original_mode = original.mode
+                fresh = original.convert("RGBA")
+            for x in range(self.altered_pixels):
+                red, green, blue, alpha = fresh.getpixel((x, 0))
+                fresh.putpixel((x, 0), (red + 1, green, blue, alpha))
+            fresh.convert(original_mode).save(path)
+            return {"path": str(path), "format": "png"}
+        if command == "document.close":
+            assert params == {"index": 1, "confirm": True}
+            self.opened = None
+            self.active = 0
+            return {"closed": True}
+        raise AssertionError("Unexpected Bridge command: " + command)
 
 
 def test_lifecycle_requires_approval_before_native_mutation(tmp_path, monkeypatch):
@@ -53,7 +110,10 @@ def test_lifecycle_requires_approval_before_native_mutation(tmp_path, monkeypatc
     assert saved["version"] == 1
     assert (flow.root / "versions/v01.kra").is_file()
     assert (flow.root / "versions/v01.png").is_file()
-    assert flow.read()["status"] == "awaiting_critique"
+    assert flow.read()["status"] == "awaiting_reopen"
+    verified = flow.verify_reopen(ReopenStub(tmp_path))
+    assert verified["status"] == "awaiting_critique"
+    assert verified["reopen_stability"]["pixels"]["strict_match"] is True
 
 
 def test_critique_creates_internal_report_not_fake_human_acceptance(tmp_path, monkeypatch):
@@ -65,6 +125,7 @@ def test_critique_creates_internal_report_not_fake_human_acceptance(tmp_path, mo
     flow.paint(object())
     kra, png = native_fixture(tmp_path)
     flow.record_artwork(kra, png)
+    flow.verify_reopen(ReopenStub(tmp_path))
 
     class PassingCritic:
         model = "test-only"
@@ -140,3 +201,102 @@ def test_model_candidate_cannot_change_approved_canvas(tmp_path):
     with pytest.raises(TaskError, match="dimensions"):
         flow.plan(candidate=scene)
     assert flow.read()["status"] == "initialized"
+
+
+def test_five_pixel_reopen_drift_is_reported_but_never_accepted(tmp_path, monkeypatch):
+    flow = CreativeWorkflow.create(tmp_path / "run", brief())
+    flow.plan(candidate=sample_scene())
+    flow.approve_plan(confirm=True)
+    monkeypatch.setattr(module, "run_longjob",
+                        lambda *a, **k: {"state": "completed"})
+    flow.paint(object())
+    kra, png = native_fixture(tmp_path)
+    flow.record_artwork(kra, png)
+    first_sha = module._sha(flow.root / "versions/v01.kra")
+    result = flow.verify_reopen(ReopenStub(tmp_path, altered_pixels=5))
+    assert result["status"] == "review_blocked"
+    metrics = result["reopen_stability"]["pixels"]
+    assert metrics["different_pixels"] == 5
+    assert metrics["max_channel_difference"] == 1
+    assert metrics["alpha_different_pixels"] == 0
+    assert metrics["minor_color_tolerance"]["within_tolerance"] is True
+    assert module._sha(flow.root / "versions/v01.kra") == first_sha
+    assert (flow.root / "versions/v01-reopened.png").is_file()
+    assert (flow.root / "versions/v01-integrity-verified.json").is_file()
+    with pytest.raises(TaskError, match="expected awaiting_critique"):
+        flow.critique(object())
+    with pytest.raises(TaskError, match="expected ready_for_delivery"):
+        flow.prepare_delivery()
+
+
+def test_export_mismatch_archives_original_failure_before_block(tmp_path, monkeypatch):
+    from PIL import Image
+    flow = CreativeWorkflow.create(tmp_path / "run", brief())
+    flow.plan(candidate=sample_scene())
+    flow.approve_plan(confirm=True)
+    monkeypatch.setattr(module, "run_longjob",
+                        lambda *a, **k: {"state": "completed"})
+    flow.paint(object())
+    kra, png = native_fixture(tmp_path)
+    with Image.open(png) as image:
+        altered = image.copy()
+    altered.putpixel((0, 0), (21, 30, 40))
+    altered.save(png)
+    result = flow.record_artwork(kra, png)
+    assert result["status"] == "review_blocked"
+    assert result["export_integrity"]["pixels"]["different_pixels"] == 1
+    assert (flow.root / "versions/v01.kra").is_file()
+    assert (flow.root / "versions/v01.png").is_file()
+    with pytest.raises(TaskError, match="new-version"):
+        flow.record_artwork(kra, png)
+
+
+def test_repaired_candidate_gets_new_version_and_preserves_failed_one(tmp_path, monkeypatch):
+    flow = CreativeWorkflow.create(tmp_path / "run", brief())
+    flow.plan(candidate=sample_scene())
+    flow.approve_plan(confirm=True)
+    monkeypatch.setattr(module, "run_longjob",
+                        lambda *a, **k: {"state": "completed"})
+    flow.paint(object())
+    kra, png = native_fixture(tmp_path)
+    flow.record_artwork(kra, png)
+    assert flow.verify_reopen(ReopenStub(tmp_path, altered_pixels=5))["status"] == "review_blocked"
+    failed_sha = module._sha(flow.root / "versions/v01.kra")
+    repaired = tmp_path / "repaired.kra"
+    with zipfile.ZipFile(repaired, "w") as archive:
+        archive.writestr("maindoc.xml", "<DOC/>")
+        archive.writestr("mergedimage.png", png.read_bytes())
+        archive.writestr("editable-repair-layer", "synthetic-unit-fixture")
+    candidate = flow.record_artwork(repaired, png, confirm_new_version=True)
+    assert candidate["version"] == 2
+    assert candidate["status"] == "awaiting_reopen"
+    assert flow.verify_reopen(ReopenStub(tmp_path))["status"] == "awaiting_critique"
+    assert module._sha(flow.root / "versions/v01.kra") == failed_sha
+    assert module._sha(flow.root / "versions/v02.kra") != failed_sha
+
+
+def test_lost_fresh_reopen_reply_is_never_retried(tmp_path, monkeypatch):
+    flow = CreativeWorkflow.create(tmp_path / "run", brief())
+    flow.plan(candidate=sample_scene())
+    flow.approve_plan(confirm=True)
+    monkeypatch.setattr(module, "run_longjob",
+                        lambda *a, **k: {"state": "completed"})
+    flow.paint(object())
+    kra, png = native_fixture(tmp_path)
+    flow.record_artwork(kra, png)
+
+    class LostOpen(ReopenStub):
+        def request(self, command, **params):
+            if command == "document.open":
+                self.requests.append(command)
+                raise TimeoutError("Lost acknowledgement for potentially opened document")
+            return super().request(command, **params)
+
+    stub = LostOpen(tmp_path)
+    with pytest.raises(TimeoutError):
+        flow.verify_reopen(stub)
+    assert flow.read()["status"] == "unknown_needs_review"
+    with pytest.raises(TaskError):
+        flow.verify_reopen(stub)
+    assert stub.requests.count("document.open") == 1
+    assert (flow.root / "versions/v01.kra").is_file()

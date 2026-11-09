@@ -10,6 +10,7 @@ from krita_agent.creative_dashboard import render as render_dashboard
 from krita_agent.creative_workflow import CreativeWorkflow
 from krita_agent.scene_v3 import compile_scene_v3
 from test_round5_creative_scene import sample_scene
+from test_round5_creative_workflow import ReopenStub
 
 
 def test_v3_compiles_three_actual_krita_stage_preview_commands():
@@ -57,15 +58,17 @@ def test_native_export_archives_three_real_stage_previews(tmp_path, monkeypatch)
         native_stage.parent.mkdir(parents=True, exist_ok=True)
         Image.new("RGB", (512, 384), (30*index, 45, 65)).save(native_stage)
 
-    class Client:
+    class Client(ReopenStub):
+        def __init__(self):
+            super().__init__(tmp_path)
+            self.root = exported
+
         def request(self, name, **params):
             if name == "document.save":
                 return {"path": str(kra)}
-            if name == "document.export":
+            if name == "document.export" and self.opened is None:
                 return {"path": str(png)}
-            if name == "status":
-                return {"output_dir": str(exported)}
-            raise AssertionError(name)
+            return super().request(name, **params)
 
     result = flow.export_native(Client())
     assert result["status"] == "awaiting_critique"

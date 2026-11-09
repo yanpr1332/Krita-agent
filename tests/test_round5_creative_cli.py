@@ -48,3 +48,17 @@ def test_readonly_creative_dashboard_cli():
     ])
     assert args.action == "dashboard"
     assert args.replace is True
+
+
+def test_reopen_verification_and_explicit_repair_cli():
+    verifier = parser_build().parse_args([
+        "creative", "verify-reopen", "--directory", "artwork-results/run-1",
+        "--session", "session.json",
+    ])
+    assert verifier.action == "verify-reopen"
+    recorded = parser_build().parse_args([
+        "creative", "record", "--directory", "artwork-results/run-1",
+        "--kra", "repaired.kra", "--png", "repaired.png",
+        "--new-version", "--confirm", "--defer-reopen",
+    ])
+    assert recorded.new_version and recorded.confirm and recorded.defer_reopen

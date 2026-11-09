@@ -8,6 +8,7 @@ import zipfile
 from pathlib import Path
 
 from PIL import Image
+from krita_agent.artifact_integrity import export_integrity, reopen_stability
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "artwork_acceptance_audit.py"
@@ -74,6 +75,21 @@ def make_run(tmp_path):
     with zipfile.ZipFile(kra, "w") as archive:
         archive.writestr("maindoc.xml", "<DOC/>")
         archive.writestr("mergedimage.png", png)
+    (run / "reopened.png").write_bytes(png)
+    _write_json(run / "reopen-evidence.json", {
+        "schema": "krita-agent-artifact-integrity/1",
+        "version": 1,
+        "export_integrity": export_integrity(kra, run / "artwork.png"),
+        "reopen_stability": reopen_stability(run / "artwork.png",
+                                             run / "reopened.png", _sha(kra)),
+        "reopened_png": {
+            "path": "versions/v01-reopened.png",
+            "sha256": _sha(run / "reopened.png"),
+            "method": "fresh-copy-krita-document.open-document.export",
+            "native_copy": "test-bridge-only",
+            "native_export": "test-bridge-only",
+        },
+    })
     required = [item["key"] for item in contract["subject"]["required_objects"]]
     stages = {
         rel: _sha(run / rel)
@@ -137,3 +153,24 @@ def test_audit_rejects_stale_human_review(tmp_path):
     result = AUDITOR.audit(run)
     assert result["status"] == "fail"
     assert any("Human review is not bound to the final PNG" in error for error in result["errors"])
+
+
+def test_audit_fails_on_reopen_pixel_drift_even_with_minor_tolerance(tmp_path):
+    run = make_run(tmp_path)
+    with Image.open(run / "reopened.png") as initial:
+        altered = initial.copy()
+    altered.putpixel((0, 0), (33, 48, 64))
+    altered.save(run / "reopened.png")
+    result = AUDITOR.audit(run)
+    assert result["status"] == "fail"
+    assert any(check["name"] == "reopen_stability" and not check["pass"]
+               for check in result["checks"])
+
+
+def test_audit_requires_actual_reopen_evidence_file(tmp_path):
+    run = make_run(tmp_path)
+    (run / "reopen-evidence.json").unlink()
+    result = AUDITOR.audit(run)
+    assert result["status"] == "fail"
+    assert any(check["name"] == "reopen_evidence_bound" and not check["pass"]
+               for check in result["checks"])

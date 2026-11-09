@@ -134,3 +134,29 @@ krita-agent creative dashboard --directory artwork-results/run-001 --replace
 ```
 
 The static `dashboard.html` shows current stage, actual archived artwork PNG, native stage previews and history events. It uses escaped text, no JavaScript, no cloud access and no direct Krita control. This is not a live Krita Dock widget. Final human and independent VLM review still occur separately.
+
+## 6. Export Integrity and Reopen Stability (post-acceptance correction)
+
+Every `creative export` now first archives the original native KRA/PNG to unique immutable `versions/vNN.*` paths, **including failing versions**. It calculates:
+
+- **Export Integrity:** exact RGBA comparison of embedded `mergedimage.png` against the first exported PNG.
+- **Reopen Stability:** copy the archived KRA to a unique path in the authorized Bridge output sandbox, open that copy in Krita, export a new PNG, close the copy, restore the original document, then compare the new PNG against the first. A lost Bridge reply leaves `unknown_needs_review` and is never replayed automatically.
+
+Each comparison records changed pixel count, max RGB and channel differences, alpha-changed pixel count/max delta, image dimensions, and color configuration (KRA profile/model/depth and PNG ICC hashes, gamma, sRGB intent, mode). **Only pixel-exact results pass.** Diagnostic tolerance is separately shown: RGB delta at most 1, changed-pixel ratio at most 0.0001, and no alpha differences. Matching pixels with mismatched PNG color profiles also fails Reopen Stability.
+
+Both reports and the actual reopened PNG are archived per version (`vNN-integrity.json`, `vNN-integrity-verified.json`, `vNN-reopened.png`). Failed versions enter `review_blocked`, preventing critique and delivery. Successful versions enter `awaiting_critique`. Missing/lost native results enter `unknown_needs_review`. The final delivery includes `reopened.png` and `reopen-evidence.json` as well as the KRA/PNG pair; the artwork auditor requires those files and recomputes both strict comparisons.
+
+```powershell
+# Native export now performs both verifications by default:
+krita-agent creative export --directory artwork-results/run-001 --session SESSION.json
+
+# Manual artifact import also reopens by default; explicit opt-out blocks progression:
+krita-agent creative record --directory artwork-results/run-001 --kra ORIGINAL.kra --png ORIGINAL.png --session SESSION.json
+krita-agent creative record --directory artwork-results/run-001 --kra ORIGINAL.kra --png ORIGINAL.png --defer-reopen
+krita-agent creative verify-reopen --directory artwork-results/run-001 --session SESSION.json
+
+# To archive a separately repaired candidate AFTER a rejected version:
+krita-agent creative record --directory artwork-results/run-001 --kra REPAIRED.kra --png REPAIRED.png --new-version --confirm --session SESSION.json
+```
+
+Never modify `v01` in place or reinterpret its failed report as a pass. Historical native Qt6 five-pixel differences remain an unresolved root-cause investigation: an exact-pixel correction layer can preserve a deliverable but does **not** explain why a fresh reopen rendered differently. Source implementation and synthetic tests are **not** native-build acceptance.

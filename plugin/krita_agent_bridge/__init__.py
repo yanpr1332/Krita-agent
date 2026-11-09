@@ -325,6 +325,9 @@ class KritaAgentBridge(Extension):
         if command == "document.info":
             d = self._doc()
             return {"name": d.name(), "width": d.width(), "height": d.height(),
+                    "file_path": d.fileName(),
+                    "color_model": d.colorModel(), "color_depth": d.colorDepth(),
+                    "color_profile": d.colorProfile(),
                     "active_layer": d.activeNode().name() if d.activeNode() else None}
         if command == "document.open":
             path = self._safe_path(p.get("path"), ".kra", overwrite=True)
@@ -337,7 +340,14 @@ class KritaAgentBridge(Extension):
             if window is None:
                 raise RuntimeError("No Krita window")
             window.addView(doc)
-            return {"opened": path}
+            matches = [i for i, item in enumerate(app.documents())
+                       if Path(item.fileName()).resolve() == Path(path).resolve()]
+            if len(matches) != 1:
+                raise RuntimeError("Opened KRA has no unique document identity")
+            return {"opened": path, "index": matches[0],
+                    "file_path": doc.fileName(),
+                    "color_model": doc.colorModel(), "color_depth": doc.colorDepth(),
+                    "color_profile": doc.colorProfile()}
         if command == "layer.list":
             return self._layers()
         if command == "layer.create":

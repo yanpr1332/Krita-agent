@@ -38,6 +38,8 @@ Neither gate substitutes for the other. "Technically passed" and "Artwork passed
 D:\computer\Krita\Krita-agent\artwork-results\<run-id>\
   artwork.kra                 real editable original painting
   artwork.png                 actual final KRA export
+  reopened.png                real PNG exported after opening a fresh KRA copy
+  reopen-evidence.json        two independent strict gates, hashes, ICC/color data and differences
   krita-screen.png            screenshot of actual Krita artwork window
   scene-plan.json             submitted scene plan / workflow stages
   execution.json              actual native operation log / provenance
@@ -51,7 +53,7 @@ D:\computer\Krita\Krita-agent\artwork-results\<run-id>\
   audit.json                  generated evidence-integrity audit
 \`\`\`
 
-These run directories remain locally accessible in the repository **even when ignored by Git**. The benchmark source/reference and acceptance code are committed to GitHub; output KRA, screenshots and PNGs are not silently deleted or renamed.
+These run directories remain locally accessible in the repository **even when ignored by Git**. The benchmark source/reference and acceptance code are committed to GitHub; output KRA, screenshots and PNGs are not silently deleted or renamed. Failed originals and repaired successors are separate retained versions.
 
 ## Publishing a curated cloud copy
 

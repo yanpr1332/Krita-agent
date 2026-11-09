@@ -29,12 +29,12 @@ def register(commands, connection):
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
         "status", "dashboard", "plan", "approve", "paint", "export",
-        "record", "critique", "revision-plan", "revision-approve",
+        "record", "verify-reopen", "critique", "revision-plan", "revision-approve",
         "revise", "deliver",
     ):
         p = actions.add_parser(name)
         p.add_argument("--directory", required=True)
-        if name in ("paint", "export", "revise"):
+        if name in ("paint", "export", "revise", "record", "verify-reopen"):
             connection(p)
         if name in ("approve", "revision-approve", "revise"):
             p.add_argument("--confirm", action="store_true")
@@ -55,6 +55,12 @@ def register(commands, connection):
         if name == "record":
             p.add_argument("--kra", required=True)
             p.add_argument("--png", required=True)
+            p.add_argument("--new-version", action="store_true",
+                           help="Archive repaired files as a NEW version after a failed integrity gate")
+            p.add_argument("--confirm", action="store_true",
+                           help="Required with --new-version")
+            p.add_argument("--defer-reopen", action="store_true",
+                           help="Explicitly defer native reopening; artwork remains blocked")
         if name == "critique":
             p.add_argument("--reference", help="Actual benchmark/reference image")
             p.add_argument("--max-rounds", type=int, default=3)
@@ -98,7 +104,15 @@ def execute(args, get_client):
     if args.action == "export":
         return flow.export_native(get_client(args))
     if args.action == "record":
-        return flow.record_artwork(args.kra, args.png)
+        if args.new_version and not args.confirm:
+            raise ValueError("--new-version requires --confirm")
+        result = flow.record_artwork(args.kra, args.png,
+                                     confirm_new_version=args.new_version and args.confirm)
+        if result["status"] == "awaiting_reopen" and not args.defer_reopen:
+            return flow.verify_reopen(get_client(args))
+        return result
+    if args.action == "verify-reopen":
+        return flow.verify_reopen(get_client(args))
     if args.action == "critique":
         return flow.critique(
             _provider(args), reference=args.reference, max_rounds=args.max_rounds

@@ -29,6 +29,8 @@ def execute(bridge, command, p):
     if command == "document.list":
         active = app.activeDocument()
         return [{"index": i, "name": d.name(), "width": d.width(), "height": d.height(),
+                 "file_path": d.fileName(), "color_model": d.colorModel(),
+                 "color_depth": d.colorDepth(), "color_profile": d.colorProfile(),
                  "modified": d.modified(), "active": d is active}
                 for i, d in enumerate(app.documents())]
     if command == "document.activate":

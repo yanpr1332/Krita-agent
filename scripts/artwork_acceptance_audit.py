@@ -6,6 +6,7 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from krita_agent.artwork_review import validate_human_review, validate_visual_review
+from krita_agent.artifact_integrity import export_integrity, reopen_stability
 
 def sha(path):
     h=hashlib.sha256()
@@ -57,6 +58,32 @@ def audit(directory):
             test("kra_png_match",a.convert("RGBA").tobytes()==b.convert("RGBA").tobytes()
                  and a.size==b.size,"Final PNG does not match native KRA mergedimage.png")
     except Exception as exc:test("kra_readable",False,str(exc))
+    # Distinct, mandatory technical gates: in-memory export integrity and
+    # fresh Krita reopen stability. Tolerance is informational, never a pass.
+    try:
+        measured_export = export_integrity(kra_path, final)
+        test("export_integrity", measured_export["status"] == "pass",
+             "KRA embedded projection does not strictly match the first PNG")
+    except Exception as exc:
+        measured_export = None
+        test("export_integrity", False, str(exc))
+    try:
+        fresh = run / "reopened.png"
+        evidence = load(run / "reopen-evidence.json")
+        recorded = evidence.get("reopened_png", {})
+        measured_reopen = reopen_stability(final, fresh, kra_sha)
+        test("reopen_evidence_bound", (
+            evidence.get("schema") == "krita-agent-artifact-integrity/1"
+            and evidence.get("export_integrity") == measured_export
+            and evidence.get("reopen_stability") == measured_reopen
+            and recorded.get("sha256") == sha(fresh)
+            and recorded.get("method") == "fresh-copy-krita-document.open-document.export"
+        ), "Reopen evidence missing, stale or not bound to current KRA and PNG")
+        test("reopen_stability", measured_reopen["status"] == "pass",
+             "Freshly reopened KRA export differs from first PNG or color metadata")
+    except Exception as exc:
+        test("reopen_evidence_bound", False, str(exc))
+        test("reopen_stability", False, "Missing/invalid fresh-KRA reopen proof")
     for rel in contract["output"]["required_filenames"]:
         if rel.endswith(".png") and (run/rel).exists():
             try:
@@ -108,7 +135,7 @@ def audit(directory):
             "artwork_sha256":final_sha,"artwork_kra_sha256":kra_sha,
             "stage_preview_sha256":stage_sha,"status":"pass" if not errors else "fail",
             "checks":checks,"errors":errors,
-            "note":"Only artifact consistency; a reviewer must actually inspect the painting"}
+            "note":"Checks evidence and exact pixels, not independent proof of Krita execution or artistic quality"}
     tmp=run/("audit."+uuid.uuid4().hex+".tmp")
     tmp.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     os.replace(tmp,run/"audit.json")

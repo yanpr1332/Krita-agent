@@ -41,3 +41,7 @@ Do not use model responses as arbitrary commands. Revised strokes must stay insi
 
 
 Round 5's optional stage snapshots must come from actual Krita `preview.canvas` commands, not from offline generated substitutes. The local static dashboard is a status/evidence browser, not proof of a completed painting or a substitute for real review.
+
+## Mandatory integrity and reopen evidence
+
+For every native creative export, archive the original KRA and initial PNG **before** judging integrity, including failed files. Report Export Integrity (KRA embedded mergedimage versus initial PNG) and Reopen Stability (freshly reopened KRA versus initial PNG) as separate hash-bound metrics. Require strict RGBA/ICC equality for delivery; explicitly bounded minor RGB differences are informational and never silently accepted. A repair must be a new immutable version, retaining the failed original and evidence. A lost/ambiguous native reopen or export response must remain unknown and never be replayed automatically. Do not claim this feature natively accepted until it is exercised with real Krita builds.

@@ -39,3 +39,9 @@ The visual pass refined the second native candidate with editable Krita strokes.
 The independent visual reviewer passed the final variant against the fixed benchmark and bound the verdict to the corrected KRA, unchanged PNG and three stage previews. Forest and meadow detail remains sparser than in the benchmark. Human approval and the formal combined audit are pending. The real model-provider checks remain deferred by request. [Final visual review](../artwork-results/round5-qt6-repair-20261109-125527/final-verified/reviews/visual-model.json)
 
 For a future repository change, add a fresh-copy reopen and RGBA comparison to creative archive verification, separately reporting export integrity and reopen stability. Keep a stable KRA/PNG pair as a new version when a local mismatch is corrected. A second useful change would be validated brush changes within each semantic object, which would reduce banding caused by dividing tonal work into single-brush passes.
+
+## Follow-up repository correction — fresh-reopen verification
+
+The reported five-pixel Qt6 difference motivated a source-level correction on the Round 5 feature branch. The new export/archive path retains failed KRA/PNG originals as immutable versions, and the controller requests a real fresh-copy Krita reopen/export before moving to critique. Separate Export Integrity and Reopen Stability records now include strict RGBA differences, alpha data, explicit minor-color tolerance and color metadata. Formal artwork auditing requires matching reopen evidence. An externally repaired KRA is accepted only as another version; the original failure remains archived.
+
+This paragraph records a **code change, not a new native test result**. The first Qt6 failure and its five-pixel mismatch remain factual evidence. The renderer's root cause has **not** been identified or fixed. Cross-build native reruns, ambiguous-Bridge-response recovery inspection, and independent artwork acceptance remain pending.
