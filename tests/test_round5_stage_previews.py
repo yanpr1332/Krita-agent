@@ -74,6 +74,18 @@ def test_native_export_archives_three_real_stage_previews(tmp_path, monkeypatch)
     for name in stages:
         assert (flow.root / "stages" / name).is_file()
 
+    # A subsequent export follows a revision and must reuse the original stages.
+    record = flow.read()
+    record["status"] = "awaiting_export"
+    flow._save(record, "test_revision_completed")
+    stage_bytes = {name: (flow.root / entry["path"]).read_bytes()
+                   for name, entry in stages.items()}
+    revised = flow.export_native(Client())
+    assert revised["version"] == 2
+    assert flow.read()["artifacts"]["stage_previews"] == stages
+    assert all((flow.root / stages[name]["path"]).read_bytes() == content
+               for name, content in stage_bytes.items())
+
 
 def test_html_dashboard_escapes_user_title_and_shows_status(tmp_path):
     flow = CreativeWorkflow.create(

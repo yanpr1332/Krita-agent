@@ -4,6 +4,7 @@ A revision paints new native strokes on a new editable layer. It never deletes,
 merges, overwrites or rewrites original layers and never pastes reference art.
 """
 import hashlib
+import math
 import json
 import re
 import uuid
@@ -140,11 +141,24 @@ def execute_revision(client, plan, scene, artwork_png, ledger_directory,
     with Image.open(live["path"]) as a, Image.open(artwork_png) as b:
         if a.size != b.size or a.convert("RGBA").tobytes() != b.convert("RGBA").tobytes():
             raise TaskError("Live Krita pixels differ from approved baseline")
+    # A bounded centerline does not bound the rendered brush footprint.
+    x, y, width, height = plan["region"]
+    left, top = math.ceil(x), math.ceil(y)
+    right, bottom = math.floor(x + width), math.floor(y + height)
+    if right <= left or bottom <= top:
+        raise TaskError("Revision region contains no full pixels")
+    selection = client.request("selection.info")
+    if not isinstance(selection, dict) or selection.get("selected") is not False:
+        raise TaskError("Clear the active selection before applying a revision")
+    clip = {"command": "selection.rectangle", "parameters": {
+        "x": left, "y": top, "width": right - left, "height": bottom - top,
+    }}
+    steps = [clip, *plan["steps"], {"command": "selection.clear", "parameters": {}}]
     # Save an immutable recovery point before creating a new revision layer.
     checkpoint = client.request("checkpoint.create")
     if not isinstance(checkpoint, dict) or not checkpoint.get("sha256"):
         raise TaskError("Krita did not confirm the revision checkpoint")
-    result = run_longjob(client, {"steps": plan["steps"]}, ledger_directory)
+    result = run_longjob(client, {"steps": steps}, ledger_directory)
     return {
         "schema": "krita-agent-creative-revision-result/1",
         "state": result["state"],

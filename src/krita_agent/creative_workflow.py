@@ -201,7 +201,16 @@ class CreativeWorkflow:
             (self.root / "compiled-scene.json").read_text(encoding="utf-8")
         )
         stage_names = compiled.get("stage_preview_paths", [])
-        if stage_names:
+        archived_stages = record["artifacts"].get("stage_previews")
+        if archived_stages is not None:
+            if set(archived_stages) != {Path(name).name for name in stage_names}:
+                raise TaskError("Archived stage evidence does not match the compiled plan")
+            for name, entry in archived_stages.items():
+                target = self.root / "stages" / name
+                if (str(target.relative_to(self.root)) != entry["path"]
+                        or not target.is_file() or _sha(target) != entry["sha256"]):
+                    raise TaskError("Archived stage evidence changed")
+        elif stage_names:
             info = client.request("status")
             if not isinstance(info, dict) or not info.get("output_dir"):
                 raise TaskError("Bridge output directory unavailable for stage collection")
