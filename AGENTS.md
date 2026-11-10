@@ -49,3 +49,14 @@ For every native creative export, archive the original KRA and initial PNG **bef
 ## Round 6 per-stroke painting acceptance
 
 Native painting plans may now switch brush size, color, opacity and preset on each separate stroke, and may supply per-sample pressure dynamics. This source implementation does not prove that any installed brush reacts to pressure. When accepting a drawing, inspect the actual KRA, real exported pixels, selected brush presets, layer contributions and pressure differences in all requested Krita builds. Do not substitute brush-count, palette-size or diagnostic score for visual artwork quality. Preserve failing runs, hashes and stage snapshots. Do not silently split a continuous stroke or auto-replay an uncertain Krita effect. ScenePlan v3 still requires explicit user approval before native execution.
+
+
+## Round 7–12 generalist artist charter (future work, not accepted features)
+
+Before starting any Round 7+ development, read [docs/ARTIST-ROADMAP-R7-R12.md](docs/ARTIST-ROADMAP-R7-R12.md). The user-approved long-term direction has three non-negotiable goals: **purposeful, natural human-like painting**, **common-subject generalization beyond landscapes**, and **authorized reference repainting plus provenance-aware reusable technique learning**. Avoid replacing these goals with brush/stroke-count milestones.
+
+- Preserve the existing real editable Krita/KRA, whitelisted Bridge, user approval, hash, rollback/reopen, failed-version retention, and independent human evaluation contracts.
+- Do not hardcode final artwork for a particular benchmark, re-label pasted references as brush-painted output, or infer generic drawing skill from one alpine sunset.
+- Treat proposed Round 7–12 capabilities as **not implemented** until real code and appropriate native/artwork acceptance evidence exist. Each development round belongs on its own branch and must record unresolved limitations.
+- Full real-API multimodal **evaluation** is planned for Round 11; earlier optional model-based planning or reference understanding is allowed with explicit user-provided credentials, but paid model access must not silently become a requirement or be auto-invoked without authorization.
+- A human or visual model may guide bounded revisions, but no model response may impersonate an independent human reviewer. “Learning” recipes and style records do not constitute a change in foundation-model weights.

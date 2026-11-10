@@ -1,4 +1,4 @@
-# Krita Agent roadmap — authoritative current status (2026-11-04)
+# Krita Agent roadmap — authoritative current status (2026-11-10)
 
 Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
@@ -77,13 +77,27 @@ Deferred: generative inpainting, arbitrary reverse compositing, unattended model
 
 At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/yanpr1332/Krita-agent/actions/runs/42468603707) passed 129 offline pytest cases and source compilation on each of Windows Python 3.10 and 3.13. This is not native installed-Krita acceptance or independent finished-artwork review. A prior Python setup failure was caused by GitHub's Python artifact server returning HTTP 504; it did not run project tests.
 
-## Round 6 — stroke-level brush flexibility (SOURCE IMPLEMENTED, NATIVE PENDING)
+## Round 6 — stroke-level brush flexibility (NATIVE FIXTURES VERIFIED; HUMAN ARTWORK ACCEPTANCE PENDING)
 
 - [x] Per-stroke Krita brush preset, nominal size, foreground color and opacity; named palettes and safe baseline restoration.
 - [x] Arc-length multiknot pressure curves with bounded deterministic modulation and optional speed sensitivity.
 - [x] Per-stroke calibrated preset categories, larger semantic object stroke budgets and per-object detail minima.
 - [x] Brush diversity/density diagnostics and flexible ROI revision strokes.
-- [ ] Three-build native pressure/brush calibration and actual material texture evidence.
-- [ ] End-to-end artwork comparison against the locked Needle Lake benchmark, independent reviews and fresh-reopen integrity.
+- [x] Three-build native pressure/brush calibration, adjacent switching, mask painting and strict KRA reopen checks **for the tested fixtures**; see dated reports.
+- [x] Optimized native Needle Lake candidate and model visual review recorded; preserve the original five-pixel failed reopen and later corrected version.
+- [ ] Independent **human** whole-artwork approval, formal audit, and root-cause fix of the rare Qt6 one-level reopen difference.
 
-[Round 6 API](ROUND6-API.md) · [Round 6 acceptance](ROUND6-ACCEPTANCE.md)
+[Round 6 API](ROUND6-API.md) · [Round 6 acceptance](ROUND6-ACCEPTANCE.md) · [Round 6 native reacceptance](ROUND6-REACCEPTANCE.md)
+
+## Round 7–12 — generalist human-like painting roadmap (PROPOSED)
+
+**Long-term product direction, not delivered functionality:** real and natural Krita painting, broad common-subject coverage, and reference-based repainting plus reusable technique learning. The full six-round plan, technical architecture, per-round deliverables, AI evaluation schedule, safety boundaries, and held-out multi-subject art acceptance criteria are documented in **[ARTIST-ROADMAP-R7-R12](ARTIST-ROADMAP-R7-R12.md)**.
+
+- **R7:** Generalist hierarchical composition and staged intent-to-stroke planning; migrate safely from fixed landscape categories.
+- **R8:** Natural material-specific brushwork, lighting-aware texture, and anti-repetition.
+- **R9:** People, animals, still life, architecture, mechanical subjects, and illustration generalization.
+- **R10:** Authorized reference repainting and provenance-aware style/technique library.
+- **R11:** Real opt-in multimodal API visual evaluation and bounded, auditable revision loop. Model assistance for planning/seeing references may be used earlier when configured; mandatory paid evaluator integration is intentionally deferred.
+- **R12:** Whole-system performance, long-running reliability, cross-build testing, and held-out multi-genre artwork acceptance.
+
+Each development round should use its own branch. Native/visual/human evidence remains distinct; no fixed benchmark-specific scripts, pasted reference image, stroke-count target, or model self-rating can substitute for real artwork acceptance.

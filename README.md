@@ -1,6 +1,8 @@
 # Krita Agent
 
-**Round 6 source development:** per-stroke size, color, opacity and preset changes; arc-length pressure curves; named material styles; brush diversity diagnostics and multi-style revisions. See [Round 6 Brush API](docs/ROUND6-API.md) and [Native Acceptance Checklist](docs/ROUND6-ACCEPTANCE.md). Real Krita-build acceptance remains pending.
+**Future artistic direction (proposed):** develop Krita Agent into a generalist, human-like painting assistant: natural, purposeful brushwork; people/animals/still life/architecture as well as landscapes; reference-based repainting and reusable technique learning. The detailed Round 7–12 implementation and acceptance plan is in **[Generalist Artist Roadmap](docs/ARTIST-ROADMAP-R7-R12.md)**. API-based model *evaluation* is intentionally scheduled for Round 11; authorized model-based planning may be used earlier.
+
+**Round 6 verified scope:** per-stroke size, color, opacity and preset changes, pressure curves, and flexible revisions have native-fixture evidence on three tested Krita builds. See [Round 6 API](docs/ROUND6-API.md), [Acceptance Checklist](docs/ROUND6-ACCEPTANCE.md) and [Native Reacceptance](docs/ROUND6-REACCEPTANCE.md). Independent human artwork review and the rendering-drift root-cause fix remain pending.
 
 **Artwork acceptance policy (R4.5):** native drawing command tests do not prove a complete illustration. The original visual reference, fixed contract, required local KRA/PNG artifacts and independent reviews are documented in [Artwork Acceptance](docs/ARTWORK-ACCEPTANCE.md). Local agent instructions: [AGENTS.md](AGENTS.md).
 
@@ -17,6 +19,7 @@ Krita Agent is a Windows-native Python/Qt automation system for **real editable 
 | Round 3: Durable checkpoints, non-destructive masks, revision planner and upstream registry | **Accepted on the three installed builds; 57 offline tests passed** | [REPORT-009](docs/REPORT-009.md), [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) |
 | Round 4: Layer-aware painting, large jobs, brush profiles and ScenePlan v2 | **LOCAL ACCEPTANCE RECORDED** | [REPORT-011](docs/REPORT-011.md), [ROUND4-ACCEPTANCE](docs/ROUND4-ACCEPTANCE.md) |
 | Round 5: Autonomous creative workflow, semantic planner, pixel critic and revisions | **SOURCE IMPLEMENTED; 129/129 OFFLINE CI PASSED ON EACH PYTHON VERSION; NATIVE ARTWORK ACCEPTANCE PENDING** | [ROUND5-API](docs/ROUND5-API.md), [ROUND5-ACCEPTANCE](docs/ROUND5-ACCEPTANCE.md) |
+| Round 6: Multi-style brush control and pressure dynamics | **SOURCE IMPLEMENTED; THREE-BUILD NATIVE FIXTURES RECORDED; HUMAN ARTWORK AUDIT PENDING** | [ROUND6-REACCEPTANCE](docs/ROUND6-REACCEPTANCE.md), [ROUND6-ACCEPTANCE](docs/ROUND6-ACCEPTANCE.md) |
 
 Prior acceptance covers specific Stable/Next builds: Krita Stable 5.3.4.1, Next Qt5 5.4.0-prealpha and Next Qt6 6.1.0-prealpha, not newer features automatically. Round 3 results are in [REPORT-009](docs/REPORT-009.md). Round 4 local tests and installed-build acceptance are documented in [REPORT-011](docs/REPORT-011.md).
 
