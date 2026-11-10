@@ -1,15 +1,15 @@
 # Round 7 acceptance — generalist scenes and staged native execution
 
-> Status: **source implementation awaiting offline CI and real Krita validation**. No new finished artwork or independent human art acceptance is claimed by this branch.
+> Status: **source implementation and Windows offline CI passed; real Krita validation pending**. No new finished artwork or independent human art acceptance is claimed by this branch.
 
 ## What Round 7 delivers
 
 - [x] Versioned `krita-agent-scene/4` with free-form subjects, parent relations, bounded geometry, per-subject materials and editable brush styles.
-- [x] Separate sketch, color/form, detail stages and per-stage native command spans. Painted material remains on editable Krita layers through existing whitelisted commands.
+- [x] Separate sketch, color/form, detail stages and per-stage native command spans. Compilation targets editable Krita layers through existing whitelisted commands; their real rendering still needs native acceptance.
 - [x] Deterministic intent expansion (`gesture`, `coverage`, `accents`), with bounded scanlines/stroke counts and existing ScenePlan v3/Bridge safety controls.
 - [x] Optional, explicitly configured model JSON planning; all model suggestions must pass independent scene validation.
 - [x] CLI plan review and **explicit separate approval before each native stage**. Unknown native effects stop the workflow; no automatic replay.
-- [x] Source hashes, compiled step hashes, progress records, real native `preview.canvas` stage snapshots and existing KRA/PNG archival and strict reopening pipeline.
+- [x] Source hashes, compiled step hashes, progress records, native `preview.canvas` stage snapshot **commands** and existing KRA/PNG archival and strict reopening pipeline.
 - [x] ScenePlan v3 legacy path retained. Multi-subject scene specimen uses a figure, interior and ceramic still life without special-purpose landscape object kinds.
 - [x] Offline regression tests added for normalized plans, determinism, restrictions, source tampering, per-stage approval, lost effect and legacy compatibility.
 
@@ -17,8 +17,8 @@
 
 | Gate | Required action | This GitHub source branch |
 | --- | --- | --- |
-| Static syntax and all existing unit tests | GitHub Actions Windows Python 3.10 and 3.13 | **Pending CI result**, record link in change summary |
-| New deterministic ScenePlan v4 tests | Validate sample and negative cases | **Pending CI result**, test sources committed |
+| Static syntax and all existing unit tests | GitHub Actions Windows Python 3.10 and 3.13 | **PASS:** [GitHub Actions #42771429702](https://github.com/yanpr1332/Krita-agent/actions/runs/42771429702), Python 3.10 and 3.13, 189 passed each |
+| New deterministic ScenePlan v4 tests | Validate sample and negative cases | **PASS:** included in the same 189-case Windows CI run |
 | Real Krita roundtrip | Stable, Next Qt5 and Next Qt6, whitelisted live bridge | **Pending native run** |
 | Intermediate real pixels | For sketch/color/detail, inspect actual Krita stage previews and editable layer contributions | **Pending native run** |
 | Different subjects | Paint **three separate prompts**: landscape, single-object still life, and simple character, without hardcoded benchmark scripts | **Pending native run** |
@@ -26,6 +26,8 @@
 | KRA integrity | First PNG vs embedded `mergedimage.png`; reopened KRA export vs first PNG, record exact differences/ICC | **Pending native run** |
 | Artwork quality | Independent full-image visual review and real human judgement | **Pending independent review** |
 | Native process cost | Log high-level intent tokens/size, expanded strokes, steps and elapsed time | **Pending measured run** |
+
+The current R7 stage workflow advances forward through approved phases; it does **not** yet offer a native automatic one-stage rewind/repaint or a dedicated v4 semantic anatomy critic. Those remain future development/acceptance work.
 
 Do not turn a source or CI test success into “native accepted”; the high-level intent shapes currently remain simple geometric brush guides. They are not proof of natural human-like mark-making, anatomical correctness, reference copying or reliable multi-genre illustration. Material-aware direction fields, anti-repetition and independent blind art comparisons are prioritized for Round 8 onward.
 
