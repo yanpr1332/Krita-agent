@@ -2,6 +2,16 @@
 
 These rules apply to coding/testing agents and the local human-run acceptance workflow. Follow them before claiming a feature or end-to-end painting workflow is accepted.
 
+## Mandatory GitHub branch isolation — before every write
+
+**A new development round or a new cross-round roadmap/documentation effort MUST start on a NEW GitHub branch before writing any file.** Do not add Round N+1 source, tests, roadmap, acceptance policy or future-work plans to the existing Round N feature branch merely because it is the latest branch. This requirement applies to documentation-only work, too.
+
+1. **Identify the work type:** new numbered round → `feat/roundN-topic`; future-round or cross-round planning → a separate `docs/topic` branch; current-round bugfix only → its existing Round N branch. The user may explicitly choose another branch; honor that instruction.
+2. **Create first, write second:** inspect the intended base commit and existing branch/PR, create the new branch, verify its ref points to the expected base, **then** make commits. Never write first and decide the target branch later.
+3. **Keep review boundaries clean:** a Round N PR should contain only Round N work and relevant fixes. Plans for future rounds must not be mixed into it. No default branch merge or push to `main` without explicit authorization.
+4. **Resolve ambiguity before mutations:** when the correct target branch cannot be determined safely, ask the user. Do not infer “same branch as last turn” for a new round.
+5. **Recover safely if misfiled:** verify and preserve the exact new work on the proper new branch before repairing the old branch. Recheck remote refs and open PRs; never discard unrelated commits or rewrite another person's changes. History-altering ref moves require exact-target, no-intervening-commit checks and an explicit request/authority.
+
 ## Distinguish acceptance types
 
 - TECHNICAL acceptance checks Krita API behavior, native strokes, KRA/pixel operations, performance and safety. Simple boxes and repeated lines are allowed for only these tests.

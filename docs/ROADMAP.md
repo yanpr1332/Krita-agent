@@ -2,6 +2,8 @@
 
 Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
+**Branch isolation policy:** every new numbered development round and every cross-round roadmap/documentation milestone must be created on its own new branch *before* any GitHub write. Do not append future plans to the previous round's existing branch. See [AGENTS.md](../AGENTS.md) for mandatory workflow. This R7–R12 plan was authored on `docs/round7-12-generalist-roadmap`, separate from `feat/round6-brush-dynamics`.
+
 ## Round 1 — NATIVE ACCEPTED
 
 - [x] Authenticated localhost Bridge and CLI, Stable/Next Qt5/Next Qt6 connectivity.

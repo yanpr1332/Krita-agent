@@ -222,7 +222,7 @@
 
 ## 12. 阶段门禁与开发纪律
 
-1. 每轮独立分支（建议 `feat/round7-generalist-scene`、`feat/round8-natural-brushwork`、`feat/round9-subject-generalization`、`feat/round10-reference-learning`、`feat/round11-visual-feedback`、`feat/round12-generalist-acceptance`）；从目标前序已审查的正确提交创建，绝不默认直接合并 `main`。
+1. **先新建分支，再写任何文件。** 每一轮独立分支（例如 `feat/round7-generalist-scene` 至 `feat/round12-generalist-acceptance`）；跨轮次规划、未来路线图或验收政策调整也须独立 `docs/*` 分支。不得把 Round N+1 的方案或代码直接提交至 Round N 的现有分支；本规划保存在 `docs/round7-12-generalist-roadmap`，而非 Round 6。创建分支前先核实基准提交和开放 PR，创建后核实 ref，再开始写入。未明确目标时先询问；绝不默认合并 `main`。
 2. 每轮包含多模块开发、离线测试、真实 Krita 测试、艺术作品证据及一份明确区分通过/未通过的验收报告。无法执行真实本机验证时必须标为 pending，并提供交接说明。
 3. 对 Round 6 的画面进步要求：未来不把“一幅风景画”“更多图层”“更多 pass”“更高压感参数多样性”视为通用画师成功；必须有**不同题材**和**自然绘画的独立人类评价**。
 4. 不接受通过修改固定基准、挑选幸存样本、粘贴参考图或伪造人工意见来提高通过率。
@@ -231,6 +231,7 @@
 
 ## 13. 变更记录
 
+- **2026-11-10（分支纠正）：** 修正最初误将未来规划提交到 Round 6 分支的问题：规划独立保存在 `docs/round7-12-generalist-roadmap`，Round 6 恢复至规划前的 `8f84eea`。新增强制“新轮次、跨轮次规划均先建新分支，之后才写入”的仓库指令；适用于纯文档工作。
 - **2026-11-10：** 根据用户讨论建立本文件。明确“真实自然绘画、常见多题材、临摹和技法学习”三项长期目标；规划 R7–R12 六轮核心开发及可能的 1–2 轮专项完善；将完整 API 大模型自动验收安排在 R11，并保留之前就能选择性使用模型进行规划/参考理解的能力；以真实可编辑作品和跨题材独立评审作为最终验收标准。
 
 ## 14. 相关资料与证据
