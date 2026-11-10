@@ -11,6 +11,8 @@ import uuid
 from pathlib import Path
 
 from .creative_plans import compile_scene
+from .brush_dynamics import combine_style, pressure_samples, validate_palette
+from .strategies_v3 import PRESSURE
 from .protocol import TaskError, brush_settings, label, number, points
 from .scene_v3 import validate_scene, digest
 from .scheduler import run as run_longjob
@@ -20,10 +22,14 @@ SYSTEM = """You are a Krita painting revision planner. You receive an actual
 painted PNG image as pixels, an existing semantic object, and a localized
 critic finding. Return ONLY JSON of this exact shape:
 {"object_id":"existing-id","brush":{"color":"#RRGGBB","size":12,
-"opacity":0.8},"elements":[{"kind":"stroke","points":[{"x":1,"y":2,
-"pressure":0.5},{"x":3,"y":4,"pressure":0.8}]}]}
-Produce multiple deliberate irregular native brush strokes within the requested
-region to improve the existing object. Do not alter other regions. No delete,
+"opacity":0.8},"styles":{"wash":{"brush":{"size":35,"opacity":0.4},
+"pressure_curve":[[0,0.1],[0.3,0.8],[1,0.2]]}},"elements":[
+{"kind":"stroke","style":"wash","points":[{"x":1,"y":2},{"x":3,"y":4}]},
+{"kind":"stroke","brush":{"size":4,"color":"#CCCCAA"},"points":[
+{"x":1,"y":2,"pressure":0.5},{"x":3,"y":4,"pressure":0.8}]}]}
+Produce varied broad wash, mid-scale structure and fine native detail strokes
+within the requested region. Use several colors, sizes and pressure behaviors
+where the actual pixels call for them, without mechanical repetition. Do not alter other regions. No delete,
 merge, image import, pasted image, shell command, code or hidden side effect.
 The strokes will be placed on a NEW editable paint layer and require approval.
 Do not pretend a plan has already changed the artwork."""
@@ -80,18 +86,31 @@ def validate_revision(scene, critique, artwork_png, candidate, issue_id):
     brush = brush_settings(candidate.get("brush"))
     if "color" not in brush:
         raise TaskError("Revision requires an explicit brush color")
+    palette = validate_palette(candidate.get("styles"))
     elements = candidate.get("elements")
-    if not isinstance(elements, list) or not 1 <= len(elements) <= 120:
-        raise TaskError("Revision requires 1..120 native brush strokes")
+    if not isinstance(elements, list) or not 1 <= len(elements) <= 400:
+        raise TaskError("Revision requires 1..400 native brush strokes")
     x, y, w, h = issue["region"]
+    target = next((obj for obj in scene["objects"]
+                   if obj["id"] == issue["object_id"]), None)
+    if target is None:
+        raise TaskError("Revision targets an unknown semantic object")
     checked = []
     for item in elements:
         if not isinstance(item, dict) or item.get("kind") != "stroke":
             raise TaskError("Revision only accepts native brush strokes")
-        pp = points(item.get("points", []))
+        selected = combine_style(palette, item)
+        raw_points = item.get("points", [])
+        pp = points(raw_points)
         if not all(x <= p["x"] <= x+w and y <= p["y"] <= y+h for p in pp):
             raise TaskError("Revision stroke escaped the approved ROI")
-        checked.append({"kind": "stroke", "points": pp, "mode": "auto"})
+        pp = pressure_samples(raw_points, PRESSURE[target["kind"]], selected)
+        stroke = {"kind": "stroke", "points": pp, "mode": "auto"}
+        if "brush_category" in selected:
+            raise TaskError("Revision requires explicit brush preset, not unreviewed category")
+        if "brush" in selected:
+            stroke["brush"] = selected["brush"]
+        checked.append(stroke)
     suffix = re.sub(r"[^a-zA-Z0-9_-]", "-", issue["id"])[:32]
     name = label("R5 revision " + issue["object_id"] + " " + suffix, "revision layer")
     steps = compile_scene({"layers": [{

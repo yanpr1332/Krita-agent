@@ -2,6 +2,7 @@
 from .geometry import cubic_bezier
 from .protocol import TaskError, label, number, points
 from .stroke_engine import plan_stroke
+from .brush_dynamics import pressure_samples, validate_style
 from .workflow import compile_workflow
 
 SHAPES = {"rectangle", "ellipse", "polygon", "path"}
@@ -34,9 +35,12 @@ def compile_scene(scene):
             raise TaskError("layer must be an object")
         stages.append({"command": "layer.create", "parameters": {
             "name": label(layer.get("name"), "layer name")}})
-        if "brush" in layer:
-            from .protocol import brush_settings
-            stages.append({"command": "brush.configure", "parameters": brush_settings(layer["brush"])})
+        from .protocol import brush_settings
+        base_brush = brush_settings(layer.get("brush"))
+        current_brush = None
+        if base_brush:
+            stages.append({"command": "brush.configure", "parameters": base_brush})
+            current_brush = dict(base_brush)
         elements = layer.get("elements", [])
         if not isinstance(elements, list):
             raise TaskError("elements must be a list")
@@ -44,6 +48,20 @@ def compile_scene(scene):
             if not isinstance(element, dict):
                 raise TaskError("element must be an object")
             kind = element.get("kind")
+            override_raw = element.get("brush", {})
+            if not isinstance(override_raw, dict) or set(override_raw) - {
+                    "preset", "size", "color", "opacity", "pressure_enabled"}:
+                raise TaskError("Invalid per-stroke brush settings")
+            if override_raw and kind not in ("stroke", "bezier"):
+                raise TaskError("Per-element brush settings require native strokes")
+            override = brush_settings(override_raw)
+            effective = {**base_brush, **override}
+            if current_brush is not None and set(current_brush) - set(effective):
+                raise TaskError("Cannot restore an unspecified baseline brush setting")
+            if effective != current_brush:
+                if effective:
+                    stages.append({"command": "brush.configure", "parameters": effective})
+                current_brush = dict(effective)
             if kind == "bezier":
                 controls = element.get("controls", [])
                 if not isinstance(controls, list) or len(controls) != 4:
@@ -51,6 +69,13 @@ def compile_scene(scene):
                 points_list = cubic_bezier(*controls,
                                            count=element.get("samples", 48),
                                            pressure=element.get("pressure", (.1, .85, .1)))
+                dynamic = {key: element[key] for key in (
+                    "pressure_curve", "pressure_variation", "variation_frequency",
+                    "variation_seed", "speed_sensitivity", "pressure_interpolation"
+                ) if key in element}
+                if dynamic:
+                    dynamic = validate_style(dynamic)
+                    points_list = pressure_samples(points_list, (.1, .85, .1), dynamic)
                 spec = {"points": points_list, "spacing": element.get("spacing", 4.0)}
                 stages.append({"command": "draw.stroke", "parameters": {"points": plan_stroke(spec),
                                 "mode": element.get("mode", "auto")}})
@@ -75,4 +100,10 @@ def compile_scene(scene):
                 "filename": "previews/scene-" + str(len(stages)) + ".png"}})
     if scene.get("checkpoint", False):
         stages.append({"command": "checkpoint.create", "parameters": {}})
-    return compile_workflow({"steps": stages})
+    # ScenePlan v3 can contain hundreds of styled strokes per semantic object;
+    # validate each native step through the same allowlist without a 400-step
+    # single-message limit. Scheduler still splits actual IPC submissions.
+    verified = []
+    for step in stages:
+        verified.extend(compile_workflow({"steps": [step]}))
+    return verified

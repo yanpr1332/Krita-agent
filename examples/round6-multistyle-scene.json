@@ -1,0 +1,440 @@
+{
+  "schema": "krita-agent-scene/3",
+  "document": {
+    "width": 1600,
+    "height": 900,
+    "name": "Round 6 Multistyle Brush Demonstration"
+  },
+  "style": "Native brush technique demonstration, not complete artwork",
+  "objects": [
+    {
+      "id": "clouds",
+      "name": "Cloud volume tests",
+      "kind": "cloud",
+      "depth": 0.2,
+      "bounds": [
+        80,
+        40,
+        1440,
+        390
+      ],
+      "brush": {
+        "color": "#998caa",
+        "size": 90,
+        "opacity": 0.36,
+        "pressure_enabled": true
+      },
+      "min_strokes": 3,
+      "styles": {
+        "wash": {
+          "brush": {
+            "size": 155,
+            "color": "#9b87ab",
+            "opacity": 0.22
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.1
+            ],
+            [
+              0.22,
+              0.73
+            ],
+            [
+              0.65,
+              0.86
+            ],
+            [
+              1,
+              0.09
+            ]
+          ],
+          "pressure_variation": 0.08,
+          "variation_frequency": 3,
+          "variation_seed": 27
+        },
+        "shadow": {
+          "brush": {
+            "size": 44,
+            "color": "#655e85",
+            "opacity": 0.52
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.2
+            ],
+            [
+              0.4,
+              0.91
+            ],
+            [
+              0.7,
+              0.6
+            ],
+            [
+              1,
+              0.08
+            ]
+          ]
+        },
+        "edge": {
+          "brush": {
+            "size": 7,
+            "color": "#ffe6b9",
+            "opacity": 0.83
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.07
+            ],
+            [
+              0.18,
+              0.7
+            ],
+            [
+              0.68,
+              0.86
+            ],
+            [
+              1,
+              0.04
+            ]
+          ]
+        }
+      },
+      "elements": [
+        {
+          "kind": "stroke",
+          "style": "wash",
+          "points": [
+            {
+              "x": 120,
+              "y": 160,
+              "time_ms": 0
+            },
+            {
+              "x": 380,
+              "y": 130,
+              "time_ms": 100,
+              "speed": 0.2
+            },
+            {
+              "x": 650,
+              "y": 183,
+              "time_ms": 220
+            },
+            {
+              "x": 900,
+              "y": 145,
+              "time_ms": 330
+            }
+          ]
+        },
+        {
+          "kind": "bezier",
+          "style": "shadow",
+          "controls": [
+            [
+              350,
+              240
+            ],
+            [
+              530,
+              180
+            ],
+            [
+              820,
+              230
+            ],
+            [
+              1070,
+              200
+            ]
+          ],
+          "samples": 80
+        },
+        {
+          "kind": "stroke",
+          "style": "edge",
+          "points": [
+            {
+              "x": 480,
+              "y": 102
+            },
+            {
+              "x": 600,
+              "y": 92
+            },
+            {
+              "x": 690,
+              "y": 121
+            },
+            {
+              "x": 810,
+              "y": 98
+            },
+            {
+              "x": 930,
+              "y": 130
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "water",
+      "name": "Variable perspective ripples",
+      "kind": "water",
+      "depth": 0.6,
+      "bounds": [
+        0,
+        440,
+        1600,
+        370
+      ],
+      "brush": {
+        "color": "#3d5975",
+        "size": 42,
+        "opacity": 0.55,
+        "pressure_enabled": true
+      },
+      "min_strokes": 3,
+      "styles": {
+        "near": {
+          "brush": {
+            "size": 24,
+            "color": "#e5aa77",
+            "opacity": 0.58
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.12
+            ],
+            [
+              0.25,
+              0.68
+            ],
+            [
+              0.63,
+              0.82
+            ],
+            [
+              1,
+              0.09
+            ]
+          ],
+          "speed_sensitivity": 0.2
+        },
+        "far": {
+          "brush": {
+            "size": 5,
+            "color": "#8a9cad",
+            "opacity": 0.42
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.08
+            ],
+            [
+              0.5,
+              0.57
+            ],
+            [
+              1,
+              0.07
+            ]
+          ]
+        }
+      },
+      "elements": [
+        {
+          "kind": "stroke",
+          "style": "far",
+          "points": [
+            {
+              "x": 620,
+              "y": 500
+            },
+            {
+              "x": 695,
+              "y": 498
+            },
+            {
+              "x": 760,
+              "y": 501
+            }
+          ]
+        },
+        {
+          "kind": "stroke",
+          "style": "far",
+          "brush": {
+            "color": "#a9aaba"
+          },
+          "points": [
+            {
+              "x": 550,
+              "y": 526
+            },
+            {
+              "x": 650,
+              "y": 527
+            },
+            {
+              "x": 730,
+              "y": 523
+            }
+          ]
+        },
+        {
+          "kind": "stroke",
+          "style": "near",
+          "points": [
+            {
+              "x": 480,
+              "y": 705,
+              "speed": 0.1
+            },
+            {
+              "x": 650,
+              "y": 694,
+              "speed": 0.4
+            },
+            {
+              "x": 920,
+              "y": 707,
+              "speed": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plants",
+      "name": "Thin branches and leaves",
+      "kind": "plant",
+      "depth": 0.9,
+      "bounds": [
+        30,
+        625,
+        700,
+        275
+      ],
+      "brush": {
+        "color": "#254b42",
+        "size": 11,
+        "opacity": 0.9,
+        "pressure_enabled": true
+      },
+      "min_strokes": 3,
+      "styles": {
+        "stem": {
+          "brush": {
+            "size": 8,
+            "color": "#2f5b48"
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.72
+            ],
+            [
+              0.65,
+              0.36
+            ],
+            [
+              1,
+              0.06
+            ]
+          ]
+        },
+        "leaf": {
+          "brush": {
+            "size": 21,
+            "color": "#4a7547",
+            "opacity": 0.8
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.06
+            ],
+            [
+              0.4,
+              0.94
+            ],
+            [
+              1,
+              0.04
+            ]
+          ]
+        }
+      },
+      "elements": [
+        {
+          "kind": "stroke",
+          "style": "stem",
+          "points": [
+            {
+              "x": 190,
+              "y": 875
+            },
+            {
+              "x": 200,
+              "y": 802
+            },
+            {
+              "x": 238,
+              "y": 732
+            }
+          ]
+        },
+        {
+          "kind": "stroke",
+          "style": "leaf",
+          "points": [
+            {
+              "x": 210,
+              "y": 790
+            },
+            {
+              "x": 170,
+              "y": 758
+            },
+            {
+              "x": 120,
+              "y": 748
+            }
+          ]
+        },
+        {
+          "kind": "stroke",
+          "style": "leaf",
+          "brush": {
+            "color": "#64835b",
+            "size": 12
+          },
+          "points": [
+            {
+              "x": 217,
+              "y": 768
+            },
+            {
+              "x": 265,
+              "y": 742
+            },
+            {
+              "x": 298,
+              "y": 725
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # Krita Agent
 
+**后续通用 AI 画师路线图（已规划，尚未实现）：** 未来目标是自然、有绘画意图的笔触，覆盖人物、动物、静物、建筑、插画和风景等常见题材，并支持参考图临摹、可复用技法学习。Round 7–12 的详细开发包、架构、验收与 API 接入时机请阅读 **[通用画师路线图](docs/ARTIST-ROADMAP-R7-R12.md)**。完整的 API 大模型自动验收计划放在 Round 11；此前可以按需使用已授权的模型辅助规划。
+
+**第六轮笔刷开发（已记录三构建原生测试）：** 支持逐笔粗细、颜色、透明度、预设切换与弧长压感曲线。见 [第六轮 API](docs/ROUND6-API.md)、[验收清单](docs/ROUND6-ACCEPTANCE.md) 和 [本地重新验收报告](docs/ROUND6-REACCEPTANCE.md)。**独立人工完整作品验收与少量重开像素漂移根因修复仍待完成。**
+
 **完整作品验收新规定（R4.5）：** 命令数、笔触数和图层数不能替代完整插画验收。必须实际查看仓库中的[示例图与创作契约](docs/ARTWORK-ACCEPTANCE.md)，将最终 KRA、PNG、阶段预览和审核证据留在本地 `artwork-results/`。本地 Agent 请先阅读 [AGENTS.md](AGENTS.md)。
 
 [English](README.md) | 简体中文
@@ -15,6 +19,7 @@ Krita Agent 是 Windows 环境下的 **Krita 原生绘画自动化系统**：外
 | 第三轮：安全检查点、非破坏性蒙版、局部修订与上游证据登记 | **三个本机构建已验收，57 项离线测试通过** | [REPORT-009](docs/REPORT-009.md)、[第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) |
 | 第四轮：多图层修订、长任务、笔刷档案、ScenePlan v2 | **已记录本地验收** | [REPORT-011](docs/REPORT-011.md)、[第四轮验收清单](docs/ROUND4-ACCEPTANCE.md) |
 | 第五轮：自主创作 Workflow、语义场景规划、视觉评审和局部修订 | **源码已实现；Python 3.10/3.13 各 129 项离线测试通过；真实作品验收待完成** | [第五轮 API](docs/ROUND5-API.md)、[第五轮验收清单](docs/ROUND5-ACCEPTANCE.md) |
+| 第六轮：多样式笔刷与连续压感绘制 | **已记录三构建原生测试；完整作品人工审计待完成** | [本机重新验收报告](docs/ROUND6-REACCEPTANCE.md)、[验收清单](docs/ROUND6-ACCEPTANCE.md) |
 
 第四轮本地验收覆盖 Stable 5.3.4.1、Next Qt5 5.4.0-prealpha 和 Next Qt6 6.1.0-prealpha。功能范围与限制见 [REPORT-011](docs/REPORT-011.md)。
 

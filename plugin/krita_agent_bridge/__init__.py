@@ -246,6 +246,16 @@ class KritaAgentBridge(Extension):
             raise RuntimeError("Active node cannot be painted with current brush")
         return node
 
+    def _stroke_node(self):
+        """Allow native strokes on verified paintable transparency masks."""
+        node = self._doc().activeNode()
+        if node is not None and node.type() == "transparencymask" and not node.locked():
+            ability = getattr(node, "paintAbility", None)
+            if callable(ability) and ability() == "PAINT":
+                return node
+            raise RuntimeError("Active transparency mask cannot be painted on this build")
+        return self._node()
+
     def _safe_path(self, value, suffix, overwrite=False):
         name = _name(value, "path", 300)
         path = Path(name)
@@ -333,12 +343,15 @@ class KritaAgentBridge(Extension):
             path = self._safe_path(p.get("path"), ".kra", overwrite=True)
             if not Path(path).is_file():
                 raise FileNotFoundError(path)
-            doc = app.openDocument(path)
-            if doc is None:
-                raise RuntimeError("Could not open KRA")
+            if any(item.fileName() and Path(item.fileName()).resolve() == Path(path).resolve()
+                   for item in app.documents()):
+                raise RuntimeError("KRA is already open")
             window = app.activeWindow()
             if window is None:
                 raise RuntimeError("No Krita window")
+            doc = app.openDocument(path)
+            if doc is None:
+                raise RuntimeError("Could not open KRA")
             window.addView(doc)
             matches = [i for i, item in enumerate(app.documents())
                        if Path(item.fileName()).resolve() == Path(path).resolve()]
@@ -405,7 +418,7 @@ class KritaAgentBridge(Extension):
                 result["pressure_enabled"] = p["pressure_enabled"]
             return result
         if command == "draw.line":
-            node = self._node()
+            node = self._stroke_node()
             a = QPointF(_number(p.get("x1"), "x1"), _number(p.get("y1"), "y1"))
             b = QPointF(_number(p.get("x2"), "x2"), _number(p.get("y2"), "y2"))
             first = _number(p.get("pressure1", 1), "pressure1", 0, 1)
@@ -413,7 +426,7 @@ class KritaAgentBridge(Extension):
             node.paintLine(a.toPoint(), b.toPoint(), first, last)
             return {"mode": "line", "warning": "Visual pressure response depends on active brush preset"}
         if command == "draw.stroke":
-            node = self._node()
+            node = self._stroke_node()
             raw = p.get("points")
             locations = _points(raw)
             mode = p.get("mode", "auto")
