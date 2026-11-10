@@ -178,7 +178,7 @@ def test_creative_workflow_v4_requires_explicit_each_stage(tmp_path, monkeypatch
     assert len(planned["stage_spans"]) == 3
     assert (flow.root/"scene-plan-v4.json").is_file()
     assert (flow.root/"scene-plan-v3.json").is_file()
-    with pytest.raises(TaskError, match="approval"):
+    with pytest.raises(TaskError, match="--confirm"):
         flow.paint_stage(object())
     flow.approve_plan(confirm=True)
     with pytest.raises(TaskError, match="paint-stage"):

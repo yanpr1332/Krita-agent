@@ -82,10 +82,10 @@ def _polygon(raw, subject):
 
 
 def validate_scene_v4(candidate):
+    if not isinstance(candidate, dict) or candidate.get("schema") != SCHEMA:
+        raise TaskError("Expected ScenePlan v4")
     _mapping(candidate, ("schema", "document", "style", "subjects", "stages"),
              "ScenePlan v4")
-    if candidate.get("schema") != SCHEMA:
-        raise TaskError("Expected ScenePlan v4")
     doc = _mapping(candidate.get("document"), ("width", "height", "name"), "document")
     width = integer(doc.get("width"), "width", 1, 8192)
     height = integer(doc.get("height"), "height", 1, 8192)
