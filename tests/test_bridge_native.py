@@ -52,3 +52,17 @@ def test_job_metrics_reaches_advanced_dispatch_instead_of_legacy_job_router():
     bridge = SimpleNamespace(_job=Mock(side_effect=AssertionError("legacy router used")))
     assert execute(bridge, "job.metrics", {"id": "job"})["metrics"]["last_step_ms"] == 1
     advanced.assert_called_once_with(bridge, "job.metrics", {"id": "job"})
+
+
+
+def test_open_rejects_existing_document_before_native_open(tmp_path):
+    path = tmp_path / "existing.kra"
+    path.write_bytes(b"existing")
+    document = SimpleNamespace(fileName=lambda: str(path))
+    app = Mock()
+    app.documents.return_value = [document]
+    execute = dispatcher({"Krita": SimpleNamespace(instance=lambda: app), "Path": Path})
+    bridge = SimpleNamespace(_safe_path=lambda *args, **kwargs: str(path))
+    with pytest.raises(RuntimeError, match="already open"):
+        execute(bridge, "document.open", {"path": str(path)})
+    app.openDocument.assert_not_called()

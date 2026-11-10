@@ -156,5 +156,5 @@ def pressure_samples(raw, default_envelope, style):
             value += variation*ripple
         if speed:
             value *= 1 - speed*target["speed"]
-        target["pressure"] = round(max(0, min(1, value)), 6)
+        target["pressure"] = round(max(0.0, min(1.0, value)), 6)
     return normalized

@@ -1,0 +1,336 @@
+{
+  "builds": [
+    {
+      "build": "stable",
+      "krita": "5.3.4.1 (git bd6e8d0)",
+      "qt": "5.15.7",
+      "python": "3.13.5",
+      "continuous": false,
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        5
+      ],
+      "native_styled_plan_sha256": "33d525d208b6ea1af6f641325e05e1bc30a04ca49c4b31db61643172eb0404ce",
+      "duplicate_open_refused": true,
+      "preset_observations": [
+        {
+          "preset": "b) Basic-5 Size",
+          "category": "ink",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.42500000000000004
+            },
+            {
+              "width": 2,
+              "difference": 6.687619047619047
+            },
+            {
+              "width": 9,
+              "difference": 52.69708333333333
+            },
+            {
+              "width": 20,
+              "difference": 129.75059523809523
+            }
+          ],
+          "evidence_sha256": "fa858570406c5df38bb10038602e926be0b5d1d7589a28ad7d74e0172cfd47de"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "category": "paint",
+          "pressure_size": false,
+          "pressure_opacity": true,
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 16.23970238095238
+            },
+            {
+              "width": 24,
+              "difference": 46.76017857142857
+            },
+            {
+              "width": 24,
+              "difference": 93.15244047619048
+            },
+            {
+              "width": 24,
+              "difference": 138.87565476190477
+            }
+          ],
+          "evidence_sha256": "63e3cfdb2f08350a225d97973a54529a356963b397dbb3bf4058d1cee3c587a6"
+        },
+        {
+          "preset": "c) Pencil-2",
+          "category": "sketch",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 0,
+              "difference": 0.5166071428571428
+            },
+            {
+              "width": 12,
+              "difference": 10.085952380952381
+            },
+            {
+              "width": 18,
+              "difference": 47.74639880952381
+            },
+            {
+              "width": 22,
+              "difference": 82.2235119047619
+            }
+          ],
+          "evidence_sha256": "9f22c9144262117e9b59ab5f049bfd2d8f34e298bebb6ec94e8a4e27dd63f902"
+        }
+      ],
+      "build_mismatch_refused": true,
+      "unknown_preset_refused": true
+    },
+    {
+      "build": "qt5",
+      "krita": "5.4.0-prealpha (git 2687e5d)",
+      "qt": "5.15.7",
+      "python": "3.13.5",
+      "continuous": true,
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "native_styled_plan_sha256": "6af3140908345873753cbe0336b5250a4055110bafc365daa0e37096462ae571",
+      "duplicate_open_refused": true,
+      "preset_observations": [
+        {
+          "preset": "b) Basic-5 Size",
+          "category": "ink",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.42500000000000004
+            },
+            {
+              "width": 2,
+              "difference": 6.694434523809523
+            },
+            {
+              "width": 9,
+              "difference": 52.69026785714286
+            },
+            {
+              "width": 20,
+              "difference": 129.72488095238094
+            }
+          ],
+          "evidence_sha256": "754639037c047ea11cd992c505afb1caab6d90a85f0e299d1fa69aa39492668f"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "category": "paint",
+          "pressure_size": false,
+          "pressure_opacity": true,
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 15.798214285714286
+            },
+            {
+              "width": 24,
+              "difference": 45.72559523809524
+            },
+            {
+              "width": 24,
+              "difference": 91.94767857142857
+            },
+            {
+              "width": 24,
+              "difference": 138.4165476190476
+            }
+          ],
+          "evidence_sha256": "23658b60f5b6901a1a0f564635356433e37bafe98a9ab0b558dac7a4df4ebd08"
+        },
+        {
+          "preset": "c) Pencil-2",
+          "category": "sketch",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 0,
+              "difference": 0.5143452380952381
+            },
+            {
+              "width": 12,
+              "difference": 10.037678571428572
+            },
+            {
+              "width": 18,
+              "difference": 47.51851190476191
+            },
+            {
+              "width": 22,
+              "difference": 82.16047619047619
+            }
+          ],
+          "evidence_sha256": "a03060f79ecb24dcd48dcdd9ff3d983c45ac6c16a9604aa8779af7c9fb99ec7e"
+        }
+      ],
+      "build_mismatch_refused": true,
+      "unknown_preset_refused": true
+    },
+    {
+      "build": "qt6",
+      "krita": "6.1.0-prealpha (git 2687e5d)",
+      "qt": "6.11.0",
+      "python": "3.13.5",
+      "continuous": true,
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "native_styled_plan_sha256": "c52fa68b83a25845f53c2fedbc4d85005ed3f88d4f339afed67165a95e6a0033",
+      "duplicate_open_refused": true,
+      "preset_observations": [
+        {
+          "preset": "b) Basic-5 Size",
+          "category": "ink",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.42500000000000004
+            },
+            {
+              "width": 2,
+              "difference": 6.694434523809523
+            },
+            {
+              "width": 9,
+              "difference": 52.69026785714286
+            },
+            {
+              "width": 20,
+              "difference": 129.72488095238094
+            }
+          ],
+          "evidence_sha256": "754639037c047ea11cd992c505afb1caab6d90a85f0e299d1fa69aa39492668f"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "category": "paint",
+          "pressure_size": false,
+          "pressure_opacity": true,
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 15.798214285714286
+            },
+            {
+              "width": 24,
+              "difference": 45.72559523809524
+            },
+            {
+              "width": 24,
+              "difference": 91.94767857142857
+            },
+            {
+              "width": 24,
+              "difference": 138.4165476190476
+            }
+          ],
+          "evidence_sha256": "23658b60f5b6901a1a0f564635356433e37bafe98a9ab0b558dac7a4df4ebd08"
+        },
+        {
+          "preset": "c) Pencil-2",
+          "category": "sketch",
+          "pressure_size": true,
+          "pressure_opacity": false,
+          "measurements": [
+            {
+              "width": 0,
+              "difference": 0.5151785714285715
+            },
+            {
+              "width": 12,
+              "difference": 10.039107142857143
+            },
+            {
+              "width": 18,
+              "difference": 47.534464285714286
+            },
+            {
+              "width": 22,
+              "difference": 82.17220238095238
+            }
+          ],
+          "evidence_sha256": "c8f2eabb49479a09b2abf4c0251e80e89490c93fb8d77293201a6fee58937757"
+        }
+      ],
+      "build_mismatch_refused": true,
+      "unknown_preset_refused": true
+    }
+  ],
+  "local_native_run": "artwork-results/round6-native-20261110-093304",
+  "calibration_run": "artwork-results/round6-native-20261110-092235"
+}

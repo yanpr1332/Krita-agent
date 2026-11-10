@@ -225,3 +225,20 @@ def test_reject_partial_brush_without_restorable_baseline():
                              ]}]}
     with pytest.raises(TaskError, match="baseline"):
         compile_scene(candidate)
+
+
+
+def test_curve_saturating_at_one_remains_stable_when_revalidated():
+    scene = styled_scene()
+    stroke = scene["objects"][1]["elements"][0]
+    stroke.pop("style")
+    stroke["pressure_curve"] = [[0, 0.15], [0.5, 1], [1, 0.15]]
+    stroke["points"] = [
+        {"x": 40, "y": 80}, {"x": 100, "y": 80}, {"x": 160, "y": 80}
+    ]
+    normalized = validate_scene(scene)
+    assert normalized["objects"][1]["elements"][0]["points"][1]["pressure"] == 1.0
+    assert digest(normalized) == digest(validate_scene(normalized))
+    from krita_agent.creative_director import compile_approved
+    compile_approved({"schema": "krita-agent-creative-proposal/1",
+                      "scene": normalized, "scene_sha256": digest(normalized)})

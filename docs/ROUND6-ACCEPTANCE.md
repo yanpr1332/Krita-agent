@@ -21,18 +21,16 @@
 - [x] Dedicated offline regression tests and a complete ScenePlan example
   were added to the repository.
 
-## Required real-build native acceptance (NOT YET CLAIMED)
+## Required real-build native acceptance
 
-- [ ] Stable 5.3.4.1: confirm preset, color, size, opacity changes across
-  adjacent strokes; inspect actual pixel evidence and original KRA layers.
-- [ ] Next Qt5 5.4.0-prealpha: verify real continuous pressure and no join seams.
-- [ ] Next Qt6 6.1.0-prealpha: verify pressure curves, opacity accumulation,
-  profile switching and compatibility with fresh-KRA reopen integrity checks.
+Partial results and open gates are recorded in [ROUND6-LOCAL-ACCEPTANCE](ROUND6-LOCAL-ACCEPTANCE.md).
+
+- [ ] Stable 5.3.4.1: color, size and opacity changes were confirmed on adjacent strokes. Actual adjacent preset switching remains to be tested.
+- [ ] Next Qt5 5.4.0-prealpha: continuous pressure variation was measured. A dedicated seam comparison remains to be tested.
+- [ ] Next Qt6 6.1.0-prealpha: pressure curves and fresh-KRA integrity were exercised. Opacity accumulation and actual adjacent profile switching remain to be tested.
 - [ ] Calibrate at least three representative presets per category; demonstrate
   that an unsupported pressure mapping is not misreported as working.
-- [ ] Paint a coherent, complete landscape with natural clouds, mountains,
-  water and foreground detail; run the locked reference artwork audit and
-  independent human/visual-model reviews.
+- [ ] Paint a complete landscape against the locked benchmark. The local candidate failed independent visual review. Human review and the formal audit remain pending.
 - [ ] Quantify remaining banding, periodic marks, pressure fidelity and native
   runtime cost against the earlier Needle Lake result.
 

@@ -333,12 +333,15 @@ class KritaAgentBridge(Extension):
             path = self._safe_path(p.get("path"), ".kra", overwrite=True)
             if not Path(path).is_file():
                 raise FileNotFoundError(path)
-            doc = app.openDocument(path)
-            if doc is None:
-                raise RuntimeError("Could not open KRA")
+            if any(item.fileName() and Path(item.fileName()).resolve() == Path(path).resolve()
+                   for item in app.documents()):
+                raise RuntimeError("KRA is already open")
             window = app.activeWindow()
             if window is None:
                 raise RuntimeError("No Krita window")
+            doc = app.openDocument(path)
+            if doc is None:
+                raise RuntimeError("Could not open KRA")
             window.addView(doc)
             matches = [i for i, item in enumerate(app.documents())
                        if Path(item.fileName()).resolve() == Path(path).resolve()]
