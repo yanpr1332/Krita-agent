@@ -22,10 +22,12 @@
 | Real Krita roundtrip | Stable, Next Qt5 and Next Qt6, whitelisted live bridge | **Passed for nine staged technical fixtures** |
 | Intermediate real pixels | For sketch/color/detail, inspect actual Krita stage previews and editable layer contributions | **Recorded for the Qt6 fixtures** |
 | Different subjects | Paint **three separate prompts**: landscape, single-object still life, and simple character, without hardcoded benchmark scripts | **Executed as three locally authored structural plans. All failed finished-artwork review** |
-| Stop/recovery | Stop after stage 1; inspect live document/graph, restart workflow, continue only after manual approval; unknown effects must remain blocked | **Workflow object reopened and loss-after-native-acceptance blocked. Process restart and human approval remain open** |
+| Stop/recovery | Stop after stage 1; inspect live document/graph, restart workflow, continue only after manual approval; unknown effects must remain blocked | **Qt6 owned-process restart and executor-confirmed continuation passed. Independent human approval remains open** |
 | KRA integrity | First PNG vs embedded `mergedimage.png`; reopened KRA export vs first PNG, record exact differences/ICC | **Passed for the nine fixtures** |
 | Artwork quality | Independent full-image visual review and real human judgement | **Independent visual review failed all three Qt6 candidates. Human judgement pending** |
 | Native process cost | Log high-level intent tokens/size, expanded strokes, steps and elapsed time | **Source bytes, expanded strokes, native steps and elapsed time recorded; model token usage not applicable** |
+
+The [full-artwork attempts report](ROUND7-ARTWORK-ATTEMPTS.md) records two later three-subject attempts and their independent visual failures.
 
 The current R7 stage workflow advances forward through approved phases; it does **not** yet offer a native automatic one-stage rewind/repaint or a dedicated v4 semantic anatomy critic. Those remain future development/acceptance work.
 

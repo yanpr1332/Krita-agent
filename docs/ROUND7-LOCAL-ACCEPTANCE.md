@@ -15,3 +15,10 @@ An independent visual reviewer inspected actual Qt6 sketch, color, detail and fi
 The test used executor-confirmed local stages and no paid model API. The independent artwork gate still needs complete recognizable multi-subject artworks and a human judgement. The user-requested API-free scope does not test real model planning. Failed versions, native checkpoints, stage images, layer comparisons and real Krita screenshots remain in the [local run](../artwork-results/round7-acceptance-20261110-163621/).
 
 The change does not address the separate Qt6 five-pixel Krita rendering root cause described in the earlier reports.
+
+
+## Follow-up after the initial report
+
+An owned Qt6 process was terminated after its first stage and restarted with the same preserved native checkpoint. Opening that checkpoint restored the original stage identity. The next stage was rejected without confirmation, then stages two and three and strict KRA reopen completed with explicit executor confirmations. This is a test of stage recovery, not independent human approval. [Restart evidence](acceptance-evidence/round7-process-restart.json)
+
+Two later three-subject artwork attempts and their independent visual reviews are recorded in [ROUND7-ARTWORK-ATTEMPTS](ROUND7-ARTWORK-ATTEMPTS.md). All six candidates failed the visual gate. A separate four-stage attempt lost its connection before its second-stage submission and remains preserved at its last confirmed stage.

@@ -1,0 +1,13 @@
+{
+  "build": "Next Qt6 6.1.0-prealpha 2687e5d4",
+  "result": "pass",
+  "checkpoint_sha256": "31acddb8b6fc756e51e9f5a3186fb84ff6232602bf9917d4a26ba6587e80e4f8",
+  "stage_1": "awaiting_stage_approval",
+  "no_confirmation_refused": true,
+  "stage_2": "awaiting_stage_approval",
+  "stage_3": "awaiting_export",
+  "export": "awaiting_critique",
+  "reopen": "pass",
+  "different_pixels": 0,
+  "local_run": "artwork-results/round7-process-restart-20261110-223531"
+}
