@@ -23,7 +23,7 @@ def test_line_converts_float_coordinates_to_native_integer_points():
         def toPoint(self): return (round(self.x), round(self.y))
     execute = dispatcher({"Krita": SimpleNamespace(instance=lambda: None),
                           "QPointF": Point, "_number": lambda v, *args: float(v)})
-    execute(SimpleNamespace(_node=lambda: node), "draw.line",
+    execute(SimpleNamespace(_stroke_node=lambda: node), "draw.line",
             dict(x1=1.2, y1=2.3, x2=3.4, y2=4.5))
     node.paintLine.assert_called_once_with((1, 2), (3, 4), 1.0, 1.0)
 
@@ -66,3 +66,24 @@ def test_open_rejects_existing_document_before_native_open(tmp_path):
     with pytest.raises(RuntimeError, match="already open"):
         execute(bridge, "document.open", {"path": str(path)})
     app.openDocument.assert_not_called()
+
+
+
+def test_stroke_node_accepts_only_verified_paintable_transparency_masks():
+    source = Path(__file__).parents[1] / "plugin/krita_agent_bridge/__init__.py"
+    tree = ast.parse(source.read_text(encoding="utf-8"))
+    cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == "KritaAgentBridge")
+    method = next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == "_stroke_node")
+    namespace = {}
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[method], type_ignores=[])),
+                 str(source), "exec"), namespace)
+    mask = Mock()
+    mask.type.return_value = "transparencymask"
+    mask.locked.return_value = False
+    mask.paintAbility.return_value = "PAINT"
+    bridge = SimpleNamespace(_doc=lambda: SimpleNamespace(activeNode=lambda: mask), _node=Mock())
+    assert namespace["_stroke_node"](bridge) is mask
+    mask.paintAbility.return_value = "UNPAINTABLE"
+    with pytest.raises(RuntimeError, match="cannot be painted"):
+        namespace["_stroke_node"](bridge)
+    bridge._node.assert_not_called()

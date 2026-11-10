@@ -1,0 +1,1986 @@
+{
+  "benchmark_scope": "Single run per revision. Different plans and step counts; no statistical or aesthetic inference.",
+  "earlier_needle_lake": {
+    "banding": {
+      "region": [
+        50,
+        0,
+        150,
+        120
+      ],
+      "adjacent_row_mean_rgb_jump_threshold": 3,
+      "jumps_above_threshold": 2,
+      "max_jump": 17.542
+    },
+    "runtime": {
+      "seconds_including_checkpoint_and_poll": 109.147,
+      "native_steps_excluding_checkpoints": 957,
+      "stroke_count": 889,
+      "repeated_trajectory_signature_sum": 94
+    }
+  },
+  "optimized_round6": {
+    "banding": {
+      "region": [
+        50,
+        0,
+        150,
+        120
+      ],
+      "adjacent_row_mean_rgb_jump_threshold": 3,
+      "jumps_above_threshold": 0,
+      "max_jump": 2.0
+    },
+    "runtime": {
+      "seconds_including_checkpoint_and_poll": 344.59,
+      "native_steps_excluding_checkpoints": 2564,
+      "stroke_count": 1969,
+      "repeated_trajectory_signature_sum": 646
+    }
+  },
+  "seam_and_opacity": [
+    {
+      "build": "stable",
+      "continuous": "rejected as unsupported",
+      "outcome": "pass",
+      "join_samples": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ]
+      ],
+      "one_pass": [
+        191,
+        191,
+        191
+      ],
+      "two_passes": [
+        143,
+        143,
+        143
+      ],
+      "preset_count": 144,
+      "image_sha256": "0a089b5606d5333481cbfd67b67986cfe48002e290b6ff8e6508cf112dce9636"
+    },
+    {
+      "build": "qt5",
+      "continuous": "supported",
+      "outcome": "pass",
+      "join_samples": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ]
+      ],
+      "one_pass": [
+        191,
+        191,
+        191
+      ],
+      "two_passes": [
+        143,
+        143,
+        143
+      ],
+      "preset_count": 144,
+      "image_sha256": "9ea53da2f2cddc6dade038538ca241adb183564a56b2b8bd463897c5813bbcb2"
+    },
+    {
+      "build": "qt6",
+      "continuous": "supported",
+      "outcome": "pass",
+      "join_samples": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ]
+      ],
+      "one_pass": [
+        191,
+        191,
+        191
+      ],
+      "two_passes": [
+        143,
+        143,
+        143
+      ],
+      "preset_count": 144,
+      "image_sha256": "9ea53da2f2cddc6dade038538ca241adb183564a56b2b8bd463897c5813bbcb2"
+    }
+  ],
+  "mask_pressure": [
+    {
+      "build": "stable",
+      "presets": [
+        {
+          "preset": "b) Basic-1",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 26,
+              "difference": 163.38820662768032
+            },
+            {
+              "width": 26,
+              "difference": 163.38820662768032
+            },
+            {
+              "width": 26,
+              "difference": 163.38820662768032
+            },
+            {
+              "width": 26,
+              "difference": 163.38820662768032
+            }
+          ],
+          "before_sha256": "a69848ec6ba9884947fe3c51e39358762d6e6e801827138f4b698b9eeb1579a3",
+          "after_sha256": "e1e3d6f7ba76481b6fbb6f04be6d6adab88d1a49b30b4d26279095a5dc0a8177"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 15.586842105263159
+            },
+            {
+              "width": 24,
+              "difference": 45.26803118908382
+            },
+            {
+              "width": 24,
+              "difference": 89.34074074074074
+            },
+            {
+              "width": 24,
+              "difference": 132.00321637426902
+            }
+          ],
+          "before_sha256": "a69848ec6ba9884947fe3c51e39358762d6e6e801827138f4b698b9eeb1579a3",
+          "after_sha256": "b1ef2fa903e8c5a4d9018570a7d750db28c4f66a608abe5c782f442ceef6fe05"
+        },
+        {
+          "preset": "b) Basic-5 Size",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.40789473684210525
+            },
+            {
+              "width": 2,
+              "difference": 6.352095516569201
+            },
+            {
+              "width": 9,
+              "difference": 50.056773879142305
+            },
+            {
+              "width": 20,
+              "difference": 123.1406432748538
+            }
+          ],
+          "before_sha256": "a69848ec6ba9884947fe3c51e39358762d6e6e801827138f4b698b9eeb1579a3",
+          "after_sha256": "2a377579526d8060863d9eda702dd1705d996de166a41d680705701b9ae05cb8"
+        }
+      ],
+      "outcome": "pass"
+    },
+    {
+      "build": "qt5",
+      "presets": [
+        {
+          "preset": "b) Basic-1",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "997ac23a77915adfe160319dc90a58b8e6582ba1d87523dd3d5819604e6aa112"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 14.928654970760235
+            },
+            {
+              "width": 24,
+              "difference": 43.70828460038986
+            },
+            {
+              "width": 24,
+              "difference": 87.61442495126707
+            },
+            {
+              "width": 24,
+              "difference": 131.33781676413255
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "1ec9d9bc9ca18821c8d26dfc86724fbf612ead51ac70854aa14494d6e2bab663"
+        },
+        {
+          "preset": "b) Basic-5 Size",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.40789473684210525
+            },
+            {
+              "width": 2,
+              "difference": 6.35453216374269
+            },
+            {
+              "width": 9,
+              "difference": 50.03416179337232
+            },
+            {
+              "width": 20,
+              "difference": 123.13557504873293
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "314f0964865c49844a7dc860b8c9b20049368b45b4120ef130c1cf9d23870bd7"
+        }
+      ],
+      "outcome": "pass"
+    },
+    {
+      "build": "qt6",
+      "presets": [
+        {
+          "preset": "b) Basic-1",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            },
+            {
+              "width": 26,
+              "difference": 163.3472709551657
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "997ac23a77915adfe160319dc90a58b8e6582ba1d87523dd3d5819604e6aa112"
+        },
+        {
+          "preset": "b) Basic-2 Opacity",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 24,
+              "difference": 14.928654970760235
+            },
+            {
+              "width": 24,
+              "difference": 43.70828460038986
+            },
+            {
+              "width": 24,
+              "difference": 87.61442495126707
+            },
+            {
+              "width": 24,
+              "difference": 131.33781676413255
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "1ec9d9bc9ca18821c8d26dfc86724fbf612ead51ac70854aa14494d6e2bab663"
+        },
+        {
+          "preset": "b) Basic-5 Size",
+          "pressures": [
+            0.1,
+            0.3,
+            0.6,
+            0.9
+          ],
+          "measurements": [
+            {
+              "width": 1,
+              "difference": 0.40789473684210525
+            },
+            {
+              "width": 2,
+              "difference": 6.35453216374269
+            },
+            {
+              "width": 9,
+              "difference": 50.03416179337232
+            },
+            {
+              "width": 20,
+              "difference": 123.13557504873293
+            }
+          ],
+          "before_sha256": "1414f771c35532530621a6e64e96ac8c4b9566b6ee326c2527d072512f1d941d",
+          "after_sha256": "314f0964865c49844a7dc860b8c9b20049368b45b4120ef130c1cf9d23870bd7"
+        }
+      ],
+      "outcome": "pass"
+    }
+  ],
+  "calibration": [
+    {
+      "build": "stable",
+      "categories": {
+        "ink": [
+          {
+            "preset": "d) Ink-1 Precision",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 22,
+                "difference": 94.6618
+              },
+              {
+                "width": 22,
+                "difference": 94.6618
+              },
+              {
+                "width": 22,
+                "difference": 94.6618
+              },
+              {
+                "width": 22,
+                "difference": 94.6618
+              }
+            ],
+            "image_path": "brush-calibration\\c0423f517b7a44ed9daa5e3ed02c934f.png",
+            "sha256": "87a0752d14bf0651311fa4d681b5c7742144cf91bda0f14aa45d53b1eca590ca"
+          },
+          {
+            "preset": "d) Ink-2 Fineliner",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 18,
+                "difference": 121.884
+              },
+              {
+                "width": 20,
+                "difference": 129.9203
+              },
+              {
+                "width": 22,
+                "difference": 141.7718
+              },
+              {
+                "width": 24,
+                "difference": 153.6291
+              }
+            ],
+            "image_path": "brush-calibration\\df4e8da7e12847a4807709ec406b9ca0.png",
+            "sha256": "6d20133d51bb1a95a0e628770bebcbeea455cf920e8f7167a7955ea79578695d"
+          },
+          {
+            "preset": "d) Ink-3 Gpen",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 3,
+                "difference": 9.6376
+              },
+              {
+                "width": 5,
+                "difference": 31.7955
+              },
+              {
+                "width": 18,
+                "difference": 121.4588
+              },
+              {
+                "width": 24,
+                "difference": 160.2516
+              }
+            ],
+            "image_path": "brush-calibration\\18a750beea1049b7a62a00ef4c45259c.png",
+            "sha256": "c76c1b0ae739b50fc64f0a35814e7f3dc59be55c135302003787a7f39f715aed"
+          }
+        ],
+        "sketch": [
+          {
+            "preset": "c) Pencil-1 Hard",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.1564
+              },
+              {
+                "width": 8,
+                "difference": 2.6774
+              },
+              {
+                "width": 14,
+                "difference": 14.0192
+              },
+              {
+                "width": 18,
+                "difference": 26.8805
+              }
+            ],
+            "image_path": "brush-calibration\\f893f15cba2a424b951fcbf6bb4cf6e9.png",
+            "sha256": "a770ad1eec35950f4b8e94273e76f86f672be1ad0277db7beb9d200664215346"
+          },
+          {
+            "preset": "c) Pencil-2",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5127
+              },
+              {
+                "width": 12,
+                "difference": 10.0812
+              },
+              {
+                "width": 18,
+                "difference": 47.6915
+              },
+              {
+                "width": 22,
+                "difference": 82.2163
+              }
+            ],
+            "image_path": "brush-calibration\\865bf178adde48db8559ea346c437840.png",
+            "sha256": "52a35e0380bcbf2c67f7168f00f07c1d40a5ea0797abb73ec657b08c60cf195f"
+          },
+          {
+            "preset": "c) Pencil-3 Large 4B",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 12,
+                "difference": 0.0754
+              },
+              {
+                "width": 14,
+                "difference": 20.4054
+              },
+              {
+                "width": 18,
+                "difference": 83.74
+              },
+              {
+                "width": 20,
+                "difference": 98.4624
+              }
+            ],
+            "image_path": "brush-calibration\\5c5e90b01d7d48deb3e1ed73831ef391.png",
+            "sha256": "85db94a2f166aaae76b7db63b3740efdb6e8f872b8232654f2eaa63456882b53"
+          }
+        ],
+        "paint": [
+          {
+            "preset": "b) Basic-1",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 26,
+                "difference": 172.0473
+              },
+              {
+                "width": 26,
+                "difference": 172.0473
+              },
+              {
+                "width": 26,
+                "difference": 172.0473
+              },
+              {
+                "width": 26,
+                "difference": 172.0473
+              }
+            ],
+            "image_path": "brush-calibration\\eed395d394254e66a6755e6b40756e1d.png",
+            "sha256": "919d5fb00e0cf34d54669f7f13a11ebb97af0d6d3ef6bab65f05a78107b52f4a"
+          },
+          {
+            "preset": "b) Basic-2 Opacity",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 24,
+                "difference": 16.2397
+              },
+              {
+                "width": 24,
+                "difference": 46.7602
+              },
+              {
+                "width": 24,
+                "difference": 93.1524
+              },
+              {
+                "width": 24,
+                "difference": 138.8757
+              }
+            ],
+            "image_path": "brush-calibration\\23f65ffc98764218b2cf3d2638e3fd6b.png",
+            "sha256": "63e3cfdb2f08350a225d97973a54529a356963b397dbb3bf4058d1cee3c587a6"
+          },
+          {
+            "preset": "b) Basic-5 Size",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 1,
+                "difference": 0.425
+              },
+              {
+                "width": 2,
+                "difference": 6.6876
+              },
+              {
+                "width": 9,
+                "difference": 52.6971
+              },
+              {
+                "width": 20,
+                "difference": 129.7506
+              }
+            ],
+            "image_path": "brush-calibration\\25268cd4011746778223b7d4b3074564.png",
+            "sha256": "fa858570406c5df38bb10038602e926be0b5d1d7589a28ad7d74e0172cfd47de"
+          }
+        ],
+        "texture": [
+          {
+            "preset": "g) Dry Bristles",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 17,
+                "difference": 12.6623
+              },
+              {
+                "width": 20,
+                "difference": 41.83
+              },
+              {
+                "width": 23,
+                "difference": 93.14
+              },
+              {
+                "width": 24,
+                "difference": 119.7068
+              }
+            ],
+            "image_path": "brush-calibration\\85eb7903a87a48f2b6353b8d0100af71.png",
+            "sha256": "b8a9af5aa875559d28bcdcda7b57435e9c5204a4e6f044a01f9e0ff8d5a7c6b3"
+          },
+          {
+            "preset": "g) Dry Textured Creases",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.0011
+              },
+              {
+                "width": 17,
+                "difference": 0.444
+              },
+              {
+                "width": 22,
+                "difference": 57.8194
+              },
+              {
+                "width": 24,
+                "difference": 128.901
+              }
+            ],
+            "image_path": "brush-calibration\\837e7ddc2fa1490984d990c4f2783c24.png",
+            "sha256": "3422a65f385ed068230a322a8312c366d571b1f1ac83bf88a247c145dd00514a"
+          },
+          {
+            "preset": "h) Chalk Grainy",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 1,
+                "difference": 1.6068
+              },
+              {
+                "width": 25,
+                "difference": 18.4882
+              },
+              {
+                "width": 26,
+                "difference": 78.7962
+              },
+              {
+                "width": 26,
+                "difference": 146.0918
+              }
+            ],
+            "image_path": "brush-calibration\\6f827bad267e44cbbd570520a35c9e60.png",
+            "sha256": "74459261491047cb3f35c3d661ddf2949b0f971aded1eceb2033073be6d08494"
+          }
+        ],
+        "erase": [
+          {
+            "preset": "a) Eraser Circle",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 3.3146
+              },
+              {
+                "width": 5,
+                "difference": 27.0225
+              },
+              {
+                "width": 16,
+                "difference": 114.8037
+              },
+              {
+                "width": 22,
+                "difference": 172.6957
+              }
+            ],
+            "image_path": "erase-0.png",
+            "sha256": "133695cc0bb3686df69cc4552ec6a7265ca11f49df565e140e9d26277470fbc6"
+          },
+          {
+            "preset": "a) Eraser Small",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 11.3625
+              },
+              {
+                "width": 4,
+                "difference": 32.9627
+              },
+              {
+                "width": 8,
+                "difference": 65.8108
+              },
+              {
+                "width": 12,
+                "difference": 99.3652
+              }
+            ],
+            "image_path": "erase-1.png",
+            "sha256": "e0cbc85676b898d2b9f0e63d04c03a202712270a065c8ec29951db7a8f207de9"
+          },
+          {
+            "preset": "a) Eraser Soft",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5102
+              },
+              {
+                "width": 14,
+                "difference": 18.2129
+              },
+              {
+                "width": 18,
+                "difference": 69.4359
+              },
+              {
+                "width": 22,
+                "difference": 121.0359
+              }
+            ],
+            "image_path": "erase-2.png",
+            "sha256": "4b8d7ca2b6d8dc009ae299ec87a417aa72474c0bb1c1822f064424fae712a301"
+          }
+        ]
+      },
+      "mask": {
+        "direct_stroke_supported": false,
+        "observed_error": "Select an unlocked paint layer"
+      },
+      "outcome": "completed_with_observations"
+    },
+    {
+      "build": "qt5",
+      "categories": {
+        "ink": [
+          {
+            "preset": "d) Ink-1 Precision",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              }
+            ],
+            "image_path": "brush-calibration\\dc51cb03df7b4467bbfd866bea5a55be.png",
+            "sha256": "582345010e0c299bcce937a80e259ea560897e9d6ba1b3ed0b7c767b43efd143"
+          },
+          {
+            "preset": "d) Ink-2 Fineliner",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 18,
+                "difference": 121.8693
+              },
+              {
+                "width": 20,
+                "difference": 129.9249
+              },
+              {
+                "width": 22,
+                "difference": 141.751
+              },
+              {
+                "width": 24,
+                "difference": 153.6186
+              }
+            ],
+            "image_path": "brush-calibration\\caa086e76037471f9f457bcc6758ef0b.png",
+            "sha256": "30ec849ff6adb55cfb3c673dbea5235afdecfdb2d1ca148693beca07e7d9f177"
+          },
+          {
+            "preset": "d) Ink-3 Gpen",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 3,
+                "difference": 9.6375
+              },
+              {
+                "width": 5,
+                "difference": 31.801
+              },
+              {
+                "width": 18,
+                "difference": 121.4553
+              },
+              {
+                "width": 24,
+                "difference": 160.249
+              }
+            ],
+            "image_path": "brush-calibration\\57329558ea9e4cdea898a75d935982e0.png",
+            "sha256": "18c74b44ea1a7469f3303589c7282c1d9111e64b0102a69802192e9435d905e0"
+          }
+        ],
+        "sketch": [
+          {
+            "preset": "c) Pencil-1 Hard",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.1581
+              },
+              {
+                "width": 8,
+                "difference": 2.6706
+              },
+              {
+                "width": 14,
+                "difference": 13.9512
+              },
+              {
+                "width": 18,
+                "difference": 26.8465
+              }
+            ],
+            "image_path": "brush-calibration\\3d0efc664ffb4e79a4d0839ec66aa728.png",
+            "sha256": "3f866a8964fcc93216c389a89a6abaa1592938ac9fa13af770012f706d7f8137"
+          },
+          {
+            "preset": "c) Pencil-2",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5143
+              },
+              {
+                "width": 12,
+                "difference": 10.0449
+              },
+              {
+                "width": 18,
+                "difference": 47.5113
+              },
+              {
+                "width": 22,
+                "difference": 82.1522
+              }
+            ],
+            "image_path": "brush-calibration\\b57a487c54e04c2aab549c87e1c390af.png",
+            "sha256": "5bb57979f60c03e5a21b7bf49c257eb883d1e57a99ea594a37932cdac13c0873"
+          },
+          {
+            "preset": "c) Pencil-3 Large 4B",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 8,
+                "difference": 0.0414
+              },
+              {
+                "width": 14,
+                "difference": 20.4653
+              },
+              {
+                "width": 18,
+                "difference": 84.164
+              },
+              {
+                "width": 20,
+                "difference": 99.1248
+              }
+            ],
+            "image_path": "brush-calibration\\4097b3fbe13247788a26dcbdb891aa4d.png",
+            "sha256": "293c77c7550ff48c14bca70da44ab051f77a176bfc25760b728586fcb1abe990"
+          }
+        ],
+        "paint": [
+          {
+            "preset": "b) Basic-1",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              }
+            ],
+            "image_path": "brush-calibration\\0fc9dd2775bb4006824960822ccd25a4.png",
+            "sha256": "9775436e450e7b6b3182f6db4ce05e57dff0aa51a4b2a9a0b9c5633f4ce4b1b0"
+          },
+          {
+            "preset": "b) Basic-2 Opacity",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 24,
+                "difference": 15.7982
+              },
+              {
+                "width": 24,
+                "difference": 45.7256
+              },
+              {
+                "width": 24,
+                "difference": 91.9477
+              },
+              {
+                "width": 24,
+                "difference": 138.4165
+              }
+            ],
+            "image_path": "brush-calibration\\5e6823eb59454356b285c3951c178071.png",
+            "sha256": "23658b60f5b6901a1a0f564635356433e37bafe98a9ab0b558dac7a4df4ebd08"
+          },
+          {
+            "preset": "b) Basic-5 Size",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 1,
+                "difference": 0.425
+              },
+              {
+                "width": 2,
+                "difference": 6.6944
+              },
+              {
+                "width": 9,
+                "difference": 52.6903
+              },
+              {
+                "width": 20,
+                "difference": 129.7249
+              }
+            ],
+            "image_path": "brush-calibration\\ff94605d65d64a3195f534676f793e4e.png",
+            "sha256": "754639037c047ea11cd992c505afb1caab6d90a85f0e299d1fa69aa39492668f"
+          }
+        ],
+        "texture": [
+          {
+            "preset": "g) Dry Bristles",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 17,
+                "difference": 12.6696
+              },
+              {
+                "width": 20,
+                "difference": 41.8455
+              },
+              {
+                "width": 22,
+                "difference": 94.2472
+              },
+              {
+                "width": 24,
+                "difference": 118.5455
+              }
+            ],
+            "image_path": "brush-calibration\\1a51fb0cf68c4456b5ed225ae4d66aa0.png",
+            "sha256": "e31c52884d1b480620c6709007842d52a93568f9bbb7b56df07cc2329d5259de"
+          },
+          {
+            "preset": "g) Dry Textured Creases",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.0011
+              },
+              {
+                "width": 17,
+                "difference": 0.4379
+              },
+              {
+                "width": 22,
+                "difference": 57.6811
+              },
+              {
+                "width": 24,
+                "difference": 128.725
+              }
+            ],
+            "image_path": "brush-calibration\\7d7070506fb845078a7f256f422e3745.png",
+            "sha256": "91c27f8c6aba12f6c887e1f0148d36c058fc972c714813c5e157928ad8df40b9"
+          },
+          {
+            "preset": "h) Chalk Grainy",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 1.5929
+              },
+              {
+                "width": 24,
+                "difference": 18.2575
+              },
+              {
+                "width": 24,
+                "difference": 79.2357
+              },
+              {
+                "width": 24,
+                "difference": 145.429
+              }
+            ],
+            "image_path": "brush-calibration\\d50f8cb3440840d0b910a015648e6816.png",
+            "sha256": "a7d5a0e46f5ceafb7bb5c9f1625befa4bea3ef779bbab4738ae811546eeb88f4"
+          }
+        ],
+        "erase": [
+          {
+            "preset": "a) Eraser Circle",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 3.3148
+              },
+              {
+                "width": 5,
+                "difference": 27.0234
+              },
+              {
+                "width": 16,
+                "difference": 114.765
+              },
+              {
+                "width": 22,
+                "difference": 172.6286
+              }
+            ],
+            "image_path": "erase-0.png",
+            "sha256": "1bb3d1cd447a9ceef99af85107862bb7faaee90ecf44be7164c3c203574f146b"
+          },
+          {
+            "preset": "a) Eraser Small",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 11.3625
+              },
+              {
+                "width": 4,
+                "difference": 32.9625
+              },
+              {
+                "width": 8,
+                "difference": 65.8128
+              },
+              {
+                "width": 12,
+                "difference": 99.3607
+              }
+            ],
+            "image_path": "erase-1.png",
+            "sha256": "bfc5ad38c932a6e31286a6622ef6444b8875b3f5b25558272a02e8ca1b6b49b0"
+          },
+          {
+            "preset": "a) Eraser Soft",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5104
+              },
+              {
+                "width": 14,
+                "difference": 18.0596
+              },
+              {
+                "width": 18,
+                "difference": 69.1968
+              },
+              {
+                "width": 22,
+                "difference": 121.003
+              }
+            ],
+            "image_path": "erase-2.png",
+            "sha256": "8802ffd4981f903dfc5246be408efc775bf245447e0aac671dc87220c65f289e"
+          }
+        ]
+      },
+      "mask": {
+        "direct_stroke_supported": false,
+        "observed_error": "Select an unlocked paint layer"
+      },
+      "outcome": "completed_with_observations"
+    },
+    {
+      "build": "qt6",
+      "categories": {
+        "ink": [
+          {
+            "preset": "d) Ink-1 Precision",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              },
+              {
+                "width": 22,
+                "difference": 94.5445
+              }
+            ],
+            "image_path": "brush-calibration\\e74647eea43b44af990284e47b3c191d.png",
+            "sha256": "582345010e0c299bcce937a80e259ea560897e9d6ba1b3ed0b7c767b43efd143"
+          },
+          {
+            "preset": "d) Ink-2 Fineliner",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 18,
+                "difference": 121.8693
+              },
+              {
+                "width": 20,
+                "difference": 129.9249
+              },
+              {
+                "width": 22,
+                "difference": 141.751
+              },
+              {
+                "width": 24,
+                "difference": 153.6186
+              }
+            ],
+            "image_path": "brush-calibration\\904e168e60fd46c380b84cf0cd3130d6.png",
+            "sha256": "30ec849ff6adb55cfb3c673dbea5235afdecfdb2d1ca148693beca07e7d9f177"
+          },
+          {
+            "preset": "d) Ink-3 Gpen",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 3,
+                "difference": 9.6375
+              },
+              {
+                "width": 5,
+                "difference": 31.801
+              },
+              {
+                "width": 18,
+                "difference": 121.4553
+              },
+              {
+                "width": 24,
+                "difference": 160.249
+              }
+            ],
+            "image_path": "brush-calibration\\b825a7e2ccbb40299a9392dd73ded81e.png",
+            "sha256": "18c74b44ea1a7469f3303589c7282c1d9111e64b0102a69802192e9435d905e0"
+          }
+        ],
+        "sketch": [
+          {
+            "preset": "c) Pencil-1 Hard",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.158
+              },
+              {
+                "width": 8,
+                "difference": 2.6537
+              },
+              {
+                "width": 14,
+                "difference": 13.9574
+              },
+              {
+                "width": 18,
+                "difference": 26.8229
+              }
+            ],
+            "image_path": "brush-calibration\\3043c611a1ff424f94dba6539b5fff26.png",
+            "sha256": "8e4a80effe2f5af7090dc263c8d6e6d3b72dcbeebf0fb8278a49e3b98e024894"
+          },
+          {
+            "preset": "c) Pencil-2",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5151
+              },
+              {
+                "width": 12,
+                "difference": 10.0156
+              },
+              {
+                "width": 18,
+                "difference": 47.5151
+              },
+              {
+                "width": 22,
+                "difference": 82.1864
+              }
+            ],
+            "image_path": "brush-calibration\\6fca2d461e504d69b57525b47819c9ae.png",
+            "sha256": "2c40835825a518053909327c1f34cbfef7194c78d83ac54b3217fdbc00c036f1"
+          },
+          {
+            "preset": "c) Pencil-3 Large 4B",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 10,
+                "difference": 0.0677
+              },
+              {
+                "width": 14,
+                "difference": 18.9558
+              },
+              {
+                "width": 18,
+                "difference": 83.9859
+              },
+              {
+                "width": 20,
+                "difference": 98.1616
+              }
+            ],
+            "image_path": "brush-calibration\\27b25376e28c42e797c9f778b5f47d08.png",
+            "sha256": "39ca0a45c8a17b4a3b12a9bb40a43be44085c1a3e0190ac8359b07f892f3f36b"
+          }
+        ],
+        "paint": [
+          {
+            "preset": "b) Basic-1",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              },
+              {
+                "width": 26,
+                "difference": 172.0292
+              }
+            ],
+            "image_path": "brush-calibration\\529fb64a55064a3c9ff45d0dd50cd7a0.png",
+            "sha256": "9775436e450e7b6b3182f6db4ce05e57dff0aa51a4b2a9a0b9c5633f4ce4b1b0"
+          },
+          {
+            "preset": "b) Basic-2 Opacity",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 24,
+                "difference": 15.7982
+              },
+              {
+                "width": 24,
+                "difference": 45.7256
+              },
+              {
+                "width": 24,
+                "difference": 91.9477
+              },
+              {
+                "width": 24,
+                "difference": 138.4165
+              }
+            ],
+            "image_path": "brush-calibration\\0a9a8b6832444a3d8f6a75bf42a73289.png",
+            "sha256": "23658b60f5b6901a1a0f564635356433e37bafe98a9ab0b558dac7a4df4ebd08"
+          },
+          {
+            "preset": "b) Basic-5 Size",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 1,
+                "difference": 0.425
+              },
+              {
+                "width": 2,
+                "difference": 6.6944
+              },
+              {
+                "width": 9,
+                "difference": 52.6903
+              },
+              {
+                "width": 20,
+                "difference": 129.7249
+              }
+            ],
+            "image_path": "brush-calibration\\dd6bc64274854d3e89f04f0e414548ff.png",
+            "sha256": "754639037c047ea11cd992c505afb1caab6d90a85f0e299d1fa69aa39492668f"
+          }
+        ],
+        "texture": [
+          {
+            "preset": "g) Dry Bristles",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 17,
+                "difference": 12.4667
+              },
+              {
+                "width": 20,
+                "difference": 12.6851
+              },
+              {
+                "width": 22,
+                "difference": 94.6272
+              },
+              {
+                "width": 24,
+                "difference": 118.5488
+              }
+            ],
+            "image_path": "brush-calibration\\e80bef77940447afbf66b8b96c5124d2.png",
+            "sha256": "2f63e75b1b633079f218f6788470dd5d9e0c8239989ad09b5f21fed4b0ef203b"
+          },
+          {
+            "preset": "g) Dry Textured Creases",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.0009
+              },
+              {
+                "width": 17,
+                "difference": 0.4088
+              },
+              {
+                "width": 22,
+                "difference": 56.9032
+              },
+              {
+                "width": 24,
+                "difference": 128.2944
+              }
+            ],
+            "image_path": "brush-calibration\\ac4c5c6218494ff0a38dac4a6e4e4c2f.png",
+            "sha256": "909df0f768e727e67e9d2463dd5801f46312c376a342ea0a44a7c13477481836"
+          },
+          {
+            "preset": "h) Chalk Grainy",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 1.5912
+              },
+              {
+                "width": 24,
+                "difference": 18.2708
+              },
+              {
+                "width": 24,
+                "difference": 79.399
+              },
+              {
+                "width": 24,
+                "difference": 145.3853
+              }
+            ],
+            "image_path": "brush-calibration\\ec17070b94aa453db61a9abc359c63f0.png",
+            "sha256": "8a41976fbf216616b37bca6f7970d3093f844e802a1e8f16bac1bf9664effe34"
+          }
+        ],
+        "erase": [
+          {
+            "preset": "a) Eraser Circle",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 3.3148
+              },
+              {
+                "width": 5,
+                "difference": 27.0234
+              },
+              {
+                "width": 16,
+                "difference": 114.765
+              },
+              {
+                "width": 22,
+                "difference": 172.6286
+              }
+            ],
+            "image_path": "erase-0.png",
+            "sha256": "1bb3d1cd447a9ceef99af85107862bb7faaee90ecf44be7164c3c203574f146b"
+          },
+          {
+            "preset": "a) Eraser Small",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 2,
+                "difference": 11.3625
+              },
+              {
+                "width": 4,
+                "difference": 32.9625
+              },
+              {
+                "width": 8,
+                "difference": 65.8128
+              },
+              {
+                "width": 12,
+                "difference": 99.3607
+              }
+            ],
+            "image_path": "erase-1.png",
+            "sha256": "bfc5ad38c932a6e31286a6622ef6444b8875b3f5b25558272a02e8ca1b6b49b0"
+          },
+          {
+            "preset": "a) Eraser Soft",
+            "observed": true,
+            "measurements": [
+              {
+                "width": 0,
+                "difference": 0.5104
+              },
+              {
+                "width": 14,
+                "difference": 18.0596
+              },
+              {
+                "width": 18,
+                "difference": 69.1982
+              },
+              {
+                "width": 22,
+                "difference": 121.003
+              }
+            ],
+            "image_path": "erase-2.png",
+            "sha256": "6e14e4575dacd4a7958d55c5a87d2d282818f2ba14e1f3d3e1b75bfd4807023b"
+          }
+        ]
+      },
+      "mask": {
+        "direct_stroke_supported": false,
+        "observed_error": "Select an unlocked paint layer"
+      },
+      "outcome": "completed_with_observations"
+    }
+  ],
+  "adjacent_switch": [
+    {
+      "build": "stable",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        5
+      ],
+      "compiled_hash": "5d93f10a4183b9266afa6a99fcb8361f7ebfae337857870c3304f6376042927a",
+      "continuous_available": false,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "104f6a1d10dbb7e3ff58ce4026cf9d44892e81596efa58a4a005756e93df3229",
+        "png_sha256": "0b5027daeb8a28d969d0bda80261cd5a28f43651fd27996e4215728651014695",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "a3aee8359feb3aac7bdea862d3e88550c95ecd506c8428409cf5bc1da01309b1",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "0b5027daeb8a28d969d0bda80261cd5a28f43651fd27996e4215728651014695"
+      }
+    },
+    {
+      "build": "qt5",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "compiled_hash": "f7e7df34e468861213cfa26f93a6780f3aa81ec3498256ff8e9b522b51edb5af",
+      "continuous_available": true,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "b664600ba11876e7ac527d2fd73da5c81c65f90e8978e93f20fca32f89fb74d9",
+        "png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "d737cf94fa1243cc212874dd9e7adc04f9d5e8a2c7637e00b12994bf14769b47",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0"
+      }
+    },
+    {
+      "build": "qt6",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "compiled_hash": "06fcbadd208c5bb16affdcb638f71044ce0e25709873c76c4b42efe0f0a7c13a",
+      "continuous_available": true,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "ea1d7ed77b7fbc20615bb15ca511a99e9bcf76ee6cfd7e37640331645833a3d7",
+        "png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "e7f00624db10be245d89596b4bc72018f2ade5cecc4c6692d3bc8781ca48f293",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0"
+      }
+    }
+  ],
+  "profile_switch": [
+    {
+      "build": "stable",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        5
+      ],
+      "compiled_hash": "69a0d9d018839c6c6777b2440053d11194bdd18476b67df4eb87f729db0eebba",
+      "continuous_available": false,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "ec530ff71649260cb6d2a03213138fbf7d704d4c8e799571a0b76c9f1fab7b3b",
+        "png_sha256": "0b5027daeb8a28d969d0bda80261cd5a28f43651fd27996e4215728651014695",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "eb3031a714b208e2a2246481a4438fa1526154875d6b7308ce149815dc1963f4",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "0b5027daeb8a28d969d0bda80261cd5a28f43651fd27996e4215728651014695"
+      }
+    },
+    {
+      "build": "qt5",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "compiled_hash": "ecf45c860a510614706a67874fac4eb9efa85d0f39b3e36bd2d917c4d8b55f4a",
+      "continuous_available": true,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "8febcd84aa7c6d8f33cf50500bd2f4a30b2ae5445707bea4607ae7207aa78fdc",
+        "png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "7034ba616abf489ffa0e69a947c429ca7f95c56c907d334f5010d25ea50c9825",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0"
+      }
+    },
+    {
+      "build": "qt6",
+      "compiled_presets": [
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-5 Size",
+        "b) Basic-2 Opacity",
+        "b) Basic-2 Opacity",
+        "b) Basic-5 Size"
+      ],
+      "duplicate_open_refused_before_mutation": true,
+      "outcome": "pass",
+      "colors": {
+        "red": [
+          208,
+          32,
+          32
+        ],
+        "blue": [
+          32,
+          64,
+          208
+        ],
+        "wash": [
+          189,
+          227,
+          198
+        ]
+      },
+      "pressure_widths": [
+        1,
+        29,
+        6
+      ],
+      "compiled_hash": "b71d2c33f4f7a7039d0291258b3c1c7ce62fcca1be988fdc4c212b1f61887384",
+      "continuous_available": true,
+      "layers": 4,
+      "integrity": {
+        "kra": "versions\\v01.kra",
+        "png": "versions\\v01.png",
+        "kra_sha256": "156bdcfb84e7edc9f10cea5f72e050072548d06d600f2a61d5cf7657f8e24e33",
+        "png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0",
+        "integrity": "versions\\v01-integrity-verified.json",
+        "integrity_sha256": "b4a1a651b1d207596cd5c02dd76f9725a0386658ff925afc2eb4c3c347aaad3c",
+        "export_integrity": "pass",
+        "reopen_stability": "pass",
+        "reopened_png": "versions\\v01-reopened.png",
+        "reopened_png_sha256": "a8ed8772dd8020c728f45e09da1676e93be014a973e2e9083c43ad2015f093f0"
+      }
+    }
+  ],
+  "projection_probe": {
+    "initial_reopen": {
+      "changed_pixels": 5,
+      "max_delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "refresh_top": {
+      "changed_pixels": 5,
+      "max_delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "refresh_all": {
+      "changed_pixels": 5,
+      "max_delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "saved_projection": {
+      "changed_pixels": 5,
+      "max_delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "fresh_reopen": {
+      "changed_pixels": 5,
+      "max_delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "outcome": "observed"
+  }
+}

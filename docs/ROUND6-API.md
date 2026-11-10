@@ -129,3 +129,7 @@ Actual Krita pressure response, texture transitions, cross-build continuity,
 rendering quality and artist review are **not** certified by offline CI. Do not
 treat a high stroke count, diverse parameters or a passed structural plan as
 full-artwork acceptance.
+
+## Native strokes on transparency masks
+
+The Bridge accepts `draw.line` and `draw.stroke` on an unlocked transparency mask when the installed Krita node reports `paintAbility() == "PAINT"`. It rejects unverified or unpaintable masks before drawing. Selection transfer and shape operations retain their paint-layer requirements. Real pressure results for three mask presets on the documented builds are recorded in [ROUND6-REACCEPTANCE](ROUND6-REACCEPTANCE.md).
