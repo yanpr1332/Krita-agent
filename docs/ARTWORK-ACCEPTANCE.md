@@ -28,9 +28,9 @@ Neither gate substitutes for the other. "Technically passed" and "Artwork passed
 3. During the real Krita run, save scene plan, native command/step provenance, and three full-composition stage previews. Save screenshot(s) of the real Krita window with the artwork visible.
 4. Save final \`artwork.kra\` and export \`artwork.png\` from **that same KRA**. Reopen the KRA in Krita and re-export, verifying meaningful visual/layer integrity. Never submit an image made separately by copying the benchmark.
 5. Capture a real \`layer-graph.json\`; at least eight editable paint layers must **contribute visible content**. Layer names alone are not evidence.
-6. Independently present benchmark image, contract, actual final PNG, selected stage previews and KRA layer data to the visual model. Record a structured \`reviews/visual-model.json\` with explicit object and relation findings, failure evidence, model identity and actual image hashes.
-7. A human must see the rendered result (not merely a model-generated score), record \`reviews/human.json\`, and explicitly accept or reject. A missing, ambiguous or negative review is failure / pending, not pass.
-8. Record a layer-contributions.json file with a layers array of node_id, visible_contribution=true and a concrete description, based on actual layer inspection. Run \`python scripts/artwork_acceptance_audit.py --run-dir artwork-results/<run-id>\` only AFTER the local run and independent reviews. It validates artifact integrity and recorded review decisions, **not the truth of semantic artistic quality**; the human remains the final judge.
+6. Independently present the benchmark image, contract, actual final PNG, all three stage previews and KRA layer data to the visual model. Use schema krita-agent-artwork-vlm/2 from ARTWORK-VLM-REVIEW.md. Bind the review to the exact reference, final PNG, editable KRA and each stage-preview SHA-256. Include concrete visible evidence for every required object and spatial relation.
+7. A human must see the rendered result (not merely a model-generated score), reopen and view the KRA, record schema krita-agent-artwork-human/2 in reviews/human.json, and explicitly accept or reject. Bind the human record to the exact PNG and KRA hashes, check every required object, and record a timestamp and concrete observations. A missing, ambiguous or negative review is failure / pending, not pass.
+8. Record a layer-contributions.json file with a layers array of node_id, visible_contribution=true and a concrete description, based on actual layer inspection. Run python scripts/artwork_acceptance_audit.py --run-dir artwork-results/<run-id> only AFTER the local run and independent reviews. The R5 auditor validates artifact integrity, exact review-to-artifact hash binding, KRA/PNG consistency and recorded decisions, **not the truth of semantic artistic quality**; the human remains the final judge.
 
 ## Local output contract (cannot be omitted)
 
@@ -38,6 +38,8 @@ Neither gate substitutes for the other. "Technically passed" and "Artwork passed
 D:\computer\Krita\Krita-agent\artwork-results\<run-id>\
   artwork.kra                 real editable original painting
   artwork.png                 actual final KRA export
+  reopened.png                real PNG exported after opening a fresh KRA copy
+  reopen-evidence.json        two independent strict gates, hashes, ICC/color data and differences
   krita-screen.png            screenshot of actual Krita artwork window
   scene-plan.json             submitted scene plan / workflow stages
   execution.json              actual native operation log / provenance
@@ -51,7 +53,7 @@ D:\computer\Krita\Krita-agent\artwork-results\<run-id>\
   audit.json                  generated evidence-integrity audit
 \`\`\`
 
-These run directories remain locally accessible in the repository **even when ignored by Git**. The benchmark source/reference and acceptance code are committed to GitHub; output KRA, screenshots and PNGs are not silently deleted or renamed.
+These run directories remain locally accessible in the repository **even when ignored by Git**. The benchmark source/reference and acceptance code are committed to GitHub; output KRA, screenshots and PNGs are not silently deleted or renamed. Failed originals and repaired successors are separate retained versions.
 
 ## Publishing a curated cloud copy
 
@@ -68,3 +70,8 @@ Never automatically push raw KRA, local tokens, username-dependent absolute path
 Before declaring the artwork evaluator reliable, deliberately present it with the earlier 8 rectangles / 1,200-line grid artifacts. It must reject them as lacking a coherent landscape. Also check false positives from an imported flattened reference image with misleading eight-layer names. Maintain the fixed benchmark contract regardless of those outputs.
 
 No fourth-round or fifth-round drawing tests were run as part of this R4.5 repository change.
+
+
+## Round 5 review-record schemas
+
+The R5 review schemas are versioned and hash-bound. See ROUND5-API.md and ROUND5-ACCEPTANCE.md. The visual-model record requires object_evidence and per-relation evidence, plus hashes for the reference, final PNG, editable KRA and all three stage previews. The human record requires object-by-object checks and confirmation that the KRA was reopened and viewed. The audit remains an integrity check, not a semantic or aesthetic judge.

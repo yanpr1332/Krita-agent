@@ -57,4 +57,22 @@ Open-ended natural-language art planning, multimodal semantic critiques, generat
 
 ## R4.5 artwork acceptance correction (policy, not a drawing acceptance)
 
-An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change. Round 5 implementation is on hold pending user instruction.
+An original visual benchmark, fixed scene contract and mandatory local-result evidence gate were added after discovering that earlier 1,200-stroke / rectangle tests verified technical capability only. See [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md) and root [AGENTS.md](../AGENTS.md). No new whole-artwork drawing test has run as part of this policy change.
+
+## Round 5 — autonomous creative workflow source implemented, real-art acceptance pending
+
+Branch: `feat/round5-autonomous-creative-workflow`; Python package: `0.6.0.dev0`.
+
+- [x] **R5-A / Engine:** Persistent creative run state, explicit plan/revision approval, stage artifacts, versioned native KRA/PNG archive and fail-closed unknown effects. Long-job continuation verifies the prior KRA and restores it to a fresh copy before any suffix.
+- [x] **R5-B / Planner:** Opt-in HTTPS JSON model adapter and user-provided ScenePlan v3 candidate; validates object IDs, bounds, depth, parent cycles, real brush strokes, canvas and compiler commands. No arbitrary generated IPC commands.
+- [x] **R5-C / Painting Strategist:** Object-aware brush category, pressure envelopes, sizes and optional manually reviewed build-specific preset selection, compiled through ScenePlan v2 and existing native Bridge.
+- [x] **R5-D / Visual Critic:** Uses the real full PNG and up to three actual region crops as multimodal input, requires concrete findings for every object and returns bounded observations and ROIs; no claim of independent final artwork acceptance.
+- [x] **R5-E / Reviser:** Critique-bound new-layer native stroke proposal, ROI containment, source PNG hash, explicit human approval and live baseline preflight before drawing. No silent overwrite of original layers.
+- [x] **R5-F / Integration:** CLI `creative` lifecycle, versioned artwork collection, three run-scoped native stage snapshots, read-only HTML status dashboard, delivery artifacts, safety tests, Windows CI and bilingual docs.
+- [ ] **Native acceptance:** Stable / Next Qt5 / Next Qt6 validation, real artwork re-open and independent VLM plus human review are still required.
+
+Deferred: generative inpainting, arbitrary reverse compositing, unattended model loops, arbitrary-code plugins, high-bit-depth editing and a fully live native Dock workflow dashboard. Source-level CLI integration does not imply end-to-end real-image quality. See [ROUND5-API](ROUND5-API.md) and [ROUND5-ACCEPTANCE](ROUND5-ACCEPTANCE.md).
+
+## Round 5 cloud offline validation
+
+At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/yanpr1332/Krita-agent/actions/runs/42468603707) passed 129 offline pytest cases and source compilation on each of Windows Python 3.10 and 3.13. This is not native installed-Krita acceptance or independent finished-artwork review. A prior Python setup failure was caused by GitHub's Python artifact server returning HTTP 504; it did not run project tests.

@@ -77,3 +77,26 @@ Krita Plugin, in-process Qt GUI context
 Roadmap/README references must distinguish implementation versus actually verified capabilities. Reports are immutable historical milestones. Only an actual native acceptance report, with sanitized reproducible evidence, may advance Round 4 status. The manual GitHub workflow remains opt-in.
 
 Round 3 acceptance completed with 57 offline tests and native, pixel, controlled-crash and actual Dock evidence; see REPORT-009. Atomic metadata replacement has bounded Windows sharing-lock retries; integrity and root bounds are checked before recovery writes.
+
+
+## Round 5 controller and evidence extensions
+
+- scheduler.py supports explicit continuation only from prepared or ready_for_next_batch ledgers with no in-flight operation. The workflow digest, completed prefix, batch digests and latest KRA checkpoint SHA must all match. Unknown effects are intentionally not recoverable by automatic replay.
+- scene_quality.py performs offline structural preflight through the same ScenePlan v2 compiler used by submission. It reports geometry and operation metrics but does not infer semantic image quality.
+- artwork_review.py validates review records against the exact run PNG, KRA, benchmark and stage-preview hashes. It verifies completeness and provenance fields, not the truth of a visual judgement.
+- GitHub Actions runs the offline Python suite on supported Windows Python versions. Native Krita GUI acceptance and complete-artwork review remain separate manual gates.
+
+
+### Full R5 creative stage graph
+
+```text
+CreativeWorkflow state + immutable run manifest
+  ├─ creative_director.py + optional model_provider.py
+  ├─ scene_v3.py → strategies_v3.py → scene_v2.py (native-only allowlist)
+  ├─ scheduler.py → authenticated local Krita Bridge → actual editable KRA
+  ├─ visual_critic.py → actual PNG pixels → opt-in VLM (non-final review)
+  ├─ creative_reviser.py → human-approved bounded new-layer strokes
+  └─ versioned KRA/PNG + explicit delivery → independent final acceptance
+```
+
+The model provider is opt-in HTTPS and never stores credentials in project JSON. It accepts untrusted model JSON only via strict offline validators. The interpreter is not a command executor. Recovery states are fail-closed, and a missing model key does not trigger an implicit network request. Run output is versioned under artwork-results; no file is copied to GitHub automatically. The existing Krita Bridge and network protocol remain unchanged. A live Dock integration is a later enhancement; R5 offers a command-line status view.
