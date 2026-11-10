@@ -1,5 +1,13 @@
 # Changelog
 
+## Round 6 — stroke-level native brush flexibility (source change, 2026-11-10)
+
+- Added named object palettes and per-stroke brush size, color, opacity, preset overrides.
+- Added deterministic multi-knot pressure curves, speed sensitivity and bounded seeded pressure variation.
+- Extended ScenePlan v3 to 900 elements per object (6,000 scene total, 10,000 native steps); added explicit minimum stroke budgets and visual-plan diagnostics.
+- Extended ROI revisions with multi-style strokes and raised the per-revision bound to 400.
+- Added offline regression tests, native-style example and explicit native acceptance checklist. **No native drawing or full-artwork acceptance claimed by this source change.**
+
 ## 0.5.0.dev0 — Round 4 source implementation (2026-11-04)
 
 **No Round 4 tests executed; no installed-build acceptance claimed.**

@@ -1,5 +1,7 @@
 # Krita Agent
 
+**Round 6 source development:** per-stroke size, color, opacity and preset changes; arc-length pressure curves; named material styles; brush diversity diagnostics and multi-style revisions. See [Round 6 Brush API](docs/ROUND6-API.md) and [Native Acceptance Checklist](docs/ROUND6-ACCEPTANCE.md). Real Krita-build acceptance remains pending.
+
 **Artwork acceptance policy (R4.5):** native drawing command tests do not prove a complete illustration. The original visual reference, fixed contract, required local KRA/PNG artifacts and independent reviews are documented in [Artwork Acceptance](docs/ARTWORK-ACCEPTANCE.md). Local agent instructions: [AGENTS.md](AGENTS.md).
 
 English | [简体中文](README.zh-CN.md)

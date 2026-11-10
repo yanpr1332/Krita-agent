@@ -1,5 +1,7 @@
 # Krita Agent
 
+**第六轮笔刷大开发（源码已实现）：** 支持逐笔粗细、颜色、透明度、预设切换，弧长压感曲线、材质笔刷组合、笔触多样性诊断和多样式局部修订。见 [第六轮 API](docs/ROUND6-API.md) 与 [真实 Krita 验收清单](docs/ROUND6-ACCEPTANCE.md)。尚未宣称本机绘画验收通过。
+
 **完整作品验收新规定（R4.5）：** 命令数、笔触数和图层数不能替代完整插画验收。必须实际查看仓库中的[示例图与创作契约](docs/ARTWORK-ACCEPTANCE.md)，将最终 KRA、PNG、阶段预览和审核证据留在本地 `artwork-results/`。本地 Agent 请先阅读 [AGENTS.md](AGENTS.md)。
 
 [English](README.md) | 简体中文

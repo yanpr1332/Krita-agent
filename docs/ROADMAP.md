@@ -76,3 +76,14 @@ Deferred: generative inpainting, arbitrary reverse compositing, unattended model
 ## Round 5 cloud offline validation
 
 At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/yanpr1332/Krita-agent/actions/runs/42468603707) passed 129 offline pytest cases and source compilation on each of Windows Python 3.10 and 3.13. This is not native installed-Krita acceptance or independent finished-artwork review. A prior Python setup failure was caused by GitHub's Python artifact server returning HTTP 504; it did not run project tests.
+
+## Round 6 — stroke-level brush flexibility (SOURCE IMPLEMENTED, NATIVE PENDING)
+
+- [x] Per-stroke Krita brush preset, nominal size, foreground color and opacity; named palettes and safe baseline restoration.
+- [x] Arc-length multiknot pressure curves with bounded deterministic modulation and optional speed sensitivity.
+- [x] Per-stroke calibrated preset categories, larger semantic object stroke budgets and per-object detail minima.
+- [x] Brush diversity/density diagnostics and flexible ROI revision strokes.
+- [ ] Three-build native pressure/brush calibration and actual material texture evidence.
+- [ ] End-to-end artwork comparison against the locked Needle Lake benchmark, independent reviews and fresh-reopen integrity.
+
+[Round 6 API](ROUND6-API.md) · [Round 6 acceptance](ROUND6-ACCEPTANCE.md)

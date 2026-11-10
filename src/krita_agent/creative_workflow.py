@@ -132,7 +132,8 @@ class CreativeWorkflow:
         record["status"] = "planned"
         self._save(record, "plan_proposed")
         return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"],
-                "objects": len(compiled["objects"]), "native_steps": len(compiled["steps"])}
+                "objects": len(compiled["objects"]), "native_steps": len(compiled["steps"]),
+                "brush_diagnostics": compiled.get("brush_diagnostics")}
 
     def approve_plan(self, confirm=False):
         if confirm is not True:

@@ -9,19 +9,32 @@ editable layers, NOT copied/pasted images or a flat generated bitmap.
 Scene keys: schema, document {width,height,name}, style, objects.
 Objects: id (unique lowercase identifier), name, kind, bounds [x,y,w,h] in
 canvas pixels, depth 0..1, optional parent id, brush {color:"#RRGGBB",
-size:positive_number, opacity:0..1, optional preset}, elements.
-Each object MUST contain actual brush-stroke elements:
-{kind:"stroke",points:[{x,y,pressure,time_ms},...]}, optionally
-{kind:"bezier",controls:[[x,y],[x,y],[x,y],[x,y]],samples:48}.
-Draw meaningful irregular object contours and surface textures; do not use
-a few placeholder rectangles or repeated parallel strokes.
-Keep all points on canvas and respect spatial relationships, horizon,
-lighting direction, depth order and expected detail density.
-Use 1..32 objects, 1..240 elements per object, and no more than 6000
-total elements. Ensure at least eight materially contributing objects for a
-full landscape. Avoid user-identifying data, paths, arbitrary commands, code,
-plugin requests or downloading external assets. These generated elements are
-a PROPOSAL only; the human must approve before drawing."""
+size:positive_number, opacity:0..1, optional preset}, optional min_strokes,
+optional styles (a palette of named stroke-style objects), and elements.
+Do not paint an entire object with one fixed color, size and pressure shape.
+For each material, plan coarse volumetric strokes, medium contour/color strokes,
+fine details and irregular accents. For example a cloud needs soft broad washes,
+broken mid-size shadow planes and narrow lit edges; water needs ripples whose
+length, spacing, lightness and direction change with perspective.
+A style entry may contain brush {color,size,opacity,preset,pressure_enabled},
+pressure_curve:[[0,0.2],[0.25,0.75],[0.6,0.9],[1,0.1]],
+pressure_variation:0..0.3, variation_frequency:0.25..32,
+variation_seed:nonnegative_integer, speed_sensitivity:0..1.
+A stroke element can select style:"style_name" and override brush fields.
+Each object MUST contain original native strokes:
+{kind:"stroke",style:"wash",points:[{x,y,time_ms,speed},...]},
+optionally {kind:"bezier",controls:[[x,y],[x,y],[x,y],[x,y]],samples:48,
+style:"detail"}. Point pressure can be explicit; a stroke pressure_curve
+overrides point pressure with a deterministic arc-length curve.
+Vary colors and brush sizes BETWEEN strokes; Krita does not accept arbitrary
+color changes inside one continuous native stroke. Choose actual meaningful
+irregular contours, lighting planes and textures, not uniform parallel marks.
+Keep all points on canvas, with correct horizon, depth, spatial relations and
+material-specific detail density. Use 1..32 objects, 1..900 elements per object,
+no more than 6000 total elements, and below 10000 compiled native steps.
+For complex full landscapes, at least eight materially contributing objects.
+Avoid user-identifying data, paths, arbitrary commands, code, plugin requests
+or downloading assets. These are PROPOSALS, never completed artwork."""
 
 def validate_brief(brief):
     if isinstance(brief, str):
@@ -54,7 +67,9 @@ def propose(brief, provider, reference_image=None):
         "Canvas width={width}, height={height}, title={title}, style={style}.\n"
         "User request: {prompt}\n"
         "Return an original scene with irregular meaningful brush strokes "
-        "and natural-object differences, not a shallow geometric test."
+        "with several scale/color/opacity choices per complex object, "
+        "different pressure dynamics and varied irregular detail density, "
+        "not a shallow geometric test or a few broad passes."
     ).format(**spec)
     inputs = [reference_image] if reference_image else []
     if reference_image:

@@ -9,6 +9,7 @@ import re
 
 from .protocol import TaskError, brush_settings, integer, label, number, points
 from .scene_v2 import compile_plan as compile_v2
+from .brush_dynamics import combine_style, pressure_samples, validate_palette
 
 SCHEMA = "krita-agent-scene/3"
 KINDS = frozenset({
@@ -39,12 +40,18 @@ def _box(value, width, height):
     return [x, y, w, h]
 
 
-def _geometry_element(value, width, height, box, object_kind):
+def _geometry_element(value, width, height, box, object_kind, palette):
     if not isinstance(value, dict) or value.get("kind") not in ELEMENT_KINDS:
         raise TaskError("Unsupported semantic drawing element")
     kind = value["kind"]
     element = dict(value)
     x, y, w, h = box
+    if kind not in PAINT_KINDS and any(k in value for k in (
+            "brush", "style", "brush_category", "pressure_curve",
+            "pressure_variation", "variation_frequency", "variation_seed",
+            "speed_sensitivity", "pressure_interpolation")):
+        raise TaskError("Stroke styles require an actual brush stroke")
+    selected_style = combine_style(palette, element) if kind in PAINT_KINDS else {}
     if kind in PAINT_KINDS:
         if kind == "bezier":
             controls = element.get("controls")
@@ -56,21 +63,22 @@ def _geometry_element(value, width, height, box, object_kind):
                 number(control[0], "bezier x", 0, width)
                 number(control[1], "bezier y", 0, height)
             element["samples"] = integer(element.get("samples", 48), "samples", 4, 256)
+            for key in ("pressure_curve", "pressure_variation", "variation_frequency",
+                        "variation_seed", "speed_sensitivity", "pressure_interpolation"):
+                if key in selected_style:
+                    element[key] = selected_style[key]
         else:
             raw_points = element.get("points", [])
             coords = points(raw_points)
             if not all(0 <= p["x"] <= width and 0 <= p["y"] <= height for p in coords):
                 raise TaskError("Stroke coordinates must be within the canvas")
             from .strategies_v3 import PRESSURE
-            initial, peak, final = PRESSURE[object_kind]
-            for index, (raw, point) in enumerate(zip(raw_points, coords)):
-                if "pressure" not in raw:
-                    t = index / max(1, len(coords) - 1)
-                    point["pressure"] = round(
-                        initial + (peak-initial)*2*t if t <= .5
-                        else peak + (final-peak)*2*(t-.5), 5
-                    )
-            element["points"] = coords
+            element["points"] = pressure_samples(raw_points, PRESSURE[object_kind],
+                                                  selected_style)
+        if "brush" in selected_style:
+            element["brush"] = selected_style["brush"]
+        if "brush_category" in selected_style:
+            element["brush_category"] = selected_style["brush_category"]
     elif kind in ("rectangle", "ellipse"):
         element["rect"] = _box(element.get("rect"), width, height)
     else:
@@ -81,7 +89,10 @@ def _geometry_element(value, width, height, box, object_kind):
     # No other element-level command or file path is carried through.
     return {key: element[key] for key in (
         "kind", "points", "controls", "samples", "pressure", "spacing",
-        "mode", "rect", "fill", "allow_seams"
+        "mode", "rect", "fill", "allow_seams", "brush", "brush_category",
+        "pressure_curve", "pressure_variation", "variation_frequency",
+        "variation_seed", "speed_sensitivity", "pressure_interpolation",
+        "spline", "smooth", "smoothing_passes", "smoothing_strength"
     ) if key in element}
 
 
@@ -118,22 +129,26 @@ def validate_scene(candidate):
         box = _box(value.get("bounds"), width, height)
         depth = number(value.get("depth", 0.5), "depth", 0, 1)
         brush = brush_settings(value.get("brush", {}))
+        palette = validate_palette(value.get("styles"))
+        min_strokes = integer(value.get("min_strokes", 1),
+                              "minimum object strokes", 1, 900)
         elements = value.get("elements")
-        if not isinstance(elements, list) or not 1 <= len(elements) <= 240:
-            raise TaskError("Each semantic object needs 1..240 drawing elements")
-        compiled = [_geometry_element(e, width, height, box, kind) for e in elements]
+        if not isinstance(elements, list) or not 1 <= len(elements) <= 900:
+            raise TaskError("Each semantic object needs 1..900 drawing elements")
+        compiled = [_geometry_element(e, width, height, box, kind, palette) for e in elements]
         count += len(compiled)
         if count > MAX_ELEMENTS:
             raise TaskError("Scene exceeds 6000 elements")
-        if not any(e["kind"] in PAINT_KINDS for e in compiled):
-            raise TaskError("Each semantic object must contain actual brush strokes")
+        actual_strokes = sum(e["kind"] in PAINT_KINDS for e in compiled)
+        if actual_strokes < min_strokes:
+            raise TaskError("Object needs actual brush strokes: below declared min_strokes budget")
         parent = value.get("parent")
         if parent is not None and not isinstance(parent, str):
             raise TaskError("Parent object ID must be text")
         result.append({
             "id": oid, "name": name, "kind": kind, "bounds": box,
             "depth": depth, "parent": parent, "brush": brush,
-            "elements": compiled,
+            "styles": palette, "min_strokes": min_strokes, "elements": compiled,
         })
     for item in result:
         if item["parent"] is not None and (item["parent"] == item["id"] or item["parent"] not in ids):
@@ -169,7 +184,7 @@ def compile_scene_v3(candidate, profile_directory=None, build=None, preview_pref
     layers = []
     for item in scene["objects"]:
         brush = brush_for_object(item, profile_directory, build)
-        elements = strokes_for_object(item)
+        elements = strokes_for_object(item, profile_directory, build)
         layers.append({
             "name": item["id"] + " - " + item["name"],
             "role": ROLES[item["kind"]],
@@ -220,7 +235,10 @@ def compile_scene_v3(candidate, profile_directory=None, build=None, preview_pref
         native_steps = step_with_stages
     if len(native_steps) > 10000:
         raise TaskError("Scene with stage previews exceeds 10000 native steps")
+    from .stroke_quality import analyze_scene
+    brush_diagnostics = analyze_scene(scene)
     return {
+        "brush_diagnostics": brush_diagnostics,
         "schema": "krita-agent-scene-compiled/3",
         "source_sha256": digest(scene),
         "native_steps_sha256": digest(native_steps),

@@ -49,8 +49,27 @@ def brush_for_object(item, profile_directory=None, build=None):
     return brush_settings(brush)
 
 
-def strokes_for_object(item):
-    """Preserve author/model explicit pressure; normalized implicit pressure
-    was filled by scene_v3 using the object's pressure envelope.
+def strokes_for_object(item, profile_directory=None, build=None):
+    """Resolve calibrated per-stroke presets without inventing capabilities.
+
+    ScenePlan v3 normalizes sensor curves; this function changes only brush
+    settings between strokes. Unknown/unreviewed categories fail closed.
     """
-    return [dict(e) for e in item["elements"]]
+    result = []
+    for source in item["elements"]:
+        element = dict(source)
+        category = element.pop("brush_category", None)
+        if category is not None:
+            if not profile_directory or not build:
+                raise TaskError("Per-stroke brush category requires a reviewed build/profile directory")
+            brush = dict(element.get("brush", {}))
+            if "preset" in brush:
+                raise TaskError("Specify either a calibrated category or an explicit preset")
+            selected = choose(profile_directory, build, category)
+            brush["preset"] = selected["preset"]
+            brush["pressure_enabled"] = bool(
+                selected["pressure_size"] or selected["pressure_opacity"]
+            )
+            element["brush"] = brush_settings(brush)
+        result.append(element)
+    return result

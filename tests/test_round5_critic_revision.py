@@ -114,3 +114,40 @@ def test_critic_requires_independent_findings_for_each_object(tmp_path):
             return result
     with pytest.raises(TaskError, match="every planned object"):
         critique(sample_scene(), image, ShallowReview())
+
+
+def test_revision_uses_independent_multicolor_brush_and_pressure_styles(tmp_path):
+    image = make_image(tmp_path)
+    reviewed = critique(sample_scene(), image, FakeCritic())
+    candidate = {
+        "object_id": "clouds",
+        "brush": {"size": 38, "color": "#987e99", "opacity": 0.3},
+        "styles": {
+            "wash": {
+                "brush": {"size": 53, "color": "#a7a0bf", "opacity": 0.24},
+                "pressure_curve": [[0, 0.08], [0.45, 0.91], [1, 0.14]],
+            },
+            "edge": {
+                "brush": {"size": 5, "color": "#fff2c1", "opacity": 0.88},
+                "pressure_curve": [[0, 0.17], [0.7, 0.75], [1, 0.07]],
+            },
+        },
+        "elements": [
+            {"kind": "stroke", "style": "wash", "points": [
+                {"x": 30, "y": 60}, {"x": 80, "y": 85}, {"x": 150, "y": 70}
+            ]},
+            {"kind": "stroke", "style": "edge", "points": [
+                {"x": 50, "y": 50}, {"x": 100, "y": 45}, {"x": 190, "y": 55}
+            ]},
+        ],
+    }
+    revision = validate_revision(sample_scene(), reviewed, image, candidate, "issue-1")
+    commands = revision["steps"]
+    styles = [s["parameters"] for s in commands if s["command"] == "brush.configure"]
+    assert [s["size"] for s in styles] == [38.0, 53.0, 5.0]
+    assert styles[1]["color"] == "#a7a0bf"
+    assert styles[2]["color"] == "#fff2c1"
+    strokes = [s["parameters"]["points"] for s in commands if s["command"] == "draw.stroke"]
+    assert len(strokes) == 2
+    assert strokes[0][0]["pressure"] == pytest.approx(0.08)
+    assert strokes[1][0]["pressure"] == pytest.approx(0.17)
