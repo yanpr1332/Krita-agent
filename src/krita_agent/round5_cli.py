@@ -28,15 +28,15 @@ def register(commands, connection):
     initial.add_argument("--brief-file", required=True,
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
-        "status", "dashboard", "plan", "approve", "paint", "export",
+        "status", "dashboard", "plan", "approve", "paint", "paint-stage", "export",
         "record", "verify-reopen", "critique", "revision-plan", "revision-approve",
         "revise", "deliver",
     ):
         p = actions.add_parser(name)
         p.add_argument("--directory", required=True)
-        if name in ("paint", "export", "revise", "record", "verify-reopen"):
+        if name in ("paint", "paint-stage", "export", "revise", "record", "verify-reopen"):
             connection(p)
-        if name in ("approve", "revision-approve", "revise"):
+        if name in ("approve", "paint-stage", "revision-approve", "revise"):
             p.add_argument("--confirm", action="store_true")
         if name in ("plan", "critique", "revision-plan"):
             p.add_argument("--model", help="Opt-in OpenAI-compatible JSON model ID")
@@ -45,11 +45,13 @@ def register(commands, connection):
             p.add_argument("--output", help="HTML output inside the run directory")
             p.add_argument("--replace", action="store_true")
         if name == "plan":
-            p.add_argument("--candidate", help="Explicit user-authored ScenePlan v3 JSON")
+            p.add_argument("--candidate", help="User-authored ScenePlan v3 or v4 JSON")
+            p.add_argument("--generalist", action="store_true",
+                           help="Request a generalist StagePlan v4 from a model")
             p.add_argument("--reference", help="Actual reference image, optional")
             p.add_argument("--profiles-directory")
             p.add_argument("--build")
-        if name == "paint":
+        if name in ("paint", "paint-stage"):
             p.add_argument("--ledger-dir")
             p.add_argument("--batch-size", type=int, default=120)
         if name == "record":
@@ -96,11 +98,16 @@ def execute(args, get_client):
             reference=args.reference,
             profile_directory=args.profiles_directory,
             build=args.build,
+            generalist=args.generalist,
         )
     if args.action == "approve":
         return flow.approve_plan(confirm=args.confirm)
     if args.action == "paint":
         return flow.paint(get_client(args), args.ledger_dir, args.batch_size)
+    if args.action == "paint-stage":
+        return flow.paint_stage(get_client(args), confirm=args.confirm,
+                                ledger_directory=args.ledger_dir,
+                                batch_steps=args.batch_size)
     if args.action == "export":
         return flow.export_native(get_client(args))
     if args.action == "record":

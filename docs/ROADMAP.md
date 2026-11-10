@@ -91,11 +91,11 @@ At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/
 
 [Round 6 API](ROUND6-API.md) · [Round 6 acceptance](ROUND6-ACCEPTANCE.md) · [Round 6 native reacceptance](ROUND6-REACCEPTANCE.md)
 
-## Round 7–12 — generalist human-like painting roadmap (PROPOSED)
+## Round 7–12 — generalist human-like painting roadmap (partially implemented; R8–R12 proposed)
 
-**Long-term product direction, not delivered functionality:** real and natural Krita painting, broad common-subject coverage, and reference-based repainting plus reusable technique learning. The full six-round plan, technical architecture, per-round deliverables, AI evaluation schedule, safety boundaries, and held-out multi-subject art acceptance criteria are documented in **[ARTIST-ROADMAP-R7-R12](ARTIST-ROADMAP-R7-R12.md)**.
+**Long-term product direction, not yet delivered artwork capability:** real and natural Krita painting, broad common-subject coverage, and reference-based repainting plus reusable technique learning. Round 7 source implementation introduces the staged foundation, **not** native or finished-art validation. The full six-round plan, technical architecture, per-round deliverables, AI evaluation schedule, safety boundaries, and held-out multi-subject art acceptance criteria are documented in **[ARTIST-ROADMAP-R7-R12](ARTIST-ROADMAP-R7-R12.md)**.
 
-- **R7:** Generalist hierarchical composition and staged intent-to-stroke planning; migrate safely from fixed landscape categories.
+- **R7 (source implemented, native QA pending):** ScenePlan v4 free-form subject hierarchy/materials, sketch/block/detail StagePlan, deterministic gesture/coverage/accent intent lowering to ScenePlan v3, explicit per-stage approval and source-bound native preview archiving; old v3 retained. See [Round 7 API](ROUND7-API.md) and [Round 7 acceptance](ROUND7-ACCEPTANCE.md).
 - **R8:** Natural material-specific brushwork, lighting-aware texture, and anti-repetition.
 - **R9:** People, animals, still life, architecture, mechanical subjects, and illustration generalization.
 - **R10:** Authorized reference repainting and provenance-aware style/technique library.

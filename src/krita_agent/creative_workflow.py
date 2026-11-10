@@ -13,6 +13,8 @@ from pathlib import Path
 
 from .artifact_integrity import export_integrity, reopen_stability
 from .creative_director import compile_approved, propose, validate_brief
+from .generalist_director import propose_generalist, compile_approved_generalist
+from .scene_v4 import SCHEMA as SCHEMA_V4, validate_scene_v4, lower_scene_v4
 from .creative_reviser import execute_revision, plan_revision, validate_revision
 from .protocol import TaskError
 from .scene_v3 import SCHEMA, digest, validate_scene
@@ -26,6 +28,7 @@ KNOWN_STATES = frozenset({
     "revision_proposed", "revision_approved", "revision_unknown",
     "ready_for_delivery", "delivery_prepared", "review_blocked",
     "unknown_needs_review", "awaiting_reopen", "reopen_unknown",
+    "awaiting_stage_approval",
 })
 
 
@@ -98,28 +101,79 @@ class CreativeWorkflow:
                 record["status"], "/".join(states)
             ))
 
-    def plan(self, provider=None, candidate=None, reference=None, profile_directory=None, build=None):
+    def plan(self, provider=None, candidate=None, reference=None,
+             profile_directory=None, build=None, generalist=False):
+        """Plan a legacy ScenePlan v3 or an explicitly selected generalist v4.
+
+        v4 is lowered to v3 for the existing reviewed pixel-critic and revision
+        contracts. Both immutable sources are recorded and hash-bound.
+        """
         record = self.read()
         self._expect(record, "initialized")
         if (provider is None) == (candidate is None):
-            raise TaskError("Choose exactly one provider or manually supplied ScenePlan v3")
-        if provider is not None:
+            raise TaskError("Choose exactly one provider or manually supplied scene")
+        v4_scene = None
+        generalist_proposal = None
+        if provider is not None and generalist:
+            generalist_proposal = propose_generalist(record["brief"], provider, reference)
+            v4_scene = generalist_proposal["scene_v4"]
+            scene, _ = lower_scene_v4(v4_scene)
+            proposal = {
+                "schema": "krita-agent-creative-proposal/1", "scene": scene,
+                "scene_sha256": digest(scene),
+                "provider_model": generalist_proposal["provider_model"],
+                "approval": "required", "side_effects": "none",
+            }
+        elif provider is not None:
             proposal = propose(record["brief"], provider, reference)
-        else:
-            scene = validate_scene(candidate)
-            if (scene["document"]["width"], scene["document"]["height"]) != (
-                record["brief"]["width"], record["brief"]["height"]
-            ):
-                raise TaskError("Scene differs from the approved canvas dimensions")
+        elif isinstance(candidate, dict) and candidate.get("schema") == SCHEMA_V4:
+            v4_scene = validate_scene_v4(candidate)
+            scene, _ = lower_scene_v4(v4_scene)
             proposal = {
                 "schema": "krita-agent-creative-proposal/1", "scene": scene,
                 "scene_sha256": digest(scene), "provider_model": "human_supplied",
                 "approval": "required", "side_effects": "none",
             }
-        compiled = compile_approved(
-            proposal, profile_directory, build,
-            preview_prefix="r5-runs/" + record["id"],
-        )
+            generalist_proposal = {
+                "schema": "krita-agent-generalist-proposal/1",
+                "scene_v4": v4_scene, "scene_v4_sha256": digest(v4_scene),
+                "provider_model": "human_supplied", "approval": "required",
+            }
+        else:
+            if generalist:
+                raise TaskError("Generalist option requires a v4 candidate or provider")
+            scene = validate_scene(candidate)
+            proposal = {
+                "schema": "krita-agent-creative-proposal/1", "scene": scene,
+                "scene_sha256": digest(scene), "provider_model": "human_supplied",
+                "approval": "required", "side_effects": "none",
+            }
+        if (proposal["scene"]["document"]["width"],
+                proposal["scene"]["document"]["height"]) != (
+                record["brief"]["width"], record["brief"]["height"]):
+            raise TaskError("Scene differs from the approved canvas dimensions")
+        preview_prefix = "r5-runs/" + record["id"]
+        if v4_scene is None:
+            compiled = compile_approved(
+                proposal, profile_directory, build, preview_prefix=preview_prefix)
+        else:
+            compiled = compile_approved_generalist(
+                generalist_proposal, profile_directory, build,
+                preview_prefix=preview_prefix)
+            if compiled["source_sha256"] != digest(proposal["scene"]):
+                raise TaskError("Generalist lowering does not match approved v3 source")
+            _write_new(self.root / "scene-plan-v4.json", v4_scene)
+            _write_new(self.root / "generalist-proposal.json", generalist_proposal)
+            record["artifacts"]["scene_v4"] = {
+                "path": "scene-plan-v4.json",
+                "sha256": _sha(self.root / "scene-plan-v4.json"),
+            }
+            record["artifacts"]["generalist_proposal"] = {
+                "path": "generalist-proposal.json",
+                "sha256": _sha(self.root / "generalist-proposal.json"),
+            }
+            record["staged"] = {"total": len(compiled["stage_spans"]),
+                                "next_stage": 0, "completed": []}
         _write_new(self.root / "scene-plan-v3.json", proposal["scene"])
         _write_new(self.root / "creative-proposal.json", proposal)
         _write_new(self.root / "compiled-scene.json", compiled)
@@ -130,10 +184,16 @@ class CreativeWorkflow:
             "path": "compiled-scene.json", "sha256": _sha(self.root / "compiled-scene.json"),
         }
         record["status"] = "planned"
-        self._save(record, "plan_proposed")
-        return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"],
-                "objects": len(compiled["objects"]), "native_steps": len(compiled["steps"]),
-                "brush_diagnostics": compiled.get("brush_diagnostics")}
+        self._save(record, "generalist_plan_proposed" if v4_scene else "plan_proposed")
+        result = {"status": record["status"],
+                  "plan_sha256": compiled["native_steps_sha256"],
+                  "objects": len(compiled["objects"]),
+                  "native_steps": len(compiled["steps"]),
+                  "brush_diagnostics": compiled.get("brush_diagnostics")}
+        if v4_scene is not None:
+            result["stage_spans"] = compiled["stage_spans"]
+            result["subjects"] = len(v4_scene["subjects"])
+        return result
 
     def approve_plan(self, confirm=False):
         if confirm is not True:
@@ -146,6 +206,8 @@ class CreativeWorkflow:
             or _sha(self.root / "scene-plan-v3.json") != record["artifacts"]["scene"]["sha256"]
             or digest(validate_scene(scene)) != compiled.get("source_sha256")):
             raise TaskError("Approved plan changed since it was compiled")
+        if "staged" in record:
+            self._verified_staged_plan(record)
         record["status"] = "plan_approved"
         self._save(record, "plan_approved_by_user")
         return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"]}
@@ -153,6 +215,8 @@ class CreativeWorkflow:
     def paint(self, client, ledger_directory=None, batch_steps=120):
         record = self.read()
         self._expect(record, "plan_approved")
+        if "staged" in record:
+            raise TaskError("Generalist v4 requires paint-stage --confirm at each phase")
         compiled_path = self.root / "compiled-scene.json"
         if _sha(compiled_path) != record["artifacts"]["compiled"]["sha256"]:
             raise TaskError("Compiled plan changed after approval")
@@ -170,6 +234,139 @@ class CreativeWorkflow:
         )
         self._save(record, "native_paint_" + result.get("state", "unknown"))
         return {"status": record["status"], "native": result}
+
+    def _verified_staged_plan(self, record):
+        """Re-bind every stage to both immutable source scenes and native steps."""
+        if "staged" not in record or "scene_v4" not in record["artifacts"]:
+            raise TaskError("No approved generalist stage plan")
+        for key in ("compiled", "scene", "scene_v4", "generalist_proposal"):
+            entry = record["artifacts"].get(key)
+            if not isinstance(entry, dict):
+                raise TaskError("Missing generalist plan artifact: " + key)
+            path = (self.root / entry.get("path", "")).resolve()
+            if self.root not in path.parents or not path.is_file() or _sha(path) != entry.get("sha256"):
+                raise TaskError("Generalist source artifact changed: " + key)
+        compiled = json.loads((self.root / "compiled-scene.json").read_text(encoding="utf-8"))
+        source = json.loads((self.root / "scene-plan-v4.json").read_text(encoding="utf-8"))
+        proposal = json.loads((self.root / "generalist-proposal.json").read_text(encoding="utf-8"))
+        v4 = validate_scene_v4(source)
+        lowered, _ = lower_scene_v4(v4)
+        if (proposal.get("scene_v4_sha256") != digest(v4)
+                or digest(proposal.get("scene_v4")) != digest(v4)
+                or compiled.get("source_v4_sha256") != digest(v4)
+                or digest(lowered) != compiled.get("source_sha256")
+                or digest(lowered) != digest(json.loads(
+                    (self.root / "scene-plan-v3.json").read_text(encoding="utf-8")))):
+            raise TaskError("Approved generalist stage sources do not match")
+        steps = compiled.get("steps")
+        spans = compiled.get("stage_spans")
+        if (not isinstance(steps, list) or not isinstance(spans, list)
+                or len(spans) != record["staged"].get("total")
+                or len(spans) != len(v4["stages"])
+                or compiled.get("native_steps_sha256") != digest(steps)):
+            raise TaskError("Compiled generalist stage count or hash mismatch")
+        cursor = 0
+        for idx, stage in enumerate(spans):
+            if (stage.get("index") != idx
+                    or stage.get("id") != v4["stages"][idx]["id"]
+                    or stage.get("start") != cursor
+                    or type(stage.get("stop")) is not int
+                    or not cursor < stage["stop"] <= len(steps)
+                    or stage.get("steps_sha256") != digest(steps[cursor:stage["stop"]])):
+                raise TaskError("Compiled generalist stage boundary changed")
+            cursor = stage["stop"]
+        if cursor != len(steps):
+            raise TaskError("Compiled generalist stage tail is unbound")
+        return compiled
+
+    @staticmethod
+    def _stage_live_identity(client, document):
+        """Conservative active document and layer-graph fingerprint.
+
+        The fingerprint rejects wrong/changed documents; it does not claim
+        full pixel-integrity or substitute for fresh-KRA reopen acceptance.
+        """
+        docs = client.request("document.list")
+        if not isinstance(docs, list):
+            raise TaskError("Cannot identify the active Krita document")
+        active = [row for row in docs if isinstance(row, dict)
+                  and row.get("active") is True]
+        if len(active) != 1:
+            raise TaskError("Expected exactly one active Krita document")
+        row = active[0]
+        if (row.get("name") != document["name"]
+                or row.get("width") != document["width"]
+                or row.get("height") != document["height"]):
+            raise TaskError("Active Krita document differs from staged plan")
+        graph = client.request("layer.tree")
+        if not isinstance(graph, (dict, list)):
+            raise TaskError("Native layer graph unavailable for stage approval")
+        return {
+            "document": {
+                "index": row.get("index"), "name": row["name"],
+                "width": row["width"], "height": row["height"],
+                "file_path": row.get("file_path"),
+                "color_model": row.get("color_model"),
+                "color_depth": row.get("color_depth"),
+                "color_profile": row.get("color_profile"),
+            },
+            "layer_graph_sha256": digest(graph),
+        }
+
+    def paint_stage(self, client, confirm=False, ledger_directory=None,
+                    batch_steps=120):
+        """One user-confirmed stage per invocation; never auto-submit the next."""
+        if confirm is not True:
+            raise TaskError("Each native painting stage requires explicit --confirm")
+        record = self.read()
+        self._expect(record, "plan_approved", "awaiting_stage_approval")
+        compiled = self._verified_staged_plan(record)
+        state = record["staged"]
+        index = state.get("next_stage")
+        if type(index) is not int or not 0 <= index < state["total"]:
+            raise TaskError("Generalist stage cursor is invalid")
+        if index > 0:
+            expected = record.get("stage_live")
+            current = self._stage_live_identity(client, compiled["document"])
+            if expected != current:
+                raise TaskError("Active Krita document/layers changed since last stage")
+        stage = compiled["stage_spans"][index]
+        segment = compiled["steps"][stage["start"]:stage["stop"]]
+        if digest(segment) != stage["steps_sha256"]:
+            raise TaskError("Generalist stage instructions changed")
+        record["status"] = "painting_unknown"
+        record["active_stage"] = index
+        self._save(record, "native_stage_%02d_submission_intent" % (index+1))
+        try:
+            result = run_longjob(
+                client, {"steps": segment},
+                ledger_directory or self.root / "stage-ledgers",
+                batch_steps=batch_steps,
+            )
+            if result.get("state") != "completed":
+                record["stage_result"] = result
+                record["status"] = "unknown_needs_review"
+                self._save(record, "native_stage_%02d_uncertain" % (index+1))
+                return {"status": record["status"], "stage": index+1, "native": result}
+            fingerprint = self._stage_live_identity(client, compiled["document"])
+        except Exception as exc:
+            record["status"] = "unknown_needs_review"
+            record["stage_error"] = str(exc)
+            self._save(record, "native_stage_%02d_uncertain" % (index+1))
+            raise
+        state["completed"].append({
+            "stage_index": index, "id": stage["id"],
+            "steps_sha256": stage["steps_sha256"], "native": result,
+        })
+        state["next_stage"] = index+1
+        record["stage_live"] = fingerprint
+        record.pop("active_stage", None)
+        record["status"] = ("awaiting_export" if index+1 == state["total"]
+                            else "awaiting_stage_approval")
+        self._save(record, "native_stage_%02d_completed" % (index+1))
+        return {"status": record["status"], "stage": index+1,
+                "total_stages": state["total"], "native": result,
+                "next_stage_requires_approval": index+1 < state["total"]}
 
     def export_native(self, client):
         """Save/export via authenticated Krita and archive immutable copies.

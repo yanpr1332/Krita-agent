@@ -70,3 +70,12 @@ Before starting any Round 7+ development, read [docs/ARTIST-ROADMAP-R7-R12.md](d
 - Treat proposed Round 7–12 capabilities as **not implemented** until real code and appropriate native/artwork acceptance evidence exist. Each development round belongs on its own branch and must record unresolved limitations.
 - Full real-API multimodal **evaluation** is planned for Round 11; earlier optional model-based planning or reference understanding is allowed with explicit user-provided credentials, but paid model access must not silently become a requirement or be auto-invoked without authorization.
 - A human or visual model may guide bounded revisions, but no model response may impersonate an independent human reviewer. “Learning” recipes and style records do not constitute a change in foundation-model weights.
+
+
+## Round 7 stage-planning and new branch safety
+
+This round lives on the dedicated `feat/round7-generalist-scene` branch, based on the separate planning branch. Every subsequent numbered development round or cross-round roadmap effort MUST create and verify its **new** GitHub branch before the first write; do not append new rounds to R7. Do not silently merge a feature branch into main.
+
+ScenePlan v4 is a high-level **proposal** with generic subjects, material descriptors, stages, and `gesture`/`coverage`/`accents` intents. Validate all candidate JSON; forbid generated code or unreviewed IPC commands. Only the bounded compiler may emit native brush operations. The artist must review the full scene and **explicitly approve each stage individually**; observe real Krita canvas previews and layer contributions between phases. If a stage effect is uncertain, preserve the ledger and require manual inspection without automatic retry or fabricated success.
+
+The R7 source implementation, offline unit tests, real Krita native verification, and independent complete-artwork quality acceptance are separate claims. Keep the original KRA and all failed evidence; enforce strict export/reopen pixel gates, and archive repairs as new versions. R8–R12 goals remain prospective; do not claim R7 provides sophisticated human-like strokes, universal subjects, or learned reference styles without whole-artwork acceptance.

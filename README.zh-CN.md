@@ -1,5 +1,7 @@
 # Krita Agent
 
+**第七轮通用画师底层架构（源码已开发，原生验收待完成）：** ScenePlan v4 支持自由题材的主体层级、材质、独立绘画阶段及 `gesture` / `coverage` / `accents` 意图，安全编译成 Krita 原生笔触；提供可选模型规划与每阶段单独 `creative paint-stage --confirm` 人工批准。见 [Round 7 API](docs/ROUND7-API.md) 与 [第七轮验收清单](docs/ROUND7-ACCEPTANCE.md)。尚不宣称实现自然的人类级绘画或跨题材成品验收。
+
 **后续通用 AI 画师路线图（已规划，尚未实现）：** 未来目标是自然、有绘画意图的笔触，覆盖人物、动物、静物、建筑、插画和风景等常见题材，并支持参考图临摹、可复用技法学习。Round 7–12 的详细开发包、架构、验收与 API 接入时机请阅读 **[通用画师路线图](docs/ARTIST-ROADMAP-R7-R12.md)**。完整的 API 大模型自动验收计划放在 Round 11；此前可以按需使用已授权的模型辅助规划。
 
 **第六轮笔刷开发（已记录三构建原生测试）：** 支持逐笔粗细、颜色、透明度、预设切换与弧长压感曲线。见 [第六轮 API](docs/ROUND6-API.md)、[验收清单](docs/ROUND6-ACCEPTANCE.md) 和 [本地重新验收报告](docs/ROUND6-REACCEPTANCE.md)。**独立人工完整作品验收与少量重开像素漂移根因修复仍待完成。**

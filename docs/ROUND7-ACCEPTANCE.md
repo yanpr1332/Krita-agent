@@ -1,0 +1,40 @@
+# Round 7 acceptance — generalist scenes and staged native execution
+
+> Status: **source implementation awaiting offline CI and real Krita validation**. No new finished artwork or independent human art acceptance is claimed by this branch.
+
+## What Round 7 delivers
+
+- [x] Versioned `krita-agent-scene/4` with free-form subjects, parent relations, bounded geometry, per-subject materials and editable brush styles.
+- [x] Separate sketch, color/form, detail stages and per-stage native command spans. Painted material remains on editable Krita layers through existing whitelisted commands.
+- [x] Deterministic intent expansion (`gesture`, `coverage`, `accents`), with bounded scanlines/stroke counts and existing ScenePlan v3/Bridge safety controls.
+- [x] Optional, explicitly configured model JSON planning; all model suggestions must pass independent scene validation.
+- [x] CLI plan review and **explicit separate approval before each native stage**. Unknown native effects stop the workflow; no automatic replay.
+- [x] Source hashes, compiled step hashes, progress records, real native `preview.canvas` stage snapshots and existing KRA/PNG archival and strict reopening pipeline.
+- [x] ScenePlan v3 legacy path retained. Multi-subject scene specimen uses a figure, interior and ceramic still life without special-purpose landscape object kinds.
+- [x] Offline regression tests added for normalized plans, determinism, restrictions, source tampering, per-stage approval, lost effect and legacy compatibility.
+
+## Mandatory verification matrix
+
+| Gate | Required action | This GitHub source branch |
+| --- | --- | --- |
+| Static syntax and all existing unit tests | GitHub Actions Windows Python 3.10 and 3.13 | **Pending CI result**, record link in change summary |
+| New deterministic ScenePlan v4 tests | Validate sample and negative cases | **Pending CI result**, test sources committed |
+| Real Krita roundtrip | Stable, Next Qt5 and Next Qt6, whitelisted live bridge | **Pending native run** |
+| Intermediate real pixels | For sketch/color/detail, inspect actual Krita stage previews and editable layer contributions | **Pending native run** |
+| Different subjects | Paint **three separate prompts**: landscape, single-object still life, and simple character, without hardcoded benchmark scripts | **Pending native run** |
+| Stop/recovery | Stop after stage 1; inspect live document/graph, restart workflow, continue only after manual approval; unknown effects must remain blocked | **Pending native run** |
+| KRA integrity | First PNG vs embedded `mergedimage.png`; reopened KRA export vs first PNG, record exact differences/ICC | **Pending native run** |
+| Artwork quality | Independent full-image visual review and real human judgement | **Pending independent review** |
+| Native process cost | Log high-level intent tokens/size, expanded strokes, steps and elapsed time | **Pending measured run** |
+
+Do not turn a source or CI test success into “native accepted”; the high-level intent shapes currently remain simple geometric brush guides. They are not proof of natural human-like mark-making, anatomical correctness, reference copying or reliable multi-genre illustration. Material-aware direction fields, anti-repetition and independent blind art comparisons are prioritized for Round 8 onward.
+
+## Suggested local acceptance workflow (no local action performed by this GitHub change)
+
+1. Read `docs/ROUND7-API.md`. Keep an isolated creative run directory and save the brief.
+2. Run `creative init`, `creative plan` with a human-created v4 candidate or the opt-in `--generalist --model` provider, inspect the normalized scene and stage plan, then `creative approve --confirm`.
+3. Connect to the intended active Krita build and invoke `creative paint-stage --confirm` **once per stage**. After each stage, inspect the actual PNG preview and layer tree before authorizing the next stage.
+4. After final stage, run `creative export` and strict native fresh-reopen checks. Preserve failures and their complete artifacts; repair only as a newly versioned KRA.
+5. Supply authentic screenshots, KRA/PNG, logs and independent reviewers, including failed examples. Do not publish raw private run artifacts through the repository.
+
+See also [existing whole-artwork acceptance](ARTWORK-ACCEPTANCE.md), [Round 6 native report](ROUND6-REACCEPTANCE.md), and the [Round 7–12 roadmap](ARTIST-ROADMAP-R7-R12.md).
