@@ -1,6 +1,6 @@
 # Round 7 acceptance — generalist scenes and staged native execution
 
-> Status: **source implementation and Windows offline CI passed; real Krita validation pending**. No new finished artwork or independent human art acceptance is claimed by this branch.
+> Status: **local technical fixtures exercised on three Krita builds; complete-artwork acceptance failed**. The [local report](ROUND7-LOCAL-ACCEPTANCE.md) records the scope and remaining work.
 
 ## What Round 7 delivers
 
@@ -19,13 +19,13 @@
 | --- | --- | --- |
 | Static syntax and all existing unit tests | GitHub Actions Windows Python 3.10 and 3.13 | **PASS:** [GitHub Actions #42771429702](https://github.com/yanpr1332/Krita-agent/actions/runs/42771429702), Python 3.10 and 3.13, 189 passed each |
 | New deterministic ScenePlan v4 tests | Validate sample and negative cases | **PASS:** included in the same 189-case Windows CI run |
-| Real Krita roundtrip | Stable, Next Qt5 and Next Qt6, whitelisted live bridge | **Pending native run** |
-| Intermediate real pixels | For sketch/color/detail, inspect actual Krita stage previews and editable layer contributions | **Pending native run** |
-| Different subjects | Paint **three separate prompts**: landscape, single-object still life, and simple character, without hardcoded benchmark scripts | **Pending native run** |
-| Stop/recovery | Stop after stage 1; inspect live document/graph, restart workflow, continue only after manual approval; unknown effects must remain blocked | **Pending native run** |
-| KRA integrity | First PNG vs embedded `mergedimage.png`; reopened KRA export vs first PNG, record exact differences/ICC | **Pending native run** |
-| Artwork quality | Independent full-image visual review and real human judgement | **Pending independent review** |
-| Native process cost | Log high-level intent tokens/size, expanded strokes, steps and elapsed time | **Pending measured run** |
+| Real Krita roundtrip | Stable, Next Qt5 and Next Qt6, whitelisted live bridge | **Passed for nine staged technical fixtures** |
+| Intermediate real pixels | For sketch/color/detail, inspect actual Krita stage previews and editable layer contributions | **Recorded for the Qt6 fixtures** |
+| Different subjects | Paint **three separate prompts**: landscape, single-object still life, and simple character, without hardcoded benchmark scripts | **Executed as three locally authored structural plans. All failed finished-artwork review** |
+| Stop/recovery | Stop after stage 1; inspect live document/graph, restart workflow, continue only after manual approval; unknown effects must remain blocked | **Workflow object reopened and loss-after-native-acceptance blocked. Process restart and human approval remain open** |
+| KRA integrity | First PNG vs embedded `mergedimage.png`; reopened KRA export vs first PNG, record exact differences/ICC | **Passed for the nine fixtures** |
+| Artwork quality | Independent full-image visual review and real human judgement | **Independent visual review failed all three Qt6 candidates. Human judgement pending** |
+| Native process cost | Log high-level intent tokens/size, expanded strokes, steps and elapsed time | **Source bytes, expanded strokes, native steps and elapsed time recorded; model token usage not applicable** |
 
 The current R7 stage workflow advances forward through approved phases; it does **not** yet offer a native automatic one-stage rewind/repaint or a dedicated v4 semantic anatomy critic. Those remain future development/acceptance work.
 

@@ -65,7 +65,11 @@ def _coverage(intent, selected, width, height):
             if a["x"] != b["x"] or a["y"] != b["y"]:
                 if len(result) % 2:
                     a, b = b, a
-                result.append(_stroke([a, b], selected))
+                midpoint = {"x": round((a["x"] + b["x"]) / 2, 4),
+                            "y": round((a["y"] + b["y"]) / 2, 4)}
+                coverage_style = dict(selected)
+                coverage_style.setdefault("pressure_curve", [[0.0, 0.85], [1.0, 0.85]])
+                result.append(_stroke([a, midpoint, b], coverage_style))
                 if len(result) > MAX_EXPANDED_PER_INTENT:
                     raise TaskError("Coverage intent expands beyond 240 native strokes")
         v += spacing

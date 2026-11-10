@@ -245,3 +245,21 @@ def test_generalist_source_and_compiled_hashes_rechecked_before_approval(tmp_pat
     p.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(TaskError, match="source artifact changed"):
         flow.approve_plan(confirm=True)
+
+
+
+def test_coverage_strokes_have_effective_pressure_and_respect_explicit_curve():
+    candidate = sample_v4()
+    lowered, _ = lower_scene_v4(candidate)
+    wall = next(item for item in lowered["objects"] if item["id"] == "s01_room")
+    points = wall["elements"][0]["points"]
+    assert len(points) == 3
+    assert [point["pressure"] for point in points] == [0.85, 0.85, 0.85]
+
+    candidate["stages"][1]["intents"][0]["pressure_curve"] = [
+        [0, 0.1], [0.5, 0.9], [1, 0.2]
+    ]
+    lowered, _ = lower_scene_v4(candidate)
+    wall = next(item for item in lowered["objects"] if item["id"] == "s01_room")
+    pressures = [point["pressure"] for point in wall["elements"][0]["points"]]
+    assert pressures == [0.1, 0.9, 0.2]
