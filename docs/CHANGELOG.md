@@ -1,5 +1,14 @@
 # Changelog
 
+## Round 7 — generalist staged intent-to-stroke foundation (source change, 2026-11-10)
+
+- Created independent `feat/round7-generalist-scene` branch from the R7–R12 planning branch, preserving Round 6 and main.
+- Added ScenePlan v4 with free-form hierarchic subjects, materials, per-subject brushes, 3–6 ordered paint stages, bounded geometric purpose-bearing intents and safe ScenePlan v3 lowering.
+- Added deterministic `gesture`, `coverage`, and `accents` compilation into real native brush strokes, with command/geometry validation and per-stage hash-bound native previews.
+- Added optional generalist model planner, CLI `creative plan --generalist` and explicit `creative paint-stage --confirm`; stages are independently approved and unknown effects block replay.
+- Extended source and output tamper checks, staged evidence archives, diverse scene fixture and offline tests; legacy ScenePlan v3 remains available.
+- **Source/CI success is not a claim of real multi-genre painting ability.** Native Krita stage evidence, strict KRA reopen and independent artwork review remain required.
+
 ## Round 6 — stroke-level native brush flexibility (source change, 2026-11-10)
 
 - Added named object palettes and per-stroke brush size, color, opacity, preset overrides.

@@ -1,0 +1,468 @@
+{
+  "schema": "krita-agent-scene/4",
+  "document": {
+    "width": 512,
+    "height": 384,
+    "name": "Round 7 Generalist Study"
+  },
+  "style": "Editable staged character, interior, and ceramic still-life study",
+  "subjects": [
+    {
+      "id": "room",
+      "name": "Room backdrop",
+      "kind": "interior architecture",
+      "materials": [
+        "plaster",
+        "wood"
+      ],
+      "bounds": [
+        0,
+        0,
+        512,
+        384
+      ],
+      "depth": 0.05,
+      "brush": {
+        "size": 18,
+        "color": "#b8ac9e",
+        "opacity": 0.9
+      },
+      "styles": {
+        "structure": {
+          "brush": {
+            "size": 5,
+            "color": "#514e53",
+            "opacity": 0.8
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.2
+            ],
+            [
+              0.5,
+              0.75
+            ],
+            [
+              1,
+              0.2
+            ]
+          ]
+        },
+        "block": {
+          "brush": {
+            "size": 44,
+            "color": "#a5a2a6",
+            "opacity": 0.75
+          }
+        },
+        "light": {
+          "brush": {
+            "size": 9,
+            "color": "#e5c8a7",
+            "opacity": 0.72
+          }
+        }
+      }
+    },
+    {
+      "id": "person",
+      "name": "Character silhouette",
+      "kind": "human figure",
+      "materials": [
+        "skin",
+        "hair",
+        "cloth"
+      ],
+      "bounds": [
+        25,
+        20,
+        245,
+        360
+      ],
+      "depth": 0.55,
+      "brush": {
+        "size": 11,
+        "color": "#9c746b",
+        "opacity": 0.9
+      },
+      "styles": {
+        "structure": {
+          "brush": {
+            "size": 4,
+            "color": "#554b59",
+            "opacity": 0.9
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.1
+            ],
+            [
+              0.48,
+              0.9
+            ],
+            [
+              1,
+              0.1
+            ]
+          ]
+        },
+        "skin": {
+          "brush": {
+            "size": 23,
+            "color": "#bd8f82",
+            "opacity": 0.68
+          }
+        },
+        "hair": {
+          "brush": {
+            "size": 5,
+            "color": "#383744",
+            "opacity": 0.85
+          },
+          "pressure_curve": [
+            [
+              0,
+              0.1
+            ],
+            [
+              0.4,
+              0.9
+            ],
+            [
+              1,
+              0.12
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "cup",
+      "name": "Ceramic cup",
+      "kind": "ceramic still life",
+      "materials": [
+        "porcelain",
+        "glaze"
+      ],
+      "bounds": [
+        285,
+        175,
+        175,
+        170
+      ],
+      "depth": 0.7,
+      "brush": {
+        "size": 9,
+        "color": "#d1b8a8",
+        "opacity": 0.9
+      },
+      "styles": {
+        "structure": {
+          "brush": {
+            "size": 3,
+            "color": "#65586d",
+            "opacity": 0.9
+          }
+        },
+        "ceramic": {
+          "brush": {
+            "size": 19,
+            "color": "#e7d8ca",
+            "opacity": 0.7
+          }
+        },
+        "gleam": {
+          "brush": {
+            "size": 4,
+            "color": "#fff1d9",
+            "opacity": 0.86
+          }
+        }
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "gesture",
+      "phase": "sketch",
+      "goal": "Proportions, spatial relationships and recognizable silhouettes",
+      "intents": [
+        {
+          "id": "room_outline",
+          "subject_id": "room",
+          "kind": "gesture",
+          "purpose": "Establish background room perspective line",
+          "material": "wood",
+          "style": "structure",
+          "path": [
+            [
+              0,
+              195
+            ],
+            [
+              185,
+              175
+            ],
+            [
+              512,
+              188
+            ]
+          ]
+        },
+        {
+          "id": "figure_spine",
+          "subject_id": "person",
+          "kind": "gesture",
+          "purpose": "Locate head and torso center with a gesture",
+          "material": "cloth",
+          "style": "structure",
+          "path": [
+            [
+              125,
+              54
+            ],
+            [
+              150,
+              105
+            ],
+            [
+              143,
+              202
+            ],
+            [
+              120,
+              333
+            ]
+          ]
+        },
+        {
+          "id": "cup_outline",
+          "subject_id": "cup",
+          "kind": "gesture",
+          "purpose": "Establish ceramic vessel silhouette proportions",
+          "material": "porcelain",
+          "style": "structure",
+          "path": [
+            [
+              320,
+              233
+            ],
+            [
+              327,
+              301
+            ],
+            [
+              376,
+              316
+            ],
+            [
+              419,
+              287
+            ],
+            [
+              421,
+              227
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "block",
+      "phase": "block_in",
+      "goal": "Lay in broad colors separately from structural gestures",
+      "intents": [
+        {
+          "id": "wall_tone",
+          "subject_id": "room",
+          "kind": "coverage",
+          "purpose": "Fill wall with broad neutral midtone brush strokes",
+          "material": "plaster",
+          "style": "block",
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              512,
+              0
+            ],
+            [
+              512,
+              165
+            ],
+            [
+              0,
+              165
+            ]
+          ],
+          "spacing": 31,
+          "angle": 0,
+          "seed": 5
+        },
+        {
+          "id": "face_block",
+          "subject_id": "person",
+          "kind": "coverage",
+          "purpose": "Build a face value mass before fine features",
+          "material": "skin",
+          "style": "skin",
+          "polygon": [
+            [
+              97,
+              60
+            ],
+            [
+              166,
+              55
+            ],
+            [
+              185,
+              112
+            ],
+            [
+              169,
+              158
+            ],
+            [
+              107,
+              163
+            ],
+            [
+              85,
+              111
+            ]
+          ],
+          "spacing": 14,
+          "angle": 10,
+          "seed": 9
+        },
+        {
+          "id": "cup_block",
+          "subject_id": "cup",
+          "kind": "coverage",
+          "purpose": "Build ceramic volume with warm translucent strokes",
+          "material": "porcelain",
+          "style": "ceramic",
+          "polygon": [
+            [
+              316,
+              222
+            ],
+            [
+              417,
+              219
+            ],
+            [
+              407,
+              298
+            ],
+            [
+              377,
+              319
+            ],
+            [
+              334,
+              301
+            ]
+          ],
+          "spacing": 14,
+          "angle": -5,
+          "seed": 3
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "phase": "detail",
+      "goal": "Add a few purposeful local details, without pretending to finish artwork",
+      "intents": [
+        {
+          "id": "hair_accents",
+          "subject_id": "person",
+          "kind": "accents",
+          "purpose": "Describe hair strands curving around the head",
+          "material": "hair",
+          "style": "hair",
+          "path": [
+            [
+              100,
+              90
+            ],
+            [
+              125,
+              42
+            ],
+            [
+              164,
+              51
+            ],
+            [
+              188,
+              91
+            ]
+          ],
+          "count": 9,
+          "length": 16,
+          "jitter": 0.11,
+          "seed": 7
+        },
+        {
+          "id": "cup_gleam",
+          "subject_id": "cup",
+          "kind": "accents",
+          "purpose": "Place short reflected-light marks along cup rim",
+          "material": "glaze",
+          "style": "gleam",
+          "path": [
+            [
+              318,
+              225
+            ],
+            [
+              363,
+              213
+            ],
+            [
+              417,
+              223
+            ]
+          ],
+          "count": 5,
+          "length": 9,
+          "jitter": 0.08,
+          "seed": 4
+        },
+        {
+          "id": "room_light",
+          "subject_id": "room",
+          "kind": "accents",
+          "purpose": "Mark broken sunlight on nearby furniture edge",
+          "material": "wood",
+          "style": "light",
+          "path": [
+            [
+              280,
+              204
+            ],
+            [
+              415,
+              198
+            ],
+            [
+              485,
+              219
+            ]
+          ],
+          "count": 7,
+          "length": 14,
+          "jitter": 0.15,
+          "seed": 8
+        }
+      ]
+    }
+  ]
+}

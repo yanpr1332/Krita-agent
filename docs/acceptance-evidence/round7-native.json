@@ -1,0 +1,406 @@
+{
+  "local_run": "artwork-results/round7-acceptance-20261110-163621",
+  "tested_head": "696243f plus coverage pressure fix",
+  "native": [
+    {
+      "build": "qt6",
+      "topic": "landscape",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 2650,
+      "expanded_strokes": 39,
+      "native_steps": 60,
+      "elapsed_seconds": 13.942,
+      "stages": [
+        {
+          "stage": 1,
+          "status": "awaiting_stage_approval",
+          "sha256": "20cc0d675e36104dd85610f721c213331d8aee2e5d66ad6a2a39124cae51087d",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "stage": 2,
+          "status": "awaiting_stage_approval",
+          "sha256": "e54a5deae9625b840aeaf1bf2b8fd5525897f6c2611bb779f0544b4493b32eb7",
+          "changed_pixels": 155448,
+          "layer_count": 6
+        },
+        {
+          "stage": 3,
+          "status": "awaiting_export",
+          "sha256": "c41234eeae159630b10ec98909509a274edcc55df0c91ea25675f70514686759",
+          "changed_pixels": 55,
+          "layer_count": 8
+        }
+      ]
+    },
+    {
+      "build": "qt6",
+      "topic": "still-life",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3084,
+      "expanded_strokes": 26,
+      "native_steps": 51,
+      "elapsed_seconds": 15.321,
+      "stages": [
+        {
+          "stage": 1,
+          "status": "awaiting_stage_approval",
+          "sha256": "8796480894bd89301dc819f794f671038da3d5e07b8ecf674fceab7b043d37df",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "stage": 2,
+          "status": "awaiting_stage_approval",
+          "sha256": "ee74e17e4e63501b73aff458aa0d7b4cf6f07dc55d7aeccda22f62a4bc840aeb",
+          "changed_pixels": 88656,
+          "layer_count": 5
+        },
+        {
+          "stage": 3,
+          "status": "awaiting_export",
+          "sha256": "6ff8e9c7e4dafebbb834ac272d3e9d01919cd867129ef41aafb75dfb490de6f7",
+          "changed_pixels": 141,
+          "layer_count": 7
+        }
+      ]
+    },
+    {
+      "build": "qt6",
+      "topic": "character",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3187,
+      "expanded_strokes": 31,
+      "native_steps": 56,
+      "elapsed_seconds": 14.945,
+      "stages": [
+        {
+          "stage": 1,
+          "status": "awaiting_stage_approval",
+          "sha256": "a483fc9b07a6d9fca7d2e988d33537451ef5dd3661c81788764d00ee9ad32ece",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "stage": 2,
+          "status": "awaiting_stage_approval",
+          "sha256": "67969b5962adfca09b9ea8893aaba753f4976abec9ae574f4640e8522323f0c8",
+          "changed_pixels": 80339,
+          "layer_count": 5
+        },
+        {
+          "stage": 3,
+          "status": "awaiting_export",
+          "sha256": "9d10bab067d1e4d73ecf78d3c6a064f2eabe259d2974c279c1dd9f1e850e01a9",
+          "changed_pixels": 149,
+          "layer_count": 7
+        }
+      ]
+    },
+    {
+      "build": "stable",
+      "topic": "landscape",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 2650,
+      "expanded_strokes": 39,
+      "native_steps": 60,
+      "elapsed_seconds": 13.467,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "778768e901cd254ccb2bfddcabbd74ac758e8b169614588553a1f6c62313f028",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "b800a7d655590b1e696128cb6ec32bdd0727a9252b92a10afc5ffa99f9ce0043",
+          "changed_pixels": 156124,
+          "layer_count": 6
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "b6acb2fc4b89f92ff7e1802002f03236d94a689c8b891666a65d86d31782e325",
+          "changed_pixels": 55,
+          "layer_count": 8
+        }
+      ]
+    },
+    {
+      "build": "stable",
+      "topic": "still-life",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3084,
+      "expanded_strokes": 26,
+      "native_steps": 51,
+      "elapsed_seconds": 13.973,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "53965c34a5c3316f568b0c1245556a703432bc29d5ba024f179ddeb91ae2039d",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "2543816cb908ff8b9ea9fed0b9309a5c50183d2a5b9ffd3c75b2ad4028c6556d",
+          "changed_pixels": 88558,
+          "layer_count": 5
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "3db18269979d9ab8fa718feb62837d13a5178c16c3d72c25fa4d8f0fe8c83e11",
+          "changed_pixels": 155,
+          "layer_count": 7
+        }
+      ]
+    },
+    {
+      "build": "stable",
+      "topic": "character",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3187,
+      "expanded_strokes": 31,
+      "native_steps": 56,
+      "elapsed_seconds": 13.397,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "4c7e7a6d1f53e0debe4ca6cdfab5d186d4dfd43cfc0a274384ced5bff2bd9ee0",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "8f4b76a2f62406adcc8ea3e3069046341b27228ead0a4e0293d1e0d97226041f",
+          "changed_pixels": 80338,
+          "layer_count": 5
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "7b16dd3afe736462afa7643496d118b5ce6c64a318ef382c2c5a283484bd4a60",
+          "changed_pixels": 141,
+          "layer_count": 7
+        }
+      ]
+    },
+    {
+      "build": "qt5",
+      "topic": "landscape",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 2650,
+      "expanded_strokes": 39,
+      "native_steps": 60,
+      "elapsed_seconds": 13.452,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "828d648cd76f2fc5257777f5327b6abc9b57ce9c29788bb75d3a4c72303c8bc0",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "c3401805b7f538a6e5d6bf7721175234367aba2d44fc86283410f7a9ddca108d",
+          "changed_pixels": 155448,
+          "layer_count": 6
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "c529481e9a759c4274fd112ac9352307d5d79bd18e00c30463d1dfdc3031950e",
+          "changed_pixels": 55,
+          "layer_count": 8
+        }
+      ]
+    },
+    {
+      "build": "qt5",
+      "topic": "still-life",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3084,
+      "expanded_strokes": 26,
+      "native_steps": 51,
+      "elapsed_seconds": 13.053,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "f962cbeb63b0073f0013e99d0c62909b283444f6a266dffd47ad16f3b1523e69",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "4d8705bd43440ea30fd098d8a095685e7e38f65c1afcba6293d21e2554c6e0a2",
+          "changed_pixels": 88656,
+          "layer_count": 5
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "0445f64b4f2cc483299504b76b2acc998601b8d1df687ab20f7818f1f058b649",
+          "changed_pixels": 141,
+          "layer_count": 7
+        }
+      ]
+    },
+    {
+      "build": "qt5",
+      "topic": "character",
+      "outcome": "completed",
+      "export_status": "awaiting_critique",
+      "reopen_status": "pass",
+      "different_pixels": 0,
+      "source_bytes": 3187,
+      "expanded_strokes": 31,
+      "native_steps": 56,
+      "elapsed_seconds": 14.029,
+      "stages": [
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "c05279ca93acd118656be3c36cf25d12a5a41cc17854ec0a593f8bb03a7e9b52",
+          "changed_pixels": null,
+          "layer_count": 3
+        },
+        {
+          "status": "awaiting_stage_approval",
+          "sha256": "580db78b949a79e8a88616f998dcad8882700822a8d5e2e55ca5dfbf6181ebbd",
+          "changed_pixels": 80339,
+          "layer_count": 5
+        },
+        {
+          "status": "awaiting_export",
+          "sha256": "e911198e55bae81fb0968a839c5ff4940b15fbaf92a169c975f634a12c948a2b",
+          "changed_pixels": 149,
+          "layer_count": 7
+        }
+      ]
+    }
+  ],
+  "lost_reply": {
+    "state": "unknown_needs_review",
+    "native_state": "completed",
+    "submit_calls": 1,
+    "automatic_replay": false
+  },
+  "visual_review": {
+    "schema": "krita-agent-round7-generalist-visual-review/1",
+    "model": "gpt-6.1-sol",
+    "reviewed_at": "2026-11-10T08:47:29.049282+00:00",
+    "decision": "fail",
+    "topics": {
+      "landscape": {
+        "recognizability": "Partial. Peach sky, navy water and a mountain zigzag suggest a landscape.",
+        "stage_observations": [
+          "The sketch places a two-peak zigzag and a low horizontal water guide against white.",
+          "The color stage adds a flat peach upper field, flat blue lower field and thick navy strokes to the left peak. The right peak remains mostly white and the sky band cuts off its summit.",
+          "The detail stage is visually almost identical to color, as is the final export. It leaves broad white gaps and the exposed ends of the fill strokes."
+        ],
+        "failure_modes": [
+          "The incomplete right peak and white gaps across the central band interrupt the landform and spatial depth.",
+          "Rounded stroke ends dominate the left peak and leave small white wedges between the mountain outline and fill.",
+          "Flat color fields and sparse detail leave the result at block-in quality."
+        ],
+        "decision": "fail",
+        "finished_illustration": false,
+        "width": 512,
+        "height": 384,
+        "artwork_png": "qt6-landscape/versions/v01.png",
+        "artwork_png_sha256": "4db08b1987f3b8b28d4588dcf011bcf5969be2170851b4a2ef2f10aa4d01a634",
+        "artwork_kra": "qt6-landscape/versions/v01.kra",
+        "artwork_kra_sha256": "d3d76220f5e24d96e4a820f044af5a542005cf68ca91859519d6154ea88c280c",
+        "stage_previews": {
+          "stages/01-layout.png": "20cc0d675e36104dd85610f721c213331d8aee2e5d66ad6a2a39124cae51087d",
+          "stages/02-color.png": "e54a5deae9625b840aeaf1bf2b8fd5525897f6c2611bb779f0544b4493b32eb7",
+          "stages/03-final.png": "c41234eeae159630b10ec98909509a274edcc55df0c91ea25675f70514686759"
+        }
+      },
+      "still-life": {
+        "recognizability": "Weak. A faint tapering guide and pale fill suggest a possible vessel, but the object and its relationship to a supporting surface are unresolved.",
+        "stage_observations": [
+          "The sketch shows a thin shallow diagonal contour and a barely visible open vessel outline on the right.",
+          "The color stage adds the gray striped field and seven pale horizontal bars over the vessel guide.",
+          "The detail stage adds very faint marks above the vessel, and the final export still reads as an unfinished arrangement of bars and guides."
+        ],
+        "failure_modes": [
+          "There is no clear rim or opening, continuous vessel silhouette, or tonal turn to establish ceramic form.",
+          "Parallel fill bars and gaps remain conspicuous as separate strokes.",
+          "The largely blank lower field offers no readable tabletop or cast shadow to ground the object."
+        ],
+        "decision": "fail",
+        "finished_illustration": false,
+        "width": 512,
+        "height": 384,
+        "artwork_png": "qt6-still-life/versions/v01.png",
+        "artwork_png_sha256": "874b42c0eca594bc7454c7d2bf312b12448f0b93e625d25ea08efc022ca7fae2",
+        "artwork_kra": "qt6-still-life/versions/v01.kra",
+        "artwork_kra_sha256": "c74a98183b681f7aa1c74e4cdaeb0520212239cb3e0bf310ae5628a23e68bc32",
+        "stage_previews": {
+          "stages/01-layout.png": "8796480894bd89301dc819f794f671038da3d5e07b8ecf674fceab7b043d37df",
+          "stages/02-color.png": "ee74e17e4e63501b73aff458aa0d7b4cf6f07dc55d7aeccda22f62a4bc840aeb",
+          "stages/03-final.png": "6ff8e9c7e4dafebbb834ac272d3e9d01919cd867129ef41aafb75dfb490de6f7"
+        }
+      },
+      "character": {
+        "recognizability": "No readable figure. The visible subject consists of a left-of-center stack of peach strokes with a long dark tapered line beneath it.",
+        "stage_observations": [
+          "The sketch has a single curved vertical gesture and a thin crossing line across a mostly blank page.",
+          "The color stage adds a gray striped backdrop and a compact block of peach stroke bars near the top of the gesture.",
+          "Detail adds marks too faint to establish form. The final export still lacks a readable body, face or pose."
+        ],
+        "failure_modes": [
+          "No connected head, torso or limbs form a coherent character silhouette.",
+          "Skin-colored parallel strokes remain a swatch without readable anatomy or costume.",
+          "The lower part of the image is mostly blank, and the surviving gesture line does not establish a standing or seated figure."
+        ],
+        "decision": "fail",
+        "finished_illustration": false,
+        "width": 512,
+        "height": 384,
+        "artwork_png": "qt6-character/versions/v01.png",
+        "artwork_png_sha256": "441363196a394fa8f3edf6a08528f87a392fc6773e3ce79e67e386fdaf18cc5b",
+        "artwork_kra": "qt6-character/versions/v01.kra",
+        "artwork_kra_sha256": "5048baed0e486e69e265a55b1acd73f8214f59195f770f780c0793e9e1ace3d5",
+        "stage_previews": {
+          "stages/01-layout.png": "a483fc9b07a6d9fca7d2e988d33537451ef5dd3661c81788764d00ee9ad32ece",
+          "stages/02-color.png": "67969b5962adfca09b9ea8893aaba753f4976abec9ae574f4640e8522323f0c8",
+          "stages/03-final.png": "9d10bab067d1e4d73ecf78d3c6a064f2eabe259d2974c279c1dd9f1e850e01a9"
+        }
+      }
+    },
+    "scope": "Independent local visual review of the Qt6 v01 exports and their actual sketch, color and detail previews. Judged each image against its declared genre and the Round 7 finished-artwork gate. The generalist scene example supplied intent, and the verdict was based on the visible exports. Technical stage execution and independent human judgment are separate."
+  },
+  "coverage_qt6_wall": {
+    "before_nonwhite_pixels": 8727,
+    "after_nonwhite_pixels": 80305,
+    "region_pixels": 84480
+  },
+  "visible_layer_counts": {
+    "landscape": 7,
+    "still-life": 7,
+    "character": 7
+  }
+}

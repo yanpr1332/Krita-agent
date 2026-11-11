@@ -1,5 +1,7 @@
 # Krita Agent
 
+**Round 7 source update (new branch, native QA pending):** free-form ScenePlan v4 subjects, staged painting intents (`gesture`, `coverage`, `accents`), deterministic safe Krita stroke compilation, optional model proposal, and individual `creative paint-stage --confirm` approvals. See [Round 7 API](docs/ROUND7-API.md) and [Acceptance](docs/ROUND7-ACCEPTANCE.md). No natural-artwork or real-build acceptance is asserted by the source branch.
+
 **Future artistic direction (proposed):** develop Krita Agent into a generalist, human-like painting assistant: natural, purposeful brushwork; people/animals/still life/architecture as well as landscapes; reference-based repainting and reusable technique learning. The detailed Round 7–12 implementation and acceptance plan is in **[Generalist Artist Roadmap](docs/ARTIST-ROADMAP-R7-R12.md)**. API-based model *evaluation* is intentionally scheduled for Round 11; authorized model-based planning may be used earlier.
 
 **Round 6 verified scope:** per-stroke size, color, opacity and preset changes, pressure curves, and flexible revisions have native-fixture evidence on three tested Krita builds. See [Round 6 API](docs/ROUND6-API.md), [Acceptance Checklist](docs/ROUND6-ACCEPTANCE.md) and [Native Reacceptance](docs/ROUND6-REACCEPTANCE.md). Independent human artwork review and the rendering-drift root-cause fix remain pending.

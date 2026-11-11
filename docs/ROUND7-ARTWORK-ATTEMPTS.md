@@ -1,0 +1,13 @@
+# Round 7 full-artwork attempts
+
+Two local Qt6 runs on 2026-11-10 used separately reviewed, locally authored ScenePlan v4 candidates for a landscape, a teapot and pear still life, and a traveler character. The second run used smaller, more closely spaced coverage strokes and explicit detail pressure. The native Bridge performed the drawing. Each stage was confirmed by the executor after inspecting its actual Krita preview. The user did not independently approve the images or each phase.
+
+All six KRA/PNG pairs passed embedded-image and fresh-reopen integrity. Individual Krita layer ablation found 13, 10 and 13 visibly contributing layers in the first run, and 12, 10 and 13 in the second, for landscape, still life and character respectively. Each candidate has a real KRA, PNG, execution history, stage previews, reopened PNG and layer evidence in its run directory. Real Krita screenshots were retained for the three second-run candidates.
+
+The independent local visual reviewer rejected every candidate as a finished illustration. In the second run the landscape had a readable sun and a continuous lake, but repeated cloud strokes, sparse trees, incomplete mountain reflections and a bare foreground remained. The teapot and pear became more recognizable, but the handle/spout construction, scalloped filled edges and flat material rendering remained unfinished. The character gained facial marks, hands, boots and a satchel, but had a visible neck gap and insufficiently resolved forms. The reviewer recorded exact KRA, PNG and stage hashes. No human verdict was supplied.
+
+A third, four-stage attempt was prepared to address those observations. It completed the sketch and saved its checkpoint. Before stage two was submitted, the controller's live-identity check received connection refusal from the test session. Its state remains `awaiting_stage_approval` with the first checkpoint retained. There was no confirmed second-stage submission and no automatic retry. The remaining subjects in that attempt were not started.
+
+The full-artwork acceptance gate therefore remains **not accepted**. The technical and review outcomes must not be treated as evidence of complete multi-genre artistic ability. Future work needs better subject structure and material-aware, irregular coverage. A separate human review is required for any later candidate that passes independent visual review.
+
+[First run](../artwork-results/round7-artwork-20261110-170737/) · [Second run](../artwork-results/round7-artwork-v2-20261110-172144/) · [Interrupted run](../artwork-results/round7-artwork-v3-20261110-173551/) · [Sanitized artifact summary](acceptance-evidence/round7-artwork-attempts.json)

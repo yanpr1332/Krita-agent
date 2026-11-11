@@ -1,0 +1,66 @@
+{
+  "runs": [
+    {
+      "local_run": "artwork-results/round7-artwork-20261110-170737",
+      "model": "gpt-6.1-sol",
+      "topics": [
+        {
+          "topic": "landscape",
+          "kra_sha256": "436d0f614ef1e24328b108b82936edcc3b09605cb0d9b42ff96aa0ad2baed7a5",
+          "png_sha256": "7df84037d3cc11bd2a7652383433e65d6ab5f980174e47b75c0cdbb858d964f1",
+          "visible_layers": 13,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        },
+        {
+          "topic": "still-life",
+          "kra_sha256": "1597e98b0c0b3ef429a88c9e2c8bc831196ece88655212a5e0cd62e285102d80",
+          "png_sha256": "b01d6ff7a13f2f5f2d67a1e19c9b8140a478c8598492b34625c10e1ae341d410",
+          "visible_layers": 10,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        },
+        {
+          "topic": "character",
+          "kra_sha256": "0420535d166ef5fdc8fb5d23ca8ff0b3b44d9e4becb9b446f275e53203b97386",
+          "png_sha256": "7f92656cdb0d69e24630863c00e6fd622801485a80d73e492e2ebd453ab71f5f",
+          "visible_layers": 13,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        }
+      ]
+    },
+    {
+      "local_run": "artwork-results/round7-artwork-v2-20261110-172144",
+      "model": "gpt-6.1-sol",
+      "topics": [
+        {
+          "topic": "landscape",
+          "kra_sha256": "6f4c89b193b166e32ac5b4232363bec2453a5cbc9d6d5c007b19c1da92e85f79",
+          "png_sha256": "491061944044fbc9d58a4ae7c22560fb26dd2a6bdafce47852b22689c1ee7517",
+          "visible_layers": 12,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        },
+        {
+          "topic": "still-life",
+          "kra_sha256": "3ea9488cc13deaa2aa46f3a1e6d48c4dce45f8d9739d13f715eaf6532e28cbb4",
+          "png_sha256": "02fc8420b7e79520829017fdf03c83ad1497647b7939189093c20ea55df40e1d",
+          "visible_layers": 10,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        },
+        {
+          "topic": "character",
+          "kra_sha256": "46815ef64f963e8355e02b3deeb773a7efd9612eccdcb4212aa11106faf8bc0d",
+          "png_sha256": "e24c3d77bb87347ff0b9f8bcbb0f516124927ea12883129ecb02907493995518",
+          "visible_layers": 13,
+          "visual_decision": "fail",
+          "reopen_stability": "pass"
+        }
+      ]
+    }
+  ],
+  "third_attempt": "interrupted before stage two submission due to connection refusal",
+  "human_review": "not supplied"
+}
