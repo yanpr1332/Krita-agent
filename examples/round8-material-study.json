@@ -318,7 +318,9 @@
               "#CEC8C3",
               "#E6D9C6"
             ],
-            "seed": 110
+            "seed": 110,
+            "light_angle": -70,
+            "light_strength": 0.65
           }
         },
         {
@@ -373,7 +375,9 @@
               "#CF9684",
               "#F0B59D"
             ],
-            "seed": 220
+            "seed": 220,
+            "light_angle": -50,
+            "light_strength": 0.65
           }
         },
         {
@@ -424,7 +428,9 @@
               "#8B9DA2",
               "#D4D9D7"
             ],
-            "seed": 330
+            "seed": 330,
+            "light_angle": -30,
+            "light_strength": 0.65
           }
         }
       ]
@@ -473,7 +479,9 @@
               "#293348",
               "#6F6870"
             ],
-            "seed": 440
+            "seed": 440,
+            "light_angle": -70,
+            "light_strength": 0.35
           }
         },
         {
@@ -511,7 +519,9 @@
               "#D5DDE2",
               "#F2F1E8"
             ],
-            "seed": 550
+            "seed": 550,
+            "light_angle": -70,
+            "light_strength": 0.35
           }
         },
         {
@@ -550,7 +560,9 @@
               "#D9C5A8",
               "#F6E9D3"
             ],
-            "seed": 660
+            "seed": 660,
+            "light_angle": -70,
+            "light_strength": 0.35
           }
         }
       ]

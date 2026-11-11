@@ -392,8 +392,19 @@ class CreativeWorkflow:
         archived = record.get("artifacts", {}).get("stage_previews")
         spans = compiled.get("stage_spans")
         if archived is not None and spans:
+            subjects, source_canvas = None, None
+            v4_ref = record.get("artifacts", {}).get("scene_v4")
+            if v4_ref is not None:
+                source_path = (self.root / v4_ref.get("path", "")).resolve()
+                if (self.root not in source_path.parents or not source_path.is_file()
+                        or _sha(source_path) != v4_ref.get("sha256")):
+                    raise TaskError("Generalist source changed before pixel diagnostics")
+                v4 = validate_scene_v4(json.loads(source_path.read_text(encoding="utf-8")))
+                subjects = v4["subjects"]
+                source_canvas = (v4["document"]["width"], v4["document"]["height"])
             result["native_stage_pixels"] = archived_stage_diagnostics(
-                self.root, archived, spans)
+                self.root, archived, spans, subjects=subjects,
+                canvas_size=source_canvas)
         return result
 
     def export_native(self, client):

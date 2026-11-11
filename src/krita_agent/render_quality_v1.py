@@ -145,7 +145,51 @@ def compare_actual_pngs(before, after, max_pixels=32000000):
         }
 
 
-def archived_stage_diagnostics(root, artifacts, stage_spans):
+def compare_actual_region(before, after, bounds, canvas_size):
+    """Count actual changed pixels in one approved subject rectangle.
+
+    A subject ROI may overlap another subject. This reports local evidence,
+    NOT which layer or artist is responsible and NOT artwork completeness.
+    """
+    from PIL import Image, ImageChops
+    if (not isinstance(bounds, list) or len(bounds) != 4
+            or not isinstance(canvas_size, (list, tuple)) or len(canvas_size) != 2):
+        raise TaskError("Invalid subject pixel region")
+    if any(type(v) not in (int, float) or not math.isfinite(v) for v in bounds):
+        raise TaskError("Invalid subject bound")
+    width, height = canvas_size
+    if (type(width) is not int or type(height) is not int
+            or width <= 0 or height <= 0):
+        raise TaskError("Invalid approved source canvas")
+    x, y, w, h = bounds
+    if x < 0 or y < 0 or w <= 0 or h <= 0 or x+w > width or y+h > height:
+        raise TaskError("Subject pixel region escapes approved canvas")
+    with Image.open(before) as a, Image.open(after) as b:
+        if a.size != b.size:
+            raise TaskError("Stage dimensions differ for subject region")
+        iw, ih = a.size
+        box = (
+            max(0, min(iw, math.floor(x*iw/width))),
+            max(0, min(ih, math.floor(y*ih/height))),
+            max(0, min(iw, math.ceil((x+w)*iw/width))),
+            max(0, min(ih, math.ceil((y+h)*ih/height))),
+        )
+        if box[2] <= box[0] or box[3] <= box[1]:
+            raise TaskError("Subject region is smaller than one native preview pixel")
+        old = a.convert("RGBA").crop(box)
+        new = b.convert("RGBA").crop(box)
+        diff = ImageChops.difference(old, new)
+        px = diff.get_flattened_data() if hasattr(diff, "get_flattened_data") else diff.getdata()
+        changed = sum(any(channels) for channels in px)
+        total = (box[2]-box[0])*(box[3]-box[1])
+    return {"native_preview_roi": list(box),
+            "changed_pixels": changed,
+            "region_pixels": total,
+            "changed_fraction": round(changed/total, 8),
+            "note": "Overlapping subject regions are not layer-level attribution"}
+
+
+def archived_stage_diagnostics(root, artifacts, stage_spans, subjects=None, canvas_size=None):
     """Hash-bound stage comparison from existing immutable CreativeWorkflow artifacts."""
     if not isinstance(artifacts, dict) or not isinstance(stage_spans, list):
         raise TaskError("Missing stage preview archive or stage plan")
@@ -165,10 +209,17 @@ def archived_stage_diagnostics(root, artifacts, stage_spans):
         paths.append((name, path))
     rows = []
     for (left_name, before), (right_name, after) in zip(paths, paths[1:]):
-        rows.append({
-            "from_stage": left_name, "to_stage": right_name,
-            "pixels": compare_actual_pngs(before, after),
-        })
+        row = {"from_stage": left_name, "to_stage": right_name,
+               "pixels": compare_actual_pngs(before, after)}
+        if subjects is not None:
+            if canvas_size is None:
+                raise TaskError("Subject diagnostics need approved canvas dimensions")
+            row["subject_roi_deltas"] = [
+                {"subject_id": subject["id"],
+                 **compare_actual_region(before, after, subject["bounds"], canvas_size)}
+                for subject in subjects
+            ]
+        rows.append(row)
     return {"schema": "krita-agent-archived-stage-qc/1",
             "stages_verified": len(paths), "transitions": rows,
             "artwork_accepted": False,

@@ -1,5 +1,7 @@
 # Krita Agent
 
+**Round 8 source development (native/artwork QA pending):** opt-in material-aware native brush recipes with directional flow, bounded blue-noise mark placement, layered size/pressure/color, coverage edge stitching, and read-only real stage-pixel diagnostics. Existing ScenePlan v4 plans remain supported. See [Round 8 API](docs/ROUND8-API.md), [Acceptance](docs/ROUND8-ACCEPTANCE.md) and [R7 failed-art baseline](docs/ROUND7-ARTWORK-ATTEMPTS.md). A passing CI does not prove human-like art.
+
 **Round 7 source update (new branch, native QA pending):** free-form ScenePlan v4 subjects, staged painting intents (`gesture`, `coverage`, `accents`), deterministic safe Krita stroke compilation, optional model proposal, and individual `creative paint-stage --confirm` approvals. See [Round 7 API](docs/ROUND7-API.md) and [Acceptance](docs/ROUND7-ACCEPTANCE.md). No natural-artwork or real-build acceptance is asserted by the source branch.
 
 **Future artistic direction (proposed):** develop Krita Agent into a generalist, human-like painting assistant: natural, purposeful brushwork; people/animals/still life/architecture as well as landscapes; reference-based repainting and reusable technique learning. The detailed Round 7–12 implementation and acceptance plan is in **[Generalist Artist Roadmap](docs/ARTIST-ROADMAP-R7-R12.md)**. API-based model *evaluation* is intentionally scheduled for Round 11; authorized model-based planning may be used earlier.

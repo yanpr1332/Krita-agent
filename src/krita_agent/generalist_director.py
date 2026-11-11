@@ -45,7 +45,8 @@ Do not plan by repetitive line-count targets. Include plausible
 relationships, proportions, perspective and occlusion for the specific
 subject matter. Do not claim a painting has been rendered.
 Round 8 opt-in material rendering: an intent MAY specify render:{technique,flow,
-angle,spacing,length,curvature,irregularity,layers,edge_mode,edge_inset,
+angle,light_angle,light_strength,spacing,length,curvature,
+irregularity,layers,edge_mode,edge_inset,
 palette,seed,placement}. technique may be wash, wisps, ripples, facets, growth,
 contour, folds, strands, planes or specular. flow is linear/radial/
 tangential/perspective/growth; edge_mode is none/stitch; palette is

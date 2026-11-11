@@ -42,7 +42,8 @@ def validate_render(raw, kind):
         raise TaskError("Render recipe must be a JSON object")
     allowed = {"technique", "flow", "angle", "spacing", "length",
                "curvature", "irregularity", "layers", "edge_mode",
-               "edge_inset", "palette", "seed", "placement"}
+               "edge_inset", "palette", "seed", "placement",
+               "light_angle", "light_strength"}
     extra = set(raw) - allowed
     if extra:
         raise TaskError("Unsupported material recipe fields: " + ", ".join(sorted(extra)))
@@ -59,6 +60,8 @@ def validate_render(raw, kind):
         "technique": technique,
         "flow": (lambda v: v if v in FLOWS else _bad_flow())(raw.get("flow", flow)),
         "angle": number(raw.get("angle", 0), "material angle", -180, 180),
+        "light_angle": number(raw.get("light_angle", -45), "material light angle", -180, 180),
+        "light_strength": number(raw.get("light_strength", .4), "material light strength", 0, 1),
         "spacing": number(raw.get("spacing", spacing), "material spacing", 3, 100),
         "length": number(raw.get("length", length), "material length", 4, 240),
         "curvature": number(raw.get("curvature", curvature), "material curvature", 0, .6),
@@ -315,8 +318,15 @@ def _render_coverage(intent, selected, subject, recipe):
             for fragment in _clip_mark(path, polygon, recipe["edge_inset"]):
                 # Color follows value/depth and pass, not pixel noise.
                 normalized_y = (y-top)/max(1.0, bottom-top)
+                normalized_x = (x-left)/max(1.0, right-left)
+                light = math.radians(recipe["light_angle"])
+                along = ((normalized_x-.5)*math.cos(light)
+                         +(normalized_y-.5)*math.sin(light))
+                lit = max(0.0, min(1.0, .5+along*.71))
+                value_position = ((1-recipe["light_strength"])*normalized_y
+                                  + recipe["light_strength"]*lit)
                 ci = min(len(colors)-1, int(
-                    (normalized_y*.55+layer/max(1, recipe["layers"])*.45)
+                    (value_position*.72+layer/max(1, recipe["layers"])*.28)
                     * len(colors)
                 ))
                 nominal = nominal_size * (

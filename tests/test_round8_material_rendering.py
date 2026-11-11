@@ -17,7 +17,8 @@ from krita_agent.material_rendering import (
 )
 from krita_agent.protocol import TaskError
 from krita_agent.render_quality_v1 import (
-    archived_stage_diagnostics, compare_actual_pngs, plan_mark_diagnostics,
+    archived_stage_diagnostics, compare_actual_pngs, compare_actual_region,
+    plan_mark_diagnostics,
 )
 from krita_agent.scene_v3 import digest
 from krita_agent.scene_v4 import compile_scene_v4, lower_scene_v4, validate_scene_v4
@@ -105,6 +106,7 @@ def test_each_material_technique_produces_bounded_native_brush_marks(technique):
     ({"technique": "wash", "edge_inset": -10}, "edge inset"),
     ({"technique": "wash", "angle": 999}, "material angle"),
     ({"technique": "wash", "placement": "regular_grid_forever"}, "material placement"),
+    ({"technique": "wash", "light_strength": 3}, "material light strength"),
 ])
 def test_material_recipe_strictly_rejects_untrusted_parameters(patch, expected):
     with pytest.raises(TaskError, match=expected):
@@ -194,6 +196,7 @@ def test_hash_bound_stage_archive_and_read_only_workflow_qc(tmp_path):
     report = flow.diagnose_materials()
     assert report["native_stage_pixels"]["stages_verified"] == 3
     assert len(report["native_stage_pixels"]["transitions"]) == 2
+    assert len(report["native_stage_pixels"]["transitions"][0]["subject_roi_deltas"]) == 3
     assert report["artwork_accepted"] is False
     first = folder/next(iter(references))
     first.write_bytes(b"tampered")
@@ -226,3 +229,39 @@ def test_blue_noise_sampling_breaks_rigid_grid_without_losing_determinism():
     assert first["elements"] != second["elements"]
     assert second["elements"] == repeat["elements"]
     assert 1 < len(second["elements"]) <= MAX_MARKS
+
+
+def test_actual_subject_region_deltas_are_separate_from_global_metrics(tmp_path):
+    before, after = tmp_path/"before.png", tmp_path/"after.png"
+    Image.new("RGBA", (12, 12), (100, 120, 140, 255)).save(before)
+    im = Image.new("RGBA", (12, 12), (100, 120, 140, 255))
+    im.putpixel((2, 2), (110, 120, 140, 255))
+    im.putpixel((10, 10), (110, 120, 140, 255))
+    im.save(after)
+    top_left = compare_actual_region(before, after, [0, 0, 6, 6], (12, 12))
+    assert top_left["changed_pixels"] == 1
+    assert top_left["region_pixels"] == 36
+    assert "not layer-level attribution" in top_left["note"]
+    assert compare_actual_pngs(before, after)["changed_rgba_pixels"] == 2
+    with pytest.raises(TaskError, match="escapes"):
+        compare_actual_region(before, after, [0, 0, 99, 3], (12, 12))
+
+
+def test_material_light_direction_changes_value_group_without_changing_geometry():
+    a = new_scene()
+    b = new_scene()
+    recipe_a = a["stages"][1]["intents"][2]["render"]
+    recipe_b = b["stages"][1]["intents"][2]["render"]
+    recipe_a.update(light_angle=-90, light_strength=1)
+    recipe_b.update(light_angle=90, light_strength=1)
+    left, _ = lower_scene_v4(a)
+    right, _ = lower_scene_v4(b)
+    def colors(scene):
+        return [e["brush"]["color"] for obj in scene["objects"]
+                if obj["id"] == "s01_cup" for e in obj["elements"]]
+    assert colors(left) != colors(right)
+    # Source order/geometry of paint marks are unchanged by the lighting palette.
+    def geometries(scene):
+        return [e["points"] for obj in scene["objects"]
+                if obj["id"] == "s01_cup" for e in obj["elements"]]
+    assert geometries(left) == geometries(right)

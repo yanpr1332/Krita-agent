@@ -1,6 +1,6 @@
 # Round 8 development brief — natural brushwork and material rendering
 
-> **Kickoff / implementation plan, NOT implemented and NOT accepted.** Created on the new `feat/round8-natural-brushwork` branch based on `main` at `5eb948ba10f96771da32ea003261a32292c72a05` (2026-11-11). Round 7 is merged, but its **finished-artwork acceptance FAILED**. Preserve all failed local evidence and do not modify `main` as part of Round 8 development.
+> **Original kickoff plan.** Source implementation is now underway on the same branch, but native and whole-artwork acceptance are NOT established. See [R8 API](ROUND8-API.md) and [acceptance](ROUND8-ACCEPTANCE.md). Created on the new `feat/round8-natural-brushwork` branch based on `main` at `5eb948ba10f96771da32ea003261a32292c72a05` (2026-11-11). Round 7 is merged, but its **finished-artwork acceptance FAILED**. Preserve all failed local evidence and do not modify `main` as part of Round 8 development.
 
 ## 1. Why Round 8 is necessary
 
@@ -108,3 +108,8 @@ This plan **does not** authorize a model API payment or immediate new native loc
 - **Current status:** kickoff / plan only. This document is not an implementation claim. Round 8 development must be separately implemented, CI-tested, natively verified and visually assessed.
 - Preserve `main`, Round 7 merged history and all old feature branches. Do not merge/push `main` without express authorization. No Windows/WSL workspace or RDC operations were performed for this GitHub preparation.
 - Continue to obey [AGENTS.md](../AGENTS.md), [the generalist roadmap](ARTIST-ROADMAP-R7-R12.md), [Round 7 acceptance](ROUND7-ACCEPTANCE.md) and [full artwork standards](ARTWORK-ACCEPTANCE.md).
+
+
+## 7. Implementation checkpoint (2026-11-11)
+
+The initial R8 source batch implements an optional validated recipe/field layer for ten painting techniques and five flow types; layered per-mark style/pressure, seed-stable staggered or bounded blue-noise placement, polygon-clipped centerlines and optional fine edge stitching; legacy R7 opt-out compatibility; a read-only diagnostic command inspecting actual native stage PNGs and mark-shape repeats; and Windows offline regression tests. This is **not** evidence of actual perceptual improvement. Remaining work in this round includes native material/preset trials, region-level edge and fill review, controlled R7-vs-R8 visual comparison, finishing quality improvements based on failed art, and independent human full-art acceptance. No cloud deployment or local desktop/Krita test is performed by this commit.

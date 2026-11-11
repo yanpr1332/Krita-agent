@@ -1,5 +1,13 @@
 # Changelog
 
+## Round 8 — natural mark-making and native stage diagnostics (source development, 2026-11-11)
+
+- Added opt-in per-intent material recipes atop ScenePlan v4: 10 techniques, 5 surface flow fields, deterministic placement including bounded blue noise, curve/size/pressure/opacity/palette layering and edge-stitch suggestions. All output remains native brush strokes.
+- Preserved legacy ScenePlan v4/v3 behavior when material recipes are absent; extended optional generalist model planning without granting command authority.
+- Added read-only full-stage PNG delta and geometry repetition diagnostics with source hash binding; introduced `creative diagnose` and a generalist three-subject material study.
+- Added Windows CI regression cases for safe material parameters, over-budget rejection, geometry containment, deterministic lowering and stage PNG evidence. **This does not claim installed-Krita or finished-artwork acceptance.**
+
+
 ## Round 7 — generalist staged intent-to-stroke foundation (source change, 2026-11-10)
 
 - Created independent `feat/round7-generalist-scene` branch from the R7–R12 planning branch, preserving Round 6 and main.
