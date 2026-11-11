@@ -1,6 +1,6 @@
 # Krita Agent
 
-**Round 8 source development (native/artwork QA pending):** opt-in material-aware native brush recipes with directional flow, bounded blue-noise mark placement, layered size/pressure/color, coverage edge stitching, and read-only real stage-pixel diagnostics. Existing ScenePlan v4 plans remain supported. See [Round 8 API](docs/ROUND8-API.md), [Acceptance](docs/ROUND8-ACCEPTANCE.md) and [R7 failed-art baseline](docs/ROUND7-ARTWORK-ATTEMPTS.md). A passing CI does not prove human-like art.
+**Round 8 source development (native/artwork QA pending):** opt-in material-aware native brush recipes with directional flow, bounded blue-noise mark placement, layered size/pressure/color, coverage edge stitching, and read-only real stage-pixel diagnostics. Existing ScenePlan v4 plans remain supported. See [Round 8 API](docs/ROUND8-API.md), [Acceptance](docs/ROUND8-ACCEPTANCE.md) and [R7 failed-art baseline](docs/ROUND7-ARTWORK-ATTEMPTS.md). Windows CI [#42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) passed 223 offline tests on each Python version; this does not prove human-like art.
 
 **Round 7 source update (new branch, native QA pending):** free-form ScenePlan v4 subjects, staged painting intents (`gesture`, `coverage`, `accents`), deterministic safe Krita stroke compilation, optional model proposal, and individual `creative paint-stage --confirm` approvals. See [Round 7 API](docs/ROUND7-API.md) and [Acceptance](docs/ROUND7-ACCEPTANCE.md). No natural-artwork or real-build acceptance is asserted by the source branch.
 

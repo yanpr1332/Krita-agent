@@ -1,6 +1,6 @@
 # Krita Agent
 
-**第八轮自然笔触（源码开发，真实画质验收待进行）：** 为 ScenePlan v4 增加可选的十类材质笔法、方向场、有界蓝噪声落笔、颜色/粗细/压感/透明度分层、边缘修饰和真实阶段 PNG 差异诊断；旧计划保持兼容。参见 [Round 8 API](docs/ROUND8-API.md)、[验收清单](docs/ROUND8-ACCEPTANCE.md) 和 [Round 7 失败作品基线](docs/ROUND7-ARTWORK-ATTEMPTS.md)。源码通过测试不等于画得像人。
+**第八轮自然笔触（源码开发，真实画质验收待进行）：** 为 ScenePlan v4 增加可选的十类材质笔法、方向场、有界蓝噪声落笔、颜色/粗细/压感/透明度分层、边缘修饰和真实阶段 PNG 差异诊断；旧计划保持兼容。参见 [Round 8 API](docs/ROUND8-API.md)、[验收清单](docs/ROUND8-ACCEPTANCE.md) 和 [Round 7 失败作品基线](docs/ROUND7-ARTWORK-ATTEMPTS.md)。Windows [CI #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) 在两种 Python 版本上各通过 223 项离线测试；这不等于画得像人。
 
 **第七轮通用画师底层架构（源码已开发，原生验收待完成）：** ScenePlan v4 支持自由题材的主体层级、材质、独立绘画阶段及 `gesture` / `coverage` / `accents` 意图，安全编译成 Krita 原生笔触；提供可选模型规划与每阶段单独 `creative paint-stage --confirm` 人工批准。见 [Round 7 API](docs/ROUND7-API.md) 与 [第七轮验收清单](docs/ROUND7-ACCEPTANCE.md)。尚不宣称实现自然的人类级绘画或跨题材成品验收。
 

@@ -1,6 +1,6 @@
 # Round 8 acceptance — natural brushwork and material-aware rendering
 
-> **Current state:** Round 8 source work and offline tests are being developed on `feat/round8-natural-brushwork`. No real Krita painting, independent visual acceptance or human approval has been performed in this cloud development phase. Preserve R7's known failed artworks as the locked baseline.
+> **Current state:** Round 8 source implementation and Windows offline CI have passed; installed-Krita and whole-artwork verification are still outstanding on `feat/round8-natural-brushwork`. No real Krita painting, independent visual acceptance or human approval has been performed in this cloud development phase. Preserve R7's known failed artworks as the locked baseline.
 
 ## A. Source and safety gates
 
@@ -10,7 +10,7 @@
 - [x] User-approved R7 staged execution, hash-binding, editable layer output, unknown-result fail-closed policy and no-paste boundaries remain intact.
 - [x] Informational plan repetition diagnostics, hash-validated full-canvas and per-subject-ROI pixel changes for archived actual Krita stage PNGs, and read-only CLI `creative diagnose`.
 - [x] Cross-subject, cross-material sample study, negative/security tests and legacy compile regressions.
-- [ ] Execute full Windows 3.10/3.13 GitHub CI for the final code SHA; link evidence here.
+- [x] Windows 3.10/3.13 GitHub CI on source revision `a366a41f`: **223 tests passed per environment**, no warnings. [Actions run #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459).
 - [ ] Native tests of `wash/wisps/ripples/facets/growth/contour/folds/strands/planes/specular` on installed Krita builds, including brush preset behavior, actual stage pixels and CPU/time.
 - [ ] Strict Export Integrity and fresh-copy Reopen Stability for new R8 creations, recording RGBA+ICC and retaining every failure.
 
@@ -50,4 +50,4 @@ At least three complete works (landscape, still life, simple character) plus at 
 
 Run `creative diagnose` against preserved real artwork after the native-stage archive; report original and reopened pixels and actual stage preview deltas. In each build, inspect at least three different materials at full-resolution crops. For the complete works, include the old-vs-new plan hashes and equivalent-run budget. Retain screenshots and failed results in isolated ignored `artwork-results/<run-id>` paths, and write a concise source-backed acceptance report to GitHub on this Round 8 branch only. Do not merge `main` without user authorization.
 
-See [R8 API](ROUND8-API.md), [planned work packages](ROUND8-DEVELOPMENT-PLAN.md), [R7 failed baseline](ROUND7-ARTWORK-ATTEMPTS.md) and [project acceptance rules](../AGENTS.md).
+See [native handoff steps](ROUND8-NATIVE-HANDOFF.md), [R8 API](ROUND8-API.md), [planned work packages](ROUND8-DEVELOPMENT-PLAN.md), [R7 failed baseline](ROUND7-ARTWORK-ATTEMPTS.md) and [project acceptance rules](../AGENTS.md).

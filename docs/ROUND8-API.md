@@ -108,6 +108,7 @@ The diagnostics read existing hashes and PNGs without altering any drawing, docu
 ## Acceptance and future scope
 
 - [Round 8 acceptance matrix](ROUND8-ACCEPTANCE.md)
+- [Native local-agent test handoff](ROUND8-NATIVE-HANDOFF.md)
 - [Round 8 development brief](ROUND8-DEVELOPMENT-PLAN.md)
 - [R7 failed whole-art evidence](ROUND7-ARTWORK-ATTEMPTS.md)
 - [Full artwork acceptance](ARTWORK-ACCEPTANCE.md)

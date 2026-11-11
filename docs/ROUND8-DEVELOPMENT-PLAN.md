@@ -113,3 +113,8 @@ This plan **does not** authorize a model API payment or immediate new native loc
 ## 7. Implementation checkpoint (2026-11-11)
 
 The initial R8 source batch implements an optional validated recipe/field layer for ten painting techniques and five flow types; layered per-mark style/pressure, seed-stable staggered or bounded blue-noise placement, polygon-clipped centerlines and optional fine edge stitching; legacy R7 opt-out compatibility; a read-only diagnostic command inspecting actual native stage PNGs and mark-shape repeats; and Windows offline regression tests. This is **not** evidence of actual perceptual improvement. Remaining work in this round includes native material/preset trials, region-level edge and fill review, controlled R7-vs-R8 visual comparison, finishing quality improvements based on failed art, and independent human full-art acceptance. No cloud deployment or local desktop/Krita test is performed by this commit.
+
+
+### Source validation checkpoint
+
+Windows GitHub Actions [run #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) passed **223 offline tests** on Python 3.10 and 3.13 for commit `a366a41f`. The tests cover the declarative material schema, deterministic bounded native brush compilation, opt-out R7 compatibility, blue-noise placement, light-dependent palettes, actual-PNG diagnostics, subject-ROI deltas, failure guards and CLI contracts. **No installed Krita was used in this CI run.** For real native/visual acceptance, follow [the local handoff](ROUND8-NATIVE-HANDOFF.md) and preserve failed results.
