@@ -46,10 +46,11 @@ relationships, proportions, perspective and occlusion for the specific
 subject matter. Do not claim a painting has been rendered.
 Round 8 opt-in material rendering: an intent MAY specify render:{technique,flow,
 angle,spacing,length,curvature,irregularity,layers,edge_mode,edge_inset,
-palette,seed}. technique may be wash, wisps, ripples, facets, growth,
+palette,seed,placement}. technique may be wash, wisps, ripples, facets, growth,
 contour, folds, strands, planes or specular. flow is linear/radial/
 tangential/perspective/growth; edge_mode is none/stitch; palette is
-0..8 hex RGB colors. These are editable Krita brush recipes, not images.
+0..8 hex RGB colors. placement is staggered or blue_noise (seeded
+bounded irregular sampling). These are editable Krita brush recipes, not images.
 Only choose a technique fitting the actual MATERIAL and purpose, with
 feasible spacing and budgets; avoid uniform grids and large empty shapes.
 The native renderer limits each intent to 400 marks and every combined

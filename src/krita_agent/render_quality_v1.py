@@ -115,7 +115,9 @@ def compare_actual_pngs(before, after, max_pixels=32000000):
         # Loop over actual decoded pixel tuples; transparent RGB must still count
         # as a difference, because strict Reopen Stability has no tolerance.
         changed, alpha_changed, maximum, rgb_sum = 0, 0, 0, 0
-        for channels in delta.getdata():
+        pixel_rows = (delta.get_flattened_data() if hasattr(delta, "get_flattened_data")
+                      else delta.getdata())
+        for channels in pixel_rows:
             if any(channels):
                 changed += 1
                 if channels[3]:

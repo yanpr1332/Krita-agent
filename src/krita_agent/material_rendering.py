@@ -18,6 +18,7 @@ TECHNIQUES = frozenset((
 ))
 FLOWS = frozenset(("linear", "radial", "tangential", "perspective", "growth"))
 EDGES = frozenset(("none", "stitch"))
+PLACEMENTS = frozenset(("staggered", "blue_noise"))
 HEX = re.compile(r"#[0-9A-Fa-f]{6}\Z")
 DEFAULTS = {
     "wash": ("linear", 20, 55, 0.045),
@@ -41,7 +42,7 @@ def validate_render(raw, kind):
         raise TaskError("Render recipe must be a JSON object")
     allowed = {"technique", "flow", "angle", "spacing", "length",
                "curvature", "irregularity", "layers", "edge_mode",
-               "edge_inset", "palette", "seed"}
+               "edge_inset", "palette", "seed", "placement"}
     extra = set(raw) - allowed
     if extra:
         raise TaskError("Unsupported material recipe fields: " + ", ".join(sorted(extra)))
@@ -67,6 +68,8 @@ def validate_render(raw, kind):
         "edge_inset": number(raw.get("edge_inset", 1), "material edge inset", 0, 14),
         "palette": [v.upper() for v in palette],
         "seed": integer(raw.get("seed", 0), "material seed", 0, 2147483647),
+        "placement": (lambda v: v if v in PLACEMENTS else _bad_placement())(
+            raw.get("placement", "staggered" if technique == "wash" else "blue_noise")),
     }
 
 
@@ -76,6 +79,10 @@ def _bad_flow():
 
 def _bad_edge():
     raise TaskError("Unknown material edge treatment")
+
+
+def _bad_placement():
+    raise TaskError("Unknown material placement")
 
 
 def _inside(x, y, poly):
@@ -216,6 +223,65 @@ def _colors(recipe, selected, subject):
     return recipe["palette"] or [selected.get("brush", {}).get("color", subject["brush"]["color"])]
 
 
+
+def _centers(polygon, recipe, layer, rng):
+    """Sample intentional stroke centers; blue-noise suppresses rigid grids.
+
+    Reject samples too close to prior ones on the same paint pass. A bounded
+    spatial bucket grid keeps the deterministic rejection step inexpensive.
+    Every sample is still constrained by the approved polygon and edge inset.
+    """
+    left = min(x for x, _ in polygon)
+    top = min(y for _, y in polygon)
+    right = max(x for x, _ in polygon)
+    bottom = max(y for _, y in polygon)
+    spacing = recipe["spacing"]
+    if recipe["placement"] == "staggered":
+        rows = math.ceil((bottom-top)/spacing)+1
+        cols = math.ceil((right-left)/spacing)+1
+        points = []
+        for row in range(rows):
+            cy = top+(row+.46+(layer/recipe["layers"]-.5)*.65)*spacing
+            if cy > bottom:
+                continue
+            for col in range(cols):
+                stagger = .46 if row % 2 else 0
+                cx = left+(col+.48+stagger)*spacing
+                x = cx+(rng.random()-.5)*spacing*recipe["irregularity"]
+                y = cy+(rng.random()-.5)*spacing*recipe["irregularity"]
+                if _safe_point((x, y), polygon, recipe["edge_inset"]):
+                    points.append((x, y))
+        return points
+    desired = max(1, math.ceil((right-left)*(bottom-top)/(spacing*spacing)*1.12))
+    separation = spacing*(.68-.12*recipe["irregularity"])
+    cell = max(1.0, separation)
+    occupied, points = {}, []
+    # Bound attempted candidates, not just successful marks.
+    for _ in range(min(2500, max(48, desired*15))):
+        if len(points) >= desired:
+            break
+        x = left+rng.random()*(right-left)
+        y = top+rng.random()*(bottom-top)
+        if not _safe_point((x, y), polygon, recipe["edge_inset"]):
+            continue
+        gx, gy = math.floor(x/cell), math.floor(y/cell)
+        close = False
+        for bx in range(gx-1, gx+2):
+            for by in range(gy-1, gy+2):
+                for ox, oy in occupied.get((bx, by), ()):
+                    if (x-ox)**2+(y-oy)**2 < separation**2:
+                        close = True
+                        break
+                if close:
+                    break
+            if close:
+                break
+        if not close:
+            points.append((x, y))
+            occupied.setdefault((gx, gy), []).append((x, y))
+    return points
+
+
 def _render_coverage(intent, selected, subject, recipe):
     polygon = intent["polygon"]
     left = min(x for x, _ in polygon)
@@ -235,47 +301,36 @@ def _render_coverage(intent, selected, subject, recipe):
     nominal_size = base["size"]
     nominal_alpha = base.get("opacity", 1.0)
     for layer in range(recipe["layers"]):
-        for row in range(rows):
-            cy = top+(row+.46+(layer/recipe["layers"]-.5)*.65)*spacing
-            if cy > bottom:
-                continue
-            for col in range(cols):
-                stagger = .46 if row % 2 else 0
-                cx = left+(col+.48+stagger)*spacing
-                x = cx+(rng.random()-.5)*spacing*recipe["irregularity"]
-                y = cy+(rng.random()-.5)*spacing*recipe["irregularity"]
-                if not _safe_point((x, y), polygon, recipe["edge_inset"]):
-                    continue
-                dx, dy = _field(x, y, subject, recipe)
-                jitter = (rng.random()-.5)*recipe["irregularity"]*.75
-                cs, sn = math.cos(jitter), math.sin(jitter)
-                dx, dy = dx*cs-dy*sn, dx*sn+dy*cs
-                length = recipe["length"]*(.77+.46*rng.random())
-                curvature = recipe["curvature"]*(.72+.45*rng.random())
-                if technique in ("strands", "specular"):
-                    length *= .65
-                path = _mark_geometry(x, y, dx, dy, length, curvature,
-                                      technique, .7+.6*rng.random())
-                for fragment in _clip_mark(path, polygon, recipe["edge_inset"]):
-                    # Taper and palette choice follow depth/lighting and pass,
-                    # never independent per-pixel random paint.
-                    normalized_y = (y-top)/max(1.0, bottom-top)
-                    ci = min(len(colors)-1, int(
-                        (normalized_y*.55+layer/max(1, recipe["layers"])*.45)
-                        * len(colors)
-                    ))
-                    nominal = nominal_size * (
-                        .95 if technique == "wash" else
-                        .62 if technique in ("wisps", "planes", "contour") else
-                        .23 if technique in ("strands", "specular") else
-                        .46 if technique in ("ripples", "growth") else .54
-                    )
-                    size = nominal*(.82+.32*rng.random())*(1+.1*layer)
-                    alpha = nominal_alpha*(.72 if layer == 0 else .53)
-                    marks.append(_stroke(fragment, selected, subject,
-                                         colors[ci], size, alpha, technique))
-                    if len(marks) > MAX_MARKS:
-                        raise TaskError("Material intent exceeds 400 native strokes")
+        for x, y in _centers(polygon, recipe, layer, rng):
+            dx, dy = _field(x, y, subject, recipe)
+            jitter = (rng.random()-.5)*recipe["irregularity"]*.75
+            cs, sn = math.cos(jitter), math.sin(jitter)
+            dx, dy = dx*cs-dy*sn, dx*sn+dy*cs
+            length = recipe["length"]*(.77+.46*rng.random())
+            curvature = recipe["curvature"]*(.72+.45*rng.random())
+            if technique in ("strands", "specular"):
+                length *= .65
+            path = _mark_geometry(x, y, dx, dy, length, curvature,
+                                  technique, .7+.6*rng.random())
+            for fragment in _clip_mark(path, polygon, recipe["edge_inset"]):
+                # Color follows value/depth and pass, not pixel noise.
+                normalized_y = (y-top)/max(1.0, bottom-top)
+                ci = min(len(colors)-1, int(
+                    (normalized_y*.55+layer/max(1, recipe["layers"])*.45)
+                    * len(colors)
+                ))
+                nominal = nominal_size * (
+                    .95 if technique == "wash" else
+                    .62 if technique in ("wisps", "planes", "contour") else
+                    .23 if technique in ("strands", "specular") else
+                    .46 if technique in ("ripples", "growth") else .54
+                )
+                size = nominal*(.82+.32*rng.random())*(1+.1*layer)
+                alpha = nominal_alpha*(.72 if layer == 0 else .53)
+                marks.append(_stroke(fragment, selected, subject,
+                                     colors[ci], size, alpha, technique))
+                if len(marks) > MAX_MARKS:
+                    raise TaskError("Material intent exceeds 400 native strokes")
     if recipe["edge_mode"] == "stitch":
         center = (sum(x for x, _ in polygon)/len(polygon),
                   sum(y for _, y in polygon)/len(polygon))

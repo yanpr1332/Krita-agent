@@ -104,6 +104,7 @@ def test_each_material_technique_produces_bounded_native_brush_marks(technique):
     ({"technique": "wash", "spacing": 0}, "material spacing"),
     ({"technique": "wash", "edge_inset": -10}, "edge inset"),
     ({"technique": "wash", "angle": 999}, "material angle"),
+    ({"technique": "wash", "placement": "regular_grid_forever"}, "material placement"),
 ])
 def test_material_recipe_strictly_rejects_untrusted_parameters(patch, expected):
     with pytest.raises(TaskError, match=expected):
@@ -206,3 +207,22 @@ def test_standalone_stage_archive_validation_rejects_missing_stage(tmp_path):
             {"index": 0, "phase": "sketch"},
             {"index": 1, "phase": "block_in"},
         ])
+
+
+def test_blue_noise_sampling_breaks_rigid_grid_without_losing_determinism():
+    scene = old_scene()
+    intent = scene["stages"][1]["intents"][0]
+    shared = {"technique": "wash", "spacing": 35, "length": 60,
+              "curvature": .12, "layers": 1, "edge_mode": "none",
+              "palette": ["#556677", "#99AABB"], "seed": 57}
+    intent["render"] = {**shared, "placement": "staggered"}
+    a, _ = lower_scene_v4(scene)
+    intent["render"] = {**shared, "placement": "blue_noise"}
+    b, _ = lower_scene_v4(scene)
+    c, _ = lower_scene_v4(deepcopy(scene))
+    first = next(o for o in a["objects"] if o["id"] == "s01_room")
+    second = next(o for o in b["objects"] if o["id"] == "s01_room")
+    repeat = next(o for o in c["objects"] if o["id"] == "s01_room")
+    assert first["elements"] != second["elements"]
+    assert second["elements"] == repeat["elements"]
+    assert 1 < len(second["elements"]) <= MAX_MARKS
