@@ -368,6 +368,34 @@ class CreativeWorkflow:
                 "total_stages": state["total"], "native": result,
                 "next_stage_requires_approval": index+1 < state["total"]}
 
+    def diagnose_materials(self):
+        """Read-only inspection of native marks and archived actual Krita pixels.
+
+        A report is diagnostic evidence, never an automated artwork verdict.
+        This method sends no native command, draws nothing and writes no file.
+        """
+        from .render_quality_v1 import plan_mark_diagnostics, archived_stage_diagnostics
+        record = self.read()
+        scene_ref = record.get("artifacts", {}).get("scene")
+        compiled_ref = record.get("artifacts", {}).get("compiled")
+        if not isinstance(scene_ref, dict) or not isinstance(compiled_ref, dict):
+            raise TaskError("No creative scene has been compiled for material diagnostics")
+        for ref in (scene_ref, compiled_ref):
+            path = (self.root / ref.get("path", "")).resolve()
+            if self.root not in path.parents or not path.is_file() or _sha(path) != ref.get("sha256"):
+                raise TaskError("Creative material diagnostic source is missing or changed")
+        scene = json.loads((self.root / scene_ref["path"]).read_text(encoding="utf-8"))
+        compiled = json.loads((self.root / compiled_ref["path"]).read_text(encoding="utf-8"))
+        result = {"schema": "krita-agent-round8-workflow-diagnostics/1",
+                  "plan": plan_mark_diagnostics(scene),
+                  "native_stage_pixels": "not_archived", "artwork_accepted": False}
+        archived = record.get("artifacts", {}).get("stage_previews")
+        spans = compiled.get("stage_spans")
+        if archived is not None and spans:
+            result["native_stage_pixels"] = archived_stage_diagnostics(
+                self.root, archived, spans)
+        return result
+
     def export_native(self, client):
         """Save/export via authenticated Krita and archive immutable copies.
 
