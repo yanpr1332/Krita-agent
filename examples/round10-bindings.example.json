@@ -1,0 +1,14 @@
+[
+  {
+    "subject_id": "vessel",
+    "source_id": "composition",
+    "region_id": "main_subject",
+    "role": "composition"
+  },
+  {
+    "subject_id": "water",
+    "source_id": "palette",
+    "region_id": "highlight",
+    "role": "material"
+  }
+]
