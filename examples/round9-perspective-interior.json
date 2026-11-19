@@ -1,0 +1,333 @@
+{
+  "schema": "krita-agent-scene/4",
+  "document": {
+    "width": 256,
+    "height": 192,
+    "name": "Architectural one-point perspective"
+  },
+  "style": "architecture pencil color study",
+  "subjects": [
+    {
+      "id": "wall",
+      "name": "Wall and floor",
+      "kind": "architecture interior planes",
+      "materials": [
+        "plaster"
+      ],
+      "bounds": [
+        0,
+        0,
+        256,
+        192
+      ],
+      "depth": 0.1,
+      "brush": {
+        "color": "#A6A1A1",
+        "size": 4
+      }
+    },
+    {
+      "id": "door",
+      "name": "Door opening",
+      "kind": "architectural door",
+      "materials": [
+        "wood"
+      ],
+      "bounds": [
+        99,
+        80,
+        54,
+        94
+      ],
+      "depth": 0.65,
+      "brush": {
+        "color": "#72533E",
+        "size": 3
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "sketch",
+      "phase": "sketch",
+      "goal": "Establish perspective floor lines and door",
+      "intents": [
+        {
+          "id": "floorleft",
+          "subject_id": "wall",
+          "kind": "gesture",
+          "purpose": "Trace left floor perspective edge",
+          "path": [
+            [
+              16,
+              170
+            ],
+            [
+              128,
+              72
+            ]
+          ]
+        },
+        {
+          "id": "doorframe",
+          "subject_id": "door",
+          "kind": "gesture",
+          "purpose": "Outline the vertical door opening",
+          "path": [
+            [
+              102,
+              170
+            ],
+            [
+              102,
+              83
+            ],
+            [
+              150,
+              83
+            ],
+            [
+              150,
+              170
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blocks",
+      "phase": "block_in",
+      "goal": "Lay material blocks without perspective drift",
+      "intents": [
+        {
+          "id": "roomwash",
+          "subject_id": "wall",
+          "kind": "coverage",
+          "purpose": "Block wall plane in broad parallel strokes",
+          "polygon": [
+            [
+              3,
+              3
+            ],
+            [
+              253,
+              3
+            ],
+            [
+              253,
+              74
+            ],
+            [
+              3,
+              74
+            ]
+          ],
+          "spacing": 18,
+          "angle": 0
+        },
+        {
+          "id": "doorfill",
+          "subject_id": "door",
+          "kind": "coverage",
+          "purpose": "Fill broad wooden door material plane",
+          "polygon": [
+            [
+              104,
+              86
+            ],
+            [
+              148,
+              86
+            ],
+            [
+              148,
+              166
+            ],
+            [
+              104,
+              166
+            ]
+          ],
+          "spacing": 12,
+          "angle": 0,
+          "render": {
+            "technique": "planes",
+            "layers": 1,
+            "placement": "staggered",
+            "palette": [
+              "#72533E",
+              "#926947"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "phase": "detail",
+      "goal": "Define door trim and frame edges",
+      "intents": [
+        {
+          "id": "trim",
+          "subject_id": "door",
+          "kind": "accents",
+          "purpose": "Add architectural frame bevel accents",
+          "path": [
+            [
+              104,
+              92
+            ],
+            [
+              104,
+              165
+            ]
+          ],
+          "count": 7,
+          "length": 5
+        },
+        {
+          "id": "floorright",
+          "subject_id": "wall",
+          "kind": "gesture",
+          "purpose": "Close floor perspective to right corner",
+          "path": [
+            [
+              240,
+              170
+            ],
+            [
+              128,
+              72
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "structure": {
+    "version": 1,
+    "guide_mode": "paint",
+    "subjects": [
+      {
+        "subject_id": "door",
+        "category": "one_point_architecture",
+        "anchors": [
+          {
+            "id": "tl",
+            "xy": [
+              102,
+              83
+            ]
+          },
+          {
+            "id": "tr",
+            "xy": [
+              150,
+              83
+            ]
+          },
+          {
+            "id": "bl",
+            "xy": [
+              102,
+              170
+            ]
+          },
+          {
+            "id": "br",
+            "xy": [
+              150,
+              170
+            ]
+          }
+        ],
+        "parts": [
+          {
+            "id": "panel",
+            "tag": "door_panel",
+            "bounds": [
+              103,
+              85,
+              46,
+              84
+            ],
+            "material": "wood"
+          }
+        ],
+        "chains": [
+          {
+            "id": "left_jamb",
+            "anchors": [
+              "tl",
+              "bl"
+            ],
+            "purpose": "Keep door vertical jamb aligned"
+          },
+          {
+            "id": "upper_frame",
+            "anchors": [
+              "tl",
+              "tr"
+            ],
+            "purpose": "Keep door upper beam horizontally aligned"
+          }
+        ],
+        "expectations": [
+          {
+            "tag": "door_panel",
+            "min": 1,
+            "max": 1
+          }
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "door_front",
+        "kind": "front_of",
+        "a": "door",
+        "b": "wall"
+      }
+    ],
+    "perspective": {
+      "horizon_y": 72,
+      "vanishing_points": [
+        {
+          "id": "center",
+          "xy": [
+            128,
+            72
+          ]
+        }
+      ],
+      "rays": [
+        {
+          "id": "floor_left",
+          "vanishing_point": "center",
+          "start": [
+            16,
+            170
+          ],
+          "end": [
+            80,
+            114
+          ],
+          "max_deviation_deg": 2
+        },
+        {
+          "id": "floor_right",
+          "vanishing_point": "center",
+          "start": [
+            240,
+            170
+          ],
+          "end": [
+            176,
+            114
+          ],
+          "max_deviation_deg": 2
+        }
+      ]
+    }
+  }
+}

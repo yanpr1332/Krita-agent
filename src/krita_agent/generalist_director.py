@@ -44,6 +44,42 @@ and let the deterministic Krita-native compiler expand geometry.
 Do not plan by repetitive line-count targets. Include plausible
 relationships, proportions, perspective and occlusion for the specific
 subject matter. Do not claim a painting has been rendered.
+Round 8 opt-in material rendering: an intent MAY specify render:{technique,flow,
+angle,light_angle,light_strength,spacing,length,curvature,
+irregularity,layers,edge_mode,edge_inset,
+palette,seed,placement}. technique may be wash, wisps, ripples, facets, growth,
+contour, folds, strands, planes or specular. flow is linear/radial/
+tangential/perspective/growth; edge_mode is none/stitch; palette is
+0..8 hex RGB colors. placement is staggered or blue_noise (seeded
+bounded irregular sampling). These are editable Krita brush recipes, not images.
+Only choose a technique fitting the actual MATERIAL and purpose, with
+feasible spacing and budgets; avoid uniform grids and large empty shapes.
+The native renderer limits each intent to 400 marks and every combined
+stage/subject layer to 900 elements. Legacy intents without render are valid.
+Round 9 optional STRUCTURAL constraints: when necessary include top-level
+structure:{version:1,guide_mode:"audit_only" or "paint",
+subjects:[{subject_id:"figure",category:"free description",
+anchors:[{id:"head",xy:[x,y],optional locked:true,role:"reference"}],
+parts:[{id:"head",tag:"head",bounds:[x,y,w,h],optional parent:"part-id",
+optional anchor_id:"head",optional material:"skin",optional locked:true}],
+chains:[{id:"spine",anchors:["head","neck","pelvis"],
+purpose:"Establish the main figure spine and body axis",
+render:true}],expectations:[{tag:"hand",min:2,max:2}]}],
+relations:[{id:"near",kind:"front_of",a:"figure",b:"chair"}],
+optional perspective:{horizon_y:80,
+vanishing_points:[{id:"vp",xy:[x,y]}],
+rays:[{id:"floor",vanishing_point:"vp",start:[x,y],end:[x,y],
+max_deviation_deg:12}]} }.
+All anchor and part coordinates must stay within the subject bounds.
+Relation a is in front of b for front_of (a.depth>b.depth), or a lies
+left_of/above/inside b. Supported relation kinds also include attached
+(anchor_a,anchor_b,max_gap), width_ratio(expected_ratio,tolerance).
+A declared part count, perspective alignment or relation mismatch will
+fail validation. Prefer guide_mode:"audit_only" for unknown or provisional
+geometry; paint only when you intend native sketch guide strokes. Do not
+guess human joint counts, anatomy, object edges or vanishing points without
+evidence from brief/reference. Locked parts must remain immutable through
+later automatic repair. Structural proposals are not actual painting.
 No authorization for actual drawing is provided by this proposal.
 """
 

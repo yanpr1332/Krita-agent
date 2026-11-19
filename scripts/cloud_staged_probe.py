@@ -24,7 +24,7 @@ PREVIEW_PREFIX = "r5-runs/" + "d" * 32
 
 def synthetic_scene():
     """Reviewable deterministic 128x128 multi-subject, multi-phase source fixture."""
-    return {
+    scene = {
         "schema": "krita-agent-scene/4",
         "document": {"width": 128, "height": 128, "name": "Cloud CI Staged Native Test"},
         "style": "CI structural study, not a finished painting",
@@ -70,6 +70,47 @@ def synthetic_scene():
              ]},
         ],
     }
+    # Round 9 opt-in: the additional construction paths are compiled by the
+    # *same* safe v4 native renderer, not drawn by a Python mock or raster paste.
+    scene["structure"] = {
+        "version": 1, "guide_mode": "paint",
+        "subjects": [
+            {
+                "subject_id": "vessel", "category": "ceramic still life",
+                "anchors": [
+                    {"id": "top", "xy": [40, 35]},
+                    {"id": "bottom", "xy": [41, 90]},
+                ],
+                "parts": [
+                    {"id": "body", "tag": "vessel_body",
+                     "bounds": [22, 36, 38, 54], "material": "ceramic"}
+                ],
+                "chains": [
+                    {"id": "center_axis", "anchors": ["top", "bottom"],
+                     "purpose": "Establish ceramic vessel construction axis"}
+                ],
+                "expectations": [{"tag": "vessel_body", "min": 1, "max": 1}],
+            },
+            {
+                "subject_id": "water", "category": "reflective water",
+                "anchors": [
+                    {"id": "left", "xy": [77, 100]},
+                    {"id": "right", "xy": [120, 100]},
+                ],
+                "parts": [
+                    {"id": "band", "tag": "water_region",
+                     "bounds": [76, 92, 44, 18], "material": "water"}
+                ],
+                "chains": [
+                    {"id": "flow_axis", "anchors": ["left", "right"],
+                     "purpose": "Mark water surface direction in composition"}
+                ],
+                "expectations": [{"tag": "water_region", "min": 1, "max": 1}],
+            },
+        ],
+        "relations": [{"id": "vessel_left", "kind": "left_of", "a": "vessel", "b": "water"}],
+    }
+    return scene
 
 
 def compile_fixture():
@@ -146,6 +187,8 @@ def execute_staged_fixture(client, output_dir):
             "scene_sha256": compiled["source_v4_sha256"],
             "compiled_steps_sha256": compiled["native_steps_sha256"],
             "stage_spans": compiled["stage_spans"],
+            "structure_diagnostics": compiled.get("structure_diagnostics"),
+            "subject_strategy_count": len(compiled.get("subject_strategies", {}).get("subjects", [])),
         })
         status = client.request("status")
         if not isinstance(status, dict) or status.get("connected") is not True:

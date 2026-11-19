@@ -9,6 +9,7 @@ import re
 
 from .brush_dynamics import combine_style, validate_palette
 from .intent_strokes_v4 import expand_intent
+from .material_rendering import expand_render_intent, validate_render
 from .protocol import TaskError, brush_settings, integer, label, number
 from .scene_v3 import compile_scene_v3, digest, validate_scene
 from .workflow import compile_workflow
@@ -84,7 +85,7 @@ def _polygon(raw, subject):
 def validate_scene_v4(candidate):
     if not isinstance(candidate, dict) or candidate.get("schema") != SCHEMA:
         raise TaskError("Expected ScenePlan v4")
-    _mapping(candidate, ("schema", "document", "style", "subjects", "stages"),
+    _mapping(candidate, ("schema", "document", "style", "subjects", "stages", "structure"),
              "ScenePlan v4")
     doc = _mapping(candidate.get("document"), ("width", "height", "name"), "document")
     width = integer(doc.get("width"), "width", 1, 8192)
@@ -164,7 +165,7 @@ def validate_scene_v4(candidate):
                             "pressure_curve", "pressure_variation",
                             "variation_frequency", "variation_seed",
                             "speed_sensitivity", "pressure_interpolation",
-                            "path", "polygon", "spacing", "angle",
+                            "path", "polygon", "spacing", "angle", "render",
                             "jitter", "seed", "count", "length"), "paint intent")
             iid = _id(item.get("id"), "paint-intent ID")
             sid = _id(item.get("subject_id"), "intent subject ID")
@@ -208,6 +209,8 @@ def validate_scene_v4(candidate):
                                                "coverage spacing", 1, 200)
                 normalized["angle"] = number(item.get("angle", 0),
                                              "coverage angle", -180, 180)
+            if "render" in item:
+                normalized["render"] = validate_render(item["render"], kind)
             intents.append(normalized)
         total_intents += len(intents)
         if total_intents > MAX_TOTAL_INTENTS:
@@ -219,9 +222,14 @@ def validate_scene_v4(candidate):
         })
     if stages[0]["phase"] != "sketch" or stages[-1]["phase"] not in ("detail", "polish"):
         raise TaskError("Stages require sketch first and detail/polish last")
-    return {"schema": SCHEMA, "document": document,
-            "style": label(candidate.get("style", "illustration"), "style", 160),
-            "subjects": subjects, "stages": stages}
+    result = {"schema": SCHEMA, "document": document,
+              "style": label(candidate.get("style", "illustration"), "style", 160),
+              "subjects": subjects, "stages": stages}
+    if "structure" in candidate:
+        from .structure_v9 import validate_structure_plan
+        result["structure"] = validate_structure_plan(candidate["structure"],
+                                                      subjects, document)
+    return result
 
 
 def lower_scene_v4(candidate):
@@ -232,7 +240,11 @@ def lower_scene_v4(candidate):
     stage_layers = []
     for index, stage in enumerate(scene["stages"]):
         grouped = {}
-        for item in stage["intents"]:
+        current_intents = list(stage["intents"])
+        if index == 0 and "structure" in scene:
+            from .structure_v9 import structural_guide_intents
+            current_intents = structural_guide_intents(scene) + current_intents
+        for item in current_intents:
             grouped.setdefault(item["subject_id"], []).append(item)
         rows = []
         for sid in sorted(grouped, key=lambda key: (by_id[key]["depth"], key)):
@@ -240,7 +252,12 @@ def lower_scene_v4(candidate):
             elements = []
             for item in grouped[sid]:
                 selected = combine_style(subject["styles"], item)
-                elements.extend(expand_intent(item, selected, subject, scene["document"]))
+                if "render" in item:
+                    elements.extend(expand_render_intent(item, selected, subject,
+                                                         scene["document"]))
+                else:
+                    elements.extend(expand_intent(item, selected, subject,
+                                                  scene["document"]))
             if len(elements) > 900:
                 raise TaskError("A stage/subject group exceeds 900 native elements")
             rows.append({
@@ -319,6 +336,11 @@ def compile_scene_v4(candidate, profile_directory=None, build=None,
         })
     if len(all_steps) > 10000:
         raise TaskError("ScenePlan v4 exceeds 10000 native steps")
+    if "structure" in scene:
+        from .structure_v9 import diagnose_structure
+        base["structure_diagnostics"] = diagnose_structure(scene)
+        from .subject_strategy_v9 import all_subject_strategies
+        base["subject_strategies"] = all_subject_strategies(scene)
     base.update({
         "schema": "krita-agent-scene-compiled/4",
         "source_v4_sha256": digest(scene),

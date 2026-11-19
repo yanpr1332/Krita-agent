@@ -1,0 +1,448 @@
+{
+  "schema": "krita-agent-scene/4",
+  "document": {
+    "width": 256,
+    "height": 192,
+    "name": "Generalist figure in room"
+  },
+  "style": "structural illustration, not finished art",
+  "subjects": [
+    {
+      "id": "room",
+      "name": "Interior planes",
+      "kind": "interior",
+      "materials": [
+        "plaster"
+      ],
+      "bounds": [
+        0,
+        0,
+        256,
+        192
+      ],
+      "depth": 0.15,
+      "brush": {
+        "color": "#9CA8B6",
+        "size": 5,
+        "opacity": 0.85
+      }
+    },
+    {
+      "id": "figure",
+      "name": "Standing adult",
+      "kind": "human figure",
+      "materials": [
+        "skin",
+        "fabric"
+      ],
+      "bounds": [
+        65,
+        20,
+        96,
+        165
+      ],
+      "depth": 0.78,
+      "brush": {
+        "color": "#685345",
+        "size": 4,
+        "opacity": 0.95
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "layout",
+      "phase": "sketch",
+      "goal": "Establish human proportions in the room",
+      "intents": [
+        {
+          "id": "floorline",
+          "subject_id": "room",
+          "kind": "gesture",
+          "material": "plaster",
+          "purpose": "Indicate the room's floor horizon",
+          "path": [
+            [
+              10,
+              143
+            ],
+            [
+              245,
+              143
+            ]
+          ]
+        },
+        {
+          "id": "silhouette",
+          "subject_id": "figure",
+          "kind": "gesture",
+          "material": "fabric",
+          "purpose": "Locate figure silhouette in canvas",
+          "path": [
+            [
+              110,
+              29
+            ],
+            [
+              88,
+              67
+            ],
+            [
+              86,
+              128
+            ],
+            [
+              97,
+              177
+            ],
+            [
+              125,
+              176
+            ],
+            [
+              142,
+              128
+            ],
+            [
+              131,
+              65
+            ],
+            [
+              110,
+              29
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blocks",
+      "phase": "block_in",
+      "goal": "Separate body and background paint masses",
+      "intents": [
+        {
+          "id": "walltone",
+          "subject_id": "room",
+          "kind": "coverage",
+          "material": "plaster",
+          "purpose": "Place broad background wall midtone",
+          "polygon": [
+            [
+              8,
+              8
+            ],
+            [
+              246,
+              8
+            ],
+            [
+              246,
+              136
+            ],
+            [
+              8,
+              136
+            ]
+          ],
+          "spacing": 20,
+          "angle": 2
+        },
+        {
+          "id": "torso",
+          "subject_id": "figure",
+          "kind": "coverage",
+          "material": "fabric",
+          "purpose": "Fill the torso with broad cloth marks",
+          "polygon": [
+            [
+              93,
+              74
+            ],
+            [
+              125,
+              73
+            ],
+            [
+              130,
+              120
+            ],
+            [
+              91,
+              120
+            ]
+          ],
+          "spacing": 10,
+          "angle": 3,
+          "render": {
+            "technique": "folds",
+            "layers": 1,
+            "flow": "growth",
+            "placement": "staggered",
+            "palette": [
+              "#685345",
+              "#8A7566"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "phase": "detail",
+      "goal": "Confirm face, hands and clothing connections",
+      "intents": [
+        {
+          "id": "faceline",
+          "subject_id": "figure",
+          "kind": "gesture",
+          "material": "skin",
+          "purpose": "Indicate face center and eye direction",
+          "path": [
+            [
+              110,
+              36
+            ],
+            [
+              110,
+              61
+            ]
+          ]
+        },
+        {
+          "id": "seam",
+          "subject_id": "figure",
+          "kind": "accents",
+          "material": "fabric",
+          "purpose": "Place cloth edge accents around waist",
+          "path": [
+            [
+              91,
+              119
+            ],
+            [
+              127,
+              120
+            ]
+          ],
+          "count": 6,
+          "length": 8
+        }
+      ]
+    }
+  ],
+  "structure": {
+    "version": 1,
+    "guide_mode": "paint",
+    "subjects": [
+      {
+        "subject_id": "figure",
+        "category": "figure_proportions",
+        "anchors": [
+          {
+            "id": "head",
+            "xy": [
+              110,
+              42
+            ]
+          },
+          {
+            "id": "neck",
+            "xy": [
+              110,
+              64
+            ]
+          },
+          {
+            "id": "shoulder_l",
+            "xy": [
+              94,
+              70
+            ]
+          },
+          {
+            "id": "shoulder_r",
+            "xy": [
+              130,
+              70
+            ]
+          },
+          {
+            "id": "hip",
+            "xy": [
+              110,
+              124
+            ]
+          },
+          {
+            "id": "hand_l",
+            "xy": [
+              79,
+              123
+            ]
+          },
+          {
+            "id": "hand_r",
+            "xy": [
+              146,
+              123
+            ]
+          },
+          {
+            "id": "foot_l",
+            "xy": [
+              97,
+              175
+            ]
+          },
+          {
+            "id": "foot_r",
+            "xy": [
+              126,
+              175
+            ]
+          }
+        ],
+        "parts": [
+          {
+            "id": "head",
+            "tag": "head",
+            "bounds": [
+              96,
+              29,
+              29,
+              33
+            ],
+            "anchor_id": "head",
+            "material": "skin"
+          },
+          {
+            "id": "torso",
+            "tag": "torso",
+            "bounds": [
+              91,
+              69,
+              40,
+              52
+            ],
+            "anchor_id": "hip",
+            "material": "fabric"
+          },
+          {
+            "id": "left_hand",
+            "tag": "hand",
+            "bounds": [
+              75,
+              118,
+              12,
+              14
+            ],
+            "anchor_id": "hand_l",
+            "material": "skin"
+          },
+          {
+            "id": "right_hand",
+            "tag": "hand",
+            "bounds": [
+              140,
+              118,
+              12,
+              14
+            ],
+            "anchor_id": "hand_r",
+            "material": "skin"
+          },
+          {
+            "id": "left_leg",
+            "tag": "leg",
+            "bounds": [
+              92,
+              125,
+              17,
+              53
+            ],
+            "material": "fabric"
+          },
+          {
+            "id": "right_leg",
+            "tag": "leg",
+            "bounds": [
+              115,
+              125,
+              17,
+              53
+            ],
+            "material": "fabric"
+          }
+        ],
+        "chains": [
+          {
+            "id": "spine",
+            "anchors": [
+              "head",
+              "neck",
+              "hip"
+            ],
+            "purpose": "Establish the head spine and pelvis axis"
+          },
+          {
+            "id": "arm_l",
+            "anchors": [
+              "shoulder_l",
+              "hand_l"
+            ],
+            "purpose": "Locate left upper limb attachment"
+          },
+          {
+            "id": "arm_r",
+            "anchors": [
+              "shoulder_r",
+              "hand_r"
+            ],
+            "purpose": "Locate right upper limb attachment"
+          },
+          {
+            "id": "leg_l",
+            "anchors": [
+              "hip",
+              "foot_l"
+            ],
+            "purpose": "Locate left leg construction axis"
+          },
+          {
+            "id": "leg_r",
+            "anchors": [
+              "hip",
+              "foot_r"
+            ],
+            "purpose": "Locate right leg construction axis"
+          }
+        ],
+        "expectations": [
+          {
+            "tag": "head",
+            "min": 1,
+            "max": 1
+          },
+          {
+            "tag": "hand",
+            "min": 2,
+            "max": 2
+          },
+          {
+            "tag": "leg",
+            "min": 2,
+            "max": 2
+          }
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "figure_front",
+        "kind": "front_of",
+        "a": "figure",
+        "b": "room"
+      }
+    ]
+  }
+}
