@@ -281,3 +281,15 @@ def test_reference_cli_is_registered_without_auth_or_network():
     assert args.command == "reference" and args.reference_action == "analyze"
     args = parser.parse_args(["reference", "technique-list", "--library", "."])
     assert args.reference_action == "technique-list"
+
+
+def test_cloud_fixture_separates_approved_brush_hash_from_preview_execution_hash(tmp_path):
+    from scripts.cloud_reference_probe import prepare
+    from krita_agent.scene_v4 import compile_scene_v4
+    fixture = prepare(tmp_path, "5.3.4.1 (git bd6e8d0)")
+    core = compile_scene_v4(fixture["scene"])["native_steps_sha256"]
+    assert fixture["approved_native_steps_sha256"] == core
+    assert fixture["compiled"]["native_steps_sha256"] != core
+    assert len(fixture["compiled"]["stage_preview_paths"]) >= 3
+    assert all(step["command"] not in ("image.import", "reference.import", "pixel.fill")
+               for step in fixture["compiled"]["steps"])

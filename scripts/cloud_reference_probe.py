@@ -23,7 +23,12 @@ from krita_agent.reference_compare_v10 import compare_native_repaint
 from krita_agent.technique_library_v10 import (
     propose_technique_application, approve_technique_application,
 )
-from cloud_staged_probe import synthetic_scene
+try:
+    from cloud_staged_probe import synthetic_scene
+except ModuleNotFoundError as exc:
+    if exc.name != "cloud_staged_probe":
+        raise
+    from scripts.cloud_staged_probe import synthetic_scene
 
 ROOT_MODE = "synthetic_cloud_reference_never_user_artwork"
 ALLOWED = frozenset(("canvas.create", "layer.create", "brush.configure",
@@ -112,6 +117,7 @@ def prepare(root, build):
         "manifest": manifest, "bindings": bindings, "evidence": evidence,
         "proposal": proposed, "technique_proposal": suggested,
         "scene": final, "compiled": compiled,
+        "approved_native_steps_sha256": approved_core["native_steps_sha256"],
     }
 
 
@@ -145,6 +151,7 @@ def execute(client, output_dir):
             "reference_analysis_sha256": fixture["evidence"]["analysis_sha256"],
             "source_scene_sha256": fixture["proposal"]["source_scene_sha256"],
             "native_steps_sha256": compiled["native_steps_sha256"],
+            "approved_native_steps_sha256": fixture["approved_native_steps_sha256"],
             "approved_technique_sha256": fixture["technique_proposal"]["technique_sha256"],
             "stage_count": len(compiled["stage_spans"]),
             "stage_guide_count": compiled["structure_diagnostics"]["rendered_skeleton_chains"],
@@ -204,7 +211,7 @@ def execute(client, output_dir):
 
         comparison = compare_native_repaint(
             fixture["scene"], fixture["evidence"], fixture["bindings"],
-            kra, png, reopened, compiled_sha256=compiled["native_steps_sha256"])
+            kra, png, reopened, compiled_sha256=fixture["approved_native_steps_sha256"])
         report["native_reference_comparison"] = comparison
         report["source_approval"] = {
             "rights": "owned and explicitly confirmed", "external_upload": False,
