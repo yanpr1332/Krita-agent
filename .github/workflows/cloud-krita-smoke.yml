@@ -72,9 +72,15 @@ jobs:
           test -x squashfs-root/AppRun
       - name: Run genuine native Krita Bridge test under Xvfb
         env:
-          KRITA_NATIVE_BINARY: ${{ runner.temp }}/krita-native-pilot/download/squashfs-root/AppRun
+          KRITA_NATIVE_BINARY: ${{ runner.temp }}/krita-native-pilot/appimage-runner.sh
         run: |
-          chmod +x scripts/cloud_krita_runner.sh
+          cat > "$RUNNER_TEMP/krita-native-pilot/appimage-runner.sh" <<'EOF'
+          #!/usr/bin/env bash
+          export APPDIR="$RUNNER_TEMP/krita-native-pilot/download/squashfs-root"
+          export APPIMAGE="$RUNNER_TEMP/krita-native-pilot/download/Krita.AppImage"
+          exec "$APPDIR/AppRun" "$@"
+          EOF
+          chmod +x "$KRITA_NATIVE_BINARY" scripts/cloud_krita_runner.sh
           xvfb-run -a -s '-screen 0 1366x900x24 -ac +extension GLX +render' \
             bash scripts/cloud_krita_runner.sh
       - name: Upload synthetic native evidence, including failures
