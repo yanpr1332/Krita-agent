@@ -29,6 +29,8 @@ def test_staged_fixture_compiles_deterministically_with_bounded_native_commands(
     assert a["steps"] == b["steps"]
     assert len(a["stage_spans"]) == 3
     assert len(a["stage_layers"]) == 6
+    assert a["structure_diagnostics"]["rendered_skeleton_chains"] == 2
+    assert len(a["subject_strategies"]["subjects"]) == 2
     assert a["steps"][0]["command"] == "canvas.create"
     assert len(a["steps"]) <= 110
     assert {item["command"] for item in a["steps"]} <= module.ALLOWED_NATIVE

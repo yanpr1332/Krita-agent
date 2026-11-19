@@ -5,10 +5,15 @@ on:
   push:
     branches:
       - infra/cloud-tiered-acceptance
+      - feat/round9-multigenre-structure
     paths:
       - '.github/workflows/cloud-krita-smoke.yml'
       - 'scripts/cloud_native_probe.py'
       - 'scripts/cloud_staged_probe.py'
+      - 'src/krita_agent/structure_v9.py'
+      - 'src/krita_agent/subject_strategy_v9.py'
+      - 'src/krita_agent/structure_revision_v9.py'
+      - 'src/krita_agent/scene_v4.py'
       - 'scripts/cloud_krita_runner.sh'
       - 'plugin/krita_agent_bridge/**'
       - 'plugin/krita_agent_bridge.desktop'

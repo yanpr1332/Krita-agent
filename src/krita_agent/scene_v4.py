@@ -339,6 +339,8 @@ def compile_scene_v4(candidate, profile_directory=None, build=None,
     if "structure" in scene:
         from .structure_v9 import diagnose_structure
         base["structure_diagnostics"] = diagnose_structure(scene)
+        from .subject_strategy_v9 import all_subject_strategies
+        base["subject_strategies"] = all_subject_strategies(scene)
     base.update({
         "schema": "krita-agent-scene-compiled/4",
         "source_v4_sha256": digest(scene),
