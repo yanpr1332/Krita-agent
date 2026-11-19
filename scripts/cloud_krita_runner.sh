@@ -48,16 +48,28 @@ fi
   echo "DISPLAY: ${DISPLAY:-unset}"
 } > "$ART/environment.txt" 2>&1
 
-# Lightweight WM ensures a Krita active window under Xvfb, even without desktop login.
-openbox > "$ART/openbox.log" 2>&1 &
-wm_pid=$!
+# An X11 window manager helps activation, but is not guaranteed on hosted images.
+# Do not block the entire cloud experiment on unavailable apt mirrors.
+wm_pid=""
+if command -v openbox >/dev/null 2>&1; then
+  openbox > "$ART/openbox.log" 2>&1 &
+  wm_pid=$!
+elif command -v fluxbox >/dev/null 2>&1; then
+  fluxbox > "$ART/openbox.log" 2>&1 &
+  wm_pid=$!
+else
+  echo "No installed window manager; Krita/Qt activation may be unavailable" > "$ART/openbox.log"
+fi
 env -u LD_LIBRARY_PATH -u PYTHONHOME -u PYTHONPATH \
   "$KRITA_BIN" --nosplash > "$ART/krita-startup.log" 2>&1 &
 krita_pid=$!
 cleanup() {
-  kill "$krita_pid" "$wm_pid" 2>/dev/null || true
+  kill "$krita_pid" 2>/dev/null || true
   wait "$krita_pid" 2>/dev/null || true
-  wait "$wm_pid" 2>/dev/null || true
+  if [[ -n "$wm_pid" ]]; then
+    kill "$wm_pid" 2>/dev/null || true
+    wait "$wm_pid" 2>/dev/null || true
+  fi
 }
 trap cleanup EXIT
 

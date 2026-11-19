@@ -48,11 +48,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install virtual display dependencies (no user machine)
+      - name: Verify preinstalled Xvfb tools (avoid hanging apt repositories)
         run: |
-          sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            xvfb xauth openbox dbus-x11 libgl1-mesa-dri libxkbcommon-x11-0
+          command -v Xvfb
+          command -v xvfb-run
+          command -v xauth
+          command -v curl
       - name: Install external probe dependencies
         run: python -m pip install -e '.[feedback]'
       - name: Obtain official Krita 5.3.4.1 Linux AppImage
