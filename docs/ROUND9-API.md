@@ -1,18 +1,18 @@
 # Round 9 — Generalist structure, composition and perspective API
 
-**Status:** source development on the independent \`feat/round9-multigenre-structure\` branch. The code is an extension of ScenePlan v4, not an image generator, anatomical visual recognizer, automatic author of artistic strokes or evidence that artwork now looks human-painted. Round 8 material stroke source and merged cloud Tier-2 infrastructure were both included in this branch before this work.
+**Status:** source development on the independent `feat/round9-multigenre-structure` branch. The code is an extension of ScenePlan v4, not an image generator, anatomical visual recognizer, automatic author of artistic strokes or evidence that artwork now looks human-painted. Round 8 material stroke source and merged cloud Tier-2 infrastructure were both included in this branch before this work.
 
 ## Scope
 
-The optional \`structure\` field augments the existing \`krita-agent-scene/4\` scene. Existing scenes with no \`structure\` follow the original R7/R8 compiler path without added guide strokes. Material-specific optional \`render\` from R8 is still accepted by v4 intents.
+The optional `structure` field augments the existing `krita-agent-scene/4` scene. Existing scenes with no `structure` follow the original R7/R8 compiler path without added guide strokes. Material-specific optional `render` from R8 is still accepted by v4 intents.
 
-A structure plan supports arbitrary **named subjects and parts**, with no special-case code drawing a fixed human or animal benchmark. \`src/krita_agent/structure_v9.py\` validates geometry and semantic relations; \`subject_strategy_v9.py\` suggests phase+material approaches without creating commands. \`structure_revision_v9.py\` offers bounded immutable repairs requiring explicit approval.
+A structure plan supports arbitrary **named subjects and parts**, with no special-case code drawing a fixed human or animal benchmark. `src/krita_agent/structure_v9.py` validates geometry and semantic relations; `subject_strategy_v9.py` suggests phase+material approaches without creating commands. `structure_revision_v9.py` offers bounded immutable repairs requiring explicit approval.
 
 ## Contract
 
 Top-level optional property:
 
-\`\`\`json
+```json
 {
   "structure": {
     "version": 1,
@@ -44,29 +44,29 @@ Top-level optional property:
     }
   }
 }
-\`\`\`
+```
 
-The example is a \`structure\` field only; it must be embedded in a complete v4 scene with a matching \`figure\` subject and matching canvas, stages and brush. The source files [figure/room](../examples/round9-figure-and-room.json) and [perspective interior](../examples/round9-perspective-interior.json) provide complete fixtures.
+The example is a `structure` field only; it must be embedded in a complete v4 scene with a matching `figure` subject and matching canvas, stages and brush. The source files [figure/room](../examples/round9-figure-and-room.json) and [perspective interior](../examples/round9-perspective-interior.json) provide complete fixtures.
 
-- \`guide_mode: audit_only\` (default): validate structure and issue diagnostics, **never** draw hidden guides.
-- \`guide_mode: paint\`: explicitly include each \`render:true\` chain as an additional **real native brush gesture in the sketch phase**. The compiler retains v3/v2 allowlist, stroke budgets, stage approval and hashing; it does not paste a raster image.
-- \`parts\` have generic \`tag\`, \`name\`, \`bounds\`, optional parent and material. Expected tag counts can be declared by the author. A mismatch is a validation failure; this cannot magically detect real hands from an image.
-- \`anchors\`, \`parts\`, \`chains\`: per-subject bounding, unique IDs, connected references, and acyclic hierarchy checked.
-- \`relations\`: \`front_of\` (strict depth), \`left_of\`, \`above\`, \`inside\`, \`attached\` (named anchors+maximum gap), \`width_ratio\` (expected ratio+tolerance). Inconsistent geometry is refused; overlapping/occluded pixels are *not* automatically segmented or re-painted.
-- \`perspective\`: optional horizon, up to four possibly off-canvas vanishing points, up to 32 guide rays with explicit convergence tolerance (0–30 degrees). Deviations outside tolerance fail the plan.
-- \`locked:true\` on a structured subject, part or anchor protects against later structural change proposals. These locks are planning-level and do not themselves stop a user manually changing the Krita canvas.
+- `guide_mode: audit_only` (default): validate structure and issue diagnostics, **never** draw hidden guides.
+- `guide_mode: paint`: explicitly include each `render:true` chain as an additional **real native brush gesture in the sketch phase**. The compiler retains v3/v2 allowlist, stroke budgets, stage approval and hashing; it does not paste a raster image.
+- `parts` have generic `tag`, `name`, `bounds`, optional parent and material. Expected tag counts can be declared by the author. A mismatch is a validation failure; this cannot magically detect real hands from an image.
+- `anchors`, `parts`, `chains`: per-subject bounding, unique IDs, connected references, and acyclic hierarchy checked.
+- `relations`: `front_of` (strict depth), `left_of`, `above`, `inside`, `attached` (named anchors+maximum gap), `width_ratio` (expected ratio+tolerance). Inconsistent geometry is refused; overlapping/occluded pixels are *not* automatically segmented or re-painted.
+- `perspective`: optional horizon, up to four possibly off-canvas vanishing points, up to 32 guide rays with explicit convergence tolerance (0–30 degrees). Deviations outside tolerance fail the plan.
+- `locked:true` on a structured subject, part or anchor protects against later structural change proposals. These locks are planning-level and do not themselves stop a user manually changing the Krita canvas.
 
 ## Bounded security and artifacts
 
 - Up to 24 structured subjects, 192 parts total, 256 anchors, 64 chains, 96 intersubject relations and 24 additional sketch guide chains. An individual subject has at most 32 parts, 64 anchors, 8 chains and 24 expectations.
-- \`compile_scene_v4(scene)\` returns \`structure_diagnostics\` and \`subject_strategies\` only when a structure exists. These are read-only and **never** indicate human artwork acceptance.
+- `compile_scene_v4(scene)` returns `structure_diagnostics` and `subject_strategies` only when a structure exists. These are read-only and **never** indicate human artwork acceptance.
 - Adding structure changes the source digest and compiled step digest. No accepted painting is silently overwritten. Native effects still require stage-level approval in real creative workflow.
-- \`propose_structure_fix(source, edits, rationale, expected_sha256=...)\` accepts 1..8 corrections of named \`anchor_xy\` or \`part_bounds\` in **unlocked** geometry, validates the entire result and creates a source/candidate SHA-256-bound proposal. It performs **zero Krita commands**.
-- \`approve_structure_fix(source, proposal, confirm=True)\` verifies both hashes and explicit approval before returning a future candidate ScenePlan v4. This is *not* an automatic undo/repaint of the old native document.
+- `propose_structure_fix(source, edits, rationale, expected_sha256=...)` accepts 1..8 corrections of named `anchor_xy` or `part_bounds` in **unlocked** geometry, validates the entire result and creates a source/candidate SHA-256-bound proposal. It performs **zero Krita commands**.
+- `approve_structure_fix(source, proposal, confirm=True)` verifies both hashes and explicit approval before returning a future candidate ScenePlan v4. This is *not* an automatic undo/repaint of the old native document.
 
 ## Material + subject strategy
 
-\`subject_strategy_v9.subject_strategy(scene, subject_id)\` considers declared material family (water/cloth/wood/skin/etc), number of structural parts, occlusion relations and perspective rays; it recommends a matching R8 technique and phase priorities. Unknown material families fall back to conservative generic suggestions rather than being forced into a landscape-centric object list. The model/user remains responsible for choosing actual composition and final native brush configuration.
+`subject_strategy_v9.subject_strategy(scene, subject_id)` considers declared material family (water/cloth/wood/skin/etc), number of structural parts, occlusion relations and perspective rays; it recommends a matching R8 technique and phase priorities. Unknown material families fall back to conservative generic suggestions rather than being forced into a landscape-centric object list. The model/user remains responsible for choosing actual composition and final native brush configuration.
 
 ## Tests and exact limitations
 
