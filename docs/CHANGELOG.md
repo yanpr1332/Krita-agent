@@ -52,3 +52,9 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Add Round 5 CLI lifecycle and offline regression suite. Native Krita acceptance remains separate and pending.
 
 - Cloud offline evidence: source compilation and 129 tests passed on Python 3.10 and 3.13 for the Round 5 code revision 689535a. Native/visual acceptance is NOT implied.
+
+## Round 8 — natural mark-making and native stage diagnostics (source development, 2026-11-11)
+- Added opt-in per-intent material recipes atop ScenePlan v4: 10 techniques, 5 surface flow fields, deterministic placement including bounded blue noise, curve/size/pressure/opacity/palette layering and edge-stitch suggestions. All output remains native brush strokes.
+- Preserved legacy ScenePlan v4/v3 behavior when material recipes are absent; extended optional generalist model planning without granting command authority.
+- Added read-only full-stage PNG delta and geometry repetition diagnostics with source hash binding; introduced `creative diagnose` and a generalist three-subject material study.
+- Added 34 Round 8 and related regression cases; [Windows CI #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) passed 223 offline tests each on Python 3.10/3.13 for source revision `a366a41f`. Tests cover safe material parameters, over-budget rejection, geometry containment, deterministic lowering and stage PNG evidence. **This does not claim installed-Krita or finished-artwork acceptance.**

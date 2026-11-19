@@ -28,7 +28,7 @@ def register(commands, connection):
     initial.add_argument("--brief-file", required=True,
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
-        "status", "dashboard", "plan", "approve", "paint", "paint-stage", "export",
+        "status", "dashboard", "diagnose", "plan", "approve", "paint", "paint-stage", "export",
         "record", "verify-reopen", "critique", "revision-plan", "revision-approve",
         "revise", "deliver",
     ):
@@ -90,6 +90,8 @@ def execute(args, get_client):
         return flow.read()
     if args.action == "dashboard":
         return render_dashboard(flow, args.output, replace=args.replace)
+    if args.action == "diagnose":
+        return flow.diagnose_materials()
     if args.action == "plan":
         candidate = _json(args.candidate) if args.candidate else None
         return flow.plan(

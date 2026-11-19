@@ -9,6 +9,7 @@ import re
 
 from .brush_dynamics import combine_style, validate_palette
 from .intent_strokes_v4 import expand_intent
+from .material_rendering import expand_render_intent, validate_render
 from .protocol import TaskError, brush_settings, integer, label, number
 from .scene_v3 import compile_scene_v3, digest, validate_scene
 from .workflow import compile_workflow
@@ -164,7 +165,7 @@ def validate_scene_v4(candidate):
                             "pressure_curve", "pressure_variation",
                             "variation_frequency", "variation_seed",
                             "speed_sensitivity", "pressure_interpolation",
-                            "path", "polygon", "spacing", "angle",
+                            "path", "polygon", "spacing", "angle", "render",
                             "jitter", "seed", "count", "length"), "paint intent")
             iid = _id(item.get("id"), "paint-intent ID")
             sid = _id(item.get("subject_id"), "intent subject ID")
@@ -208,6 +209,8 @@ def validate_scene_v4(candidate):
                                                "coverage spacing", 1, 200)
                 normalized["angle"] = number(item.get("angle", 0),
                                              "coverage angle", -180, 180)
+            if "render" in item:
+                normalized["render"] = validate_render(item["render"], kind)
             intents.append(normalized)
         total_intents += len(intents)
         if total_intents > MAX_TOTAL_INTENTS:
@@ -240,7 +243,12 @@ def lower_scene_v4(candidate):
             elements = []
             for item in grouped[sid]:
                 selected = combine_style(subject["styles"], item)
-                elements.extend(expand_intent(item, selected, subject, scene["document"]))
+                if "render" in item:
+                    elements.extend(expand_render_intent(item, selected, subject,
+                                                         scene["document"]))
+                else:
+                    elements.extend(expand_intent(item, selected, subject,
+                                                  scene["document"]))
             if len(elements) > 900:
                 raise TaskError("A stage/subject group exceeds 900 native elements")
             rows.append({

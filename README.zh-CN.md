@@ -127,3 +127,5 @@ krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\l
 [第四轮 API](docs/ROUND4-API.md) · [第四轮验收清单](docs/ROUND4-ACCEPTANCE.md) · [第四轮验收报告](docs/REPORT-011.md) · [第三轮 API](docs/ROUND3-API.md) · [第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) · [项目路线图](docs/ROADMAP.md) · [工程架构](docs/ARCHITECTURE.md) · [第三轮源码实现报告](docs/REPORT-008.md) · [贡献规范](CONTRIBUTING.md)。
 
 原创代码采用 MIT License；Krita 和第三方依赖遵循各自许可证。
+
+**第八轮自然笔触（源码开发，真实画质验收待进行）：** 为 ScenePlan v4 增加可选的十类材质笔法、方向场、有界蓝噪声落笔、颜色/粗细/压感/透明度分层、边缘修饰和真实阶段 PNG 差异诊断；旧计划保持兼容。参见 [Round 8 API](docs/ROUND8-API.md)、[验收清单](docs/ROUND8-ACCEPTANCE.md) 和 [Round 7 失败作品基线](docs/ROUND7-ARTWORK-ATTEMPTS.md)。Windows [CI #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) 在两种 Python 版本上各通过 223 项离线测试；这不等于画得像人。
