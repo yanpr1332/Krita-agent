@@ -293,3 +293,68 @@ def test_cloud_fixture_separates_approved_brush_hash_from_preview_execution_hash
     assert len(fixture["compiled"]["stage_preview_paths"]) >= 3
     assert all(step["command"] not in ("image.import", "reference.import", "pixel.fill")
                for step in fixture["compiled"]["steps"])
+
+
+def test_technique_extraction_uses_declared_material_and_real_roi_edges(tmp_path):
+    from krita_agent.technique_extraction_v10 import extract_technique_hypothesis
+    scene, manifest, bindings = _fixture(tmp_path)
+    out = extract_technique_hypothesis(
+        tmp_path, manifest, source_id="painted", region_id="water",
+        profile_id="learned_water", material="water", phase="block_in",
+    )
+    again = extract_technique_hypothesis(
+        tmp_path, manifest, source_id="painted", region_id="water",
+        profile_id="learned_water", material="water", phase="block_in",
+    )
+    assert out == again
+    assert out["model_api"] == "not_called"
+    assert out["native_effects"] == "none"
+    assert out["material_label_source"] == "human_authored_region"
+    assert out["image_orientation"]["status"] in (
+        "image_edge_tangent_proxy_not_brush_detection",
+        "indeterminate_no_oriented_edges",
+    )
+    profile = out["profile"]
+    assert validate_technique(profile) == profile
+    assert profile["status"] == "hypothesis"
+    assert profile["render"]["technique"] == "ripples"
+    proposed = propose_technique_application(scene, profile, "water", "waterfill")
+    assert len(proposed["candidate_sha256"]) == 64
+    assert approve_technique_application(
+        scene, profile, proposed, confirm=True,
+    )["stages"][1]["intents"][1]["render"]["technique"] == "ripples"
+
+
+def test_technique_extraction_refuses_mismatched_material_and_missing_roi(tmp_path):
+    from krita_agent.technique_extraction_v10 import extract_technique_hypothesis
+    _, manifest, _ = _fixture(tmp_path)
+    with pytest.raises(TaskError, match="contradicts manually labeled"):
+        extract_technique_hypothesis(
+            tmp_path, manifest, source_id="painted", region_id="water",
+            profile_id="bad_material", material="fabric")
+    with pytest.raises(TaskError, match="explicit analyzed reference ROI"):
+        extract_technique_hypothesis(
+            tmp_path, manifest, source_id="painted", region_id="unknown",
+            profile_id="no_roi", material="water")
+
+
+def test_technique_extraction_requires_material_or_technique_right(tmp_path):
+    from krita_agent.technique_extraction_v10 import extract_technique_hypothesis
+    _, manifest, _ = _fixture(tmp_path)
+    manifest["sources"][0]["roles"] = ["composition"]
+    with pytest.raises(TaskError, match="material/technique rights"):
+        extract_technique_hypothesis(
+            tmp_path, manifest, source_id="painted", region_id="water",
+            profile_id="not_authorized", material="water")
+
+
+def test_technique_extract_cli_requires_explicit_source_and_roi():
+    from krita_agent.cli import parser_build
+    parser = parser_build()
+    args = parser.parse_args([
+        "reference", "technique-extract", "--root", "./authorized",
+        "--manifest", "refs.json", "--source-id", "ref",
+        "--region-id", "water", "--id", "learned_water",
+        "--phase", "block_in", "--profile-only"])
+    assert args.reference_action == "technique-extract"
+    assert args.profile_only and args.source_id == "ref"

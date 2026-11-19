@@ -31,19 +31,28 @@ def register(commands):
     entry = commands.add_parser("reference", help="Authorized reference analysis / techniques (Round 10)")
     actions = entry.add_subparsers(dest="reference_action", required=True)
     for name in ("analyze", "annotate", "propose", "approve", "compare", "technique-save",
-                 "technique-list", "technique-plan", "technique-approve"):
+                 "technique-list", "technique-plan", "technique-approve", "technique-extract"):
         p = actions.add_parser(name)
         if name not in ("technique-save", "technique-list", "technique-plan",
                         "technique-approve"):
-            if name in ("analyze", "annotate", "approve"):
+            if name in ("analyze", "annotate", "approve", "technique-extract"):
                 p.add_argument("--root", required=True, help="Authorized directory with image sources")
-            if name in ("analyze", "approve"):
+            if name in ("analyze", "approve", "technique-extract"):
                 p.add_argument("--manifest", required=True)
-            if name not in ("analyze", "annotate"):
+            if name not in ("analyze", "annotate", "technique-extract"):
                 p.add_argument("--scene", required=True)
             if name in ("propose", "compare"):
                 p.add_argument("--analysis", required=True)
                 p.add_argument("--bindings", required=True, help="JSON list of explicit source/ROI/subject mappings")
+            if name == "technique-extract":
+                p.add_argument("--source-id", required=True)
+                p.add_argument("--region-id", required=True)
+                p.add_argument("--id", required=True)
+                p.add_argument("--version", type=int, default=1)
+                p.add_argument("--material")
+                p.add_argument("--phase", default="material")
+                p.add_argument("--profile-only", action="store_true",
+                               help="Output only a valid profile JSON for technique-save")
             if name == "annotate":
                 p.add_argument("--model", required=True, help="Explicit external VLM model ID")
                 p.add_argument("--endpoint", help="HTTPS JSON model endpoint")
@@ -95,6 +104,15 @@ def execute(args):
             ChatJSONProvider(args.model, endpoint=args.endpoint),
             allow_external_upload=True,
         ), args.output)
+    if action == "technique-extract":
+        from .technique_extraction_v10 import extract_technique_hypothesis
+        hypothesis = extract_technique_hypothesis(
+            args.root, _load(args.manifest), source_id=args.source_id,
+            region_id=args.region_id, profile_id=args.id,
+            version=args.version, material=args.material, phase=args.phase,
+        )
+        return _output(hypothesis["profile"] if args.profile_only else hypothesis,
+                       args.output)
     if action == "propose":
         return _output(propose_reference_repaint(
             _load(args.scene), _load(args.analysis), _load(args.bindings),

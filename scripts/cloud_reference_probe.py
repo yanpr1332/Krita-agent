@@ -23,6 +23,7 @@ from krita_agent.reference_compare_v10 import compare_native_repaint
 from krita_agent.technique_library_v10 import (
     propose_technique_application, approve_technique_application,
 )
+from krita_agent.technique_extraction_v10 import extract_technique_hypothesis
 try:
     from cloud_staged_probe import synthetic_scene
 except ModuleNotFoundError as exc:
@@ -80,28 +81,10 @@ def prepare(root, build):
         rationale="Test reproducible authorized native-only color transfer")
     accepted = approve_reference_repaint(
         scene, manifest, root, proposed, confirm=True)
-    profile = {
-        "schema": "krita-agent-technique/1",
-        "id": "ci_water_ripple", "version": 1,
-        "title": "Cloud CI horizontal water glints",
-        "materials": ["water"], "subjects": ["water"],
-        "phases": ["block_in"], "intent_kinds": ["coverage"],
-        "render": {
-            "technique": "ripples", "layers": 1, "placement": "staggered",
-            "flow": "linear", "spacing": 12, "length": 15, "curvature": .08,
-            "palette": ["#326DBE", "#6095DE"],
-        },
-        "brush": {"size": 4.0, "opacity": .9},
-        "provenance": {
-            "source_id": "ci_reference",
-            "source_sha256": evidence["sources"][0]["sha256"],
-            "rights_basis": "owned",
-            "source_note": "Original generated CI reference",
-        },
-        "status": "hypothesis", "evidence": [],
-        "limitations": "CI structure fixture; no human or material quality acceptance",
-        "builds": [build],
-    }
+    hypothesis = extract_technique_hypothesis(
+        root, manifest, source_id="ci_reference", region_id="water_color",
+        profile_id="ci_water_ripple", material="water", phase="block_in")
+    profile = hypothesis["profile"]
     suggested = propose_technique_application(
         accepted, profile, "water", "waterfill", build=build)
     final = approve_technique_application(
@@ -117,6 +100,7 @@ def prepare(root, build):
         "manifest": manifest, "bindings": bindings, "evidence": evidence,
         "proposal": proposed, "technique_proposal": suggested,
         "scene": final, "compiled": compiled,
+        "technique_extraction": hypothesis,
         "approved_native_steps_sha256": approved_core["native_steps_sha256"],
     }
 
@@ -153,6 +137,11 @@ def execute(client, output_dir):
             "native_steps_sha256": compiled["native_steps_sha256"],
             "approved_native_steps_sha256": fixture["approved_native_steps_sha256"],
             "approved_technique_sha256": fixture["technique_proposal"]["technique_sha256"],
+            "technique_extraction": {
+                "orientation": fixture["technique_extraction"]["image_orientation"],
+                "declaration": fixture["technique_extraction"]["material_label_source"],
+                "model_api": fixture["technique_extraction"]["model_api"],
+            },
             "stage_count": len(compiled["stage_spans"]),
             "stage_guide_count": compiled["structure_diagnostics"]["rendered_skeleton_chains"],
         })

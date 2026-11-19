@@ -74,3 +74,5 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Added immutable technique profiles with permitted materials/phase/Krita builds, source SHA and license record; only pre-approved v4 native intents may reuse these profiles.
 - Added ROI diagnostic comparison requiring real KRA and strict exported/reopened PNG consistency. Pixel color/edge similarity is not declared artistic success.
 - Added reference CLI, security/negative regression tests and an opt-in synthetic source fixture for the real Linux Krita/Xvfb acceptance pipeline. The proper status of the native fixture is recorded separately in the acceptance document after observing CI.
+
+- Added offline reference-ROI technique hypothesis extraction: material family remains user-declared; measured image edge tangents, palette and texture density yield bounded R8 render candidates with evidence and warnings. New `reference technique-extract` CLI and approval-loop tests; native CI fixture also consumes the extracted profile rather than a hard-coded water profile.

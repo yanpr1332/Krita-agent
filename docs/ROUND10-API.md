@@ -45,6 +45,20 @@ Applying a technique yields a new hash-bound scene candidate; explicit approval 
 
 **Technique learning is structured knowledge extraction and reuse, not automatic training or fine-tuning.**
 
+
+### 4.1 Offline technique extraction (additional R10 capability)
+
+`technique_extraction_v10.extract_technique_hypothesis(root, manifest, source_id, region_id, profile_id, material, phase)` reads only a user-authorized ROI and combines its **actual sampled palette, coarse image-edge tangent orientation, edge density and an explicitly HUMAN-DECLARED material name** into a conservative Round 8 `render` recipe. It generates a valid `krita-agent-technique/1` profile with `status:hypothesis`, analysis hash, source SHA, rights note, and explicit limitations. Anisotropy is reported as an *uncalibrated image edge proxy*; this is **not recognition of physical brush strokes, material identity or the original artist's technique**. No network or model training.
+
+The JSON result contains a `profile` object that can be saved immutably, and separate diagnostic fields `image_orientation` and `material_label_source`. Use the CLI flag `--profile-only` to write a library-ready profile:
+
+```powershell
+krita-agent reference technique-extract --root ./authorized_refs --manifest refs.json --source-id palette --region-id highlight --id water_ripples_study --version 1 --material water --phase material --profile-only --output water-ripples.json
+krita-agent reference technique-save --library ./techniques --profile water-ripples.json
+```
+
+A saved hypothesis cannot be promoted to `native_tested` or `human_reviewed` without separately recorded inspection. Its material family is supplied by the user; the derived spacing/angle/color may be unsuitable on another subject, canvas size, Krita brush preset or build. `technique-plan` and `technique-approve` are still required before reusing it on a native painting.
+
 ## 5. Actual native comparison
 
 `reference_compare_v10.compare_native_repaint(scene, analysis, bindings, kra, png, fresh_reopened_png)` requires a genuine Krita KRA archive with editable paint-layer metadata and strict matching embedded/exported PNG. If a separate native reopened PNG is supplied, strict RGBA and color-profile consistency are also required. It returns descriptive per-subject color, value, edge and provenance diagnostics.

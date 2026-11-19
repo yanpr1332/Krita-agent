@@ -10,6 +10,7 @@ Development only on `feat/round10-reference-technique` based on verified `main` 
 - [ ] Distinguish independent global composition/structure/palette roles from per-subject material contributions. Binding source/ROI/subject mismatches fail closed.
 - [ ] External provider called only when the user requests the model, explicitly approves upload *and* each source's consent explicitly permits upload. Model output is validated as untrusted hypotheses and cannot submit native commands.
 - [ ] Color-only proposals preserve original geometries, are immutable with source/pixel/hash checks, and re-measure actual sources when approved. Structure adaptation requires a separate human/model-authored candidate.
+- [ ] Offline ROI technique extractor is deterministic, retains user-declared material and measured edge/palette proxies, outputs a hypothesis only, and works with native-rendering approval flow.
 - [ ] Technique recipes are versioned, immutable, have explicit license/source SHA, confidence/limitation/build context and prevent overwrite; future re-use needs explicit approval and can't silently alter locked material/subject geometry.
 - [ ] KRA/PNG comparison rejects Pillow-only fake files, reports strict embedded/export integrity, reopened PNG consistency, descriptive ROI metrics, and leaves artistic verdict pending.
 - [ ] Existing R7/R8/R9 geometry/material workflows and stage approvals remain compatible.
