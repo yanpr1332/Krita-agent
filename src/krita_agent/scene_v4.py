@@ -85,7 +85,7 @@ def _polygon(raw, subject):
 def validate_scene_v4(candidate):
     if not isinstance(candidate, dict) or candidate.get("schema") != SCHEMA:
         raise TaskError("Expected ScenePlan v4")
-    _mapping(candidate, ("schema", "document", "style", "subjects", "stages"),
+    _mapping(candidate, ("schema", "document", "style", "subjects", "stages", "structure"),
              "ScenePlan v4")
     doc = _mapping(candidate.get("document"), ("width", "height", "name"), "document")
     width = integer(doc.get("width"), "width", 1, 8192)
@@ -222,9 +222,14 @@ def validate_scene_v4(candidate):
         })
     if stages[0]["phase"] != "sketch" or stages[-1]["phase"] not in ("detail", "polish"):
         raise TaskError("Stages require sketch first and detail/polish last")
-    return {"schema": SCHEMA, "document": document,
-            "style": label(candidate.get("style", "illustration"), "style", 160),
-            "subjects": subjects, "stages": stages}
+    result = {"schema": SCHEMA, "document": document,
+              "style": label(candidate.get("style", "illustration"), "style", 160),
+              "subjects": subjects, "stages": stages}
+    if "structure" in candidate:
+        from .structure_v9 import validate_structure_plan
+        result["structure"] = validate_structure_plan(candidate["structure"],
+                                                      subjects, document)
+    return result
 
 
 def lower_scene_v4(candidate):
@@ -235,7 +240,11 @@ def lower_scene_v4(candidate):
     stage_layers = []
     for index, stage in enumerate(scene["stages"]):
         grouped = {}
-        for item in stage["intents"]:
+        current_intents = list(stage["intents"])
+        if index == 0 and "structure" in scene:
+            from .structure_v9 import structural_guide_intents
+            current_intents = structural_guide_intents(scene) + current_intents
+        for item in current_intents:
             grouped.setdefault(item["subject_id"], []).append(item)
         rows = []
         for sid in sorted(grouped, key=lambda key: (by_id[key]["depth"], key)):
@@ -327,6 +336,9 @@ def compile_scene_v4(candidate, profile_directory=None, build=None,
         })
     if len(all_steps) > 10000:
         raise TaskError("ScenePlan v4 exceeds 10000 native steps")
+    if "structure" in scene:
+        from .structure_v9 import diagnose_structure
+        base["structure_diagnostics"] = diagnose_structure(scene)
     base.update({
         "schema": "krita-agent-scene-compiled/4",
         "source_v4_sha256": digest(scene),
