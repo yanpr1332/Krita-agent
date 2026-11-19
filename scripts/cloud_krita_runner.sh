@@ -76,3 +76,8 @@ trap cleanup EXIT
 # A timeout here is a failed experiment, never an accepted native test.
 timeout --signal=TERM 230s python "$GITHUB_WORKSPACE/scripts/cloud_native_probe.py" \
   --output-dir "$ART" --port "$KRITA_AGENT_PORT" --ready-timeout 95
+
+# Real staged ScenePlan v4 fixture in the same isolated Krita process.
+# This is a pre-reviewed synthetic test; it does not approve a human artwork.
+timeout --signal=TERM 230s python "$GITHUB_WORKSPACE/scripts/cloud_staged_probe.py" \
+  --output-dir "$ART" --port "$KRITA_AGENT_PORT"

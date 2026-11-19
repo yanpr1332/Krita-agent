@@ -51,3 +51,10 @@ This experiment does not validate the Windows-specific `.exe` launcher, user-ins
 | T3 consolidated local Windows acceptance | Deferred until integration |
 
 See [AGENTS.md](../AGENTS.md), [ROADMAP.md](ROADMAP.md), [ARTIST-ROADMAP-R7-R12.md](ARTIST-ROADMAP-R7-R12.md) and [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md).
+
+
+## Bounded multi-stage Tier-2 extension (cloud CI fixture)
+
+Following the basic native success, the same real Krita AppImage job also attempts a separate **pre-reviewed synthetic ScenePlan v4** fixture: two arbitrary subjects (ceramic vessel and water stripe), three ordered phases (sketch / block-in / detail), and only a small fixed number of validated native commands. Its actual per-stage Krita preview.canvas PNGs, layer inventory, colored pixel changes, editable KRA, fresh reopened PNG, hashes and strict RGBA/ICC comparisons form an independent cloud-staged-report.json. No model API is called; this is not a natural artwork or human approval.
+
+The fixture is source-controlled in scripts/cloud_staged_probe.py and its deterministic compiler/unknown-effect tests are in tests/test_cloud_staged_probe.py. The AppImage binary alone is cached between runs when available; no user artwork, token or session is cached. A success does not establish Round 8 materials, Windows builds or finished-artwork aesthetics. A failed staged test does not undo the earlier verified single-stroke evidence: report each gate separately.
