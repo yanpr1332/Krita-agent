@@ -1,0 +1,59 @@
+{
+  "schema": "krita-agent-references/1",
+  "sources": [
+    {
+      "id": "composition",
+      "file": "licensed-composition.png",
+      "rights": {
+        "basis": "explicit_permission",
+        "permission_confirmed": true,
+        "source_note": "Replace with actual owner/permission record",
+        "external_upload_permitted": false
+      },
+      "roles": [
+        "composition",
+        "structure"
+      ],
+      "regions": [
+        {
+          "id": "main_subject",
+          "rect": [
+            0.1,
+            0.15,
+            0.7,
+            0.75
+          ],
+          "subject_id": "vessel",
+          "material": "ceramic"
+        }
+      ]
+    },
+    {
+      "id": "palette",
+      "file": "licensed-palette.png",
+      "rights": {
+        "basis": "licensed",
+        "permission_confirmed": true,
+        "source_note": "Replace with license documentation",
+        "external_upload_permitted": false
+      },
+      "roles": [
+        "palette",
+        "material"
+      ],
+      "regions": [
+        {
+          "id": "highlight",
+          "rect": [
+            0.12,
+            0.2,
+            0.55,
+            0.45
+          ],
+          "subject_id": "water",
+          "material": "water"
+        }
+      ]
+    }
+  ]
+}

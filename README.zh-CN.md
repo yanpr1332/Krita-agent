@@ -131,3 +131,5 @@ krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\l
 **第八轮自然笔触（源码开发，真实画质验收待进行）：** 为 ScenePlan v4 增加可选的十类材质笔法、方向场、有界蓝噪声落笔、颜色/粗细/压感/透明度分层、边缘修饰和真实阶段 PNG 差异诊断；旧计划保持兼容。参见 [Round 8 API](docs/ROUND8-API.md)、[验收清单](docs/ROUND8-ACCEPTANCE.md) 和 [Round 7 失败作品基线](docs/ROUND7-ARTWORK-ATTEMPTS.md)。Windows [CI #42990495459](https://github.com/yanpr1332/Krita-agent/actions/runs/42990495459) 在两种 Python 版本上各通过 223 项离线测试；这不等于画得像人。
 
 **第九轮结构与多题材规划（源码及云端集成）：** 支持主体锚点、语义部件和结构连接链、遮挡/透视/比例约束、锁定部件与哈希绑定的人工批准结构修订；仅在明确启用时，草图结构线才会转换为真正的 Krita 原生笔触。保留 Round 8 材质渲染和三级云端验证机制。参见 [Round 9 API](docs/ROUND9-API.md) 与 [验收清单](docs/ROUND9-ACCEPTANCE.md)。**语义约束通过不意味着人物或动物画得好。**
+
+**第十轮参考图临摹与技法档案（源码及云端验收）：** 新增合法授权参考图的多来源分工、区域配色/明暗分析、显式允许后才调用视觉模型、哈希绑定的原生 ScenePlan v4 重绘提案、不可覆盖的技法档案，以及真实 KRA/PNG 对照诊断。默认离线、不上传参考图，不使用贴图代替原生笔触。参见 [Round 10 API](docs/ROUND10-API.md) 与 [验收清单](docs/ROUND10-ACCEPTANCE.md)。**临摹相似度和人工绘画质量尚未通过验收。**

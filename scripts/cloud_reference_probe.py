@@ -101,12 +101,13 @@ def prepare(root, build):
         accepted, profile, "water", "waterfill", build=build)
     final = approve_technique_application(
         accepted, profile, suggested, confirm=True)
+    approved_core = compile_scene_v4(final)
+    if approved_core["native_steps_sha256"] != suggested["native_steps_sha256"]:
+        raise RuntimeError("Approved core native brush steps differ from proposal")
     compiled = compile_scene_v4(final, preview_prefix="r5-runs/"+"e"*32)
     if (len(compiled["steps"]) > 150 or
             not all(item["command"] in ALLOWED for item in compiled["steps"])):
         raise RuntimeError("Round 10 preapproved test exceeded native brush-only budget")
-    if compiled["native_steps_sha256"] != suggested["native_steps_sha256"]:
-        raise RuntimeError("Approved native step digest differs from proposal")
     return {
         "manifest": manifest, "bindings": bindings, "evidence": evidence,
         "proposal": proposed, "technique_proposal": suggested,

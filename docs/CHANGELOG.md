@@ -66,3 +66,11 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Added geometry-aware material/phase strategy suggestions, user-locked structure, SHA-bound bounded structure-fix proposals and explicit approval; no implicit native repaint.
 - Added two complete structural scenes and deterministic six-genre schema coverage, negative safety/geometry tests, and a true cloud Krita staged fixture with native structural strokes.
 - [Windows CI #44494279871](https://github.com/yanpr1332/Krita-agent/actions/runs/44494279871): 265 passed on each Python 3.10 / 3.13. [Krita cloud native #44494279816](https://github.com/yanpr1332/Krita-agent/actions/runs/44494279816) confirmed 41 real Bridge commands and zero strict KRA reopen differences. Cross-genre image quality **not accepted**.
+
+## Round 10 — legal references, deterministic color studies and technique library (2026-11-19)
+
+- New independently verified `feat/round10-reference-technique` branch from latest merged R9 `main`. No local Windows/WSL, RDC or direct `main` changes.
+- Added bounded real-pixel analysis, per-role multiref consent controls, explicit external-VLM opt-in visual annotations, provenance-checked repaint proposals and separate confirm gate.
+- Added immutable technique profiles with permitted materials/phase/Krita builds, source SHA and license record; only pre-approved v4 native intents may reuse these profiles.
+- Added ROI diagnostic comparison requiring real KRA and strict exported/reopened PNG consistency. Pixel color/edge similarity is not declared artistic success.
+- Added reference CLI, security/negative regression tests and an opt-in synthetic source fixture for the real Linux Krita/Xvfb acceptance pipeline. The proper status of the native fixture is recorded separately in the acceptance document after observing CI.

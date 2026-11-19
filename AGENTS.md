@@ -106,3 +106,14 @@ Material recipes, seeded irregularity, ten named techniques and plan/repetition 
 ## Round 9 structural planning constraint
 
 Round 9 is authored only on `feat/round9-multigenre-structure`. Its starting point is the current `main` with Tier-2 infrastructure; outstanding Round 8 code was brought into the new feature branch without changing `main` or the Round 8 branch. Keep all source/CI/artwork acceptance categories separate. Structural part counts and perspective checks are **declarations checked against coordinates**, not independent image understanding. Never infer artwork quality or acceptable anatomy from a green source/native test. Follow the cloud-first full-artwork acceptance deferral policy.
+
+## Round 10: external reference rights and native-only repainting
+
+Round 10 development belongs to the independently created `feat/round10-reference-technique` branch; existing `main` (including R8/R9 and cloud CI) is its verified parent. Keep all source edits and logs there until user-authorized PR merging.
+
+- Never browse, scrape or bulk-download arbitrary third-party artwork for painting tests. Require an explicit rights declaration, provenance and live file hashes for each local input; a user's declaration is not independent legal verification.
+- **Offline analysis is default.** A paid/remote multimodal provider may receive actual source image pixels only if the user deliberately invokes that path and per-source `external_upload_permitted` is true. Never store credentials, prompts with secrets or private reference images in CI artifacts.
+- Pixel-color, edge and histogram analysis is not semantic object detection or proven brush-technique learning. Source/model annotation results are bounded *hypotheses*, and no model receives arbitrary Krita command authority.
+- Binding a source palette or technique to a validated v4 candidate is **proposal only**. Recheck file hash and full scene digest at explicit approval; every native stage still uses its own separate approval gate. Never paste or import reference pixels as final artwork.
+- Technique profiles must be immutable by version, rights/SHA-bound and explicit about provenance, targeted material/build and actual validation evidence. `native_tested` or `human_reviewed` labels from user data are not proof until related artifacts have been inspected.
+- Genuine real-Krita KRA + PNG export/reopen is required before cloud native technical claims. Full reference resemblance, material realism and independent artwork/human acceptance remain in the consolidated final local campaign.
