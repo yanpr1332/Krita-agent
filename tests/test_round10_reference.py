@@ -358,3 +358,26 @@ def test_technique_extract_cli_requires_explicit_source_and_roi():
         "--phase", "block_in", "--profile-only"])
     assert args.reference_action == "technique-extract"
     assert args.profile_only and args.source_id == "ref"
+
+
+def test_technique_extraction_detects_authored_horizontal_reference_edges(tmp_path):
+    from krita_agent.technique_extraction_v10 import extract_technique_hypothesis
+    scene, manifest, _ = _fixture(tmp_path)
+    with Image.open(tmp_path / "synthetic.png") as original:
+        image = original.convert("RGB")
+    drawer = ImageDraw.Draw(image)
+    # Deliberately visible source-image texture, NOT a Krita output image.
+    for y in (77, 86, 95, 104):
+        drawer.line([(77, y), (118, y)], fill=(220, 229, 247), width=3)
+    image.save(tmp_path / "synthetic.png")
+    hypothesis = extract_technique_hypothesis(
+        tmp_path, manifest, source_id="painted", region_id="water",
+        profile_id="horizontal_reference", phase="block_in", material="water")
+    orientation = hypothesis["image_orientation"]
+    assert orientation["status"] == "image_edge_tangent_proxy_not_brush_detection"
+    assert orientation["samples"] > 0
+    assert orientation["angle"] == 0.0
+    assert orientation["anisotropy"] > .5
+    assert hypothesis["profile"]["status"] == "hypothesis"
+    assert hypothesis["profile"]["render"]["technique"] == "ripples"
+    assert hypothesis["profile"]["render"]["angle"] == 0.0
