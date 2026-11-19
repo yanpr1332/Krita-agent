@@ -103,9 +103,9 @@ def test_native_probe_failure_report_is_not_a_false_acceptance(tmp_path):
 
     class Fake:
         calls = []
-        def request(self, name, **kwargs):
-            self.calls.append(name)
-            if name == "status":
+        def request(self, action, **kwargs):
+            self.calls.append(action)
+            if action == "status":
                 return {"connected": True, "krita_version": "MOCK (not Krita)",
                         "output_dir": str(tmp_path)}
             raise BridgeError("reply lost after uncertain native mutation")
