@@ -7,3 +7,13 @@ output/
 *.log
 *.tmp
 .env
+
+# Private per-machine environment variables; keep explicitly documented examples.
+.env.*
+!.env.example
+!.env.sample
+
+# Local secrets and source references must not accidentally be staged.
+local-secrets/
+private-references/
+.krita-agent-jobs/

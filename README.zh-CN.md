@@ -124,7 +124,7 @@ krita-agent longjob resume --file ".\examples\round4-longjob.json" --ledger ".\l
 
 ## 文档与项目管理
 
-[第四轮 API](docs/ROUND4-API.md) · [第四轮验收清单](docs/ROUND4-ACCEPTANCE.md) · [第四轮验收报告](docs/REPORT-011.md) · [第三轮 API](docs/ROUND3-API.md) · [第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) · [项目路线图](docs/ROADMAP.md) · [工程架构](docs/ARCHITECTURE.md) · [第三轮源码实现报告](docs/REPORT-008.md) · [贡献规范](CONTRIBUTING.md)。
+[第四轮 API](docs/ROUND4-API.md) · [第四轮验收清单](docs/ROUND4-ACCEPTANCE.md) · [第四轮验收报告](docs/REPORT-011.md) · [第三轮 API](docs/ROUND3-API.md) · [第三轮验收清单](docs/ROUND3-ACCEPTANCE.md) · [项目路线图](docs/ROADMAP.md) · [工程架构](docs/ARCHITECTURE.md) · [第三轮源码实现报告](docs/REPORT-008.md) · [贡献规范](CONTRIBUTING.md) · [安全政策](SECURITY.md)。
 
 原创代码采用 MIT License；Krita 和第三方依赖遵循各自许可证。
 
