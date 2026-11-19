@@ -1,0 +1,50 @@
+name: Experimental real Krita cloud smoke (Linux Xvfb)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - infra/cloud-tiered-acceptance
+    paths:
+      - '.github/workflows/cloud-krita-smoke.yml'
+      - 'scripts/cloud_native_probe.py'
+      - 'scripts/cloud_krita_runner.sh'
+      - 'plugin/krita_agent_bridge/**'
+      - 'plugin/krita_agent_bridge.desktop'
+      - 'src/krita_agent/client.py'
+      - 'src/krita_agent/artifact_integrity.py'
+
+permissions:
+  contents: read
+
+jobs:
+  native-ubuntu-pilot:
+    name: Actual Krita + Bridge + KRA reopen (experimental)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native Krita and Xvfb (no user machine)
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            krita krita-data python3-pyqt5 xvfb xauth openbox dbus-x11 \
+            libgl1-mesa-dri libxkbcommon-x11-0
+      - name: Install external probe dependencies
+        run: python -m pip install -e '.[feedback]'
+      - name: Run genuine native Krita Bridge test under Xvfb
+        run: |
+          chmod +x scripts/cloud_krita_runner.sh
+          xvfb-run -a -s '-screen 0 1366x900x24 -ac +extension GLX +render' \
+            bash scripts/cloud_krita_runner.sh
+      - name: Upload synthetic native evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-krita-ubuntu-xvfb-pilot
+          path: ${{ runner.temp }}/krita-native-pilot/artifacts/
+          if-no-files-found: warn
+          retention-days: 3
