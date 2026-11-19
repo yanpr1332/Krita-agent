@@ -103,3 +103,12 @@ At code revision `689535a`, [GitHub Actions run 42468603707](https://github.com/
 - **R12:** Whole-system performance, long-running reliability, cross-build testing, and held-out multi-genre artwork acceptance.
 
 Each development round should use its own branch. Native/visual/human evidence remains distinct; no fixed benchmark-specific scripts, pasted reference image, stroke-count target, or model self-rating can substitute for real artwork acceptance.
+
+## Cloud-first acceptance scheduling amendment (2026-11-19)
+
+The user approved a consolidated local validation approach for R9–R12 to reduce costly repeated local agent sessions. Round-specific branches remain mandatory. Complete most source/contract/geometry/fault-injection tests in GitHub CI; attempt genuine cloud Krita smoke testing separately; perform **one staged local Windows acceptance campaign** after integrated cloud development, with minimal targeted native smoke exceptions if essential. Keep visual and human artwork judgements as independent final gates, and never claim mock/CI successes as native painting. Implementation and limitations: [Cloud Validation Strategy](CLOUD-VALIDATION-STRATEGY.md). This planning change lives on its own `infra/cloud-tiered-acceptance` branch and does not modify the existing Round 8 feature branch.
+
+
+## Tier-2 cloud Krita native checkpoint (2026-11-19)
+
+**Native cloud smoke verified for official Linux Krita 5.3.4.1**, with real authenticated Bridge, editable KRA, original/reopened PNGs and 0 strict pixel differences. [GitHub Actions #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863) · [full evidence report](CLOUD-NATIVE-ACCEPTANCE.md). The infrastructure is isolated on `infra/cloud-tiered-acceptance`; Windows local build compatibility, advanced brush/artwork quality and final human acceptance remain pending. CI is not merged into `main`.
