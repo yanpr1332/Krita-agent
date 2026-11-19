@@ -101,8 +101,7 @@ def perform_native_smoke(client, output_dir, *, wait=90):
 
         command("canvas.create", width=128, height=128, name="Krita Agent CI Native Stroke")
         command("layer.create", name="Cloud CI Ink")
-        command("brush.configure", color="#EE5544", size=15, opacity=1.0,
-                pressure_enabled=False)
+        command("brush.configure", color="#EE5544", size=15, opacity=1.0)
         stroke = command(
             "draw.stroke", mode="segmented",
             points=[{"x": 19, "y": 28, "pressure": 1.0},

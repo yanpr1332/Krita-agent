@@ -34,10 +34,16 @@ export XDG_RUNTIME_DIR="${RUNNER_TEMP}/krita-xdg-runtime"
 mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR"
 
+KRITA_BIN="${KRITA_NATIVE_BINARY:-$(command -v krita)}"
+if [[ ! -x "$KRITA_BIN" ]]; then
+  echo "The requested Krita binary does not exist or is not executable" >&2
+  exit 1
+fi
+
 {
   echo "Runner OS: $(uname -a)"
-  echo "Krita executable: $(command -v krita)"
-  krita --version
+  echo "Krita executable: $KRITA_BIN"
+  env -u LD_LIBRARY_PATH -u PYTHONHOME -u PYTHONPATH "$KRITA_BIN" --version
   echo "Python executable: $(python --version)"
   echo "DISPLAY: ${DISPLAY:-unset}"
 } > "$ART/environment.txt" 2>&1
@@ -45,8 +51,8 @@ chmod 700 "$XDG_RUNTIME_DIR"
 # Lightweight WM ensures a Krita active window under Xvfb, even without desktop login.
 openbox > "$ART/openbox.log" 2>&1 &
 wm_pid=$!
-env -u LD_LIBRARY_PATH -u PYTHONHOME PYTHONPATH=/usr/lib/python3/dist-packages \
-  krita --nosplash > "$ART/krita-startup.log" 2>&1 &
+env -u LD_LIBRARY_PATH -u PYTHONHOME -u PYTHONPATH \
+  "$KRITA_BIN" --nosplash > "$ART/krita-startup.log" 2>&1 &
 krita_pid=$!
 cleanup() {
   kill "$krita_pid" "$wm_pid" 2>/dev/null || true

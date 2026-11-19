@@ -20,7 +20,7 @@ Two key boundaries: (a) source/contract simulation never proves what Krita actua
 
 ## Cloud native pilot design
 
-The independent [cloud smoke workflow](../.github/workflows/cloud-krita-smoke.yml) starts via push on its `infra/cloud-tiered-acceptance` experiment branch or explicit manual dispatch; it does **not** make expensive drawing automatic on every feature push. It installs official distribution-packaged Krita in an isolated Ubuntu runner and uses Xvfb as a virtual display. Plugin files go to an isolated `XDG_DATA_HOME`, and `kritarc` enables only this plugin; secrets are ephemeral per job, confined to loopback, and never printed.
+The independent [cloud smoke workflow](../.github/workflows/cloud-krita-smoke.yml) starts via push on its `infra/cloud-tiered-acceptance` experiment branch or explicit manual dispatch; it does **not** make expensive drawing automatic on every feature push. It downloads the official versioned Krita 5.3.4.1 Linux AppImage into an isolated Ubuntu runner and uses Xvfb as a virtual display. Plugin files go to an isolated `XDG_DATA_HOME`, and `kritarc` enables only this plugin; secrets are ephemeral per job, confined to loopback, and never printed.
 
 The probe checks that the actual process can answer `status`, then creates a tiny native canvas, adds an editable paint layer, configures a brush, paints a genuine stroke, exports PNG, saves KRA, freshly reopens a separate copy, re-exports PNG and checks pixels/ICC. Collect a manifest and small non-private smoke artifacts even if the job fails. Fail closed on any unknown native effect. If Xvfb or packaged Krita cannot load our plugin, mark T2 **not established** and document runner logs rather than silently substituting a mock.
 
@@ -36,7 +36,7 @@ This experiment does not validate the Windows-specific `.exe` launcher, user-ins
 ## Costs, limits and unknowns
 
 - GitHub-hosted runner minutes, apt package downloads, Xvfb startup and artifact storage incur costs/time; bound the pilot to 15 minutes and avoid large canvases.
-- The cloud runner may lack a working Krita Python plugin or GUI support. Until a successful runner trace is observed, T2 is **pilot/unverified**.
+- The first Ubuntu distro package (5.2.2) loaded the real Bridge only after removing GitHub setup-python library-path overrides, but its View lacked the pressure-toggle API. The next pilot uses Krita 5.3.4.1 official AppImage. The cloud runner may still lack a working native painting API or a compatible GUI build. Until a successful runner trace is observed, T2 is **pilot/unverified**.
 - Windows build compatibility and aesthetic acceptance always require T3; one Linux build does not generalize.
 - Current R8 rendering improvements have offline evidence but native artwork outcomes remain unverified.
 

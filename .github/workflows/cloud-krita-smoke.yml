@@ -22,8 +22,25 @@ permissions:
   contents: read
 
 jobs:
-  native-ubuntu-pilot:
-    name: Actual Krita + Bridge + KRA reopen (experimental)
+  source-gate:
+    name: Fast offline contract gate before costly Krita download
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and probe dependencies
+        run: python -m pip install -e '.[test,feedback]'
+      - name: Compile and run isolated Bridge protocol smoke tests
+        run: |
+          python -m compileall -q src plugin scripts tests
+          python -m pytest -q tests/test_cloud_contract_bridge.py
+
+  native-appimage:
+    name: Actual Krita 5.3.4.1 AppImage + Bridge + KRA reopen
+    needs: source-gate
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -31,15 +48,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install native Krita and Xvfb (no user machine)
+      - name: Install virtual display dependencies (no user machine)
         run: |
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            krita krita-data python3-pyqt5 xvfb xauth openbox dbus-x11 \
-            libgl1-mesa-dri libxkbcommon-x11-0
+            xvfb xauth openbox dbus-x11 libgl1-mesa-dri libxkbcommon-x11-0
       - name: Install external probe dependencies
         run: python -m pip install -e '.[feedback]'
+      - name: Obtain official Krita 5.3.4.1 Linux AppImage
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/krita-native-pilot/download"
+          cd "$RUNNER_TEMP/krita-native-pilot/download"
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 240 \
+            'https://download.kde.org/stable/krita/5.3.4.1/krita-5.3.4.1-x86_64.AppImage' \
+            --output Krita.AppImage
+          test "$(stat -c%s Krita.AppImage)" -ge 350000000
+          sha256sum Krita.AppImage > "$RUNNER_TEMP/krita-native-pilot/appimage-sha256.txt"
+          chmod +x Krita.AppImage
+          ./Krita.AppImage --appimage-extract > "$RUNNER_TEMP/krita-native-pilot/appimage-extract.log" 2>&1
+          test -x squashfs-root/AppRun
       - name: Run genuine native Krita Bridge test under Xvfb
+        env:
+          KRITA_NATIVE_BINARY: ${{ runner.temp }}/krita-native-pilot/download/squashfs-root/AppRun
         run: |
           chmod +x scripts/cloud_krita_runner.sh
           xvfb-run -a -s '-screen 0 1366x900x24 -ac +extension GLX +render' \
@@ -48,7 +80,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: native-krita-ubuntu-xvfb-pilot
+          name: native-krita-official-appimage-pilot
           path: ${{ runner.temp }}/krita-native-pilot/artifacts/
           if-no-files-found: warn
           retention-days: 3
