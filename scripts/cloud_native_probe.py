@@ -63,7 +63,7 @@ def _ensure_real_files(root, kra, first, reopened):
             raise RuntimeError("Native PNG dimensions differ from requested canvas")
         rgba = png.convert("RGBA")
         native_ink_pixels = sum(
-            1 for r, g, b, a in rgba.getdata()
+            1 for r, g, b, a in (rgba.get_flattened_data() if hasattr(rgba, "get_flattened_data") else rgba.getdata())
             if a > 0 and r > g + 12 and r > b + 12
         )
     if native_ink_pixels < 10:
@@ -125,7 +125,12 @@ def perform_native_smoke(client, output_dir, *, wait=90):
             raise RuntimeError("Native save/export did not write expected files")
         # Keep the original immutable; the reopened document is a fresh independent copy.
         shutil.copy2(kra, copied)
-        command("document.open", path=copied.name)
+        opened = command("document.open", path=copied.name)
+        if Path(opened.get("opened", "")).resolve() != copied.resolve():
+            raise RuntimeError("Native open returned an unexpected document path")
+        active = command("document.info")
+        if Path(active.get("file_path", "")).resolve() != copied.resolve():
+            raise RuntimeError("Krita did not activate the freshly reopened KRA")
         command("document.export", path=reopened.name)
 
         ink_pixels = _ensure_real_files(root, kra, initial, reopened)

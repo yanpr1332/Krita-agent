@@ -45,7 +45,8 @@ chmod 700 "$XDG_RUNTIME_DIR"
 # Lightweight WM ensures a Krita active window under Xvfb, even without desktop login.
 openbox > "$ART/openbox.log" 2>&1 &
 wm_pid=$!
-krita --nosplash > "$ART/krita-startup.log" 2>&1 &
+env -u LD_LIBRARY_PATH -u PYTHONHOME PYTHONPATH=/usr/lib/python3/dist-packages \
+  krita --nosplash > "$ART/krita-startup.log" 2>&1 &
 krita_pid=$!
 cleanup() {
   kill "$krita_pid" "$wm_pid" 2>/dev/null || true

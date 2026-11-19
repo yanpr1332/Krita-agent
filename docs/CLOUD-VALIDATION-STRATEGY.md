@@ -1,6 +1,6 @@
 # Krita Agent — cloud-first development and cost-aware three-tier acceptance
 
-> Proposal recorded 2026-11-19. Infrastructure lives on \`infra/cloud-tiered-acceptance\` branched from verified \`main\` SHA \`5eb948ba10f96771da32ea003261a32292c72a05\`. Not yet merged, and not a claim that real cloud Krita ran.
+> Proposal recorded 2026-11-19. Infrastructure lives on `infra/cloud-tiered-acceptance` branched from verified `main` SHA `5eb948ba10f96771da32ea003261a32292c72a05`. Not yet merged, and not a claim that real cloud Krita ran.
 
 ## Decision
 
@@ -12,19 +12,19 @@ Two key boundaries: (a) source/contract simulation never proves what Krita actua
 
 | Tier | Environment | Required hard evidence | Allowed claim |
 | --- | --- | --- | --- |
-| T1 — offline | Windows 3.10/3.13 GitHub CI, deterministic tests and fake loopback Bridge | Schema and compiler tests, no-remote-command, timeout/ambiguous-effect behavior, SHA-based fixture results, all test statuses | \`offline_passed\` |
-| T2 — cloud native | Disposable Ubuntu runner + Xvfb + **installed Krita + actual Bridge** | Real Krita version/Qt, active Bridge, real paint layer/stroke, editable real KRA, visible non-empty exported PNG, fresh-copy reopened PNG, Export Integrity and Reopen Stability reports; hashed artifacts | \`cloud_native_verified\` **only for the actual build** |
-| T3 — local integrated | User-authorized Windows Krita Stable, Next Qt5, Next Qt6 | Native regressions, KRA reopen, multi-genre held-out images, real stage/layer provenance, independent VLM and human separate verdicts, failures retained | \`local_native_verified\` and separate \`artwork_human_accepted\` |
+| T1 — offline | Windows 3.10/3.13 GitHub CI, deterministic tests and fake loopback Bridge | Schema and compiler tests, no-remote-command, timeout/ambiguous-effect behavior, SHA-based fixture results, all test statuses | `offline_passed` |
+| T2 — cloud native | Disposable Ubuntu runner + Xvfb + **installed Krita + actual Bridge** | Real Krita version/Qt, active Bridge, real paint layer/stroke, editable real KRA, visible non-empty exported PNG, fresh-copy reopened PNG, Export Integrity and Reopen Stability reports; hashed artifacts | `cloud_native_verified` **only for the actual build** |
+| T3 — local integrated | User-authorized Windows Krita Stable, Next Qt5, Next Qt6 | Native regressions, KRA reopen, multi-genre held-out images, real stage/layer provenance, independent VLM and human separate verdicts, failures retained | `local_native_verified` and separate `artwork_human_accepted` |
 
 **Important:** A green T1 job cannot upgrade T2 or T3. A genuine T2 run fails when there is no Bridge, when PNG is empty, KRA isn't a valid editable Krita archive, or either strict integrity/reopen metric fails. Reports must preserve exact pixel deltas and metadata; small tolerated differences remain *informational only*.
 
 ## Cloud native pilot design
 
-The independent [cloud smoke workflow](../.github/workflows/cloud-krita-smoke.yml) starts via push on its \`infra/cloud-tiered-acceptance\` experiment branch or explicit manual dispatch; it does **not** make expensive drawing automatic on every feature push. It installs official distribution-packaged Krita in an isolated Ubuntu runner and uses Xvfb as a virtual display. Plugin files go to an isolated \`XDG_DATA_HOME\`, and \`kritarc\` enables only this plugin; secrets are ephemeral per job, confined to loopback, and never printed.
+The independent [cloud smoke workflow](../.github/workflows/cloud-krita-smoke.yml) starts via push on its `infra/cloud-tiered-acceptance` experiment branch or explicit manual dispatch; it does **not** make expensive drawing automatic on every feature push. It installs official distribution-packaged Krita in an isolated Ubuntu runner and uses Xvfb as a virtual display. Plugin files go to an isolated `XDG_DATA_HOME`, and `kritarc` enables only this plugin; secrets are ephemeral per job, confined to loopback, and never printed.
 
-The probe checks that the actual process can answer \`status\`, then creates a tiny native canvas, adds an editable paint layer, configures a brush, paints a genuine stroke, exports PNG, saves KRA, freshly reopens a separate copy, re-exports PNG and checks pixels/ICC. Collect a manifest and small non-private smoke artifacts even if the job fails. Fail closed on any unknown native effect. If Xvfb or packaged Krita cannot load our plugin, mark T2 **not established** and document runner logs rather than silently substituting a mock.
+The probe checks that the actual process can answer `status`, then creates a tiny native canvas, adds an editable paint layer, configures a brush, paints a genuine stroke, exports PNG, saves KRA, freshly reopens a separate copy, re-exports PNG and checks pixels/ICC. Collect a manifest and small non-private smoke artifacts even if the job fails. Fail closed on any unknown native effect. If Xvfb or packaged Krita cannot load our plugin, mark T2 **not established** and document runner logs rather than silently substituting a mock.
 
-This experiment does not validate the Windows-specific \`.exe\` launcher, user-installed presets, actual tablet pressure, Windows color management or Qt6 five-pixel drift.
+This experiment does not validate the Windows-specific `.exe` launcher, user-installed presets, actual tablet pressure, Windows color management or Qt6 five-pixel drift.
 
 ## Keeping local cost low
 
