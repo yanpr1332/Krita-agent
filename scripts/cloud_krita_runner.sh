@@ -81,3 +81,7 @@ timeout --signal=TERM 230s python "$GITHUB_WORKSPACE/scripts/cloud_native_probe.
 # This is a pre-reviewed synthetic test; it does not approve a human artwork.
 timeout --signal=TERM 230s python "$GITHUB_WORKSPACE/scripts/cloud_staged_probe.py" \
   --output-dir "$ART" --port "$KRITA_AGENT_PORT"
+
+# Round 10: source image is a generated CI fixture. The output must come
+# entirely from the real Krita native Bridge and is strictly re-opened.
+timeout --signal=TERM 230s python "$GITHUB_WORKSPACE/scripts/cloud_reference_probe.py" "$ART"

@@ -6,10 +6,14 @@ on:
     branches:
       - infra/cloud-tiered-acceptance
       - feat/round9-multigenre-structure
+      - feat/round10-reference-technique
     paths:
       - '.github/workflows/cloud-krita-smoke.yml'
       - 'scripts/cloud_native_probe.py'
       - 'scripts/cloud_staged_probe.py'
+      - 'scripts/cloud_reference_probe.py'
+      - 'src/krita_agent/reference_*.py'
+      - 'src/krita_agent/technique_library_v10.py'
       - 'src/krita_agent/structure_v9.py'
       - 'src/krita_agent/subject_strategy_v9.py'
       - 'src/krita_agent/structure_revision_v9.py'
@@ -42,7 +46,7 @@ jobs:
       - name: Compile and run isolated Bridge protocol smoke tests
         run: |
           python -m compileall -q src plugin scripts tests
-          python -m pytest -q tests/test_cloud_contract_bridge.py tests/test_cloud_staged_probe.py
+          python -m pytest -q tests/test_cloud_contract_bridge.py tests/test_cloud_staged_probe.py tests/test_round10_reference.py
 
   native-appimage:
     name: Actual Krita 5.3.4.1 AppImage + Bridge + KRA reopen

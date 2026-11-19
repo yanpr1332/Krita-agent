@@ -268,7 +268,7 @@ def test_pillow_generated_png_does_not_prove_native_kra_integrity(tmp_path):
     scene, manifest, bindings = _fixture(tmp_path)
     a = analyze_references(tmp_path, manifest)
     kra = tmp_path / "fake.kra"
-    kra.write_bytes(b"not a KRA, even if a picture looks plausible")
+    kra.write_bytes(b"not a KRA, even if a picture looks plausible"*10)
     with pytest.raises(TaskError, match="Not an independently valid Krita KRA"):
         compare_native_repaint(scene, a, bindings, kra, tmp_path / "synthetic.png")
 
