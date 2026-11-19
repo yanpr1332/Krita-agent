@@ -35,9 +35,18 @@ jobs:
             libgl1-mesa-dri libxkbcommon-x11-0
       - name: Install external probe dependencies
         run: python -m pip install -e '.[feedback]'
+      - name: Prepare isolated system-Python wrapper for distro Krita
+        shell: bash
+        run: |
+          cat > "$RUNNER_TEMP/krita-distro-exec.sh" <<'EOF'
+          #!/usr/bin/env bash
+          export PYTHONPATH=/usr/lib/python3/dist-packages
+          exec /usr/bin/krita "$@"
+          EOF
+          chmod +x "$RUNNER_TEMP/krita-distro-exec.sh"
       - name: Run real Bridge native brush and KRA reopen
         env:
-          KRITA_NATIVE_BINARY: /usr/bin/krita
+          KRITA_NATIVE_BINARY: ${{ runner.temp }}/krita-distro-exec.sh
         run: |
           chmod +x scripts/cloud_krita_runner.sh
           xvfb-run -a -s '-screen 0 1366x900x24 -ac +extension GLX +render' \
