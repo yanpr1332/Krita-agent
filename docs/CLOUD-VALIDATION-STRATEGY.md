@@ -1,6 +1,6 @@
 # Krita Agent — cloud-first development and cost-aware three-tier acceptance
 
-> Proposal recorded 2026-11-19. Infrastructure lives on `infra/cloud-tiered-acceptance` branched from verified `main` SHA `5eb948ba10f96771da32ea003261a32292c72a05`. Not yet merged, and not a claim that real cloud Krita ran.
+> Proposal recorded 2026-11-19. Infrastructure lives on `infra/cloud-tiered-acceptance` branched from verified `main` SHA `5eb948ba10f96771da32ea003261a32292c72a05`. Not merged. Tier-2 real Linux Krita 5.3.4.1 is now verified for a bounded native smoke only; see [execution report](CLOUD-NATIVE-ACCEPTANCE.md).
 
 ## Decision
 
@@ -36,7 +36,7 @@ This experiment does not validate the Windows-specific `.exe` launcher, user-ins
 ## Costs, limits and unknowns
 
 - GitHub-hosted runner minutes, apt package downloads, Xvfb startup and artifact storage incur costs/time; bound the pilot to 15 minutes and avoid large canvases.
-- The first Ubuntu distro package (5.2.2) loaded the real Bridge only after removing GitHub setup-python library-path overrides, but its View lacked the pressure-toggle API. The next pilot uses Krita 5.3.4.1 official AppImage. The cloud runner may still lack a working native painting API or a compatible GUI build. Until a successful runner trace is observed, T2 is **pilot/unverified**.
+- The Ubuntu distro Krita 5.2.2 can connect to the real Bridge but lacks required native painting APIs. The official Krita 5.3.4.1 AppImage is now confirmed to run inside Xvfb once its APPDIR/APPIMAGE and Python environment are correct. [Observed run #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863) passed the bounded native stroke, original PNG, fresh reopened PNG and strict integrity/reopen gates. This does not establish full material or finished-artwork ability; see [verified report](CLOUD-NATIVE-ACCEPTANCE.md).
 - Windows build compatibility and aesthetic acceptance always require T3; one Linux build does not generalize.
 - Current R8 rendering improvements have offline evidence but native artwork outcomes remain unverified.
 
@@ -45,9 +45,9 @@ This experiment does not validate the Windows-specific `.exe` launcher, user-ins
 | Gate | Status |
 | --- | --- |
 | New independent infrastructure branch | Verified |
-| T1 Windows existing offline baseline | Historically passing; rerun new branch |
-| T1 stub Bridge fault-injection integration | Implemented on this branch, pending CI confirmation |
-| T2 actual Ubuntu Krita Xvfb native smoke | **Experimental; pending observed CI result** |
+| T1 Windows 3.10/3.13 regression | **196 passed each** on [run #44482971886](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971886) |
+| T1 fake Bridge and fault injection | Included in 196 passing tests on both Python versions |
+| T2 real Linux Krita 5.3.4.1 native smoke | **Passed**, [run #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863), 0 strict export/reopen pixel differences; see [report](CLOUD-NATIVE-ACCEPTANCE.md) |
 | T3 consolidated local Windows acceptance | Deferred until integration |
 
 See [AGENTS.md](../AGENTS.md), [ROADMAP.md](ROADMAP.md), [ARTIST-ROADMAP-R7-R12.md](ARTIST-ROADMAP-R7-R12.md) and [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md).
