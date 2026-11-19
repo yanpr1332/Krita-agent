@@ -107,7 +107,8 @@ def _pixel_change(a, b):
             raise RuntimeError("Unexpected real stage-preview dimensions")
         # Actual native snapshots only; no Python-synthesized image is accepted.
         diff = ImageChops.difference(aa, bb).convert("RGBA")
-        return sum(1 for rgba in diff.getdata() if rgba != (0, 0, 0, 0))
+        pixels = diff.get_flattened_data() if hasattr(diff, "get_flattened_data") else diff.getdata()
+        return sum(1 for rgba in pixels if rgba != (0, 0, 0, 0))
 
 
 def _real_material_pixels(path):
@@ -212,7 +213,7 @@ def execute_staged_fixture(client, output_dir):
         with zipfile.ZipFile(kra) as archive:
             if archive.testzip() or not {"maindoc.xml", "mergedimage.png"}.issubset(archive.namelist()):
                 raise RuntimeError("Staged native KRA ZIP invalid")
-            if not any(b"paintlayer" in archive.read("maindoc.xml").lower() for _ in (0,)):
+            if b"paintlayer" not in archive.read("maindoc.xml").lower():
                 raise RuntimeError("Staged KRA has no editable paint layer")
         counts = _real_material_pixels(initial)
         if counts["vessel_red"] < 15 or counts["water_blue"] < 15:

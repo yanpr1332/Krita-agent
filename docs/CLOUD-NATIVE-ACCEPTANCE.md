@@ -53,3 +53,7 @@ The failed pilots were preserved as separate workflow histories, never relabeled
 5. Bring this dedicated `infra/*` branch into a feature branch via an explicitly reviewed PR or equivalent approved integration. **Do not merge to `main` without authorization.**
 
 See [cloud validation strategy](CLOUD-VALIDATION-STRATEGY.md), [AGENTS.md](../AGENTS.md), [Roadmap](ROADMAP.md), and [full-artwork acceptance rules](ARTWORK-ACCEPTANCE.md).
+
+## 5. Subsequent extension (same day)
+
+A later [real Krita 5.3.4.1 run #44485164168](https://github.com/yanpr1332/Krita-agent/actions/runs/44485164168) successfully executed a **three-stage generalist ScenePlan v4 fixture** in the same cloud process: 39 compiled native commands, six editable phase/subject paint layers, six real Krita stage PNGs, two separately visible subject colors, and strict 0-pixel export/reopen differences. Verified hashes, stage contribution counts and precise scope are recorded separately in [CLOUD-STAGED-ACCEPTANCE.md](CLOUD-STAGED-ACCEPTANCE.md). This enhances Tier 2 engineering coverage but does not establish visual artwork acceptance or Round 8 material outcomes.

@@ -45,9 +45,10 @@ This experiment does not validate the Windows-specific `.exe` launcher, user-ins
 | Gate | Status |
 | --- | --- |
 | New independent infrastructure branch | Verified |
-| T1 Windows 3.10/3.13 regression | **196 passed each** on [run #44482971886](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971886) |
+| T1 Windows 3.10/3.13 regression | **199 passed each** on [run #44485164045](https://github.com/yanpr1332/Krita-agent/actions/runs/44485164045) (latest expanded fixture; Pillow warnings subsequently fixed) |
 | T1 fake Bridge and fault injection | Included in 196 passing tests on both Python versions |
-| T2 real Linux Krita 5.3.4.1 native smoke | **Passed**, [run #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863), 0 strict export/reopen pixel differences; see [report](CLOUD-NATIVE-ACCEPTANCE.md) |
+| T2 basic native Krita 5.3.4.1 | **Passed**, [run #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863), strict 0-pixel export/reopen differences; [report](CLOUD-NATIVE-ACCEPTANCE.md) |
+| T2 three-stage generalist native | **Passed**, [run #44485164168](https://github.com/yanpr1332/Krita-agent/actions/runs/44485164168), 39 native commands, six paint layers, real stage previews, strict 0-pixel export/reopen; [report](CLOUD-STAGED-ACCEPTANCE.md) |
 | T3 consolidated local Windows acceptance | Deferred until integration |
 
 See [AGENTS.md](../AGENTS.md), [ROADMAP.md](ROADMAP.md), [ARTIST-ROADMAP-R7-R12.md](ARTIST-ROADMAP-R7-R12.md) and [ARTWORK-ACCEPTANCE.md](ARTWORK-ACCEPTANCE.md).
@@ -57,4 +58,4 @@ See [AGENTS.md](../AGENTS.md), [ROADMAP.md](ROADMAP.md), [ARTIST-ROADMAP-R7-R12.
 
 Following the basic native success, the same real Krita AppImage job also attempts a separate **pre-reviewed synthetic ScenePlan v4** fixture: two arbitrary subjects (ceramic vessel and water stripe), three ordered phases (sketch / block-in / detail), and only a small fixed number of validated native commands. Its actual per-stage Krita preview.canvas PNGs, layer inventory, colored pixel changes, editable KRA, fresh reopened PNG, hashes and strict RGBA/ICC comparisons form an independent cloud-staged-report.json. No model API is called; this is not a natural artwork or human approval.
 
-The fixture is source-controlled in scripts/cloud_staged_probe.py and its deterministic compiler/unknown-effect tests are in tests/test_cloud_staged_probe.py. The AppImage binary alone is cached between runs when available; no user artwork, token or session is cached. A success does not establish Round 8 materials, Windows builds or finished-artwork aesthetics. A failed staged test does not undo the earlier verified single-stroke evidence: report each gate separately.
+The fixture is source-controlled in scripts/cloud_staged_probe.py and its deterministic compiler/unknown-effect tests are in tests/test_cloud_staged_probe.py. The AppImage binary alone is cached between runs when available; no user artwork, token or session is cached. A success does not establish Round 8 materials, Windows builds or finished-artwork aesthetics. A failed staged test does not undo the earlier verified single-stroke evidence: report each gate separately. **Execution confirmed:** [run #44485164168](https://github.com/yanpr1332/Krita-agent/actions/runs/44485164168) successfully completed this extension; verified hashes and scope in [CLOUD-STAGED-ACCEPTANCE.md](CLOUD-STAGED-ACCEPTANCE.md).
