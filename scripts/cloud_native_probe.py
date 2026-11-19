@@ -84,11 +84,11 @@ def perform_native_smoke(client, output_dir, *, wait=90):
     }
     _write_report(root, report)
 
-    def command(name, **kwargs):
+    def command(action, **kwargs):
         # Client.request generates a new request ID; on an ambiguous effect,
         # stop and preserve files/logs. Never do hidden retry.
-        result = client.request(name, **kwargs)
-        report["native_steps"].append(name)
+        result = client.request(action, **kwargs)
+        report["native_steps"].append(action)
         _write_report(root, report)
         return result
 
