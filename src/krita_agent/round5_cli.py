@@ -15,7 +15,8 @@ def _provider(args):
     model = getattr(args, "model", None)
     if not model:
         raise ValueError("A model ID is required unless an explicit candidate JSON file is supplied")
-    return ChatJSONProvider(model, endpoint=getattr(args, "endpoint", None))
+    return ChatJSONProvider(model, endpoint=getattr(args, "endpoint", None),
+                           timeout=getattr(args, "timeout", 75))
 
 
 def register(commands, connection):
@@ -29,7 +30,7 @@ def register(commands, connection):
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
         "status", "dashboard", "diagnose", "plan", "approve", "paint", "paint-stage", "export",
-        "record", "verify-reopen", "critique", "revision-plan", "revision-approve",
+        "record", "verify-reopen", "critique", "critique-v11", "revision-plan", "revision-approve",
         "revise", "deliver",
     ):
         p = actions.add_parser(name)
@@ -38,7 +39,7 @@ def register(commands, connection):
             connection(p)
         if name in ("approve", "paint-stage", "revision-approve", "revise"):
             p.add_argument("--confirm", action="store_true")
-        if name in ("plan", "critique", "revision-plan"):
+        if name in ("plan", "critique", "critique-v11", "revision-plan"):
             p.add_argument("--model", help="Opt-in OpenAI-compatible JSON model ID")
             p.add_argument("--endpoint", help="Optional HTTPS chat-completions endpoint")
         if name == "dashboard":
@@ -66,6 +67,31 @@ def register(commands, connection):
         if name == "critique":
             p.add_argument("--reference", help="Actual benchmark/reference image")
             p.add_argument("--max-rounds", type=int, default=3)
+        if name == "critique-v11":
+            p.add_argument("--confirm-external-review", action="store_true",
+                           help="Confirm this operation may send selected evidence to the configured external provider")
+            p.add_argument("--upload-artwork", action="store_true",
+                           help="Explicitly permit upload of the final artwork PNG")
+            p.add_argument("--reference", help="Optional reference image")
+            p.add_argument("--upload-reference", action="store_true")
+            p.add_argument("--confirm-reference-rights", action="store_true",
+                           help="Confirm the reference may legally be sent to this provider")
+            p.add_argument("--stage-preview", action="append", default=[], metavar="LABEL=FILE")
+            p.add_argument("--upload-stages", action="store_true")
+            p.add_argument("--upload-rois", action="store_true")
+            p.add_argument("--layer-graph", help="Optional JSON layer graph metadata")
+            p.add_argument("--layer-contributions", help="Optional JSON layer contribution metadata")
+            p.add_argument("--upload-layer-metadata", action="store_true")
+            p.add_argument("--constraints", help="Optional JSON target constraints")
+            p.add_argument("--max-rounds", type=int)
+            p.add_argument("--max-revisions", type=int)
+            p.add_argument("--max-calls", type=int)
+            p.add_argument("--max-images", type=int)
+            p.add_argument("--max-output-tokens", type=int)
+            p.add_argument("--price-input-usd-per-million", type=float)
+            p.add_argument("--price-output-usd-per-million", type=float)
+            p.add_argument("--max-total-cost-usd", type=float)
+            p.add_argument("--timeout", type=float, default=75)
         if name == "revision-plan":
             p.add_argument("--object-id", required=True)
             p.add_argument("--candidate", help="Explicit candidate native stroke JSON")
@@ -125,6 +151,44 @@ def execute(args, get_client):
     if args.action == "critique":
         return flow.critique(
             _provider(args), reference=args.reference, max_rounds=args.max_rounds
+        )
+    if args.action == "critique-v11":
+        if not args.confirm_external_review or not args.upload_artwork:
+            raise ValueError("Round 11 requires --confirm-external-review and --upload-artwork")
+        if args.reference and (not args.upload_reference or not args.confirm_reference_rights):
+            raise ValueError("Reference upload requires --upload-reference and --confirm-reference-rights")
+        if not args.reference and (args.upload_reference or args.confirm_reference_rights):
+            raise ValueError("Reference upload flags require --reference")
+        if args.stage_preview and not args.upload_stages:
+            raise ValueError("Explicit stage previews require --upload-stages")
+        if (args.layer_graph or args.layer_contributions) and not args.upload_layer_metadata:
+            raise ValueError("Layer metadata files require --upload-layer-metadata")
+        stages = {}
+        for item in args.stage_preview:
+            if "=" not in item:
+                raise ValueError("--stage-preview requires LABEL=FILE")
+            name, filename = item.split("=", 1)
+            if not name or not filename or name in stages:
+                raise ValueError("Stage preview labels must be unique and non-empty")
+            stages[name] = filename
+        consent = {
+            "confirmed": True, "artwork_upload": True,
+            "reference_upload": args.upload_reference,
+            "reference_rights_confirmed": args.confirm_reference_rights,
+            "stage_upload": args.upload_stages, "roi_upload": args.upload_rois,
+            "layer_metadata_upload": args.upload_layer_metadata,
+        }
+        return flow.critique_v11(
+            _provider(args), consent=consent, reference=args.reference,
+            stage_previews=stages or None,
+            layer_graph=args.layer_graph, layer_contributions=args.layer_contributions,
+            target_constraints=_json(args.constraints) if args.constraints else None,
+            max_rounds=args.max_rounds, max_revisions=args.max_revisions,
+            max_calls=args.max_calls, max_images=args.max_images,
+            max_output_tokens=args.max_output_tokens,
+            input_usd_per_million=args.price_input_usd_per_million,
+            output_usd_per_million=args.price_output_usd_per_million,
+            max_total_cost_usd=args.max_total_cost_usd,
         )
     if args.action == "revision-plan":
         candidate = _json(args.candidate) if args.candidate else None
