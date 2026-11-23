@@ -20,6 +20,8 @@ from .protocol import TaskError
 from .scene_v3 import SCHEMA, digest, validate_scene
 from .scheduler import run as run_longjob
 from .visual_critic import critique
+from .visual_critic_v11 import review_artwork as review_artwork_v11, to_revision_critique
+from .review_budget_v11 import BudgetedProvider
 
 WORKFLOW_SCHEMA = "krita-agent-creative-workflow/1"
 KNOWN_STATES = frozenset({
@@ -722,6 +724,8 @@ class CreativeWorkflow:
     def critique(self, provider, reference=None, max_rounds=3):
         record = self.read()
         self._expect(record, "awaiting_critique")
+        if record.get("review_v11_policy"):
+            raise TaskError("Round 11 review policy is locked; use critique-v11")
         self._verified_integrity(record)
         path = self._current_png(record)
         rounds = record.get("critique_rounds", 0) + 1
@@ -746,6 +750,94 @@ class CreativeWorkflow:
         self._save(record, "creative_critique_" + result["decision"])
         return {"status": record["status"], "critique": result}
 
+    def critique_v11(self, provider, *, consent, reference=None, stage_previews=None,
+                     layer_graph=None, layer_contributions=None, target_constraints=None,
+                     max_rounds=None, max_revisions=None, max_calls=None, max_images=None,
+                     max_output_tokens=None, input_usd_per_million=None,
+                     output_usd_per_million=None, max_total_cost_usd=None):
+        """One real-pixel multimodal review with a locked, append-only call budget."""
+        record = self.read()
+        self._expect(record, "awaiting_critique")
+        self._verified_integrity(record)
+        path = self._current_png(record)
+        rounds = record.get("critique_rounds", 0) + 1
+        requested = {
+            "max_rounds": 3 if max_rounds is None else max_rounds,
+            "max_revisions": 2 if max_revisions is None else max_revisions,
+            "max_calls": 5 if max_calls is None else max_calls,
+            "max_images": 12 if max_images is None else max_images,
+            "max_output_tokens": 4096 if max_output_tokens is None else max_output_tokens,
+            "input_usd_per_million": input_usd_per_million,
+            "output_usd_per_million": output_usd_per_million,
+            "max_total_cost_usd": max_total_cost_usd,
+        }
+        policy = record.get("review_v11_policy")
+        if policy is None:
+            if type(requested["max_revisions"]) is not int or not 0 <= requested["max_revisions"] <= 3:
+                raise TaskError("Round 11 revision budget must be 0..3")
+            if type(requested["max_rounds"]) is not int or not 1 <= requested["max_rounds"] <= 5:
+                raise TaskError("Round 11 review rounds must be 1..5")
+            if type(requested["max_images"]) is not int or not 1 <= requested["max_images"] <= 12:
+                raise TaskError("Round 11 image budget must be 1..12")
+            policy = dict(requested)
+            policy["revision_count"] = 0
+        else:
+            for key, value in requested.items():
+                if value is not None and value != policy.get(key):
+                    raise TaskError("Round 11 review budget is immutable; requested " + key + " differs")
+        if rounds > policy["max_rounds"]:
+            raise TaskError("Round 11 maximum review rounds reached")
+        if consent.get("stage_upload") is True and stage_previews is None:
+            archived = record.get("artifacts", {}).get("stage_previews", {})
+            selected = {}
+            for name, entry in archived.items():
+                candidate = (self.root / entry.get("path", "")).resolve()
+                if (self.root not in candidate.parents or not candidate.is_file()
+                        or _sha(candidate) != entry.get("sha256")):
+                    raise TaskError("Archived stage preview changed or escaped the workflow")
+                selected[name.rsplit(".", 1)[0]] = candidate
+            stage_previews = selected
+        ledger = self.root / "review-usage-v11.jsonl"
+        budgeted = BudgetedProvider(
+            provider, ledger, max_calls=policy["max_calls"],
+            input_usd_per_million=policy["input_usd_per_million"],
+            output_usd_per_million=policy["output_usd_per_million"],
+            max_total_cost_usd=policy["max_total_cost_usd"],
+            max_output_tokens=policy["max_output_tokens"],
+        )
+        scene = json.loads((self.root / "scene-plan-v3.json").read_text(encoding="utf-8"))
+        result = review_artwork_v11(
+            scene, path, budgeted, reference=reference,
+            stage_previews=stage_previews, layer_graph=layer_graph,
+            layer_contributions=layer_contributions,
+            target_constraints=target_constraints, consent=consent,
+            round_index=rounds, max_rounds=policy["max_rounds"],
+            max_images=policy["max_images"],
+            max_output_tokens=policy["max_output_tokens"],
+            roi_images=consent.get("roi_upload") is True,
+        )
+        folder = self.root / "critiques"
+        folder.mkdir(exist_ok=True)
+        location = folder / ("critique-v11-{:02d}.json".format(rounds))
+        _write_new(location, result)
+        record["critique_rounds"] = rounds
+        record["review_v11_policy"] = policy
+        record["artifacts"]["latest_critique"] = {
+            "path": str(location.relative_to(self.root)), "sha256": _sha(location),
+        }
+        record["artifacts"]["review_usage_v11"] = {
+            "path": "review-usage-v11.jsonl", "sha256": _sha(ledger),
+        }
+        record["status"] = {
+            "provisional_pass": "ready_for_delivery",
+            "needs_revision": "awaiting_revision_proposal",
+            "insufficient_evidence": "review_blocked",
+        }[result["decision"]]
+        self._save(record, "round11_multimodal_review_" + result["decision"])
+        return {"status": record["status"], "review": result,
+                "budget": budgeted.summary(), "usage_ledger": str(ledger)}
+
+
     def propose_revision(self, object_id, provider=None, candidate=None, issue_id=None):
         record = self.read()
         self._expect(record, "awaiting_revision_proposal")
@@ -758,6 +850,20 @@ class CreativeWorkflow:
             raise TaskError("Critique changed after review")
         review = json.loads(path.read_text(encoding="utf-8"))
         image = self._current_png(record)
+        if review.get("schema") == "krita-agent-multimodal-review/1":
+            review = to_revision_critique(review)
+            policy = record.get("review_v11_policy")
+            if policy and policy.get("revision_count", 0) >= policy.get("max_revisions", 0):
+                raise TaskError("Round 11 revision budget is exhausted")
+            if provider is not None and policy:
+                provider = BudgetedProvider(
+                    provider, self.root / "review-usage-v11.jsonl",
+                    max_calls=policy["max_calls"],
+                    input_usd_per_million=policy["input_usd_per_million"],
+                    output_usd_per_million=policy["output_usd_per_million"],
+                    max_total_cost_usd=policy["max_total_cost_usd"],
+                    max_output_tokens=policy["max_output_tokens"],
+                )
         if provider is not None:
             revision = plan_revision(scene, review, image, object_id, provider)
         else:
@@ -800,6 +906,12 @@ class CreativeWorkflow:
         revision = json.loads(path.read_text(encoding="utf-8"))
         scene = json.loads((self.root / "scene-plan-v3.json").read_text(encoding="utf-8"))
         artwork = self._current_png(record)
+        policy = record.get("review_v11_policy")
+        if policy is not None:
+            if policy.get("revision_count", 0) >= policy.get("max_revisions", 0):
+                raise TaskError("Round 11 revision budget is exhausted")
+            policy["revision_count"] = policy.get("revision_count", 0) + 1
+            record["review_v11_policy"] = policy
         record["status"] = "revision_unknown"
         self._save(record, "native_revision_submission_intent")
         try:
