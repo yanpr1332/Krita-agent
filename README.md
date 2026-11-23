@@ -127,7 +127,7 @@ R5 now implements an explicit creative lifecycle: natural-language (opt-in JSON-
 
 ## Documentation and contribution
 
-[Round 4 API](docs/ROUND4-API.md) · [Round 4 acceptance checklist](docs/ROUND4-ACCEPTANCE.md) · [Round 4 acceptance report](docs/REPORT-011.md) · [Release notes](docs/RELEASE.md) · [Round 3 API](docs/ROUND3-API.md) · [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) · [Current roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Round 3 implementation report](docs/REPORT-008.md) · [Contributing](CONTRIBUTING.md).
+[Round 4 API](docs/ROUND4-API.md) · [Round 4 acceptance checklist](docs/ROUND4-ACCEPTANCE.md) · [Round 4 acceptance report](docs/REPORT-011.md) · [Release notes](docs/RELEASE.md) · [Round 3 API](docs/ROUND3-API.md) · [Round 3 acceptance checklist](docs/ROUND3-ACCEPTANCE.md) · [Current roadmap](docs/ROADMAP.md) · [Architecture](docs/ARCHITECTURE.md) · [Round 3 implementation report](docs/REPORT-008.md) · [Contributing](CONTRIBUTING.md) · [Security policy](SECURITY.md).
 
 The project-authored code is MIT-licensed. Krita and all third-party dependencies retain their own licensing terms.
 
