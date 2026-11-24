@@ -24,6 +24,9 @@ from .visual_critic_v11 import review_artwork as review_artwork_v11, to_revision
 from .review_budget_v11 import BudgetedProvider
 from .workflow_metrics_v12 import measure_operation
 from .brush_quality_v12 import evaluate_brush_plan
+from .native_continuity_v13 import (
+    inspect_stroke_continuity, reject_unsafe_segmented_joins,
+)
 
 WORKFLOW_SCHEMA = "krita-agent-creative-workflow/1"
 KNOWN_STATES = frozenset({
@@ -341,9 +344,27 @@ class CreativeWorkflow:
             "layer_graph_sha256": digest(graph),
         }
 
+    def native_stage_preflight(self, client):
+        """Read-only next-stage stroke audit bound to the approved plan.
+
+        Neither reads untrusted native pixels nor submits any Krita drawing.
+        The returned symbol inventory is only a capability hypothesis.
+        """
+        record = self.read()
+        self._expect(record, "plan_approved", "awaiting_stage_approval")
+        compiled = self._verified_staged_plan(record)
+        index = record["staged"].get("next_stage")
+        if type(index) is not int or not 0 <= index < record["staged"]["total"]:
+            raise TaskError("Generalist stage cursor is invalid")
+        span = compiled["stage_spans"][index]
+        segment = compiled["steps"][span["start"]:span["stop"]]
+        report = inspect_stroke_continuity(segment, client.request("capabilities"))
+        return {"stage": index + 1, "stage_id": span["id"],
+                "approved_stage_sha256": span["steps_sha256"], **report}
+
     @measure_operation("paint_stage")
     def paint_stage(self, client, confirm=False, ledger_directory=None,
-                    batch_steps=120):
+                    batch_steps=120, reject_segmented_joins=False):
         """One user-confirmed stage per invocation; never auto-submit the next."""
         if confirm is not True:
             raise TaskError("Each native painting stage requires explicit --confirm")
@@ -363,6 +384,13 @@ class CreativeWorkflow:
         segment = compiled["steps"][stage["start"]:stage["stop"]]
         if digest(segment) != stage["steps_sha256"]:
             raise TaskError("Generalist stage instructions changed")
+        if type(reject_segmented_joins) is not bool:
+            raise TaskError("reject_segmented_joins must be boolean")
+        if reject_segmented_joins:
+            # Explicit opt-in: fail before any stage status change or native
+            # submission. Legacy callers retain their historical auto-mode
+            # segmented fallback until a real build-specific fix is verified.
+            reject_unsafe_segmented_joins(segment, client.request("capabilities"))
         record["status"] = "painting_unknown"
         record["active_stage"] = index
         self._save(record, "native_stage_%02d_submission_intent" % (index+1))
