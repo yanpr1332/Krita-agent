@@ -14,7 +14,7 @@
 
 ## Validation status
 - Source implementation: complete for this milestone.
-- Offline regression: passed on Windows GitHub Actions, Python 3.10 and 3.13 (306 tests each).
+- Offline regression: passed on Windows GitHub Actions, Python 3.10 and 3.13 (325 tests each).
 - Cloud native timing / fresh-KRA reopen: pending.
 - Windows Stable / Next Qt5 / Next Qt6: pending.
 - Whole-artwork / multi-genre / human acceptance: pending.

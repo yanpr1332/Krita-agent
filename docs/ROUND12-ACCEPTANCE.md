@@ -9,7 +9,7 @@
 - [x] Telemetry failure cannot change a native operation result.
 - [x] Read-only CLI summary and dashboard with planned-only brush diagnostics.
 - [x] Per-channel pixel drift localization; strict equality remains mandatory.
-- [x] Python 3.10 and 3.13 Windows GitHub Actions offline suites: 306 passed on each version.
+- [x] Python 3.10 and 3.13 Windows GitHub Actions offline suites: 325 passed on each version.
 
 ## Tier 2: cloud native
 - [ ] Run real Krita 5.3.4.1 staged fixture on this branch.

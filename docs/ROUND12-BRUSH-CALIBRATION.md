@@ -4,7 +4,7 @@ The \`brushcal\` command creates and manages evidence-backed brush profiles. The
 
 1. **Pressure ladder:** four constant-pressure lines at 0.1 / 0.3 / 0.6 / 0.9, allowing visual comparison of line width and opacity.
 2. **Pressure ramps:** increasing and decreasing pressure along continuous strokes, checking whether the response is smooth rather than only comparing isolated values.
-3. **Size ladder:** three nominal brush sizes, using the selected preset and pressure enabled.
+3. **Size ladder:** up to three nominal brush sizes (duplicates are removed at the 0.1/500 boundary), using the selected preset and pressure enabled.
 
 ## Generate and run
 
