@@ -234,6 +234,7 @@ Use this local layout; keep it ignored by Git:
         <task-id>/
           brief.json
           task-contract.json
+          scene-plan.json              # approved-plan index/normalized copy; never a hand-edited substitute
           scene-plan-v4.json
           scene-plan-v3.json
           execution.json
@@ -254,7 +255,7 @@ Use this local layout; keep it ignored by Git:
             scorecard.json
           audit.json              # required for LND-REF; not a generic audit for other tasks
 
-For each task, preserve the exact source commit, prompt/contract/reference hashes, model identifier, build metadata, plan hash, native execution evidence, KRA/PNG/reopen hashes, reviewer identities/timestamps, rubric scores, and final state. Keep original failed files and repaired successors as separate versions.
+For each task, preserve the exact source commit, prompt/contract/reference hashes, model identifier, build metadata, plan hash, native execution evidence, KRA/PNG/reopen hashes, reviewer identities/timestamps, rubric scores, and final state. For `LND-REF`, `scene-plan.json` must satisfy the existing auditor's required filename and reflect the actual approved plan; it may be a normalized export/index of the v4/v3 files, never an invented plan. Its `execution.json` must also explicitly record that the reference was not imported as the final artwork. Keep original failed files and repaired successors as separate versions.
 
 `campaign-summary.md` must include:
 
