@@ -212,3 +212,64 @@ def test_cli_exposes_read_only_preflight_and_explicit_strict_mode():
         "--session", "session.json", "--confirm",
     ])
     assert legacy.reject_segmented_joins is False
+
+
+def test_bridge_fallback_matches_preflight_hazard_without_krita_import():
+    """AST-extracted dispatcher demonstrates repeated native paintLine calls."""
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from test_bridge_native import dispatcher
+
+    class Point:
+        def __init__(self, x, y):
+            self.x, self.y = x, y
+        def toPoint(self):
+            return (self.x, self.y)
+
+    raw = [{"x": 10 * i, "y": 10 * i, "pressure": .25}
+           for i in range(5)]
+    node = SimpleNamespace(paintLine=Mock())  # Stable: no polyline method.
+    execute = dispatcher({
+        "Krita": SimpleNamespace(instance=lambda: None),
+        "_points": lambda items: [Point(p["x"], p["y"]) for p in items],
+        "_number": lambda value, *_args: float(value),
+        "krita_module": SimpleNamespace(),
+    })
+    bridge = SimpleNamespace(_stroke_node=lambda: node)
+    result = execute(bridge, "draw.stroke", {"points": raw, "mode": "auto"})
+    assert result["mode"] == "segmented"
+    assert node.paintLine.call_count == 4
+    assert node.paintLine.call_args_list[0].args[1] == (
+        node.paintLine.call_args_list[1].args[0]
+    )
+    assert inspect_stroke_continuity(
+        [stroke(5, "auto")], capabilities(False)
+    )["segmented_join_risk_strokes"] == 1
+    with pytest.raises(RuntimeError, match="lacks continuous-stroke API"):
+        execute(bridge, "draw.stroke", {"points": raw, "mode": "continuous"})
+    assert node.paintLine.call_count == 4
+
+
+def test_bridge_auto_uses_one_native_polyline_on_supported_mock():
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from test_bridge_native import dispatcher
+
+    raw = [{"x": 10 * i, "y": 4 * i, "pressure": .6}
+           for i in range(5)]
+    node = SimpleNamespace(paintLine=Mock(), paintPolylineStroke=Mock())
+    module = SimpleNamespace(StrokePoint=lambda *args: tuple(args))
+    execute = dispatcher({
+        "Krita": SimpleNamespace(instance=lambda: None),
+        "_points": lambda items: [(p["x"], p["y"]) for p in items],
+        "_number": lambda value, *_args: float(value),
+        "krita_module": module,
+    })
+    bridge = SimpleNamespace(_stroke_node=lambda: node)
+    result = execute(bridge, "draw.stroke", {"points": raw, "mode": "auto"})
+    assert result["mode"] == "continuous"
+    node.paintPolylineStroke.assert_called_once()
+    node.paintLine.assert_not_called()
+    assert inspect_stroke_continuity(
+        [stroke(5, "auto")], capabilities(True)
+    )["segmented_join_risk_strokes"] == 0
