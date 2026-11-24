@@ -175,7 +175,9 @@ class CreativeWorkflow:
             )
         complexity = record["brief"].get("complexity", "standard")
         brush_policy = record["brief"].get("brush_diversity_policy", "advisory")
-        brush_quality = evaluate_brush_plan(proposal["scene"], complexity)
+        brush_quality = evaluate_brush_plan(
+            proposal["scene"], complexity, source_v4=v4_scene
+        )
         compiled["brush_quality_v12"] = dict(brush_quality, policy=brush_policy)
         if brush_policy == "enforce" and brush_quality["status"] != "pass":
             raise TaskError(

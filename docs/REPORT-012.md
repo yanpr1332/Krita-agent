@@ -22,3 +22,4 @@
 Metrics report planned values and command durations only; they do not infer that native painting happened or that an artwork is accepted.
 
 8. Added profile-aware brush diversity floors. Advisory mode preserves existing behavior while surfacing weak plans; enforce mode blocks sparse/repetitive large subjects before approval.
+9. Corrected generalist brush-floor evaluation to aggregate all stage-layer fragments into their logical subject before measuring diversity, with strict-mode regression coverage.

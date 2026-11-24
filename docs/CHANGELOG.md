@@ -86,3 +86,4 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Offline CI, cloud-native timing, Windows build checks and whole-artwork acceptance remain pending; see [REPORT-012](REPORT-012.md).
 
 - Added per-subject brush diversity floors tied to effort profile; advisory by default, strict enforcement opt-in.
+- Generalist brush-diversity floors now aggregate each logical subject across all stages instead of judging stage fragments independently.

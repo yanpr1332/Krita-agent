@@ -35,9 +35,39 @@ def describe_floor(profile):
     ).format(**rule)
 
 
-def evaluate_brush_plan(scene, profile):
+def _aggregate_generalist_subjects(scene, source_v4):
+    """Merge stage-layer fragments back into their logical v4 subjects.
+
+    A staged subject may occupy several native layers. Diversity floors should
+    evaluate the complete subject across all stages, not reject each small
+    phase fragment independently.
+    """
+    fragments = {}
+    for item in scene["objects"]:
+        ident = item.get("id", "")
+        if (not isinstance(ident, str) or len(ident) < 5
+                or ident[0] != "s" or not ident[1:3].isdigit()
+                or ident[3] != "_"):
+            raise ValueError("Generalist stage-layer ID is malformed")
+        subject_id = ident[4:]
+        fragments.setdefault(subject_id, []).extend(item.get("elements", []))
+    objects = []
+    for subject in source_v4["subjects"]:
+        objects.append({
+            "id": subject["id"],
+            "kind": "custom",
+            "bounds": subject["bounds"],
+            "brush": subject["brush"],
+            "elements": fragments.get(subject["id"], []),
+        })
+    return {"objects": objects}
+
+
+def evaluate_brush_plan(scene, profile, source_v4=None):
     if profile not in RULES:
         raise ValueError("Unknown brush diversity profile")
+    if source_v4 is not None:
+        scene = _aggregate_generalist_subjects(scene, source_v4)
     rule = RULES[profile]
     diagnostics = analyze_scene(scene)
     objects = {item["id"]: item for item in scene["objects"]}

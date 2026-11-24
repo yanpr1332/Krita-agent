@@ -211,3 +211,39 @@ def test_generalist_step_budget_rejects_before_archiving_plan_sources(tmp_path):
     assert not (flow.root / "generalist-proposal.json").exists()
     assert not (flow.root / "scene-plan-v3.json").exists()
     assert not (flow.root / "compiled-scene.json").exists()
+
+
+def test_generalist_brush_quality_aggregates_across_stage_layers():
+    from test_round7_generalist_scene import sample_v4
+    from krita_agent.brush_quality_v12 import evaluate_brush_plan
+    from krita_agent.scene_v4 import lower_scene_v4
+
+    source = sample_v4()
+    lowered, stage_layers = lower_scene_v4(source)
+    result = evaluate_brush_plan(lowered, "detailed", source_v4=source)
+    assert len(result["subjects"]) == 3
+    assert {row["subject_id"] for row in result["subjects"]} == {
+        "room", "person", "cup",
+    }
+    for row in result["subjects"]:
+        fragments = [
+            obj for obj in lowered["objects"]
+            if obj["id"].endswith("_" + row["subject_id"])
+        ]
+        assert row["stroke_count"] == sum(
+            len(obj["elements"]) for obj in fragments
+        )
+    assert result["not_artwork_acceptance"] is True
+
+
+def test_generalist_strict_brush_floor_rejects_before_archiving(tmp_path):
+    from test_round7_generalist_scene import sample_v4
+    flow = CreativeWorkflow.create(
+        tmp_path / "strict-generalist-brush-run",
+        brief(complexity="detailed", brush_diversity_policy="enforce"),
+    )
+    with pytest.raises(TaskError, match="Brush diversity floor"):
+        flow.plan(candidate=sample_v4())
+    assert flow.read()["status"] == "initialized"
+    assert not (flow.root / "scene-plan-v4.json").exists()
+    assert not (flow.root / "compiled-scene.json").exists()

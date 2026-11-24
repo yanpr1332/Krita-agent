@@ -52,3 +52,8 @@ Briefs also accept brush_diversity_policy: advisory (default) or enforce. The pr
 Repeated trajectory ratios are also bounded by profile. A subject is considered large/complex when its bounding-box area is at least 50,000 pixels or it reaches the profile stroke threshold. In advisory mode, the plan is retained and the compiled diagnostics expose unmet floors. In enforce mode, a plan that misses any floor is rejected before archival or approval. No stroke is silently added or altered.
 
 These are structural plan checks, not visual-quality checks. The actual Krita preset response, native execution and artistic appearance still require separate tests and review.
+
+
+### Generalist staged-subject aggregation
+
+ScenePlan v4 subjects are split into native layer groups by stage. The brush floor now recombines those groups by logical subject before evaluating stroke count, size, color, opacity, pressure, direction and repeated trajectories. This prevents a subject from being judged as several artificially small fragments. Legacy ScenePlan v3 continues to be evaluated by its original object boundaries.
