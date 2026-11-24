@@ -89,3 +89,39 @@ The locked landscape reference and scene contract were hashed. An ignored draft 
 - `artwork-results/r12-20261124-112221-6ed4ba8/` — corrected smoke and performance evidence, two native A/B outputs, blind scorecard, and held-out task draft.
 
 Both runs are ignored by Git. No KRA, PNG, private reference, local absolute path or credential is included in the commit.
+
+## Follow-up on Windows archive paths, stroke joins and material coverage
+
+Native follow-up ran from clean `bbfdf01` with the same code as `main` at `6ed4ba8`. The separate archived-stage verification used `14b0ddd` in an isolated checkout. Evidence is retained under `artwork-results/r12-followup-20261124-113955-bbfdf01/`.
+
+### Archived-stage diagnostics — fix verified
+
+The real Windows archives from all nine smoke attempts and both original A/B runs were copied into the follow-up evidence directory. On `14b0ddd`, `CreativeWorkflow.diagnose_materials()` verified all **11 archives and 33 canonical stage PNGs** with the recorded Windows separators and hashes. The focused Round 8 suite passed **34 tests**, including the traversal and tampering checks. The original evidence was left intact. The fix remains on `fix/windows-stage-archive-path`.
+
+### Stroke join isolation — reproducible segmented-mode limitation
+
+A transparent canvas used `b) Basic-2 Opacity`, size 24, constant pressure and the same color and geometry. Two repeats compared two-, three- and five-point automatic strokes, explicit segmented strokes, and explicit continuous strokes where supported. Results were identical across repeats. The real Bridge response identified the actual stroke path used.
+
+| Build and execution path | 25% alpha, body / interior join | 50% alpha, body / interior join |
+| --- | --- | --- |
+| Stable, automatic two-point | 64 / 64 | 128 / 128 |
+| Stable, automatic three- or five-point (segmented fallback) | 64 / 112 | 128 / 192 |
+| Next Qt5 and Qt6, automatic or explicit continuous | 64 / 64 | 128 / 128 |
+| All three builds, explicit segmented three-point | 64 / 112 | 128 / 192 |
+
+Stable lacked the continuous API in this build. The Next controls reproduced the same dark deposits only when forced through the segmented path. The measured values match two overlapping alpha applications at shared segment endpoints. This identifies the segmented fallback as the cause for the tested fixture. The Stable continuity criterion remains **FAIL**. Continuous strokes passed this focused check on both Next builds.
+
+### Material coverage A/B — failed visual threshold
+
+Stable rerendered the same blue-noise scene with the same geometry, seed, brushes, colors, stage layout and 300-step ceiling. Only the render spacing changed from 75 to 36 pixels. Both original KRA/PNG pairs passed strict export and fresh reopen with zero differing pixels. The blinded reviewer inspected both final exports and all six ROI crops, and those hashes were verified before unblinding.
+
+| Spacing | Compiled steps | Wall time | Room / person / cup nonwhite coverage | Blind room / person / cup | Mean |
+| --- | ---: | ---: | --- | --- | ---: |
+| 75 px (B) | 119 | 18.16 s | 59.2% / 20.7% / 3.7% | 0.50 / 0.25 / 0.75 | 0.50/4 |
+| 36 px (A) | 257 | 47.05 s | 98.9% / 43.4% / 8.8% | 0.75 / 0.25 / 0.75 | 0.58/4 |
+
+Coverage counts pixels with at least one RGB channel 20 levels away from white inside fixed rectangular crops. Coverage includes any underlying marks in each crop. The 0.083-point score change is below the required 0.5-point improvement. The 0.58 mean and all three ROI scores are also below the 3.0 and 2.0 pass thresholds. **FAIL / NO_IMPROVEMENT.** Denser strokes covered the wall more fully while leaving recognizable form and lighting unresolved. The next material revision should establish base values and coherent surface directions before adding detail.
+
+### Formal campaign readiness
+
+The repository's 1600×900 landscape benchmark matches the locked contract hash. The 24-task campaign remains `BLOCKED` because it needs one configured and authorized planning model and five further rights-confirmed references. The existing default online planner would require a configured provider credential for the first planning call. No paid provider was used during this follow-up. An API key alone does not resolve reference rights or human review.
