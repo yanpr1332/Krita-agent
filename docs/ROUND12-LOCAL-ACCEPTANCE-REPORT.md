@@ -147,3 +147,21 @@ The landscape slot retains the repository's locked benchmark. The configuration 
 **Separate text pilot:** The initial generic adapter call returned content that could not be parsed as a JSON object. A fresh one-call pilot, using explicit non-thinking mode and a compact JSON schema example in a local harness, returned valid JSON. This tested DeepSeek compatibility without changing production source. The authenticated Stable Bridge executed 146 planned steps over five individually inspected stages on a 1600×900 canvas. Strict export and fresh reopen both passed with zero differing pixels. Hiding paint layers in a fresh reopened working copy showed 13/13 made measurable pixel changes, including background. The independent reviewer scored **7/24**, failing visual acceptance because the jug remained built from repeated stripes with exposed gaps, large background passes showed lines and dots, and rosemary was almost entirely absent. The pilot is outside the 24-task denominator. Its native files, stage previews, screenshot and hash-bound review are in `artwork-results/r12-deepseek-pilot2-20261124-131200-0739e07/`.
 
 To improve planning reliability, give the model the actual numerical bounds up front and validate the relationship between every point and its subject before compiling. Any corrections should remain new evidence-bearing attempts. Palette and surface coverage still require separate visible quality improvements. Reference generation and external image-based review remain pending explicit campaign upload authorization.
+
+## Reorganized acceptance checkpoint — paused after user review
+
+After the user authorized campaign image uploads, an isolated local harness tested a compact, normalized paint-plan format with DeepSeek Flash. It derives subject bounds from the proposed points, rejects points outside the normalized canvas, and compiles through the existing ScenePlan v4 validators. It uses overlapping opaque native strokes for base areas. No production source was modified. The previous formal planning failures remain recorded.
+
+The three pilot cases in `artwork-results/r12-reorganized-gate-20261124-132554-4313d2f/` were compiled and painted in Krita Next Qt6 `216446e`. The static runner's first invocation stopped before painting due to an incorrect expected status name. The corrected invocation used a separate output directory and preserved the failed startup evidence.
+
+| Pilot | Compiled steps | Contributing paint layers | Strict export and reopen | Independent visual score |
+| --- | ---: | ---: | --- | ---: |
+| LND-T1 | 117 | 15/20 | Pass, zero differing pixels | 6/24, fail |
+| STL-REF | 186 | 19/26 | Pass, zero differing pixels | 6/24, fail |
+| ARC-REF | 159 | 17/22 | Pass, zero differing pixels | 6/24, fail |
+
+All three outputs had repeated round stroke ends and lacked convincing form. The pine crown and trunk were disconnected. In the still life, individual apples, the basket rim, and the cloth folds remained unresolved. In the interior, bed and chairs lacked visible support and the room lacked convincing depth. The still-life basket's block-in layer contributed 28,108 changed pixels outside its intended polygon, 27.6% of its visible contribution. The tree canopy's equivalent figure was 47.6%. These are visible layer-difference measurements, with later occlusion included in the result.
+
+In the separate compile-only run `artwork-results/r12-reorganized-ref-preflight-20261124-133522-4313d2f/`, LND-REF and ANI-REF compiled. HUM-REF had an intersecting coverage boundary, and ILL-REF attempted an unsupported brush for an area. None of those four was painted.
+
+The user paused further work after inspecting the visual results. These pilot runs do not count toward formal artwork acceptance. Raw assets, native files, layer measurements and independent reviews remain local and ignored by Git.
