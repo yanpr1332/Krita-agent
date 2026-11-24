@@ -174,3 +174,18 @@ def test_advisory_brush_policy_preserves_legacy_plan_but_reports_failure(tmp_pat
     quality = metrics["compiled_plan"]["brush_quality_v12"]
     assert quality["policy"] == "advisory"
     assert quality["status"] == "fail"
+
+
+def test_generalist_step_budget_rejects_before_archiving_plan_sources(tmp_path):
+    from test_round7_generalist_scene import sample_v4
+    flow = CreativeWorkflow.create(
+        tmp_path / "generalist-budget-run",
+        brief(max_native_steps=100),
+    )
+    with pytest.raises(TaskError, match="max_native_steps"):
+        flow.plan(candidate=sample_v4())
+    assert flow.read()["status"] == "initialized"
+    assert not (flow.root / "scene-plan-v4.json").exists()
+    assert not (flow.root / "generalist-proposal.json").exists()
+    assert not (flow.root / "scene-plan-v3.json").exists()
+    assert not (flow.root / "compiled-scene.json").exists()

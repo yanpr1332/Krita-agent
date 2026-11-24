@@ -167,18 +167,6 @@ class CreativeWorkflow:
                 preview_prefix=preview_prefix)
             if compiled["source_sha256"] != digest(proposal["scene"]):
                 raise TaskError("Generalist lowering does not match approved v3 source")
-            _write_new(self.root / "scene-plan-v4.json", v4_scene)
-            _write_new(self.root / "generalist-proposal.json", generalist_proposal)
-            record["artifacts"]["scene_v4"] = {
-                "path": "scene-plan-v4.json",
-                "sha256": _sha(self.root / "scene-plan-v4.json"),
-            }
-            record["artifacts"]["generalist_proposal"] = {
-                "path": "generalist-proposal.json",
-                "sha256": _sha(self.root / "generalist-proposal.json"),
-            }
-            record["staged"] = {"total": len(compiled["stage_spans"]),
-                                "next_stage": 0, "completed": []}
         step_budget = record["brief"].get("max_native_steps", 10000)
         if len(compiled.get("steps", [])) > step_budget:
             raise TaskError(
@@ -194,6 +182,21 @@ class CreativeWorkflow:
                 "Brush diversity floor not met for the selected profile; "
                 "inspect brush_quality_v12 diagnostics or revise the plan"
             )
+        # Generalist source files and stage cursor are archived only after every
+        # compile-time budget and diversity gate has passed.
+        if v4_scene is not None:
+            _write_new(self.root / "scene-plan-v4.json", v4_scene)
+            _write_new(self.root / "generalist-proposal.json", generalist_proposal)
+            record["artifacts"]["scene_v4"] = {
+                "path": "scene-plan-v4.json",
+                "sha256": _sha(self.root / "scene-plan-v4.json"),
+            }
+            record["artifacts"]["generalist_proposal"] = {
+                "path": "generalist-proposal.json",
+                "sha256": _sha(self.root / "generalist-proposal.json"),
+            }
+            record["staged"] = {"total": len(compiled["stage_spans"]),
+                                "next_stage": 0, "completed": []}
         _write_new(self.root / "scene-plan-v3.json", proposal["scene"])
         _write_new(self.root / "creative-proposal.json", proposal)
         _write_new(self.root / "compiled-scene.json", compiled)
