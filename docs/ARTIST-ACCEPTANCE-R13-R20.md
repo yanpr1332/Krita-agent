@@ -4,6 +4,8 @@
 >
 > [R13–R20 路线图](ARTIST-ROADMAP-R13-R20.md) · [目标架构](ARTIST-ARCHITECTURE-R13-R20.md) · [原生本地历史报告](ROUND12-LOCAL-ACCEPTANCE-REPORT.md)
 
+> **实施时间调整（用户 2026-11-24 指示）：** 从 R14 起，各轮开发以 GitHub Python 3.10/3.13 离线 CI、安全/兼容测试为必须门禁，暂不反复执行昂贵的真实三构建 Krita、独立视觉评审、人工评审与 24 项完整画作验收。详细见 [统一最终验收与成本控制政策](CONSOLIDATED-ACCEPTANCE-POLICY.md)。本文件以下**量化标准和必须保存的证据没有降低**；目前没运行的 G2–G5 项必须写 `NOT_RUN`，直到 R20 集中验收。
+
 ## 1. 正确区分阶段结果和最终结果
 
 所有测试项统一状态：`PASS` / `FAIL` / `BLOCKED` / `NOT_RUN`，若存在独立评审争议，可另外报告 `DISPUTED`（不得计入 PASS）；真实 native effect 不明另报 `unknown_needs_review`，禁止自动重试。
