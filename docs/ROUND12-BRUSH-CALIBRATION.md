@@ -32,6 +32,12 @@ Then record the profile:
 
 The profile is accepted only when the evidence file exists, is non-empty and is at most 5 MB. Its SHA-256 is stored. Listing/choosing rechecks the evidence hash and ignores malformed, tampered, unreviewed, wrong-build or low-confidence profiles.
 
+## Acceptance thresholds and physical-tablet distinction
+
+The generated fixture supplies pressure values through the Bridge. It verifies the installed Krita preset's response to supplied pressure values; it does **not** verify a physical tablet, stylus sensor, Windows driver, or live pen-input path. Test the physical stylus separately when available, and record the device/driver. If no tablet is available, mark hardware pressure as `NOT_RUN`.
+
+For the consolidated acceptance thresholds (nominal-size ordering, pressure-size and pressure-opacity deltas, bidirectional ramp checks, color/opacity controls, and build-specific profile requirements), follow [ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md](ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md). The numeric thresholds are project test criteria; they are not automatic properties of every brush preset.
+
 ## Important boundary
 
 The test fixture is a measurement aid, not an automatic claim that pressure size or opacity works. A person must inspect the actual exported native Krita image and set the two capability booleans truthfully. Profiles are build-specific; a different Krita build requires recalibration.
