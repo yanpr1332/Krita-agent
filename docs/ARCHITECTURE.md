@@ -1,5 +1,11 @@
 # Krita Agent architecture and safety policy
 
+## Future architecture proposal (R13–R20; not yet implemented)
+
+Keep the **existing Python Controller + authenticated localhost Krita Bridge**, but progressively separate AI semantic planning from deterministic geometry and Krita-native execution. The planned contract is ArtBrief → CompositionGraph → PaintPlan → safe region/stroke compiler → real Krita layers/KRA → actual-pixel review and authorized revision. A region/fill engine should establish shape, value and occlusion; a continuous fine-stroke engine should handle contours, taper, controlled pressure and material-specific marks. Do **not** make random stroke counts a quality goal or infer in-stroke arbitrary RGB support from per-stroke color APIs.
+
+See the [detailed proposed architecture and migration design](ARTIST-ARCHITECTURE-R13-R20.md), [R13–R20 roadmap](ARTIST-ROADMAP-R13-R20.md), [line-art and training plan](LINEART-DATASET-AND-LEARNING.md), and [acceptance](ARTIST-ACCEPTANCE-R13-R20.md). The current implementation and evidence remain documented below; these links do not upgrade the implementation status.
+
 ## Runtime-proven foundation
 
 **Round 1 and Round 2 are verified** by real build-specific acceptance: see REPORT-004, REPORT-006 and REPORT-007. Stable 5.3.4.1 / Next Qt5 5.4.0-prealpha / Next Qt6 6.1.0-prealpha are the three documented environments. Round 3 installed-build acceptance and repairs are recorded in REPORT-009. Round 4 installed-build acceptance and repairs are recorded in REPORT-011. A feature's availability always refers to a concrete build and test.

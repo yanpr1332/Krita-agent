@@ -1,5 +1,7 @@
 # Krita Agent
 
+**R13–R20 通用 AI 画师后续开发规划（2026-11-24，仅规划、尚未实现）：** [Round 12 本地验收](docs/ROUND12-LOCAL-ACCEPTANCE-REPORT.md) 已记录三构建 9/9 原生 Smoke 严格导出和重开通过，但完整作品质量**未通过**：18 个初始文本规划被校验拒绝，另行试画仅得 6/24。后续将优先改善模型结构规划、形体与区域填色、细腻连续笔触、材质色光、合法线稿素材检索、真实图像修订与完整作品验收。详细参见 [R13–R20 总路线图](docs/ARTIST-ROADMAP-R13-R20.md) · [架构设计](docs/ARTIST-ARCHITECTURE-R13-R20.md) · [线稿采集与模型学习](docs/LINEART-DATASET-AND-LEARNING.md) · [分轮与最终验收](docs/ARTIST-ACCEPTANCE-R13-R20.md) · [执行和素材交接](docs/ARTIST-DEVELOPMENT-HANDOFF-R13-R20.md)。以下历史阶段介绍保留其原始记录语境，不应解读为 R13 以后功能已经完成。
+
 **云端优先开发与三级验收（独立基础设施分支、尚未合并）：** 已在 GitHub 云端用**真实 Krita 5.3.4.1 Linux 版**完成 Bridge 原生绘画、KRA 保存、重新打开及严格像素/颜色配置一致性测试。[成功运行 #44482971863](https://github.com/yanpr1332/Krita-agent/actions/runs/44482971863)；Windows 原生兼容性、自然画质及人工最终验收仍需分别进行。参见[三级验收策略](docs/CLOUD-VALIDATION-STRATEGY.md)和[原生验收证据](docs/CLOUD-NATIVE-ACCEPTANCE.md)。
 
 **第七轮通用画师底层架构（源码已开发，原生验收待完成）：** ScenePlan v4 支持自由题材的主体层级、材质、独立绘画阶段及 `gesture` / `coverage` / `accents` 意图，安全编译成 Krita 原生笔触；提供可选模型规划与每阶段单独 `creative paint-stage --confirm` 人工批准。见 [Round 7 API](docs/ROUND7-API.md) 与 [第七轮验收清单](docs/ROUND7-ACCEPTANCE.md)。尚不宣称实现自然的人类级绘画或跨题材成品验收。
