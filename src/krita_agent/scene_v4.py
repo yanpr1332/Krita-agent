@@ -199,7 +199,7 @@ def validate_scene_v4(candidate):
                 raise TaskError("Native region fill forbids stroke-only settings")
             style = combine_style(subject["styles"], item)
             if "natural" in item:
-                if kind != "gesture" or any(key in style for key in (
+                if kind != "gesture" or "render" in item or any(key in style for key in (
                         "pressure_curve", "pressure_variation",
                         "variation_frequency", "variation_seed",
                         "speed_sensitivity", "pressure_interpolation")):
