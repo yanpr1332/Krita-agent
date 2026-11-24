@@ -56,7 +56,7 @@ def register(commands, connection):
         if name in ("paint", "paint-stage"):
             p.add_argument("--ledger-dir")
             p.add_argument("--batch-size", type=int, default=120)
-        if name == "paint-stage":
+        if name in ("paint", "paint-stage"):
             p.add_argument("--reject-segmented-joins", action="store_true",
                            help="Before native submission, reject multi-point "
                                 "segmented join risks; legacy default is unchanged")
@@ -140,7 +140,8 @@ def execute(args, get_client):
     if args.action == "approve":
         return flow.approve_plan(confirm=args.confirm)
     if args.action == "paint":
-        return flow.paint(get_client(args), args.ledger_dir, args.batch_size)
+        return flow.paint(get_client(args), args.ledger_dir, args.batch_size,
+                          reject_segmented_joins=args.reject_segmented_joins)
     if args.action == "paint-stage":
         return flow.paint_stage(get_client(args), confirm=args.confirm,
                                 ledger_directory=args.ledger_dir,
