@@ -31,7 +31,7 @@ def validate_natural(raw):
         raise TaskError("Unsupported natural stroke fields: " +
                         ", ".join(sorted(extra)))
     purpose = raw.get("purpose", "contour")
-    if purpose not in PURPOSES:
+    if type(purpose) is not str or purpose not in PURPOSES:
         raise TaskError("Unsupported natural stroke purpose")
     start, peak, end = PROFILE[purpose]
     start = number(raw.get("start_pressure", start), "start_pressure", 0.02, 1)
