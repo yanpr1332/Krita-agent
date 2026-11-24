@@ -26,7 +26,7 @@ R12 isolated a reproducible non-continuity artifact: in Stable Krita 5.3.4.1 wit
 New read-only module `src/krita_agent/native_continuity_v13.py`:
 
 - Queries the actual connected Krita build's `capabilities` (only present native symbols, not an artistic verification).
-- Inspects compiled `draw.stroke` mode and point count for the *next approved stage*.
+- Inspects compiled `draw.stroke` mode and point count for the *next approved v4 stage* or the *entire approved legacy v3 creative plan*.
 - Flags `auto` multi-point strokes on builds without continuous API, explicitly `segmented` multi-point strokes on any build, and explicitly `continuous` strokes on builds where it cannot run.
 - Outputs bounded examples, counts, selected Krita/Qt versions, and `artwork_accepted: false`.
 - Does not modify the plan, manifest, KRA, drawing commands, or preview files.
@@ -37,15 +37,19 @@ New read-only module `src/krita_agent/native_continuity_v13.py`:
 krita-agent creative native-preflight --directory artwork-results/<run-id> --session .cache/session.json
 ```
 
-Requires an **approved generalist v4 stage** and a currently connected authenticated Krita session. Calls only `capabilities` on the native Bridge; this is **not** an artwork preview or a physical stylus test. The plan is bound to existing SHA/proposal/stage checks before inspection.
+Requires an **approved generalist v4 stage or legacy v3 creative plan** and a currently connected authenticated Krita session. Calls only `capabilities` on the native Bridge; this is **not** an artwork preview or a physical stylus test. The plan is bound to existing SHA/proposal/stage checks before inspection.
 
 ### Opt-in guard before executing a stage
 
 ```powershell
+# Generalist v4: separate approval for each stage
 krita-agent creative paint-stage --directory artwork-results/<run-id> --session .cache/session.json --confirm --reject-segmented-joins
+
+# Legacy v3: guard the entire approved plan
+krita-agent creative paint --directory artwork-results/<run-id> --session .cache/session.json --reject-segmented-joins
 ```
 
-When enabled, the worklow checks the native capability report against the upcoming compiled stage **before** recording the native submission intent or sending any job. If a multi-point segmented join or unsupported explicit continuous mode exists, the command fails closed with a `TaskError`, leaving the stage in the original approval state for manual review or plan revision.
+When enabled for either legacy `creative paint` or generalist `creative paint-stage`, the workflow checks the native capability report against the approved plan or upcoming stage **before** recording the native submission intent or sending any job. If a multi-point segmented join or unsupported explicit continuous mode exists, the command fails closed with a `TaskError`, leaving the plan or stage in its original approved state for manual review or plan revision.
 
 The flag does **not** assert that all continuous strokes are visually seamless, pressure-responsive, or human-accepted: native brush presets must be calibrated on that build. On an incompatible Stable build with multi-point strokes, a strict v4 stage may be **BLOCKED**, not PASS. Legacy callers that omit the flag retain their historical fallback behavior.
 
