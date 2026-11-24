@@ -124,6 +124,16 @@ def expand_intent(intent, selected_style, subject, document):
     """Expand a validated v4 intent into native v3 freehand brush elements."""
     kind = intent["kind"]
     if kind == "gesture":
+        if "natural" in intent:
+            from .natural_strokes_v16 import natural_points
+            if any(key in selected_style for key in (
+                    "pressure_curve", "pressure_variation",
+                    "variation_frequency", "variation_seed",
+                    "speed_sensitivity", "pressure_interpolation")):
+                raise TaskError("Natural stroke cannot override calibrated sensor samples")
+            return [_stroke(natural_points(
+                intent["path"], intent["natural"], subject["bounds"]),
+                selected_style)]
         return [_stroke([{"x": x, "y": y} for x, y in intent["path"]], selected_style)]
     if kind == "coverage":
         return _coverage(intent, selected_style,
