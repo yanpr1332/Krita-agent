@@ -27,3 +27,5 @@ Metrics report planned values and command durations only; they do not infer that
 10. Added timing coverage for the read-only material diagnostics phase so its runtime is visible alongside planning and painting.
 
 11. Reworked the dashboard brush-quality panel into a per-subject table and explicit unmet-requirement list, instead of exposing the full report as a JSON blob.
+
+12. Expanded the native brush calibration fixture to include a pressure ladder, bidirectional pressure ramps and a nominal size ladder. Added profile-catalogue integrity tests. Native image inspection remains pending.

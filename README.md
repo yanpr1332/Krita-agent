@@ -146,3 +146,5 @@ The project-authored code is MIT-licensed. Krita and all third-party dependencie
 Round 12 also adds profile-aware brush diversity diagnostics. Set brush_diversity_policy to enforce in the brief to reject large/complex subjects that do not meet the selected size/color/opacity/pressure/direction floor; the default advisory mode reports gaps without blocking legacy plans.
 
 Generalist brush-quality diagnostics aggregate each logical subject across its stages, rather than treating each phase layer as a separate finished subject.
+
+Brush calibration: `krita-agent brushcal generate` now produces a pressure/size calibration matrix; see [Native brush calibration](docs/ROUND12-BRUSH-CALIBRATION.md). Profiles require manually reviewed, hash-verified evidence.

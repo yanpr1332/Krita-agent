@@ -63,3 +63,8 @@ Material diagnostics are included in the operation timing log as a read-only pha
 The initial `creative plan` response also returns the `brush_quality_v12` report, so advisory gaps are visible immediately without requiring a separate metrics command.
 
 The read-only dashboard renders brush-quality results as a per-subject table with stroke counts, distinct sizes/colors/opacity levels, pressure span, direction bins and repeated-trajectory ratio. Unmet floors are listed separately; no raw JSON inspection is required.
+
+
+## Native brush calibration matrix
+
+See [Native brush calibration](ROUND12-BRUSH-CALIBRATION.md) for the pressure ladder, bidirectional pressure ramps, size ladder, manual evidence review and build-specific profile workflow. The generated task is executable but never self-registers a profile; human inspection is required.

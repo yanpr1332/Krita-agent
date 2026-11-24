@@ -137,3 +137,5 @@ Development branch: `feat/round12-generalist-acceptance`, based on merged Round 
 Round 12 follow-up: per-subject brush diversity floors now make the earlier request for multiple sizes, colors, opacity levels and pressure variation measurable. The default is advisory for backward compatibility; strict mode is opt-in and blocks plans that fail the selected profile floor. This is still a plan-level check, not proof of visible pressure or good artwork.
 
 Round 12 follow-up: generalist diversity floors now aggregate strokes across the subject's complete staged lifecycle. Stage-local layers no longer cause false failures simply because a sketch or block-in phase is intentionally sparse.
+
+Round 12 follow-up: the native brush calibration fixture now tests constant and changing pressure plus nominal size changes. Profiles remain build-specific and require manual inspection of real Krita exports before registration.

@@ -28,3 +28,7 @@ Offline CI is not native verification. Planned brush diversity is not proof of v
 
 - [x] Profile-aware per-subject brush diversity floor with advisory/enforce modes and deterministic regression scenes.
 - [x] Generalist brush diversity evaluated across the complete logical subject rather than isolated stage-layer fragments.
+
+- [x] Expanded native brush calibration task with constant-pressure ladder, increasing/decreasing pressure ramps and nominal size ladder.
+- [x] Added evidence catalogue validation for malformed, unreviewed, wrong-build and tampered profiles.
+- [ ] Run the calibration matrix in the user's installed Krita builds and manually inspect exported native results.
