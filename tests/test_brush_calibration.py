@@ -47,7 +47,8 @@ def test_calibration_matrix_covers_pressure_ramps_and_size_ladder():
 def test_calibration_size_ladder_stays_inside_native_brush_bounds(size):
     task = calibration_task("Pencil-2", size)
     assert all(0.1 <= value <= 500 for value in task["size_levels"])
-    assert task["size_levels"][1] == float(size)
+    assert float(size) in task["size_levels"]
+    assert task["nominal_size"] == float(size)
 
 
 @pytest.mark.parametrize("preset,size", [("", 24), ("x" * 121, 24), ("Pencil", 0), ("Pencil", 501)])
