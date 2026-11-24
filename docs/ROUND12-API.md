@@ -2,6 +2,8 @@
 
 **Status:** source implementation on `feat/round12-generalist-acceptance`. This is an operational integration milestone, not a claim that the multi-genre artwork benchmark has passed.
 
+For the exact three-build Windows smoke, brush calibration, material A/B, 24-task artwork campaign, evidence requirements, and pass thresholds, see [ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md](ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md).
+
 ## User-controlled effort profiles
 
 Briefs accept `complexity` (`quick_sketch`, `standard`, `detailed`), `max_native_steps` (100–10,000) and optional `time_budget_minutes` (1–480). Default step ceilings are 2,500 / 6,000 / 10,000. An explicit step ceiling overrides the profile default. The ceiling is checked after compilation and before plan archival/approval; over-budget plans fail rather than silently dropping strokes. The time budget is advisory, not a hard timeout.
