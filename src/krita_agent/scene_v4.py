@@ -169,7 +169,8 @@ def validate_scene_v4(candidate):
                             "variation_frequency", "variation_seed",
                             "speed_sensitivity", "pressure_interpolation",
                             "path", "polygon", "spacing", "angle", "render",
-                            "jitter", "seed", "count", "length"), "paint intent")
+                            "jitter", "seed", "count", "length",
+                            "natural"), "paint intent")
             iid = _id(item.get("id"), "paint-intent ID")
             sid = _id(item.get("subject_id"), "intent subject ID")
             if iid in intent_ids or sid not in by_id:
@@ -197,6 +198,12 @@ def validate_scene_v4(candidate):
                     "seed")):
                 raise TaskError("Native region fill forbids stroke-only settings")
             style = combine_style(subject["styles"], item)
+            if "natural" in item:
+                if kind != "gesture" or any(key in style for key in (
+                        "pressure_curve", "pressure_variation",
+                        "variation_frequency", "variation_seed",
+                        "speed_sensitivity", "pressure_interpolation")):
+                    raise TaskError("Natural stroke requires a gesture without competing pressure controls")
             normalized = {
                 "id": iid, "subject_id": sid, "kind": kind,
                 "purpose": purpose, "material": mat,
@@ -216,6 +223,9 @@ def validate_scene_v4(candidate):
                     normalized[key] = style[key] if key in style else item[key]
             if kind in ("gesture", "accents"):
                 normalized["path"] = _path(item.get("path"), subject)
+                if "natural" in item:
+                    from .natural_strokes_v16 import validate_natural
+                    normalized["natural"] = validate_natural(item["natural"])
                 if kind == "accents":
                     normalized["count"] = integer(item.get("count", 6), "accent count", 1, 64)
                     normalized["length"] = number(item.get("length", 12), "accent length", 1, 200)
