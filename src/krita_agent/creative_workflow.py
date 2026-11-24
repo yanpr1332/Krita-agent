@@ -243,7 +243,8 @@ class CreativeWorkflow:
         return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"]}
 
     @measure_operation("paint")
-    def paint(self, client, ledger_directory=None, batch_steps=120):
+    def paint(self, client, ledger_directory=None, batch_steps=120,
+              reject_segmented_joins=False):
         record = self.read()
         self._expect(record, "plan_approved")
         if "staged" in record:
@@ -252,6 +253,10 @@ class CreativeWorkflow:
         if _sha(compiled_path) != record["artifacts"]["compiled"]["sha256"]:
             raise TaskError("Compiled plan changed after approval")
         plan = json.loads(compiled_path.read_text(encoding="utf-8"))
+        if type(reject_segmented_joins) is not bool:
+            raise TaskError("reject_segmented_joins must be boolean")
+        if reject_segmented_joins:
+            reject_unsafe_segmented_joins(plan["steps"], client.request("capabilities"))
         record["status"] = "painting_unknown"
         self._save(record, "native_paint_submission_intent")
         result = run_longjob(
@@ -345,13 +350,23 @@ class CreativeWorkflow:
         }
 
     def native_stage_preflight(self, client):
-        """Read-only next-stage stroke audit bound to the approved plan.
+        """Read-only next-stage or legacy-plan audit, bound to approved steps.
 
-        Neither reads untrusted native pixels nor submits any Krita drawing.
-        The returned symbol inventory is only a capability hypothesis.
+        Never submits a drawing command or changes workflow state.
         """
         record = self.read()
         self._expect(record, "plan_approved", "awaiting_stage_approval")
+        if "staged" not in record:
+            compiled_path = self.root / "compiled-scene.json"
+            entry = record.get("artifacts", {}).get("compiled")
+            if (not isinstance(entry, dict) or
+                    _sha(compiled_path) != entry.get("sha256")):
+                raise TaskError("Approved legacy compiled plan changed")
+            compiled = json.loads(compiled_path.read_text(encoding="utf-8"))
+            report = inspect_stroke_continuity(
+                compiled["steps"], client.request("capabilities"))
+            return {"scope": "legacy_plan",
+                    "approved_steps_sha256": compiled["native_steps_sha256"], **report}
         compiled = self._verified_staged_plan(record)
         index = record["staged"].get("next_stage")
         if type(index) is not int or not 0 <= index < record["staged"]["total"]:
