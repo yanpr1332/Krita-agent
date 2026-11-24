@@ -87,11 +87,11 @@ def _scalar(value, label, minimum=0.0, maximum=1.0):
     return float(value)
 
 
-def _bbox(value, label):
+def _bbox(value, label, min_extent=.03):
     if not isinstance(value, list) or len(value) != 4:
         raise TaskError(label + " must contain [x,y,width,height]")
     x, y, w, h = [_scalar(z, label) for z in value]
-    if w < .03 or h < .03 or x+w > 1.000000001 or y+h > 1.000000001:
+    if w < min_extent or h < min_extent or x+w > 1.000000001 or y+h > 1.000000001:
         raise TaskError(label + " must be a nontrivial box inside 0..1")
     return [x, y, w, h]
 
@@ -182,23 +182,72 @@ def validate_composition(candidate):
     if not isinstance(subjects, list) or not 1 <= len(subjects) <= MAX_NODES:
         raise TaskError("Composition requires 1..10 semantic subjects")
     nodes, ids = [], set()
-    for item in subjects:
-        parent = _node(item)
-        if parent["id"] in ids:
-            raise TaskError("Duplicate composition subject ID")
-        ids.add(parent["id"])
-        nodes.append(parent)
-        parts = item.get("parts", [])
-        if not isinstance(parts, list) or len(parts) > MAX_PARTS:
-            raise TaskError("Composition subject exceeds four parts")
-        for part in parts:
-            node = _node(part, parent=parent, absolute=parent["bbox"])
-            if node["id"] in ids:
-                raise TaskError("Duplicate composition part ID")
-            ids.add(node["id"])
-            nodes.append(node)
-        if len(nodes) > MAX_NODES:
-            raise TaskError("Composition exceeds ten drawable nodes")
+    # Normalized archives flatten parts into nodes with absolute normalized
+    # bboxes and explicit parent IDs. Their deterministic round-trip MUST
+    # match the initial model proposal or approval hashes would be unstable.
+    canonical = all(type(item) is dict and "parent" in item
+                    for item in subjects)
+    if canonical:
+        for item in subjects:
+            _mapping(item, ("id", "name", "kind", "bbox", "color",
+                            "detail_color", "outline", "depth",
+                            "materials", "parent"), "canonical node")
+            ident = _id(item.get("id"), "canonical node ID")
+            if ident in ids:
+                raise TaskError("Duplicate composition subject ID")
+            ids.add(ident)
+            box = _bbox(item.get("bbox"), "canonical bbox", min_extent=1e-8)
+            parent_id = item.get("parent")
+            if parent_id is not None:
+                _id(parent_id, "canonical parent ID")
+            if item.get("outline") not in OUTLINES:
+                raise TaskError("Unsupported semantic outline")
+            colors = (_color(item.get("color"), "subject color"),
+                      _color(item.get("detail_color"), "detail color"))
+            mats = item.get("materials")
+            if (not isinstance(mats, list) or not 1 <= len(mats) <= 8):
+                raise TaskError("Semantic node materials need 1..8 names")
+            mats = [_text(m, "material", 64) for m in mats]
+            if len(set(mats)) != len(mats):
+                raise TaskError("Duplicate semantic material")
+            nodes.append({
+                "id": ident, "name": _text(item.get("name"), "subject name"),
+                "kind": _text(item.get("kind"), "semantic kind", 64),
+                "bbox": box, "depth": _scalar(item.get("depth"), "depth"),
+                "color": colors[0], "detail_color": colors[1],
+                "outline": item["outline"], "materials": mats,
+                "parent": parent_id,
+            })
+        by_id = {n["id"]: n for n in nodes}
+        for node in nodes:
+            if node["parent"] is None:
+                continue
+            parent = by_id.get(node["parent"])
+            if parent is None or parent["parent"] is not None:
+                raise TaskError("Canonical part has an invalid parent")
+            x, y, w, h = node["bbox"]
+            X, Y, W, H = parent["bbox"]
+            if not (x >= X-1e-8 and y >= Y-1e-8 and
+                    x+w <= X+W+1e-8 and y+h <= Y+H+1e-8):
+                raise TaskError("Canonical part escapes its parent")
+    else:
+        for item in subjects:
+            parent = _node(item)
+            if parent["id"] in ids:
+                raise TaskError("Duplicate composition subject ID")
+            ids.add(parent["id"])
+            nodes.append(parent)
+            parts = item.get("parts", [])
+            if not isinstance(parts, list) or len(parts) > MAX_PARTS:
+                raise TaskError("Composition subject exceeds four parts")
+            for part in parts:
+                node = _node(part, parent=parent, absolute=parent["bbox"])
+                if node["id"] in ids:
+                    raise TaskError("Duplicate composition part ID")
+                ids.add(node["id"])
+                nodes.append(node)
+            if len(nodes) > MAX_NODES:
+                raise TaskError("Composition exceeds ten drawable nodes")
     raw_relations = candidate.get("relations", [])
     if not isinstance(raw_relations, list) or len(raw_relations) > 30:
         raise TaskError("Composition supports at most 30 declared relations")
