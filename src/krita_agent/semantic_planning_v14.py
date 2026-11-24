@@ -357,7 +357,8 @@ def compile_semantic(candidate, brief):
                     "kind": "gesture", "path": verts + [verts[0]],
                     "brush": {"size": round(small, 2), "color": n["detail_color"],
                               "opacity": .85, "pressure_enabled": True},
-                    "pressure_curve": [[0, .2], [.2, .75], [.75, .68], [1, .2]],
+                    "natural": {"purpose": "contour", "spacing": 3.5,
+                                "smoothing_passes": 1},
                     "purpose": "Establish closed silhouette contour for " + n["name"],
                 }
             elif phase == "block_in":
@@ -381,7 +382,11 @@ def compile_semantic(candidate, brief):
                     "brush": {"size": round(small*.7, 2),
                               "color": n["detail_color"], "opacity": .75,
                               "pressure_enabled": True},
-                    "pressure_curve": [[0, .15], [.35, .72], [1, .15]],
+                    "natural": {
+                        "purpose": ("fur" if "fur" in n["materials"]
+                                    else "fine_detail"),
+                        "spacing": 2.5, "smoothing_passes": 1,
+                    },
                     "purpose": "Indicate a form direction guide for " + n["name"],
                 }
             intents.append({"id": iid, "subject_id": sid, **payload})
