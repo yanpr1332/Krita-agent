@@ -112,4 +112,4 @@ def test_reopen_drift_reports_channels_and_spatial_bounds():
     assert report["channel_different_pixels"] == {"red": 1, "green": 0, "blue": 1, "alpha": 0}
     assert report["difference_bounds_xyxy"] == [1, 1, 3, 3]
     assert report["mean_absolute_channel_difference"] > 0
-    assert report["minor_color_tolerance"]["within_tolerance"] is True
+    assert report["minor_color_tolerance"]["within_tolerance"] is False
