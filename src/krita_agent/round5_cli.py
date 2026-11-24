@@ -5,6 +5,7 @@ from pathlib import Path
 from .creative_workflow import CreativeWorkflow
 from .creative_dashboard import render as render_dashboard
 from .model_provider import ChatJSONProvider
+from .workflow_metrics_v12 import summarize as summarize_metrics
 
 
 def _json(path):
@@ -31,7 +32,7 @@ def register(commands, connection):
     for name in (
         "status", "dashboard", "diagnose", "plan", "approve", "paint", "paint-stage", "export",
         "record", "verify-reopen", "critique", "critique-v11", "revision-plan", "revision-approve",
-        "revise", "deliver",
+        "revise", "deliver", "metrics",
     ):
         p = actions.add_parser(name)
         p.add_argument("--directory", required=True)
@@ -114,6 +115,8 @@ def execute(args, get_client):
     flow = CreativeWorkflow(args.directory)
     if args.action == "status":
         return flow.read()
+    if args.action == "metrics":
+        return summarize_metrics(flow.root, flow.read())
     if args.action == "dashboard":
         return render_dashboard(flow, args.output, replace=args.replace)
     if args.action == "diagnose":

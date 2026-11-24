@@ -22,6 +22,7 @@ from .scheduler import run as run_longjob
 from .visual_critic import critique
 from .visual_critic_v11 import review_artwork as review_artwork_v11, to_revision_critique
 from .review_budget_v11 import BudgetedProvider
+from .workflow_metrics_v12 import measure_operation
 
 WORKFLOW_SCHEMA = "krita-agent-creative-workflow/1"
 KNOWN_STATES = frozenset({
@@ -103,6 +104,7 @@ class CreativeWorkflow:
                 record["status"], "/".join(states)
             ))
 
+    @measure_operation("plan")
     def plan(self, provider=None, candidate=None, reference=None,
              profile_directory=None, build=None, generalist=False):
         """Plan a legacy ScenePlan v3 or an explicitly selected generalist v4.
@@ -176,6 +178,12 @@ class CreativeWorkflow:
             }
             record["staged"] = {"total": len(compiled["stage_spans"]),
                                 "next_stage": 0, "completed": []}
+        step_budget = record["brief"].get("max_native_steps", 10000)
+        if len(compiled.get("steps", [])) > step_budget:
+            raise TaskError(
+                "Compiled plan exceeds the selected max_native_steps budget: "
+                + str(len(compiled.get("steps", []))) + " > " + str(step_budget)
+            )
         _write_new(self.root / "scene-plan-v3.json", proposal["scene"])
         _write_new(self.root / "creative-proposal.json", proposal)
         _write_new(self.root / "compiled-scene.json", compiled)
@@ -197,6 +205,7 @@ class CreativeWorkflow:
             result["subjects"] = len(v4_scene["subjects"])
         return result
 
+    @measure_operation("approve_plan")
     def approve_plan(self, confirm=False):
         if confirm is not True:
             raise TaskError("Explicit plan approval required")
@@ -214,6 +223,7 @@ class CreativeWorkflow:
         self._save(record, "plan_approved_by_user")
         return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"]}
 
+    @measure_operation("paint")
     def paint(self, client, ledger_directory=None, batch_steps=120):
         record = self.read()
         self._expect(record, "plan_approved")
@@ -315,6 +325,7 @@ class CreativeWorkflow:
             "layer_graph_sha256": digest(graph),
         }
 
+    @measure_operation("paint_stage")
     def paint_stage(self, client, confirm=False, ledger_directory=None,
                     batch_steps=120):
         """One user-confirmed stage per invocation; never auto-submit the next."""
@@ -409,6 +420,7 @@ class CreativeWorkflow:
                 canvas_size=source_canvas)
         return result
 
+    @measure_operation("export_native")
     def export_native(self, client):
         """Save/export via authenticated Krita and archive immutable copies.
 
@@ -489,6 +501,7 @@ class CreativeWorkflow:
             return archived  # Preserve stage evidence even if the export itself failed.
         return self.verify_reopen(client)
 
+    @measure_operation("record_artwork")
     def record_artwork(self, kra_path, png_path, confirm_new_version=False):
         """Always archive the original native KRA/PNG, including failed exports.
 
@@ -560,6 +573,7 @@ class CreativeWorkflow:
         return {"status": record["status"], "version": version,
                 "files": record["artifacts"]["latest"], "export_integrity": export}
 
+    @measure_operation("verify_reopen")
     def verify_reopen(self, client):
         """Open a UNIQUE fresh copy in Krita, export it, and compare exact pixels.
 
@@ -721,6 +735,7 @@ class CreativeWorkflow:
             raise TaskError("Archived native PNG changed")
         return path
 
+    @measure_operation("critique")
     def critique(self, provider, reference=None, max_rounds=3):
         record = self.read()
         self._expect(record, "awaiting_critique")
@@ -750,6 +765,7 @@ class CreativeWorkflow:
         self._save(record, "creative_critique_" + result["decision"])
         return {"status": record["status"], "critique": result}
 
+    @measure_operation("critique_v11")
     def critique_v11(self, provider, *, consent, reference=None, stage_previews=None,
                      layer_graph=None, layer_contributions=None, target_constraints=None,
                      max_rounds=None, max_revisions=None, max_calls=None, max_images=None,
@@ -838,6 +854,7 @@ class CreativeWorkflow:
                 "budget": budgeted.summary(), "usage_ledger": str(ledger)}
 
 
+    @measure_operation("propose_revision")
     def propose_revision(self, object_id, provider=None, candidate=None, issue_id=None):
         record = self.read()
         self._expect(record, "awaiting_revision_proposal")
@@ -880,6 +897,7 @@ class CreativeWorkflow:
         return {"status": record["status"], "revision_sha256": revision["sha256"],
                 "target_object": revision["object_id"], "strokes": len(revision["steps"]) - 2}
 
+    @measure_operation("approve_revision")
     def approve_revision(self, confirm=False):
         if confirm is not True:
             raise TaskError("Explicit revision approval required")
@@ -893,6 +911,7 @@ class CreativeWorkflow:
         self._save(record, "revision_approved_by_user")
         return {"status": record["status"], "revision_sha256": item["sha256"]}
 
+    @measure_operation("apply_revision")
     def apply_revision(self, client, confirm=False, ledger_directory=None,
                        graph_sha256=None):
         if confirm is not True:
@@ -932,6 +951,7 @@ class CreativeWorkflow:
         self._save(record, "native_revision_" + result.get("state", "unknown"))
         return {"status": record["status"], "result": result}
 
+    @measure_operation("prepare_delivery")
     def prepare_delivery(self):
         record = self.read()
         self._expect(record, "ready_for_delivery")

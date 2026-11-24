@@ -4,9 +4,12 @@ Does not control Krita or silently invoke cloud models. Open dashboard.html
 locally to review stage history, retained versions and existing previews.
 """
 import html
+import json
 import os
 import uuid
 from pathlib import Path
+
+from .workflow_metrics_v12 import summarize as summarize_metrics
 
 
 def _escape(value):
@@ -49,6 +52,20 @@ def render(workflow, output=None, replace=False):
                     ))
     state = _escape(record.get("status", "unknown"))
     title = _escape(record.get("brief", {}).get("title", "Krita Creative Workflow"))
+    metrics = summarize_metrics(root, record)
+    profile = metrics.get("planning_profile", {})
+    plan_metrics = metrics.get("compiled_plan", {})
+    time_budget = profile.get("time_budget_minutes")
+    time_budget_label = str(time_budget) + " minutes" if time_budget is not None else "not set"
+    metric_rows = []
+    for item in metrics.get("operations", []):
+        metric_rows.append(
+            "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                _escape(item.get("operation", "")), _escape(item.get("count", 0)),
+                _escape(item.get("mean_ms", "")), _escape(item.get("p95_ms", "")),
+                _escape(item.get("raised", 0)),
+            )
+        )
     html_page = """<!doctype html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
@@ -68,6 +85,14 @@ footer {{ margin-top: 32px; font-size: .9rem; opacity: .7; }}
 <header><h1>{title}</h1><div class="state">Current stage: {state}</div>
 <div class="small">Run: {id} | Version: {version}</div></header>
 <h2>Actual native artwork and stage previews</h2><div class="gallery">{images}</div>
+<h2>Run profile</h2>
+<p>Complexity: {complexity} · Target time: {time_budget} · Native-step ceiling: {step_budget}</p>
+<h2>Compiled brush plan (planned parameters, not proof of visible pressure or artistic quality)</h2>
+<p>{plan_metrics}</p>
+<h2>Execution timings</h2>
+<p>Telemetry integrity: {metrics_integrity} · Recorded operations: {metric_count} · Raised calls: {metric_failures}</p>
+<table><thead><tr><th>Operation</th><th>Count</th><th>Mean ms</th><th>P95 ms</th><th>Raised</th></tr></thead>
+<tbody>{metric_rows}</tbody></table>
 <h2>Workflow history</h2><table><thead><tr><th>Time (UTC)</th><th>Event</th></tr></thead>
 <tbody>{rows}</tbody></table>
 <footer>Generated from local run artifacts only. No human or independent VLM acceptance is implied.
@@ -76,6 +101,14 @@ Refresh explicitly with --replace; this page does not update itself.</footer></b
         title=title, state=state, id=_escape(record.get("id", "")),
         version=_escape(record.get("version", 0)),
         images="".join(thumbs) or "<p>No native artwork/preview has been archived yet.</p>",
+        complexity=_escape(profile.get("complexity", "not set")),
+        time_budget=_escape(time_budget_label),
+        step_budget=_escape(profile.get("max_native_steps", "not set")),
+        plan_metrics=_escape(json.dumps(plan_metrics, ensure_ascii=False, sort_keys=True)),
+        metrics_integrity=_escape(metrics.get("integrity", "unknown")),
+        metric_count=_escape(metrics.get("event_count", 0)),
+        metric_failures=_escape(metrics.get("raised_invocations", 0)),
+        metric_rows="".join(metric_rows) or "<tr><td colspan=\"5\">No operation timings recorded.</td></tr>",
         rows="".join(row_html),
     )
     temp = destination.with_name(destination.name + "." + uuid.uuid4().hex + ".tmp")

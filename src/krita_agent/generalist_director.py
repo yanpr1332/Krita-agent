@@ -86,13 +86,21 @@ No authorization for actual drawing is provided by this proposal.
 
 def propose_generalist(brief, provider, reference_image=None):
     spec = validate_brief(brief)
+    prompt_spec = dict(spec)
+    prompt_spec["time_budget_label"] = (
+        str(spec["time_budget_minutes"]) + " minutes"
+        if spec["time_budget_minutes"] is not None else "not specified"
+    )
     prompt = (
         "Create a coherent generalist staged painting plan for canvas "
         "{width} x {height}, named {title}, style {style}. "
+        "Effort profile: {complexity}; maximum compiled native steps: {max_native_steps}. "
+        "Target wall-clock budget: {time_budget_label} (advisory, not a guarantee). "
         "User brief: {prompt}. Plan structural proportions, color block-in "
-        "and purposeful later details across 3..6 stages. "
-        "Do not enumerate low-level pen points for the full painting."
-    ).format(**spec)
+        "and purposeful later details across 3..6 stages. Respect the step ceiling "
+        "by simplifying low-value detail before sacrificing structure or material "
+        "differentiation. Do not enumerate low-level pen points for the full painting."
+    ).format(**prompt_spec)
     images = [reference_image] if reference_image else []
     if reference_image:
         prompt += (
