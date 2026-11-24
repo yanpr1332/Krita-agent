@@ -101,7 +101,7 @@ def test_metrics_include_hash_verified_planned_brush_diversity_and_dashboard(tmp
     assert "detailed" in page and "45 minutes" in page
     assert "Brush diversity: advisory" in page
     assert "Brush quality gate" in page
-    assert "room" in page
+    assert "sky" in page
     assert "planned values only" in page
 
 
