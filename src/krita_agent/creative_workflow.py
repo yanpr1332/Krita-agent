@@ -24,6 +24,9 @@ from .visual_critic_v11 import review_artwork as review_artwork_v11, to_revision
 from .review_budget_v11 import BudgetedProvider
 from .workflow_metrics_v12 import measure_operation
 from .brush_quality_v12 import evaluate_brush_plan
+from .native_continuity_v13 import (
+    inspect_stroke_continuity, reject_unsafe_segmented_joins,
+)
 
 WORKFLOW_SCHEMA = "krita-agent-creative-workflow/1"
 KNOWN_STATES = frozenset({
@@ -240,7 +243,8 @@ class CreativeWorkflow:
         return {"status": record["status"], "plan_sha256": compiled["native_steps_sha256"]}
 
     @measure_operation("paint")
-    def paint(self, client, ledger_directory=None, batch_steps=120):
+    def paint(self, client, ledger_directory=None, batch_steps=120,
+              reject_segmented_joins=False):
         record = self.read()
         self._expect(record, "plan_approved")
         if "staged" in record:
@@ -249,6 +253,10 @@ class CreativeWorkflow:
         if _sha(compiled_path) != record["artifacts"]["compiled"]["sha256"]:
             raise TaskError("Compiled plan changed after approval")
         plan = json.loads(compiled_path.read_text(encoding="utf-8"))
+        if type(reject_segmented_joins) is not bool:
+            raise TaskError("reject_segmented_joins must be boolean")
+        if reject_segmented_joins:
+            reject_unsafe_segmented_joins(plan["steps"], client.request("capabilities"))
         record["status"] = "painting_unknown"
         self._save(record, "native_paint_submission_intent")
         result = run_longjob(
@@ -341,9 +349,37 @@ class CreativeWorkflow:
             "layer_graph_sha256": digest(graph),
         }
 
+    def native_stage_preflight(self, client):
+        """Read-only next-stage or legacy-plan audit, bound to approved steps.
+
+        Never submits a drawing command or changes workflow state.
+        """
+        record = self.read()
+        self._expect(record, "plan_approved", "awaiting_stage_approval")
+        if "staged" not in record:
+            compiled_path = self.root / "compiled-scene.json"
+            entry = record.get("artifacts", {}).get("compiled")
+            if (not isinstance(entry, dict) or
+                    _sha(compiled_path) != entry.get("sha256")):
+                raise TaskError("Approved legacy compiled plan changed")
+            compiled = json.loads(compiled_path.read_text(encoding="utf-8"))
+            report = inspect_stroke_continuity(
+                compiled["steps"], client.request("capabilities"))
+            return {"scope": "legacy_plan",
+                    "approved_steps_sha256": compiled["native_steps_sha256"], **report}
+        compiled = self._verified_staged_plan(record)
+        index = record["staged"].get("next_stage")
+        if type(index) is not int or not 0 <= index < record["staged"]["total"]:
+            raise TaskError("Generalist stage cursor is invalid")
+        span = compiled["stage_spans"][index]
+        segment = compiled["steps"][span["start"]:span["stop"]]
+        report = inspect_stroke_continuity(segment, client.request("capabilities"))
+        return {"stage": index + 1, "stage_id": span["id"],
+                "approved_stage_sha256": span["steps_sha256"], **report}
+
     @measure_operation("paint_stage")
     def paint_stage(self, client, confirm=False, ledger_directory=None,
-                    batch_steps=120):
+                    batch_steps=120, reject_segmented_joins=False):
         """One user-confirmed stage per invocation; never auto-submit the next."""
         if confirm is not True:
             raise TaskError("Each native painting stage requires explicit --confirm")
@@ -363,6 +399,13 @@ class CreativeWorkflow:
         segment = compiled["steps"][stage["start"]:stage["stop"]]
         if digest(segment) != stage["steps_sha256"]:
             raise TaskError("Generalist stage instructions changed")
+        if type(reject_segmented_joins) is not bool:
+            raise TaskError("reject_segmented_joins must be boolean")
+        if reject_segmented_joins:
+            # Explicit opt-in: fail before any stage status change or native
+            # submission. Legacy callers retain their historical auto-mode
+            # segmented fallback until a real build-specific fix is verified.
+            reject_unsafe_segmented_joins(segment, client.request("capabilities"))
         record["status"] = "painting_unknown"
         record["active_stage"] = index
         self._save(record, "native_stage_%02d_submission_intent" % (index+1))
@@ -481,7 +524,9 @@ class CreativeWorkflow:
                 raise TaskError("Archived stage evidence does not match the compiled plan")
             for name, entry in archived_stages.items():
                 target = self.root / "stages" / name
-                if (str(target.relative_to(self.root)) != entry["path"]
+                stored_path = entry.get("path") if isinstance(entry, dict) else None
+                if (not isinstance(stored_path, str)
+                        or stored_path.replace("\\", "/") != target.relative_to(self.root).as_posix()
                         or not target.is_file() or _sha(target) != entry["sha256"]):
                     raise TaskError("Archived stage evidence changed")
         elif stage_names:
@@ -509,7 +554,7 @@ class CreativeWorkflow:
                 if _sha(target) != _sha(source):
                     raise TaskError("Native stage preview copy changed")
                 stage_records[target.name] = {
-                    "path": str(target.relative_to(self.root)),
+                    "path": target.relative_to(self.root).as_posix(),
                     "sha256": _sha(target),
                 }
             record["artifacts"]["stage_previews"] = stage_records

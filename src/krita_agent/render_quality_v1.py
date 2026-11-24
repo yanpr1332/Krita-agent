@@ -201,9 +201,15 @@ def archived_stage_diagnostics(root, artifacts, stage_spans, subjects=None, canv
             raise TaskError("Invalid stage identity")
         name = "stage-%02d-%s.png" % (index+1, phase)
         entry = artifacts.get(name)
-        if not isinstance(entry, dict) or entry.get("path") != "stages/"+name:
+        # Windows Path.relative_to() historically serialized archive paths
+        # with backslashes. Validate either separator style against the
+        # *expected* constant path, then construct the actual path from the
+        # trusted stage name rather than from user-controlled manifest text.
+        stored_path = entry.get("path") if isinstance(entry, dict) else None
+        if (not isinstance(stored_path, str)
+                or stored_path.replace("\\", "/") != "stages/" + name):
             raise TaskError("Native stage preview is missing: " + name)
-        path = (base/entry["path"]).resolve()
+        path = (base / "stages" / name).resolve()
         if base not in path.parents or not path.is_file() or _sha(path) != entry.get("sha256"):
             raise TaskError("Stage preview changed after archive: " + name)
         paths.append((name, path))

@@ -30,13 +30,13 @@ def register(commands, connection):
     initial.add_argument("--brief-file", required=True,
                          help="A JSON creative brief or a plain-text prompt")
     for name in (
-        "status", "dashboard", "diagnose", "plan", "approve", "paint", "paint-stage", "export",
+        "status", "dashboard", "diagnose", "native-preflight", "plan", "approve", "paint", "paint-stage", "export",
         "record", "verify-reopen", "critique", "critique-v11", "revision-plan", "revision-approve",
         "revise", "deliver", "metrics",
     ):
         p = actions.add_parser(name)
         p.add_argument("--directory", required=True)
-        if name in ("paint", "paint-stage", "export", "revise", "record", "verify-reopen"):
+        if name in ("paint", "paint-stage", "native-preflight", "export", "revise", "record", "verify-reopen"):
             connection(p)
         if name in ("approve", "paint-stage", "revision-approve", "revise"):
             p.add_argument("--confirm", action="store_true")
@@ -56,6 +56,10 @@ def register(commands, connection):
         if name in ("paint", "paint-stage"):
             p.add_argument("--ledger-dir")
             p.add_argument("--batch-size", type=int, default=120)
+        if name in ("paint", "paint-stage"):
+            p.add_argument("--reject-segmented-joins", action="store_true",
+                           help="Before native submission, reject multi-point "
+                                "segmented join risks; legacy default is unchanged")
         if name == "record":
             p.add_argument("--kra", required=True)
             p.add_argument("--png", required=True)
@@ -121,6 +125,8 @@ def execute(args, get_client):
         return render_dashboard(flow, args.output, replace=args.replace)
     if args.action == "diagnose":
         return flow.diagnose_materials()
+    if args.action == "native-preflight":
+        return flow.native_stage_preflight(get_client(args))
     if args.action == "plan":
         candidate = _json(args.candidate) if args.candidate else None
         return flow.plan(
@@ -134,11 +140,13 @@ def execute(args, get_client):
     if args.action == "approve":
         return flow.approve_plan(confirm=args.confirm)
     if args.action == "paint":
-        return flow.paint(get_client(args), args.ledger_dir, args.batch_size)
+        return flow.paint(get_client(args), args.ledger_dir, args.batch_size,
+                          reject_segmented_joins=args.reject_segmented_joins)
     if args.action == "paint-stage":
         return flow.paint_stage(get_client(args), confirm=args.confirm,
                                 ledger_directory=args.ledger_dir,
-                                batch_steps=args.batch_size)
+                                batch_steps=args.batch_size,
+                                reject_segmented_joins=args.reject_segmented_joins)
     if args.action == "export":
         return flow.export_native(get_client(args))
     if args.action == "record":
