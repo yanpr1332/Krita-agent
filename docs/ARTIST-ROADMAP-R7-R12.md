@@ -6,6 +6,8 @@
 >
 > 本文件是 Round 7–12 的长期开发目标和验收方向。每轮启动前可细化任务，但不得未经记录而放弃本文件的三项核心目标。与已有 `docs/ARTWORK-ACCEPTANCE.md`、`AGENTS.md` 冲突时，以更严格的真实作品/安全验收要求为准。
 
+> **后续规划（2026-11-24）：** 本文为 R7–R12 历史开发方案，保留不改写。R12 的本地运行与失败证据在 [ROUND12-LOCAL-ACCEPTANCE-REPORT.md](ROUND12-LOCAL-ACCEPTANCE-REPORT.md)；更新后的 R13–R20 全面完善方案见 [ARTIST-ROADMAP-R13-R20.md](ARTIST-ROADMAP-R13-R20.md)，架构/数据集/验收细节分别在该文档中链接。新阶段尚未实现。
+
 ## 1. 产品目标与非目标
 
 ### 1.1 三项不可丢失的目标
