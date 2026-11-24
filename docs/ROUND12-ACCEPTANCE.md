@@ -1,6 +1,6 @@
 # Round 12 — integration and acceptance checklist
 
-**Execution protocol:** [Consolidated Windows / Krita local acceptance protocol](ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md) defines the build matrix, exact brush/color/pressure tests, controlled material A/B, 24-task benchmark, evidence layout, and quantitative pass thresholds. This file tracks execution status; adding the protocol does not mark any native gate passed.
+**Execution protocol:** [Consolidated Windows / Krita local acceptance protocol](ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md) defines the build matrix, exact brush/color/pressure tests, controlled material A/B, 24-task benchmark, evidence layout, and quantitative pass thresholds. This file tracks execution status. See the [2026-11-24 local results](ROUND12-LOCAL-ACCEPTANCE-REPORT.md) for the tested build identities, evidence and open gates.
 
 ## Tier 1: source and offline regression
 - [x] New isolated branch based on merged Round 11 main.
@@ -19,9 +19,9 @@
 - [ ] Verify drift diagnostics against a real fresh-KRA reopen.
 
 ## Tier 3: consolidated Windows / artwork campaign
-- [ ] Stable Qt5, Next Qt5 and Next Qt6 smoke.
-- [ ] Confirm actual pressure response of selected presets.
-- [ ] A/B material recipes at fixed scene, seed, canvas and preset.
+- [x] Stable Qt5, Next Qt5 and Next Qt6 smoke on 2026-11-24 (three runs per build, strict export and reopen).
+- [ ] Confirm all pressure calibration criteria. Both Next builds met the tested mapping criteria; Stable showed opacity-ramp join artifacts. Physical-tablet and human profile reviews are still open.
+- [ ] Pass the material A/B at fixed scene, seed, canvas and preset. The native experiment ran; both variants scored 0.5/4 in blind review.
 - [ ] Held-out campaign: 18 text tasks (six genres × three complexity levels) plus six reference tasks (one per genre; the landscape slot uses the locked project benchmark) — 24 total.
 - [ ] Preserve KRA, PNG, execution, stage, layer, visual and separate human-review evidence for every task.
 
@@ -33,7 +33,7 @@ Offline CI is not native verification. Planned brush diversity is not proof of v
 
 - [x] Expanded native brush calibration task with constant-pressure ladder, increasing/decreasing pressure ramps and nominal size ladder.
 - [x] Added evidence catalogue validation for malformed, unreviewed, wrong-build and tampered profiles.
-- [ ] Run the calibration matrix in the user's installed Krita builds and manually inspect exported native results.
+- [x] Run the calibration matrix on three installed Krita builds and inspect the nine native exports. See the local report for the failed Stable criterion and pending human review.
 
 
 ## Tier 3 pass criteria
