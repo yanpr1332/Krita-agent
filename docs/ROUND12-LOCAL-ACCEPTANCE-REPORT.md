@@ -125,3 +125,25 @@ Coverage counts pixels with at least one RGB channel 20 levels away from white i
 ### Formal campaign readiness
 
 The repository's 1600×900 landscape benchmark matches the locked contract hash. The 24-task campaign remains `BLOCKED` because it needs one configured and authorized planning model and five further rights-confirmed references. The existing default online planner would require a configured provider credential for the first planning call. No paid provider was used during this follow-up. An API key alone does not resolve reference rights or human review.
+
+## DeepSeek campaign — public reference library and first formal planning pass
+
+On 2026-11-24 the official DeepSeek models endpoint accepted the user-configured credential and listed `deepseek-flash` with text and image input. This API name resolves to DeepSeek-V4.1-Flash-1017 according to [the provider model documentation](https://api-docs.deepseek.com/quick_start/pricing/). All completion requests went to the DeepSeek official endpoint. This run sent text only.
+
+Five historical, human-authored reference reproductions were located through web search and downloaded from the source institutions. The local library is `artwork-results/reference-library/r12-20261124-public-domain/`. Every file was opened, checked against its SHA-256 and read through the local reference-analysis path. The provenance includes creator, date, rights statement, item URL, image URL and file hash.
+
+| Genre | Reference | Rights source |
+| --- | --- | --- |
+| Still life | Paul Cézanne, *The Basket of Apples* | [Art Institute of Chicago open-access item](https://www.artic.edu/artworks/111436/the-basket-of-apples) |
+| Interior | Vincent van Gogh, *The Bedroom* | [Art Institute of Chicago open-access item](https://www.artic.edu/artworks/28560/the-bedroom) |
+| Human | John Singer Sargent, *Mrs. George Swinton (Elizabeth Ebsworth)* | [Art Institute of Chicago open-access item](https://www.artic.edu/artworks/4749/mrs-george-swinton-elizabeth-ebsworth) |
+| Animal | Rosa Bonheur, *The Horse Fair* | [The Met public-domain item](https://www.metmuseum.org/art/collection/search/435702) |
+| Comic | Winsor McCay, *Little Nemo in Slumberland*, September 5, 1909 | [Library of Congress item and rights advisory](https://www.loc.gov/item/2009616052/) |
+
+The landscape slot retains the repository's locked benchmark. The configuration and inputs of all 24 tasks were frozen before formal planning at source `0739e07`. The full manifest SHA-256 is `8e3d2b21354002ef369df2b3d8be74b04243225d9066d91a2a3625363dfcbb85`. The formal run is in `artwork-results/r12-formal-deepseek-20261124-0739e07/`. The manifest and raw evidence are kept locally.
+
+**Formal result: 18/18 text plans rejected before Krita, 6/6 reference tasks blocked at image upload consent, and 0/24 artworks accepted.** Thirteen plans had a paint coordinate outside its declared subject bounds. Three used an out-of-range material setting, one exceeded the 400-stroke limit for a material intent, and one failed style validation. All original proposals and planning failures are retained. The 18 initial text requests consumed 107,100 reported tokens. A separate one-call diagnostic repeated the first text task with explicit numerical constraints and reached a different validation failure on style. It did not replace the original attempt. No native artwork from the formal matrix was executed and no human review took place.
+
+**Separate text pilot:** The initial generic adapter call returned content that could not be parsed as a JSON object. A fresh one-call pilot, using explicit non-thinking mode and a compact JSON schema example in a local harness, returned valid JSON. This tested DeepSeek compatibility without changing production source. The authenticated Stable Bridge executed 146 planned steps over five individually inspected stages on a 1600×900 canvas. Strict export and fresh reopen both passed with zero differing pixels. Hiding paint layers in a fresh reopened working copy showed 13/13 made measurable pixel changes, including background. The independent reviewer scored **7/24**, failing visual acceptance because the jug remained built from repeated stripes with exposed gaps, large background passes showed lines and dots, and rosemary was almost entirely absent. The pilot is outside the 24-task denominator. Its native files, stage previews, screenshot and hash-bound review are in `artwork-results/r12-deepseek-pilot2-20261124-131200-0739e07/`.
+
+To improve planning reliability, give the model the actual numerical bounds up front and validate the relationship between every point and its subject before compiling. Any corrections should remain new evidence-bearing attempts. Palette and surface coverage still require separate visible quality improvements. Reference generation and external image-based review remain pending explicit campaign upload authorization.

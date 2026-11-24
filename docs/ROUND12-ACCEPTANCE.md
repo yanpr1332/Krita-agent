@@ -22,7 +22,7 @@
 - [x] Stable Qt5, Next Qt5 and Next Qt6 smoke on 2026-11-24 (three runs per build, strict export and reopen).
 - [ ] Confirm all pressure calibration criteria. Both Next builds met the tested mapping criteria; Stable showed opacity-ramp join artifacts. Physical-tablet and human profile reviews are still open.
 - [ ] Pass the material A/B at fixed scene, seed, canvas and preset. The native experiment ran; both variants scored 0.5/4 in blind review.
-- [ ] Held-out campaign: 18 text tasks (six genres × three complexity levels) plus six reference tasks (one per genre; the landscape slot uses the locked project benchmark) — 24 total.
+- [ ] Held-out campaign (24 tasks). The first DeepSeek planning pass rejected all 18 text proposals before native execution. The six reference tasks have locked images and are pending upload authorization.
 - [ ] Preserve KRA, PNG, execution, stage, layer, visual and separate human-review evidence for every task.
 
 ## Non-claims
