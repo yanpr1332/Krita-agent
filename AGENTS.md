@@ -12,6 +12,12 @@ These rules apply to coding/testing agents and the local human-run acceptance wo
 4. **Resolve ambiguity before mutations:** when the correct target branch cannot be determined safely, ask the user. Do not infer “same branch as last turn” for a new round.
 5. **Recover safely if misfiled:** verify and preserve the exact new work on the proper new branch before repairing the old branch. Recheck remote refs and open PRs; never discard unrelated commits or rewrite another person's changes. History-altering ref moves require exact-target, no-intervening-commit checks and an explicit request/authority.
 
+## Round 14+ development: user-directed consolidated final acceptance
+
+**The user explicitly requested that expensive acceptance run once, after major development is complete (2026-11-24).** Read [docs/CONSOLIDATED-ACCEPTANCE-POLICY.md](docs/CONSOLIDATED-ACCEPTANCE-POLICY.md) before starting R14+ feature rounds. During development, keep GitHub Python 3.10/3.13 offline tests, security, strict plan validation, native capability preflights, branch/PR isolation and legacy compatibility. **Do not repeatedly require three Windows Krita builds, paid visual-model reviews, human full-artwork approval or the 24-task campaign per feature PR.** Mark these as `NOT_RUN/DEFERRED`, not `PASS`.
+
+At R20 integrated release, execute the real native/visual/human campaign using the **unchanged strict final acceptance standards** below. All existing evidence and safety rules remain binding when the corresponding real native/artwork claims or operations are actually performed. Small, high-risk native smoke checks may be requested separately with user consent; never claim native/artistic completion from green CI alone.
+
 ## Distinguish acceptance types
 
 - TECHNICAL acceptance checks Krita API behavior, native strokes, KRA/pixel operations, performance and safety. Simple boxes and repeated lines are allowed for only these tests.

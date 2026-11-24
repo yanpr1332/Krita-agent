@@ -18,6 +18,8 @@ Documentation map: [Target architecture and migration](ARTIST-ARCHITECTURE-R13-R
 
 Proposed rounds: R13 native reliability → R14 semantic planning → R15 region/shape drawing → R16 natural fine strokes → R17 material/color/light → R18 line-art knowledge library → R19 visual revision → R20 integrated release + official artwork acceptance. Optional actual model training is a later independent decision, **not** assumed by use of an API key.
 
+**R14+ consolidated acceptance direction (2026-11-24):** The user requested substantial cloud-first feature development with **one final integrated real-Krita/artwork acceptance**, not expensive repeated native and VLM/human campaigns after each round. [Cost and acceptance policy](CONSOLIDATED-ACCEPTANCE-POLICY.md) preserves source CI/security on each PR and retains the original strict R20 end-to-end art contract. Unrun T2/T3/T4 work remains `NOT_RUN`, not implicitly completed. R14/R15 source changes and their PRs are separate from this policy update.
+
 **Branch isolation policy:** every new numbered development round and every cross-round roadmap/documentation milestone must be created on its own new branch *before* any GitHub write. Do not append future plans to the previous round's existing branch. See [AGENTS.md](../AGENTS.md) for mandatory workflow. This R7–R12 plan was authored on `docs/round7-12-generalist-roadmap`, separate from `feat/round6-brush-dynamics`.
 
 ## Round 1 — NATIVE ACCEPTED
