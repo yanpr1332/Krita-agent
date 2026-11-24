@@ -2,6 +2,16 @@
 
 Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
+## New proposed development direction — Round 13–20 (2026-11-24)
+
+**PROPOSED, not implemented or accepted.** The new [R13–R20 detailed artist roadmap](ARTIST-ROADMAP-R13-R20.md) continues after the integrated R12 baseline. Its objective is a genuinely useful generalist Krita artist: reliable high-level model planning, geometrically valid subject/region rendering, non-mechanical continuous fine brushwork, coherent color/material/light, rights-aware line-art retrieval, actual-pixel feedback and bounded revisions, then a complete 24-task human-reviewed acceptance campaign. Do **not** infer any finished feature from this planning branch.
+
+Documentation map: [Target architecture and migration](ARTIST-ARCHITECTURE-R13-R20.md) · [Line-art dataset, article ingestion and learning](LINEART-DATASET-AND-LEARNING.md) · [Per-round and final acceptance gates](ARTIST-ACCEPTANCE-R13-R20.md) · [Execution and user material handoff](ARTIST-DEVELOPMENT-HANDOFF-R13-R20.md).
+
+**R12 reality check:** The [local Windows acceptance report](ROUND12-LOCAL-ACCEPTANCE-REPORT.md) records 9/9 three-build smoke runs with strict KRA export/reopen integrity, but **not** finished-artwork acceptance. Stable segmented opacity joins have a reproducible overlap defect; material A/B visual scores were far below threshold; 18/18 initial DeepSeek formal text plans were invalid and three separate revised native pilots scored 6/24 each. The required 24-task whole-art campaign has no accepted artworks. The new program is designed to resolve these failures rather than reclassify them as passes.
+
+Proposed rounds: R13 native reliability → R14 semantic planning → R15 region/shape drawing → R16 natural fine strokes → R17 material/color/light → R18 line-art knowledge library → R19 visual revision → R20 integrated release + official artwork acceptance. Optional actual model training is a later independent decision, **not** assumed by use of an API key.
+
 **Branch isolation policy:** every new numbered development round and every cross-round roadmap/documentation milestone must be created on its own new branch *before* any GitHub write. Do not append future plans to the previous round's existing branch. See [AGENTS.md](../AGENTS.md) for mandatory workflow. This R7–R12 plan was authored on `docs/round7-12-generalist-roadmap`, separate from `feat/round6-brush-dynamics`.
 
 ## Round 1 — NATIVE ACCEPTED
