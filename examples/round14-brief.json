@@ -1,0 +1,9 @@
+{
+  "prompt": "Make an editable line-art scaffold of a cat sitting in a room with a ceramic cup.",
+  "width": 512,
+  "height": 384,
+  "title": "Semantic Cat Study",
+  "style": "natural line illustration",
+  "brush_diversity_policy": "advisory",
+  "max_native_steps": 6000
+}
