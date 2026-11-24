@@ -125,3 +125,28 @@ def test_profile_recording_rejects_invalid_review_metadata(tmp_path, patch):
     record.update(patch)
     with pytest.raises(ValueError):
         record_profile(tmp_path / "profiles", record, evidence)
+
+
+def test_profile_recording_does_not_allow_metadata_override(tmp_path):
+    evidence = tmp_path / "calibration.png"
+    evidence.write_bytes(b"reviewed evidence")
+    record = {
+        "preset": "Pencil",
+        "build": "  Krita Build  ",
+        "category": "paint",
+        "pressure_size": True,
+        "pressure_opacity": False,
+        "confidence": 0.9,
+        "schema": "attacker-schema",
+        "status": "generated",
+        "id": "caller-controlled-id",
+        "evidence_sha256": "0" * 64,
+        "evidence_path": "missing.png",
+    }
+    profile = record_profile(tmp_path / "profiles", record, evidence)
+    assert profile["schema"] == "krita-agent-brush-profile/1"
+    assert profile["status"] == "manually_reviewed"
+    assert profile["id"] != "caller-controlled-id"
+    assert profile["evidence_path"] == str(evidence.resolve())
+    assert profile["evidence_sha256"] != "0" * 64
+    assert profile["build"] == "Krita Build"

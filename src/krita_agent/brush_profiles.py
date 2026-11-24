@@ -127,7 +127,8 @@ def record_profile(directory, record, evidence_path):
     )
     if not isinstance(record, dict) or any(key not in record for key in required):
         raise ValueError("Incomplete brush calibration record")
-    if record["category"] not in CATEGORIES:
+    if (not isinstance(record["category"], str)
+            or record["category"] not in CATEGORIES):
         raise ValueError("Unknown brush category")
     if not isinstance(record["preset"], str) or not 1 <= len(record["preset"]) <= 120:
         raise ValueError("Preset name invalid")
@@ -149,7 +150,12 @@ def record_profile(directory, record, evidence_path):
     destination.mkdir(parents=True, exist_ok=True)
     profile = {
         "schema": PROFILE_SCHEMA,
-        **record,
+        "preset": record["preset"],
+        "build": record["build"].strip(),
+        "category": record["category"],
+        "pressure_size": record["pressure_size"],
+        "pressure_opacity": record["pressure_opacity"],
+        "confidence": float(confidence),
         "evidence_sha256": sha,
         "evidence_path": str(evidence),
         "status": "manually_reviewed",
