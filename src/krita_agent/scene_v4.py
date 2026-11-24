@@ -193,15 +193,19 @@ def validate_scene_v4(candidate):
                     "pressure_variation", "variation_frequency",
                     "variation_seed", "speed_sensitivity",
                     "pressure_interpolation", "render", "path",
-                    "spacing", "angle", "count", "length", "jitter")):
+                    "spacing", "angle", "count", "length", "jitter",
+                    "seed")):
                 raise TaskError("Native region fill forbids stroke-only settings")
             style = combine_style(subject["styles"], item)
             normalized = {
                 "id": iid, "subject_id": sid, "kind": kind,
                 "purpose": purpose, "material": mat,
-                "seed": integer(item.get("seed", 0), "intent seed", 0, 2147483647),
-                "jitter": number(item.get("jitter", 0), "geometric jitter", 0, .25),
             }
+            if kind != "region":
+                normalized["seed"] = integer(
+                    item.get("seed", 0), "intent seed", 0, 2147483647)
+                normalized["jitter"] = number(
+                    item.get("jitter", 0), "geometric jitter", 0, .25)
             if "style" in item:
                 normalized["style"] = item["style"]
             for key in ("brush", "brush_category", "pressure_curve",
