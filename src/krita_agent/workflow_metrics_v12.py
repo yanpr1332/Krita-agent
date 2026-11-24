@@ -14,7 +14,8 @@ MAX_LOG_BYTES = 8 * 1024 * 1024
 MAX_EVENTS = 50000
 ZERO_HASH = "0" * 64
 OPERATIONS = frozenset({
-    "plan", "approve_plan", "paint", "paint_stage", "export_native",
+    "plan", "approve_plan", "paint", "paint_stage", "diagnose_materials",
+    "export_native",
     "record_artwork", "verify_reopen", "critique", "critique_v11",
     "propose_revision", "approve_revision", "apply_revision", "prepare_delivery",
 })

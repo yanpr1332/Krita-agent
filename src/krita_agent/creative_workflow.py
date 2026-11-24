@@ -396,6 +396,7 @@ class CreativeWorkflow:
                 "total_stages": state["total"], "native": result,
                 "next_stage_requires_approval": index+1 < state["total"]}
 
+    @measure_operation("diagnose_materials")
     def diagnose_materials(self):
         """Read-only inspection of native marks and archived actual Krita pixels.
 

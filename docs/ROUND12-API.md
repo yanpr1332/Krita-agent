@@ -57,3 +57,5 @@ These are structural plan checks, not visual-quality checks. The actual Krita pr
 ### Generalist staged-subject aggregation
 
 ScenePlan v4 subjects are split into native layer groups by stage. The brush floor now recombines those groups by logical subject before evaluating stroke count, size, color, opacity, pressure, direction and repeated trajectories. This prevents a subject from being judged as several artificially small fragments. Legacy ScenePlan v3 continues to be evaluated by its original object boundaries.
+
+Material diagnostics are included in the operation timing log as a read-only phase; the report remains diagnostic evidence and never promotes artwork to accepted.

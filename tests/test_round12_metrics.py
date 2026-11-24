@@ -247,3 +247,15 @@ def test_generalist_strict_brush_floor_rejects_before_archiving(tmp_path):
     assert flow.read()["status"] == "initialized"
     assert not (flow.root / "scene-plan-v4.json").exists()
     assert not (flow.root / "compiled-scene.json").exists()
+
+
+def test_material_diagnostics_are_included_in_operation_timings(tmp_path):
+    flow = CreativeWorkflow.create(tmp_path / "diagnostics-timing-run", brief())
+    flow.plan(candidate=sample_scene())
+    report = flow.diagnose_materials()
+    assert report["artwork_accepted"] is False
+    metrics = summarize(flow.root, flow.read())
+    row = next(item for item in metrics["operations"]
+               if item["operation"] == "diagnose_materials")
+    assert row["count"] == 1
+    assert row["raised"] == 0

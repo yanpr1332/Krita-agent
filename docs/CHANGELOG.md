@@ -87,3 +87,5 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 
 - Added per-subject brush diversity floors tied to effort profile; advisory by default, strict enforcement opt-in.
 - Generalist brush-diversity floors now aggregate each logical subject across all stages instead of judging stage fragments independently.
+
+- Included read-only material diagnostics in operation timing telemetry.
