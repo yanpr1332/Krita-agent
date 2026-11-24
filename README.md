@@ -138,3 +138,13 @@ The project-authored code is MIT-licensed. Krita and all third-party dependencie
 **Round 10 (authorized reference studies and technique profiles — source/cloud QA):** Adds local, rights-confirmed reference images with multi-source roles, bounded real-pixel color/value/ROI analysis, explicit optional VLM annotation permission, provenance/SHA-bound native ScenePlan v4 repaint proposals and immutable versioned material techniques. Reference-to-Krita comparison requires real editable KRA and strict PNG export integrity. No image is pasted to replace brush drawing; no model API is called unless separately authorized. See [Round 10 API](docs/ROUND10-API.md) and [acceptance](docs/ROUND10-ACCEPTANCE.md). **Reference similarity and human-quality validation remain pending.**
 
 **Round 10 technique extraction:** Offline, license-checked reference ROIs can additionally produce tentative material-specific brush recipes from measured color, edge orientation and texture density; no automatic brush-stroke recognition or model training. See [Round 10 API](docs/ROUND10-API.md).
+
+
+**Round 12 (integration source milestone):** user-selectable effort profiles, a compiled-step ceiling, privacy-safe hash-chained workflow timing, a `creative metrics` summary and more detailed KRA reopen pixel-drift diagnostics. These features improve planning/observability; they do not establish native pressure behavior or finished-artwork acceptance. See [Round 12 API](docs/ROUND12-API.md) and [acceptance checklist](docs/ROUND12-ACCEPTANCE.md).
+
+
+Round 12 also adds profile-aware brush diversity diagnostics. Set brush_diversity_policy to enforce in the brief to reject large/complex subjects that do not meet the selected size/color/opacity/pressure/direction floor; the default advisory mode reports gaps without blocking legacy plans.
+
+Generalist brush-quality diagnostics aggregate each logical subject across its stages, rather than treating each phase layer as a separate finished subject.
+
+Brush calibration: `krita-agent brushcal generate` now produces a pressure/size calibration matrix; see [Native brush calibration](docs/ROUND12-BRUSH-CALIBRATION.md). Profiles require manually reviewed, hash-verified evidence.

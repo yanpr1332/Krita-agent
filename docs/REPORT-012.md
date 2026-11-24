@@ -1,0 +1,31 @@
+# REPORT-012 — Round 12 integration source milestone
+
+**Branch:** `feat/round12-generalist-acceptance`  
+**Base:** merged Round 11 main `b8080aad623c13f77e97d7a450d9e3ff58a16688`
+
+## Implemented
+1. Added quick-sketch / standard / detailed planning profiles with default native-step ceilings of 2,500 / 6,000 / 10,000.
+2. Added an explicit compiled-step budget enforced before the plan is archived.
+3. Added advisory time targets to legacy and generalist planning prompts.
+4. Added privacy-safe, hash-chained operation timings and a `creative metrics` command.
+5. Extended the read-only dashboard with timing and planned brush/pressure summaries.
+6. Added per-channel pixel drift statistics and difference bounds without changing strict acceptance.
+7. Added offline regression coverage for profiles, budget enforcement, telemetry privacy/integrity, dashboard and drift diagnostics.
+
+## Validation status
+- Source implementation: complete for this milestone.
+- Offline regression: passed on Windows GitHub Actions, Python 3.10 and 3.13 (325 tests each).
+- Cloud native timing / fresh-KRA reopen: pending.
+- Windows Stable / Next Qt5 / Next Qt6: pending.
+- Whole-artwork / multi-genre / human acceptance: pending.
+
+Metrics report planned values and command durations only; they do not infer that native painting happened or that an artwork is accepted.
+
+8. Added profile-aware brush diversity floors. Advisory mode preserves existing behavior while surfacing weak plans; enforce mode blocks sparse/repetitive large subjects before approval.
+9. Corrected generalist brush-floor evaluation to aggregate all stage-layer fragments into their logical subject before measuring diversity, with strict-mode regression coverage.
+
+10. Added timing coverage for the read-only material diagnostics phase so its runtime is visible alongside planning and painting.
+
+11. Reworked the dashboard brush-quality panel into a per-subject table and explicit unmet-requirement list, instead of exposing the full report as a JSON blob.
+
+12. Expanded the native brush calibration fixture to include a pressure ladder, bidirectional pressure ramps and a nominal size ladder. Added profile-catalogue integrity tests. Native image inspection remains pending.

@@ -76,3 +76,20 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Added reference CLI, security/negative regression tests and an opt-in synthetic source fixture for the real Linux Krita/Xvfb acceptance pipeline. The proper status of the native fixture is recorded separately in the acceptance document after observing CI.
 
 - Added offline reference-ROI technique hypothesis extraction: material family remains user-declared; measured image edge tangents, palette and texture density yield bounded R8 render candidates with evidence and warnings. New `reference technique-extract` CLI and approval-loop tests; native CI fixture also consumes the extracted profile rather than a hard-coded water profile.
+
+
+## Round 12 — integrated workflow observability (source implementation)
+
+- Added user-controlled quick-sketch / standard / detailed planning profiles, a hard compiled-step ceiling and an advisory time target.
+- Added hash-chained privacy-safe operation timings, a metrics CLI and dashboard integration; brush/pressure diversity is explicitly planned-only.
+- Added per-channel reopen drift localization and difference bounds while retaining strict RGBA equality as the only pass condition.
+- Offline CI, cloud-native timing, Windows build checks and whole-artwork acceptance remain pending; see [REPORT-012](REPORT-012.md).
+
+- Added per-subject brush diversity floors tied to effort profile; advisory by default, strict enforcement opt-in.
+- Generalist brush-diversity floors now aggregate each logical subject across all stages instead of judging stage fragments independently.
+
+- Included read-only material diagnostics in operation timing telemetry.
+
+- Rendered brush diversity and unmet profile floors as a readable per-subject dashboard table.
+
+- Expanded brush calibration into pressure ladder, bidirectional pressure ramps and nominal size ladder; hardened evidence-backed profile selection.

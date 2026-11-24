@@ -87,21 +87,36 @@ def compare_rgba(original, other):
     width, height = original.size
     different = rgb_different = alpha_different = 0
     max_rgb = max_alpha = 0
+    channel_counts = [0, 0, 0, 0]
+    channel_delta_sums = [0, 0, 0, 0]
+    bounds = None
     for y in range(0, height, 128):
         box = (0, y, width, min(height, y + 128))
         aa = original.crop(box).convert("RGBA").tobytes()
         bb = other.crop(box).convert("RGBA").tobytes()
         for offset in range(0, len(aa), 4):
-            rgb = max(abs(aa[offset + ch] - bb[offset + ch]) for ch in range(3))
-            alpha = abs(aa[offset + 3] - bb[offset + 3])
+            deltas = [abs(aa[offset + ch] - bb[offset + ch]) for ch in range(4)]
+            rgb, alpha = max(deltas[:3]), deltas[3]
             if rgb or alpha:
                 different += 1
+                pixel_index = offset // 4
+                px, py = pixel_index % width, y + pixel_index // width
+                if bounds is None:
+                    bounds = [px, py, px + 1, py + 1]
+                else:
+                    bounds[0], bounds[1] = min(bounds[0], px), min(bounds[1], py)
+                    bounds[2], bounds[3] = max(bounds[2], px + 1), max(bounds[3], py + 1)
             if rgb:
                 rgb_different += 1
                 max_rgb = max(max_rgb, rgb)
             if alpha:
                 alpha_different += 1
                 max_alpha = max(max_alpha, alpha)
+            for channel, delta in enumerate(deltas):
+                if delta:
+                    channel_counts[channel] += 1
+                    channel_delta_sums[channel] += delta
+    total_samples = width * height * 4
     result.update({
         "different_pixels": different,
         "rgb_different_pixels": rgb_different,
@@ -109,6 +124,16 @@ def compare_rgba(original, other):
         "max_channel_difference": max(max_rgb, max_alpha),
         "max_rgb_difference": max_rgb,
         "max_alpha_difference": max_alpha,
+        "channel_different_pixels": {
+            "red": channel_counts[0], "green": channel_counts[1],
+            "blue": channel_counts[2], "alpha": channel_counts[3],
+        },
+        "channel_absolute_delta_sum": {
+            "red": channel_delta_sums[0], "green": channel_delta_sums[1],
+            "blue": channel_delta_sums[2], "alpha": channel_delta_sums[3],
+        },
+        "mean_absolute_channel_difference": round(sum(channel_delta_sums) / total_samples, 8),
+        "difference_bounds_xyxy": bounds,
         "strict_match": different == 0,
     })
     result["minor_color_tolerance"]["within_tolerance"] = (

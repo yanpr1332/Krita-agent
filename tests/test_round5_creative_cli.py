@@ -62,3 +62,10 @@ def test_reopen_verification_and_explicit_repair_cli():
         "--new-version", "--confirm", "--defer-reopen",
     ])
     assert recorded.new_version and recorded.confirm and recorded.defer_reopen
+
+
+def test_creative_metrics_cli():
+    args = parser_build().parse_args([
+        "creative", "metrics", "--directory", "artwork-results/run-1",
+    ])
+    assert args.action == "metrics"

@@ -1,6 +1,7 @@
 """Natural-language-to-ScenePlan v3 using an explicit JSON model provider."""
 from .protocol import TaskError, label
 from .scene_v3 import validate_scene, compile_scene_v3, digest
+from .brush_quality_v12 import describe_floor
 
 DIRECTOR_SYSTEM = """You are a visual creative director and Krita scene planner.
 Return ONLY a JSON object conforming to schema krita-agent-scene/3.
@@ -50,27 +51,51 @@ def validate_brief(brief):
         raise TaskError("Canvas dimensions must be integers")
     if not 256 <= width <= 8192 or not 256 <= height <= 8192 or width * height > 32000000:
         raise TaskError("Creative canvas exceeds bounds")
+    complexity = brief.get("complexity", "standard")
+    step_defaults = {"quick_sketch": 2500, "standard": 6000, "detailed": 10000}
+    if not isinstance(complexity, str) or complexity not in step_defaults:
+        raise TaskError("complexity must be quick_sketch, standard or detailed")
+    max_native_steps = brief.get("max_native_steps", step_defaults[complexity])
+    if type(max_native_steps) is not int or not 100 <= max_native_steps <= 10000:
+        raise TaskError("max_native_steps must be an integer in [100,10000]")
+    time_budget = brief.get("time_budget_minutes")
+    if time_budget is not None and (type(time_budget) is not int or not 1 <= time_budget <= 480):
+        raise TaskError("time_budget_minutes must be an integer in [1,480]")
+    brush_policy = brief.get("brush_diversity_policy", "advisory")
+    if brush_policy not in ("advisory", "enforce"):
+        raise TaskError("brush_diversity_policy must be advisory or enforce")
     return {
-        "prompt": prompt.strip(),
-        "width": width,
-        "height": height,
+        "prompt": prompt.strip(), "width": width, "height": height,
         "style": label(brief.get("style", "illustration"), "style", 160),
         "title": label(brief.get("title", "Creative Workflow"), "title", 120),
+        "complexity": complexity, "max_native_steps": max_native_steps,
+        "time_budget_minutes": time_budget,
+        "brush_diversity_policy": brush_policy,
     }
 
 
 def propose(brief, provider, reference_image=None):
     """Real provider call, no synthetic offline fallback pretending to be AI."""
     spec = validate_brief(brief)
+    prompt_spec = dict(spec)
+    prompt_spec["time_budget_label"] = (
+        str(spec["time_budget_minutes"]) + " minutes"
+        if spec["time_budget_minutes"] is not None else "not specified"
+    )
+    prompt_spec["brush_floor_hint"] = describe_floor(spec["complexity"])
     prompt = (
         "Create a complete editable scene matching this user brief. "
         "Canvas width={width}, height={height}, title={title}, style={style}.\n"
+        "Effort profile: {complexity}; hard compiled native-step ceiling: {max_native_steps}.\n"
+        "Brush-diversity policy: {brush_diversity_policy}. Target floor: {brush_floor_hint}.\n"
+        "If policy is enforce, satisfy every floor for each large/complex subject.\n"
+        "Target wall-clock budget: {time_budget_label} (advisory, not a guaranteed runtime).\n"
         "User request: {prompt}\n"
         "Return an original scene with irregular meaningful brush strokes "
         "with several scale/color/opacity choices per complex object, "
         "different pressure dynamics and varied irregular detail density, "
         "not a shallow geometric test or a few broad passes."
-    ).format(**spec)
+    ).format(**prompt_spec)
     inputs = [reference_image] if reference_image else []
     if reference_image:
         prompt += "\nA reference image is supplied as a complexity target. Do NOT paste it as the painting."
