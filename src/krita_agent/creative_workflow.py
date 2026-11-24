@@ -481,7 +481,9 @@ class CreativeWorkflow:
                 raise TaskError("Archived stage evidence does not match the compiled plan")
             for name, entry in archived_stages.items():
                 target = self.root / "stages" / name
-                if (str(target.relative_to(self.root)) != entry["path"]
+                stored_path = entry.get("path") if isinstance(entry, dict) else None
+                if (not isinstance(stored_path, str)
+                        or stored_path.replace("\\", "/") != target.relative_to(self.root).as_posix()
                         or not target.is_file() or _sha(target) != entry["sha256"]):
                     raise TaskError("Archived stage evidence changed")
         elif stage_names:
@@ -509,7 +511,7 @@ class CreativeWorkflow:
                 if _sha(target) != _sha(source):
                     raise TaskError("Native stage preview copy changed")
                 stage_records[target.name] = {
-                    "path": str(target.relative_to(self.root)),
+                    "path": target.relative_to(self.root).as_posix(),
                     "sha256": _sha(target),
                 }
             record["artifacts"]["stage_previews"] = stage_records
