@@ -21,8 +21,8 @@ From [R12 local Windows report](ROUND12-LOCAL-ACCEPTANCE-REPORT.md):
 | Windows path format | New archive uses portable POSIX relative paths | SOURCE_IMPLEMENTED | `creative_workflow.py` |
 | Legacy manifests | Backslash stage paths accepted only if exact expected relative path | SOURCE_IMPLEMENTED | `render_quality_v1.py`, `creative_workflow.py` |
 | Tamper safety | Missing/renamed/traversal/hash mismatch remains refused | SOURCE_IMPLEMENTED | `test_round13_native_reliability.py` |
-| Read-only connected preflight | Approved v4 stage and actual build symbol inventory, no drawing | SOURCE_IMPLEMENTED | `native_continuity_v13.py`, `native-preflight` |
-| Opt-in no-join risk | Strict flag blocks before status mutation/native job submit | SOURCE_IMPLEMENTED | `paint-stage --reject-segmented-joins` |
+| Read-only connected preflight | Approved v4 stage or v3 legacy plan and actual build symbol inventory, no drawing | SOURCE_IMPLEMENTED | `native_continuity_v13.py`, `native-preflight` |
+| Opt-in no-join risk | Strict flag on `paint` or `paint-stage` blocks before status mutation/native job submit | SOURCE_IMPLEMENTED | `paint --reject-segmented-joins`, `paint-stage --reject-segmented-joins` |
 | Legacy workflows | No default mode change, no new ScenePlan/Bridge command | SOURCE_IMPLEMENTED | Older smoke and CLI tests must pass |
 | Windows CI Py3.10 / 3.13 | Full repository pytest | NOT_RUN | Check actual GitHub Actions workflow on PR |
 | Cloud Linux real Krita | Native smoke of changed workflow | NOT_RUN | If suitable runner and authorization available |
