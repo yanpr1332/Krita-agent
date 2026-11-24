@@ -15,6 +15,9 @@ from .artifact_integrity import export_integrity, reopen_stability
 from .creative_director import compile_approved, propose, validate_brief
 from .generalist_director import propose_generalist, compile_approved_generalist
 from .scene_v4 import SCHEMA as SCHEMA_V4, validate_scene_v4, lower_scene_v4
+from .semantic_planning_v14 import (
+    COMPOSITION_SCHEMA, compile_semantic, propose_semantic,
+)
 from .creative_reviser import execute_revision, plan_revision, validate_revision
 from .protocol import TaskError
 from .scene_v3 import SCHEMA, digest, validate_scene
@@ -110,7 +113,8 @@ class CreativeWorkflow:
 
     @measure_operation("plan")
     def plan(self, provider=None, candidate=None, reference=None,
-             profile_directory=None, build=None, generalist=False):
+             profile_directory=None, build=None, generalist=False,
+             semantic=False):
         """Plan a legacy ScenePlan v3 or an explicitly selected generalist v4.
 
         v4 is lowered to v3 for the existing reviewed pixel-critic and revision
@@ -120,9 +124,28 @@ class CreativeWorkflow:
         self._expect(record, "initialized")
         if (provider is None) == (candidate is None):
             raise TaskError("Choose exactly one provider or manually supplied scene")
+        if type(semantic) is not bool or (semantic and generalist):
+            raise TaskError("Select exactly one planning route: semantic or generalist")
         v4_scene = None
         generalist_proposal = None
-        if provider is not None and generalist:
+        semantic_source = None
+        if provider is not None and semantic:
+            semantic_source = propose_semantic(record["brief"], provider, reference)
+            v4_scene = semantic_source["scene_v4"]
+            generalist_proposal = {
+                "schema": "krita-agent-generalist-proposal/1",
+                "scene_v4": v4_scene, "scene_v4_sha256": digest(v4_scene),
+                "provider_model": semantic_source["provider_model"],
+                "approval": "required", "side_effects": "none",
+            }
+            scene, _ = lower_scene_v4(v4_scene)
+            proposal = {
+                "schema": "krita-agent-creative-proposal/1", "scene": scene,
+                "scene_sha256": digest(scene),
+                "provider_model": generalist_proposal["provider_model"],
+                "approval": "required", "side_effects": "none",
+            }
+        elif provider is not None and generalist:
             generalist_proposal = propose_generalist(record["brief"], provider, reference)
             v4_scene = generalist_proposal["scene_v4"]
             scene, _ = lower_scene_v4(v4_scene)
@@ -134,6 +157,28 @@ class CreativeWorkflow:
             }
         elif provider is not None:
             proposal = propose(record["brief"], provider, reference)
+        elif isinstance(candidate, dict) and candidate.get("schema") == COMPOSITION_SCHEMA:
+            composition, paint_plan, v4_scene = compile_semantic(
+                candidate, record["brief"])
+            semantic_source = {
+                "composition": composition, "paint_plan": paint_plan,
+                "scene_v4": v4_scene, "scene_v4_sha256": digest(v4_scene),
+                "provider_model": "human_supplied",
+                "approval": "required", "side_effects": "none",
+                "model_requests": 0, "model_retries": 0,
+            }
+            scene, _ = lower_scene_v4(v4_scene)
+            proposal = {
+                "schema": "krita-agent-creative-proposal/1", "scene": scene,
+                "scene_sha256": digest(scene),
+                "provider_model": "human_supplied", "approval": "required",
+                "side_effects": "none",
+            }
+            generalist_proposal = {
+                "schema": "krita-agent-generalist-proposal/1",
+                "scene_v4": v4_scene, "scene_v4_sha256": digest(v4_scene),
+                "provider_model": "human_supplied", "approval": "required",
+            }
         elif isinstance(candidate, dict) and candidate.get("schema") == SCHEMA_V4:
             v4_scene = validate_scene_v4(candidate)
             scene, _ = lower_scene_v4(v4_scene)
@@ -148,8 +193,8 @@ class CreativeWorkflow:
                 "provider_model": "human_supplied", "approval": "required",
             }
         else:
-            if generalist:
-                raise TaskError("Generalist option requires a v4 candidate or provider")
+            if generalist or semantic:
+                raise TaskError("Selected planning route requires its matching candidate or provider")
             scene = validate_scene(candidate)
             proposal = {
                 "schema": "krita-agent-creative-proposal/1", "scene": scene,
@@ -187,6 +232,20 @@ class CreativeWorkflow:
                 "Brush diversity floor not met for the selected profile; "
                 "inspect brush_quality_v12 diagnostics or revise the plan"
             )
+        # Source files are persisted only AFTER all validation and budgets pass.
+        if semantic_source is not None:
+            _write_new(self.root / "composition-v14.json",
+                       semantic_source["composition"])
+            _write_new(self.root / "paint-plan-v14.json",
+                       semantic_source["paint_plan"])
+            record["artifacts"]["composition_v14"] = {
+                "path": "composition-v14.json",
+                "sha256": _sha(self.root / "composition-v14.json"),
+            }
+            record["artifacts"]["paint_plan_v14"] = {
+                "path": "paint-plan-v14.json",
+                "sha256": _sha(self.root / "paint-plan-v14.json"),
+            }
         # Generalist source files and stage cursor are archived only after every
         # compile-time budget and diversity gate has passed.
         if v4_scene is not None:
@@ -222,6 +281,15 @@ class CreativeWorkflow:
         if v4_scene is not None:
             result["stage_spans"] = compiled["stage_spans"]
             result["subjects"] = len(v4_scene["subjects"])
+        if semantic_source is not None:
+            result["semantic_planning"] = {
+                "schema": COMPOSITION_SCHEMA,
+                "composition_sha256": digest(semantic_source["composition"]),
+                "paint_plan_sha256": digest(semantic_source["paint_plan"]),
+                "model_requests": semantic_source["model_requests"],
+                "model_retries": semantic_source["model_retries"],
+                "quality": "structural_scaffold_not_artwork",
+            }
         return result
 
     @measure_operation("approve_plan")
@@ -275,7 +343,10 @@ class CreativeWorkflow:
         """Re-bind every stage to both immutable source scenes and native steps."""
         if "staged" not in record or "scene_v4" not in record["artifacts"]:
             raise TaskError("No approved generalist stage plan")
-        for key in ("compiled", "scene", "scene_v4", "generalist_proposal"):
+        keys = ["compiled", "scene", "scene_v4", "generalist_proposal"]
+        if "composition_v14" in record.get("artifacts", {}):
+            keys.extend(("composition_v14", "paint_plan_v14"))
+        for key in keys:
             entry = record["artifacts"].get(key)
             if not isinstance(entry, dict):
                 raise TaskError("Missing generalist plan artifact: " + key)
@@ -313,6 +384,18 @@ class CreativeWorkflow:
             cursor = stage["stop"]
         if cursor != len(steps):
             raise TaskError("Compiled generalist stage tail is unbound")
+        if "composition_v14" in record["artifacts"]:
+            composition_path = self.root / "composition-v14.json"
+            paint_path = self.root / "paint-plan-v14.json"
+            semantic_source, paint_plan, generated = compile_semantic(
+                json.loads(composition_path.read_text(encoding="utf-8")),
+                record["brief"])
+            archived_paint = json.loads(paint_path.read_text(encoding="utf-8"))
+            if (digest(generated) != digest(v4) or
+                    digest(paint_plan) != digest(archived_paint) or
+                    digest(semantic_source) != digest(
+                        json.loads(composition_path.read_text(encoding="utf-8")))):
+                raise TaskError("Approved semantic composition or paint plan changed")
         return compiled
 
     @staticmethod

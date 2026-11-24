@@ -50,6 +50,9 @@ def register(commands, connection):
             p.add_argument("--candidate", help="User-authored ScenePlan v3 or v4 JSON")
             p.add_argument("--generalist", action="store_true",
                            help="Request a generalist StagePlan v4 from a model")
+            p.add_argument("--semantic", action="store_true",
+                           help="Request a compact normalized CompositionGraph /1 from a model; "
+                                "Python lowers it to approved ScenePlan v4")
             p.add_argument("--reference", help="Actual reference image, optional")
             p.add_argument("--profiles-directory")
             p.add_argument("--build")
@@ -136,6 +139,7 @@ def execute(args, get_client):
             profile_directory=args.profiles_directory,
             build=args.build,
             generalist=args.generalist,
+            semantic=args.semantic,
         )
     if args.action == "approve":
         return flow.approve_plan(confirm=args.confirm)
