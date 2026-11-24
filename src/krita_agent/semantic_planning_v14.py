@@ -19,7 +19,7 @@ COMPOSITION_SCHEMA = "krita-agent-composition/1"
 PAINT_PLAN_SCHEMA = "krita-agent-paint-plan/1"
 MAX_NODES = 10  # 3 stages * 10 nodes leaves room under v4's 32 layer limit
 MAX_PARTS = 4
-ID = re.compile(r"[a-z][a-z0-9_-]{0,23}\Z")
+ID = re.compile(r"[a-z][a-z0-9_-]{0,19}\Z")
 HEX = re.compile(r"#[0-9a-fA-F]{6}\Z")
 OUTLINES = frozenset(("ellipse", "rectangle", "diamond", "triangle", "capsule"))
 RELATIONS = frozenset(("left_of", "above", "inside", "front_of"))
@@ -38,7 +38,7 @@ Supply 1..10 meaningful subjects with:
 All bbox coordinates are [x,y,width,height] normalized to 0..1, NOT pixels;
 part boxes are normalized inside their parent subject box. Do not make
 objects overlap unless the intended composition needs it. Keep the total
-count of subjects and parts <=10. The id is lowercase, at most 24
+count of subjects and parts <=10. The id is lowercase, at most 20
 characters, and a part's joined id uses parent_id + "_" + part_id.
 Outlines: ellipse, rectangle, diamond, triangle, capsule. Do not invent
 shape kinds. Relation entries are optional, only
@@ -301,8 +301,10 @@ def _to_pixels(normalized, width, height):
 
 def _pixel_box(box, width, height):
     x, y, w, h = box
-    return [round(x*width, 4), round(y*height, 4),
-            round(w*width, 4), round(h*height, 4)]
+    left, top = round(x*width, 4), round(y*height, 4)
+    right = min(float(width), round((x+w)*width, 4))
+    bottom = min(float(height), round((y+h)*height, 4))
+    return [left, top, round(right-left, 4), round(bottom-top, 4)]
 
 
 def compile_semantic(candidate, brief):
