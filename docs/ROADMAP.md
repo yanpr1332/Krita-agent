@@ -1,5 +1,11 @@
 # Krita Agent roadmap — authoritative current status (2026-11-10)
 
+## Round 13 — native reliability source slice (development branch; NOT YET native accepted)
+
+The independent `feat/round13-native-reliability` branch begins implementation of [R13–R20 roadmap](ARTIST-ROADMAP-R13-R20.md). This initial source slice repairs Windows stage-archive path separator normalization while preserving legacy hash-bound manifests, and adds a **read-only** native-continuity join-risk preflight and an **opt-in** `paint-stage --reject-segmented-joins` fail-closed gate before native submission. See [R13 API](ROUND13-API.md) and [R13 acceptance checklist](ROUND13-ACCEPTANCE.md).
+
+**Not a native/artwork PASS:** Stable segmented `paintLine` overlapping-alpha artifact is not yet solved by a proven same-result continuous replacement. Strict mode makes that limitation explicit and can block quality-critical tasks on unsupported builds. R13's full real Windows three-build regression/calibration remains outstanding; this source change does not imply any improvement to the separate R12 full-artwork failures.
+
 Status terms: **code authored** means committed source only; **offline passed** requires executed tests; **native accepted** requires real Krita behavioral evidence. These terms must not be used interchangeably.
 
 ## New proposed development direction — Round 13–20 (2026-11-24)
