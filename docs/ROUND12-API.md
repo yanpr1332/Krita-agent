@@ -59,3 +59,5 @@ These are structural plan checks, not visual-quality checks. The actual Krita pr
 ScenePlan v4 subjects are split into native layer groups by stage. The brush floor now recombines those groups by logical subject before evaluating stroke count, size, color, opacity, pressure, direction and repeated trajectories. This prevents a subject from being judged as several artificially small fragments. Legacy ScenePlan v3 continues to be evaluated by its original object boundaries.
 
 Material diagnostics are included in the operation timing log as a read-only phase; the report remains diagnostic evidence and never promotes artwork to accepted.
+
+The initial `creative plan` response also returns the `brush_quality_v12` report, so advisory gaps are visible immediately without requiring a separate metrics command.

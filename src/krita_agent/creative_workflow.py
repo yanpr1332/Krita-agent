@@ -214,7 +214,8 @@ class CreativeWorkflow:
                   "plan_sha256": compiled["native_steps_sha256"],
                   "objects": len(compiled["objects"]),
                   "native_steps": len(compiled["steps"]),
-                  "brush_diagnostics": compiled.get("brush_diagnostics")}
+                  "brush_diagnostics": compiled.get("brush_diagnostics"),
+                  "brush_quality_v12": compiled.get("brush_quality_v12")}
         if v4_scene is not None:
             result["stage_spans"] = compiled["stage_spans"]
             result["subjects"] = len(v4_scene["subjects"])

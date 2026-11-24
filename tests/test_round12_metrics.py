@@ -169,7 +169,9 @@ def test_detailed_brush_diversity_floor_accepts_a_varied_plan():
 
 def test_advisory_brush_policy_preserves_legacy_plan_but_reports_failure(tmp_path):
     flow = CreativeWorkflow.create(tmp_path / "advisory-brush-run", brief())
-    flow.plan(candidate=sample_scene())
+    planned = flow.plan(candidate=sample_scene())
+    assert planned["brush_quality_v12"]["policy"] == "advisory"
+    assert planned["brush_quality_v12"]["status"] == "fail"
     metrics = summarize(flow.root, flow.read())
     quality = metrics["compiled_plan"]["brush_quality_v12"]
     assert quality["policy"] == "advisory"
