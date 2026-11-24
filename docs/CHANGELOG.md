@@ -89,3 +89,5 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Generalist brush-diversity floors now aggregate each logical subject across all stages instead of judging stage fragments independently.
 
 - Included read-only material diagnostics in operation timing telemetry.
+
+- Rendered brush diversity and unmet profile floors as a readable per-subject dashboard table.

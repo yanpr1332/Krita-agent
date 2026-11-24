@@ -61,3 +61,5 @@ ScenePlan v4 subjects are split into native layer groups by stage. The brush flo
 Material diagnostics are included in the operation timing log as a read-only phase; the report remains diagnostic evidence and never promotes artwork to accepted.
 
 The initial `creative plan` response also returns the `brush_quality_v12` report, so advisory gaps are visible immediately without requiring a separate metrics command.
+
+The read-only dashboard renders brush-quality results as a per-subject table with stroke counts, distinct sizes/colors/opacity levels, pressure span, direction bins and repeated-trajectory ratio. Unmet floors are listed separately; no raw JSON inspection is required.

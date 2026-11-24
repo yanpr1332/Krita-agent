@@ -57,6 +57,41 @@ def render(workflow, output=None, replace=False):
     plan_metrics = metrics.get("compiled_plan", {})
     time_budget = profile.get("time_budget_minutes")
     time_budget_label = str(time_budget) + " minutes" if time_budget is not None else "not set"
+    brush_quality = plan_metrics.get("brush_quality_v12") or {}
+    brush_subject_rows = []
+    for item in brush_quality.get("subjects", []):
+        brush_subject_rows.append(
+            "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td>"
+            "<td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                _escape(item.get("subject_id", "")),
+                _escape(item.get("status", "")),
+                _escape(item.get("stroke_count", 0)),
+                _escape(item.get("distinct_sizes", "—")),
+                _escape(item.get("distinct_colors", "—")),
+                _escape(item.get("distinct_opacities", "—")),
+                _escape(item.get("pressure_span", "—")),
+                _escape(item.get("direction_bins", "—")),
+                _escape(item.get("repeated_trajectory_ratio", "—")),
+            )
+        )
+    brush_issue_rows = []
+    for item in brush_quality.get("issues", []):
+        brush_issue_rows.append(
+            "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                _escape(item.get("subject_id", "")),
+                _escape(item.get("requirement", "")),
+                _escape(item.get("expected", "")),
+                _escape(item.get("actual", "not available")),
+            )
+        )
+    brush_metrics_summary = {
+        key: plan_metrics.get(key)
+        for key in ("native_steps", "planned_strokes", "brush_configurations",
+                    "distinct_sizes", "distinct_colors", "distinct_opacities",
+                    "distinct_presets", "pressure_samples", "pressure_min",
+                    "pressure_max", "pressure_spread")
+        if key in plan_metrics
+    }
     metric_rows = []
     for item in metrics.get("operations", []):
         metric_rows.append(
@@ -87,8 +122,14 @@ footer {{ margin-top: 32px; font-size: .9rem; opacity: .7; }}
 <h2>Actual native artwork and stage previews</h2><div class="gallery">{images}</div>
 <h2>Run profile</h2>
 <p>Complexity: {complexity} · Target time: {time_budget} · Native-step ceiling: {step_budget} · Brush diversity: {brush_policy}</p>
-<h2>Compiled brush plan (planned parameters, not proof of visible pressure or artistic quality)</h2>
-<p>{plan_metrics}</p>
+<h2>Brush quality gate — planned values only</h2>
+<p>Policy: {brush_policy} · Result: {brush_quality_status} · This is a structural plan check, not a visual-quality verdict.</p>
+<p>{brush_metrics_summary}</p>
+<table><thead><tr><th>Subject</th><th>Gate</th><th>Strokes</th><th>Sizes</th><th>Colors</th><th>Opacity levels</th><th>Pressure span</th><th>Directions</th><th>Repeated ratio</th></tr></thead>
+<tbody>{brush_subject_rows}</tbody></table>
+<h3>Unmet brush requirements</h3>
+<table><thead><tr><th>Subject</th><th>Requirement</th><th>Expected</th><th>Actual</th></tr></thead>
+<tbody>{brush_issue_rows}</tbody></table>
 <h2>Execution timings</h2>
 <p>Telemetry integrity: {metrics_integrity} · Recorded operations: {metric_count} · Raised calls: {metric_failures}</p>
 <table><thead><tr><th>Operation</th><th>Count</th><th>Mean ms</th><th>P95 ms</th><th>Raised</th></tr></thead>
@@ -105,7 +146,10 @@ Refresh explicitly with --replace; this page does not update itself.</footer></b
         time_budget=_escape(time_budget_label),
         step_budget=_escape(profile.get("max_native_steps", "not set")),
         brush_policy=_escape(profile.get("brush_diversity_policy", "advisory")),
-        plan_metrics=_escape(json.dumps(plan_metrics, ensure_ascii=False, sort_keys=True)),
+        brush_quality_status=_escape(brush_quality.get("status", "not available")),
+        brush_metrics_summary=_escape(json.dumps(brush_metrics_summary, ensure_ascii=False, sort_keys=True)),
+        brush_subject_rows="".join(brush_subject_rows) or "<tr><td colspan=\"9\">No compiled brush-quality report yet.</td></tr>",
+        brush_issue_rows="".join(brush_issue_rows) or "<tr><td colspan=\"4\">No unmet requirements reported.</td></tr>",
         metrics_integrity=_escape(metrics.get("integrity", "unknown")),
         metric_count=_escape(metrics.get("event_count", 0)),
         metric_failures=_escape(metrics.get("raised_invocations", 0)),

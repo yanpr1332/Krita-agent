@@ -100,7 +100,9 @@ def test_metrics_include_hash_verified_planned_brush_diversity_and_dashboard(tmp
     assert "Execution timings" in page
     assert "detailed" in page and "45 minutes" in page
     assert "Brush diversity: advisory" in page
-    assert "planned parameters" in page
+    assert "Brush quality gate" in page
+    assert "room" in page
+    assert "planned values only" in page
 
 
 def test_reopen_drift_reports_channels_and_spatial_bounds():
