@@ -192,3 +192,23 @@ def test_diagnose_detects_bad_hash_on_windows_stage_paths(tmp_path):
     (folder / first).write_bytes(b"tampered")
     with pytest.raises(TaskError, match="changed after archive"):
         flow.diagnose_materials()
+
+
+def test_cli_exposes_read_only_preflight_and_explicit_strict_mode():
+    from krita_agent.cli import parser_build
+    args = parser_build().parse_args([
+        "creative", "native-preflight", "--directory", "artwork-results/run",
+        "--session", "session.json",
+    ])
+    assert args.action == "native-preflight"
+    args = parser_build().parse_args([
+        "creative", "paint-stage", "--directory", "artwork-results/run",
+        "--session", "session.json", "--confirm",
+        "--reject-segmented-joins",
+    ])
+    assert args.reject_segmented_joins is True
+    legacy = parser_build().parse_args([
+        "creative", "paint-stage", "--directory", "artwork-results/run",
+        "--session", "session.json", "--confirm",
+    ])
+    assert legacy.reject_segmented_joins is False
