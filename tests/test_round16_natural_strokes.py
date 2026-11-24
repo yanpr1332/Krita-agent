@@ -133,4 +133,6 @@ def test_natural_intent_cannot_compete_with_other_pressure_rules():
     with pytest.raises(TaskError, match="competing pressure"):
         validate_scene_v4(candidate)
     del gesture["pressure_curve"]
+    # Named legacy style itself has an incompatible pressure curve.
+    del gesture["style"]
     assert validate_scene_v4(candidate)["stages"][0]["intents"][0]["natural"]
