@@ -84,3 +84,5 @@ Installed-build accepted; see docs/REPORT-007.md and REPORT-004.md.
 - Added hash-chained privacy-safe operation timings, a metrics CLI and dashboard integration; brush/pressure diversity is explicitly planned-only.
 - Added per-channel reopen drift localization and difference bounds while retaining strict RGBA equality as the only pass condition.
 - Offline CI, cloud-native timing, Windows build checks and whole-artwork acceptance remain pending; see [REPORT-012](REPORT-012.md).
+
+- Added per-subject brush diversity floors tied to effort profile; advisory by default, strict enforcement opt-in.

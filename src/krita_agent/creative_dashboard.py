@@ -86,7 +86,7 @@ footer {{ margin-top: 32px; font-size: .9rem; opacity: .7; }}
 <div class="small">Run: {id} | Version: {version}</div></header>
 <h2>Actual native artwork and stage previews</h2><div class="gallery">{images}</div>
 <h2>Run profile</h2>
-<p>Complexity: {complexity} · Target time: {time_budget} · Native-step ceiling: {step_budget}</p>
+<p>Complexity: {complexity} · Target time: {time_budget} · Native-step ceiling: {step_budget} · Brush diversity: {brush_policy}</p>
 <h2>Compiled brush plan (planned parameters, not proof of visible pressure or artistic quality)</h2>
 <p>{plan_metrics}</p>
 <h2>Execution timings</h2>
@@ -104,6 +104,7 @@ Refresh explicitly with --replace; this page does not update itself.</footer></b
         complexity=_escape(profile.get("complexity", "not set")),
         time_budget=_escape(time_budget_label),
         step_budget=_escape(profile.get("max_native_steps", "not set")),
+        brush_policy=_escape(profile.get("brush_diversity_policy", "advisory")),
         plan_metrics=_escape(json.dumps(plan_metrics, ensure_ascii=False, sort_keys=True)),
         metrics_integrity=_escape(metrics.get("integrity", "unknown")),
         metric_count=_escape(metrics.get("event_count", 0)),

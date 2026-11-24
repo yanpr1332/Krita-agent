@@ -7,6 +7,7 @@ from .creative_director import validate_brief
 from .protocol import TaskError
 from .scene_v3 import digest
 from .scene_v4 import compile_scene_v4, validate_scene_v4
+from .brush_quality_v12 import describe_floor
 
 GENERALIST_SYSTEM = """You are a generalist painting director preparing an
 original editable Krita painting. Output ONLY one JSON object with schema
@@ -91,10 +92,13 @@ def propose_generalist(brief, provider, reference_image=None):
         str(spec["time_budget_minutes"]) + " minutes"
         if spec["time_budget_minutes"] is not None else "not specified"
     )
+    prompt_spec["brush_floor_hint"] = describe_floor(spec["complexity"])
     prompt = (
         "Create a coherent generalist staged painting plan for canvas "
         "{width} x {height}, named {title}, style {style}. "
         "Effort profile: {complexity}; maximum compiled native steps: {max_native_steps}. "
+        "Brush-diversity policy: {brush_diversity_policy}; target floor: {brush_floor_hint}. "
+        "If policy is enforce, satisfy the floor for every large/complex subject. "
         "Target wall-clock budget: {time_budget_label} (advisory, not a guarantee). "
         "User brief: {prompt}. Plan structural proportions, color block-in "
         "and purposeful later details across 3..6 stages. Respect the step ceiling "

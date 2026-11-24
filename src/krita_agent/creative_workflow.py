@@ -23,6 +23,7 @@ from .visual_critic import critique
 from .visual_critic_v11 import review_artwork as review_artwork_v11, to_revision_critique
 from .review_budget_v11 import BudgetedProvider
 from .workflow_metrics_v12 import measure_operation
+from .brush_quality_v12 import evaluate_brush_plan
 
 WORKFLOW_SCHEMA = "krita-agent-creative-workflow/1"
 KNOWN_STATES = frozenset({
@@ -183,6 +184,15 @@ class CreativeWorkflow:
             raise TaskError(
                 "Compiled plan exceeds the selected max_native_steps budget: "
                 + str(len(compiled.get("steps", []))) + " > " + str(step_budget)
+            )
+        complexity = record["brief"].get("complexity", "standard")
+        brush_policy = record["brief"].get("brush_diversity_policy", "advisory")
+        brush_quality = evaluate_brush_plan(proposal["scene"], complexity)
+        compiled["brush_quality_v12"] = dict(brush_quality, policy=brush_policy)
+        if brush_policy == "enforce" and brush_quality["status"] != "pass":
+            raise TaskError(
+                "Brush diversity floor not met for the selected profile; "
+                "inspect brush_quality_v12 diagnostics or revise the plan"
             )
         _write_new(self.root / "scene-plan-v3.json", proposal["scene"])
         _write_new(self.root / "creative-proposal.json", proposal)

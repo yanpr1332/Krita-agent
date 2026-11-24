@@ -20,3 +20,5 @@
 - Whole-artwork / multi-genre / human acceptance: pending.
 
 Metrics report planned values and command durations only; they do not infer that native painting happened or that an artwork is accepted.
+
+8. Added profile-aware brush diversity floors. Advisory mode preserves existing behavior while surfacing weak plans; enforce mode blocks sparse/repetitive large subjects before approval.

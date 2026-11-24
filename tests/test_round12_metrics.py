@@ -93,11 +93,13 @@ def test_metrics_include_hash_verified_planned_brush_diversity_and_dashboard(tmp
     assert result["compiled_plan"]["distinct_sizes"] >= 3
     assert result["compiled_plan"]["distinct_colors"] >= 3
     assert result["compiled_plan"]["pressure_samples"] >= 3
+    assert result["compiled_plan"]["brush_quality_v12"]["status"] == "fail"
     output = render(flow)
     page = (flow.root / "dashboard.html").read_text(encoding="utf-8")
     assert output["read_only"] is True
     assert "Execution timings" in page
     assert "detailed" in page and "45 minutes" in page
+    assert "Brush diversity: advisory" in page
     assert "planned parameters" in page
 
 
@@ -113,3 +115,62 @@ def test_reopen_drift_reports_channels_and_spatial_bounds():
     assert report["difference_bounds_xyxy"] == [1, 1, 3, 3]
     assert report["mean_absolute_channel_difference"] > 0
     assert report["minor_color_tolerance"]["within_tolerance"] is False
+
+
+def rich_scene():
+    scene = sample_scene()
+    colors = ["#31516f", "#b5a17c", "#f0d6a0"]
+    sizes = [4, 14, 42]
+    opacities = [0.25, 0.55, 0.9]
+    vectors = [(40, 0), (40, 40), (0, 40), (40, -40)]
+    for obj in scene["objects"]:
+        x, y, width, height = obj["bounds"]
+        elements = []
+        for i in range(24):
+            dx, dy = vectors[i % len(vectors)]
+            x0 = x + 5 + (i % 8) * 10
+            y0 = y + 10 + (i // 8) * 15 + height // 3
+            x1 = min(x + width - 1, x0 + dx)
+            y1 = max(y, min(y + height - 1, y0 + dy))
+            elements.append({
+                "kind": "stroke",
+                "brush": {
+                    "size": sizes[i % 3],
+                    "color": colors[i % 3],
+                    "opacity": opacities[i % 3],
+                },
+                "points": [
+                    {"x": x0, "y": y0, "pressure": 0.1 + 0.1 * (i % 3)},
+                    {"x": x1, "y": y1, "pressure": 0.9 - 0.1 * (i % 3)},
+                ],
+            })
+        obj["elements"] = elements
+    return scene
+
+
+def test_brush_diversity_enforce_rejects_sparse_passes(tmp_path):
+    flow = CreativeWorkflow.create(
+        tmp_path / "strict-brush-run",
+        brief(complexity="detailed", brush_diversity_policy="enforce"),
+    )
+    with pytest.raises(TaskError, match="Brush diversity floor"):
+        flow.plan(candidate=sample_scene())
+    assert flow.read()["status"] == "initialized"
+
+
+def test_detailed_brush_diversity_floor_accepts_a_varied_plan():
+    from krita_agent.brush_quality_v12 import evaluate_brush_plan
+    from krita_agent.scene_v3 import validate_scene
+    result = evaluate_brush_plan(validate_scene(rich_scene()), "detailed")
+    assert result["status"] == "pass"
+    assert len(result["subjects"]) == 3
+    assert all(row["status"] == "pass" for row in result["subjects"])
+
+
+def test_advisory_brush_policy_preserves_legacy_plan_but_reports_failure(tmp_path):
+    flow = CreativeWorkflow.create(tmp_path / "advisory-brush-run", brief())
+    flow.plan(candidate=sample_scene())
+    metrics = summarize(flow.root, flow.read())
+    quality = metrics["compiled_plan"]["brush_quality_v12"]
+    assert quality["policy"] == "advisory"
+    assert quality["status"] == "fail"

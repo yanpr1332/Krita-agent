@@ -25,3 +25,5 @@
 
 ## Non-claims
 Offline CI is not native verification. Planned brush diversity is not proof of visible dynamics or natural painting. Time budget is advisory. Drift localization is not a root-cause fix. No complete artwork or human acceptance is claimed.
+
+- [x] Profile-aware per-subject brush diversity floor with advisory/enforce modes and deterministic regression scenes.

@@ -1,6 +1,7 @@
 """Natural-language-to-ScenePlan v3 using an explicit JSON model provider."""
 from .protocol import TaskError, label
 from .scene_v3 import validate_scene, compile_scene_v3, digest
+from .brush_quality_v12 import describe_floor
 
 DIRECTOR_SYSTEM = """You are a visual creative director and Krita scene planner.
 Return ONLY a JSON object conforming to schema krita-agent-scene/3.
@@ -60,12 +61,16 @@ def validate_brief(brief):
     time_budget = brief.get("time_budget_minutes")
     if time_budget is not None and (type(time_budget) is not int or not 1 <= time_budget <= 480):
         raise TaskError("time_budget_minutes must be an integer in [1,480]")
+    brush_policy = brief.get("brush_diversity_policy", "advisory")
+    if brush_policy not in ("advisory", "enforce"):
+        raise TaskError("brush_diversity_policy must be advisory or enforce")
     return {
         "prompt": prompt.strip(), "width": width, "height": height,
         "style": label(brief.get("style", "illustration"), "style", 160),
         "title": label(brief.get("title", "Creative Workflow"), "title", 120),
         "complexity": complexity, "max_native_steps": max_native_steps,
         "time_budget_minutes": time_budget,
+        "brush_diversity_policy": brush_policy,
     }
 
 
@@ -77,10 +82,13 @@ def propose(brief, provider, reference_image=None):
         str(spec["time_budget_minutes"]) + " minutes"
         if spec["time_budget_minutes"] is not None else "not specified"
     )
+    prompt_spec["brush_floor_hint"] = describe_floor(spec["complexity"])
     prompt = (
         "Create a complete editable scene matching this user brief. "
         "Canvas width={width}, height={height}, title={title}, style={style}.\n"
         "Effort profile: {complexity}; hard compiled native-step ceiling: {max_native_steps}.\n"
+        "Brush-diversity policy: {brush_diversity_policy}. Target floor: {brush_floor_hint}.\n"
+        "If policy is enforce, satisfy every floor for each large/complex subject.\n"
         "Target wall-clock budget: {time_budget_label} (advisory, not a guaranteed runtime).\n"
         "User request: {prompt}\n"
         "Return an original scene with irregular meaningful brush strokes "

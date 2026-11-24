@@ -141,3 +141,6 @@ The project-authored code is MIT-licensed. Krita and all third-party dependencie
 
 
 **Round 12 (integration source milestone):** user-selectable effort profiles, a compiled-step ceiling, privacy-safe hash-chained workflow timing, a `creative metrics` summary and more detailed KRA reopen pixel-drift diagnostics. These features improve planning/observability; they do not establish native pressure behavior or finished-artwork acceptance. See [Round 12 API](docs/ROUND12-API.md) and [acceptance checklist](docs/ROUND12-ACCEPTANCE.md).
+
+
+Round 12 also adds profile-aware brush diversity diagnostics. Set brush_diversity_policy to enforce in the brief to reject large/complex subjects that do not meet the selected size/color/opacity/pressure/direction floor; the default advisory mode reports gaps without blocking legacy plans.

@@ -191,6 +191,7 @@ def _plan_metrics(root, record):
         "pressure_min": round(min(pressure), 4) if pressure else None,
         "pressure_max": round(max(pressure), 4) if pressure else None,
         "pressure_spread": round(max(pressure) - min(pressure), 4) if pressure else None,
+        "brush_quality_v12": compiled.get("brush_quality_v12"),
     }
 
 
@@ -237,6 +238,7 @@ def summarize(root, record=None):
             "complexity": brief.get("complexity"),
             "time_budget_minutes": brief.get("time_budget_minutes"),
             "max_native_steps": brief.get("max_native_steps"),
+            "brush_diversity_policy": brief.get("brush_diversity_policy", "advisory"),
         },
         "compiled_plan": _plan_metrics(root, record),
         "operations": operations,

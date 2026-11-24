@@ -37,3 +37,18 @@ The dashboard reports compiled brush/pressure diversity only when the compiled p
 Pixel comparisons now report per-channel changed-pixel counts and absolute-delta sums, mean absolute channel difference, and half-open difference bounds `[x_min,y_min,x_max,y_max]`. Strict RGBA equality remains the only pass condition. Diagnostics help localize drift; they do not identify its cause or waive delivery integrity.
 
 No Windows build, cloud-native performance, multi-genre artwork or human acceptance is claimed by this source milestone.
+
+
+## Profile-aware brush diversity floor
+
+Briefs also accept brush_diversity_policy: advisory (default) or enforce. The profile selects a deterministic floor for every large/complex subject:
+
+| Profile | Strokes | Sizes | Colors | Opacity levels | Pressure span | Direction bins |
+|---|---:|---:|---:|---:|---:|---:|
+| quick_sketch | 8 | 2 | 2 | 1 | 0.08 | 2 |
+| standard | 12 | 2 | 2 | 2 | 0.12 | 3 |
+| detailed | 20 | 3 | 3 | 3 | 0.20 | 4 |
+
+Repeated trajectory ratios are also bounded by profile. A subject is considered large/complex when its bounding-box area is at least 50,000 pixels or it reaches the profile stroke threshold. In advisory mode, the plan is retained and the compiled diagnostics expose unmet floors. In enforce mode, a plan that misses any floor is rejected before archival or approval. No stroke is silently added or altered.
+
+These are structural plan checks, not visual-quality checks. The actual Krita preset response, native execution and artistic appearance still require separate tests and review.
