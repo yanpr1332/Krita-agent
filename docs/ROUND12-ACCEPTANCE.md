@@ -1,5 +1,7 @@
 # Round 12 — integration and acceptance checklist
 
+**Execution protocol:** [Consolidated Windows / Krita local acceptance protocol](ROUND12-LOCAL-ACCEPTANCE-PROTOCOL.md) defines the build matrix, exact brush/color/pressure tests, controlled material A/B, 24-task benchmark, evidence layout, and quantitative pass thresholds. This file tracks execution status; adding the protocol does not mark any native gate passed.
+
 ## Tier 1: source and offline regression
 - [x] New isolated branch based on merged Round 11 main.
 - [x] Quick-sketch / standard / detailed profiles with bounded override and legacy defaults.
@@ -20,7 +22,7 @@
 - [ ] Stable Qt5, Next Qt5 and Next Qt6 smoke.
 - [ ] Confirm actual pressure response of selected presets.
 - [ ] A/B material recipes at fixed scene, seed, canvas and preset.
-- [ ] Held-out campaign: six genres × three unseen text tasks plus six authorized reference tasks (24 total).
+- [ ] Held-out campaign: 18 text tasks (six genres × three complexity levels) plus six reference tasks (one per genre; the landscape slot uses the locked project benchmark) — 24 total.
 - [ ] Preserve KRA, PNG, execution, stage, layer, visual and separate human-review evidence for every task.
 
 ## Non-claims
@@ -32,3 +34,12 @@ Offline CI is not native verification. Planned brush diversity is not proof of v
 - [x] Expanded native brush calibration task with constant-pressure ladder, increasing/decreasing pressure ramps and nominal size ladder.
 - [x] Added evidence catalogue validation for malformed, unreviewed, wrong-build and tampered profiles.
 - [ ] Run the calibration matrix in the user's installed Krita builds and manually inspect exported native results.
+
+
+## Tier 3 pass criteria
+
+A finished-artwork task counts as accepted only when its native technical gate passes, it has at least eight genuinely contributing editable paint layers, three genuine Krita stage previews, strict KRA export/reopen equality (RGBA and color profile), and both independent visual-model and human reviews pass.
+
+Each reviewer uses the six-dimension 0–4 rubric in the local protocol: at least 18/24 total, no dimension below 2, and brief/reference fidelity, subject structure/recognition, and completion each at least 3. The campaign target is at least 18/24 accepted overall, at least 3/4 accepted in every genre (including at least 2/3 text tasks), and at least 4/6 reference tasks. Failed, blocked, disputed, and retried tasks remain in the denominator.
+
+The existing `artwork_acceptance_audit.py` is bound to the fixed sunset-alpine-lake contract; use it for the landscape reference task only. It is not a generic auditor for the other 23 tasks. See the protocol for the exact evidence and manual checks.
