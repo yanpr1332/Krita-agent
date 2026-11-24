@@ -1,0 +1,98 @@
+{
+  "schema": "krita-agent-composition/1",
+  "style": "fine natural-line illustrated scene",
+  "notes": "A cat sits by the window while a blue ceramic cup rests on the sill.",
+  "subjects": [
+    {
+      "id": "room",
+      "name": "Quiet room",
+      "kind": "interior",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "outline": "rectangle",
+      "color": "#e6d9c5",
+      "detail_color": "#8d806f",
+      "depth": 0.1
+    },
+    {
+      "id": "cat",
+      "name": "Sitting cat",
+      "kind": "animal",
+      "bbox": [
+        0.22,
+        0.21,
+        0.4,
+        0.65
+      ],
+      "outline": "ellipse",
+      "color": "#af9075",
+      "detail_color": "#393437",
+      "depth": 0.7,
+      "materials": [
+        "fur"
+      ],
+      "parts": [
+        {
+          "id": "head",
+          "name": "Head",
+          "bbox": [
+            0.23,
+            0.02,
+            0.5,
+            0.32
+          ],
+          "outline": "ellipse",
+          "color": "#bd9c7c"
+        },
+        {
+          "id": "tail",
+          "name": "Tail",
+          "bbox": [
+            0.73,
+            0.53,
+            0.2,
+            0.35
+          ],
+          "outline": "capsule",
+          "color": "#a1816a"
+        }
+      ]
+    },
+    {
+      "id": "cup",
+      "name": "Glazed cup",
+      "kind": "ceramic vessel",
+      "bbox": [
+        0.73,
+        0.57,
+        0.17,
+        0.23
+      ],
+      "outline": "capsule",
+      "color": "#6398b6",
+      "detail_color": "#27465c",
+      "depth": 0.8
+    }
+  ],
+  "relations": [
+    {
+      "kind": "front_of",
+      "a": "cat",
+      "b": "room"
+    },
+    {
+      "kind": "left_of",
+      "a": "cat",
+      "b": "cup"
+    },
+    {
+      "kind": "inside",
+      "a": "cat_head",
+      "b": "cat"
+    }
+  ]
+}
