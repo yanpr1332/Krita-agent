@@ -131,7 +131,7 @@ def validate_scene(candidate):
         brush = brush_settings(value.get("brush", {}))
         palette = validate_palette(value.get("styles"))
         min_strokes = integer(value.get("min_strokes", 1),
-                              "minimum object strokes", 1, 900)
+                              "minimum object strokes", 0, 900)
         elements = value.get("elements")
         if not isinstance(elements, list) or not 1 <= len(elements) <= 900:
             raise TaskError("Each semantic object needs 1..900 drawing elements")
@@ -140,6 +140,10 @@ def validate_scene(candidate):
         if count > MAX_ELEMENTS:
             raise TaskError("Scene exceeds 6000 elements")
         actual_strokes = sum(e["kind"] in PAINT_KINDS for e in compiled)
+        if min_strokes == 0 and not any(
+                e["kind"] == "polygon" and
+                e.get("fill") == "ForegroundColor" for e in compiled):
+            raise TaskError("Zero-stroke objects require native filled polygons")
         if actual_strokes < min_strokes:
             raise TaskError("Object needs actual brush strokes: below declared min_strokes budget")
         parent = value.get("parent")

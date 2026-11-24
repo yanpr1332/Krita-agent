@@ -361,13 +361,12 @@ def compile_semantic(candidate, brief):
                     "purpose": "Establish closed silhouette contour for " + n["name"],
                 }
             elif phase == "block_in":
-                spacing = min(120., max(5., bh/9))
+                # R15: use an actual editable Krita native filled polygon,
+                # not hundreds of broad scanline paintLine fallbacks. The
+                # subject's reviewed baseline foreground color is used.
+                # Region area, shape and build capability are checked later.
                 payload = {
-                    "kind": "coverage", "polygon": verts,
-                    "spacing": round(spacing, 3), "angle": 0,
-                    "brush": {"size": round(min(190., max(4., spacing*1.6)), 3),
-                              "color": n["color"], "opacity": .9,
-                              "pressure_enabled": False},
+                    "kind": "region", "polygon": verts,
                     "purpose": "Block in the base color for " + n["name"],
                 }
             else:

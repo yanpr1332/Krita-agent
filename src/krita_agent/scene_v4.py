@@ -20,6 +20,8 @@ ID_RE = re.compile(r"[a-z][a-z0-9_-]{0,23}\Z")
 MAX_SUBJECTS = 24
 MAX_GROUPS = 32
 MAX_TOTAL_INTENTS = 192
+MAX_NATIVE_REGION_AREA = 12_000_000
+MAX_STAGE_REGION_AREA = 32_000_000
 
 
 def _mapping(raw, allowed, name):
@@ -159,6 +161,7 @@ def validate_scene_v4(candidate):
             raise TaskError("Each stage needs 1..32 paint intents")
         intents = []
         intent_ids = set()
+        stage_region_area = 0.
         for item in raw_intents:
             _mapping(item, ("id", "subject_id", "kind", "purpose", "material",
                             "style", "brush", "brush_category",
@@ -173,7 +176,7 @@ def validate_scene_v4(candidate):
                 raise TaskError("Duplicate intent or unknown subject")
             intent_ids.add(iid)
             kind = item.get("kind")
-            if kind not in ("gesture", "coverage", "accents"):
+            if kind not in ("gesture", "coverage", "accents", "region"):
                 raise TaskError("Unsupported high-level paint intent")
             subject = by_id[sid]
             mat = label(item.get("material", subject["materials"][0]), "intent material", 64)
@@ -182,14 +185,27 @@ def validate_scene_v4(candidate):
             purpose = label(item.get("purpose"), "paint purpose", 180)
             if len(purpose) < 8:
                 raise TaskError("Every intent needs a meaningful paint purpose")
-            # Merge+validate the named style and its direct sensor/brush overrides.
+            # Native polygon region fills take the validated subject baseline
+            # foreground color, not arbitrary model-specified per-pixel RGB.
+            # Disallow brush/sensor and material-render grammar on region fills.
+            if kind == "region" and any(key in item for key in (
+                    "brush", "brush_category", "style", "pressure_curve",
+                    "pressure_variation", "variation_frequency",
+                    "variation_seed", "speed_sensitivity",
+                    "pressure_interpolation", "render", "path",
+                    "spacing", "angle", "count", "length", "jitter",
+                    "seed")):
+                raise TaskError("Native region fill forbids stroke-only settings")
             style = combine_style(subject["styles"], item)
             normalized = {
                 "id": iid, "subject_id": sid, "kind": kind,
                 "purpose": purpose, "material": mat,
-                "seed": integer(item.get("seed", 0), "intent seed", 0, 2147483647),
-                "jitter": number(item.get("jitter", 0), "geometric jitter", 0, .25),
             }
+            if kind != "region":
+                normalized["seed"] = integer(
+                    item.get("seed", 0), "intent seed", 0, 2147483647)
+                normalized["jitter"] = number(
+                    item.get("jitter", 0), "geometric jitter", 0, .25)
             if "style" in item:
                 normalized["style"] = item["style"]
             for key in ("brush", "brush_category", "pressure_curve",
@@ -205,10 +221,20 @@ def validate_scene_v4(candidate):
                     normalized["length"] = number(item.get("length", 12), "accent length", 1, 200)
             else:
                 normalized["polygon"] = _polygon(item.get("polygon"), subject)
-                normalized["spacing"] = number(item.get("spacing", 18),
-                                               "coverage spacing", 1, 200)
-                normalized["angle"] = number(item.get("angle", 0),
-                                             "coverage angle", -180, 180)
+                if kind == "coverage":
+                    normalized["spacing"] = number(item.get("spacing", 18),
+                                                   "coverage spacing", 1, 200)
+                    normalized["angle"] = number(item.get("angle", 0),
+                                                 "coverage angle", -180, 180)
+                else:
+                    points = normalized["polygon"]
+                    area = abs(sum(a[0]*b[1]-a[1]*b[0]
+                                   for a, b in zip(points, points[1:]+points[:1])))/2.
+                    if area > MAX_NATIVE_REGION_AREA:
+                        raise TaskError("Native region exceeds per-fill pixel budget")
+                    stage_region_area += area
+                    if stage_region_area > MAX_STAGE_REGION_AREA:
+                        raise TaskError("Native stage exceeds region fill area budget")
             if "render" in item:
                 normalized["render"] = validate_render(item["render"], kind)
             intents.append(normalized)
@@ -252,7 +278,15 @@ def lower_scene_v4(candidate):
             elements = []
             for item in grouped[sid]:
                 selected = combine_style(subject["styles"], item)
-                if "render" in item:
+                if item["kind"] == "region":
+                    # The *existing* allowlisted Krita draw.shape command
+                    # performs an editable native polygon fill. No raster paste.
+                    elements.append({
+                        "kind": "polygon", "fill": "ForegroundColor",
+                        "points": [{"x": x, "y": y}
+                                   for x, y in item["polygon"]],
+                    })
+                elif "render" in item:
                     elements.extend(expand_render_intent(item, selected, subject,
                                                          scene["document"]))
                 else:
@@ -265,6 +299,9 @@ def lower_scene_v4(candidate):
                 "name": stage["phase"] + " - " + subject["name"],
                 "kind": "custom", "bounds": subject["bounds"],
                 "brush": subject["brush"], "elements": elements,
+                "min_strokes": (0 if all(e["kind"] == "polygon" and
+                                         e.get("fill") == "ForegroundColor"
+                                         for e in elements) else 1),
                 "parent": None,
             })
         for item in rows:
@@ -295,9 +332,11 @@ def compile_scene_v4(candidate, profile_directory=None, build=None,
         if step["command"] == "layer.create":
             current_stage = stage_map[step["parameters"]["name"]]
         groups[current_stage].append(step)
-    if any(not any(step["command"] == "draw.stroke" for step in steps)
-           for steps in groups):
-        raise TaskError("Painting stage has no real native brush strokes")
+    if any(not any(step["command"] == "draw.stroke"
+                   or (step["command"] == "draw.shape" and
+                       step["parameters"].get("fill") == "ForegroundColor")
+                   for step in steps) for steps in groups):
+        raise TaskError("Painting stage has no real native paint operations")
     if preview_prefix is not None:
         if not isinstance(preview_prefix, str) or not re.fullmatch(
             r"r5-runs/[0-9a-f]{32}", preview_prefix
