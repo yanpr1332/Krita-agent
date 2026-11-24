@@ -178,12 +178,34 @@ def test_advisory_brush_policy_preserves_legacy_plan_but_reports_failure(tmp_pat
 
 def test_generalist_step_budget_rejects_before_archiving_plan_sources(tmp_path):
     from test_round7_generalist_scene import sample_v4
+    from krita_agent.scene_v4 import compile_scene_v4
+
+    candidate = sample_v4()
+    # The small shared fixture is intentionally compact. Add three bounded
+    # accent batches so this test actually crosses the 100-step ceiling.
+    source = candidate["stages"][0]["intents"][0]
+    for index, stage in enumerate(candidate["stages"]):
+        stage["intents"].append({
+            "id": "budget_marks_" + str(index),
+            "subject_id": "room",
+            "kind": "accents",
+            "purpose": "Generate bounded native marks for step-budget regression",
+            "material": "wood",
+            "style": "structure",
+            "path": source["path"],
+            "count": 64,
+            "length": 12,
+            "jitter": 0.05,
+            "seed": 100 + index,
+        })
+    assert len(compile_scene_v4(candidate)["steps"]) > 100
+
     flow = CreativeWorkflow.create(
         tmp_path / "generalist-budget-run",
         brief(max_native_steps=100),
     )
     with pytest.raises(TaskError, match="max_native_steps"):
-        flow.plan(candidate=sample_v4())
+        flow.plan(candidate=candidate)
     assert flow.read()["status"] == "initialized"
     assert not (flow.root / "scene-plan-v4.json").exists()
     assert not (flow.root / "generalist-proposal.json").exists()
