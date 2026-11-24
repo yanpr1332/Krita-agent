@@ -273,3 +273,41 @@ def test_bridge_auto_uses_one_native_polyline_on_supported_mock():
     assert inspect_stroke_continuity(
         [stroke(5, "auto")], capabilities(True)
     )["segmented_join_risk_strokes"] == 0
+
+
+def test_legacy_plan_preflight_and_strict_block_remain_nonmutating(tmp_path, monkeypatch):
+    from test_round5_creative_scene import sample_scene
+
+    flow = CreativeWorkflow.create(tmp_path / "legacy", {
+        "prompt": "A traditional painted landscape with meaningful brushwork.",
+        "width": 512, "height": 384,
+    })
+    flow.plan(candidate=sample_scene())
+    flow.approve_plan(confirm=True)
+    old_manifest = flow.manifest.read_bytes()
+    client = CapClient(False)
+    report = flow.native_stage_preflight(client)
+    assert report["scope"] == "legacy_plan"
+    assert report["draw_strokes_scanned"] > 0
+    assert flow.manifest.read_bytes() == old_manifest
+    calls = []
+    monkeypatch.setattr(workflow_module, "run_longjob",
+                        lambda *a, **kw: calls.append(1))
+    with pytest.raises(TaskError, match="preflight blocked"):
+        flow.paint(client, reject_segmented_joins=True)
+    assert calls == []
+    assert flow.manifest.read_bytes() == old_manifest
+
+
+def test_legacy_cli_strict_flag_is_explicit():
+    from krita_agent.cli import parser_build
+    args = parser_build().parse_args([
+        "creative", "paint", "--directory", "artwork-results/run",
+        "--session", "session.json", "--reject-segmented-joins",
+    ])
+    assert args.reject_segmented_joins is True
+    old = parser_build().parse_args([
+        "creative", "paint", "--directory", "artwork-results/run",
+        "--session", "session.json",
+    ])
+    assert old.reject_segmented_joins is False
