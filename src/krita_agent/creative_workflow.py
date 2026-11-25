@@ -18,6 +18,9 @@ from .scene_v4 import SCHEMA as SCHEMA_V4, validate_scene_v4, lower_scene_v4
 from .semantic_planning_v14 import (
     COMPOSITION_SCHEMA, compile_semantic, propose_semantic,
 )
+from .native_regions_v15 import (
+    inspect_native_regions, requires_native_regions, require_supported_regions,
+)
 from .creative_reviser import execute_revision, plan_revision, validate_revision
 from .protocol import TaskError
 from .scene_v3 import SCHEMA, digest, validate_scene
@@ -323,8 +326,13 @@ class CreativeWorkflow:
         plan = json.loads(compiled_path.read_text(encoding="utf-8"))
         if type(reject_segmented_joins) is not bool:
             raise TaskError("reject_segmented_joins must be boolean")
-        if reject_segmented_joins:
-            reject_unsafe_segmented_joins(plan["steps"], client.request("capabilities"))
+        needs_regions = requires_native_regions(plan["steps"])
+        if reject_segmented_joins or needs_regions:
+            capabilities = client.request("capabilities")
+            if reject_segmented_joins:
+                reject_unsafe_segmented_joins(plan["steps"], capabilities)
+            if needs_regions:
+                require_supported_regions(plan["steps"], capabilities)
         record["status"] = "painting_unknown"
         self._save(record, "native_paint_submission_intent")
         result = run_longjob(
@@ -446,19 +454,24 @@ class CreativeWorkflow:
                     _sha(compiled_path) != entry.get("sha256")):
                 raise TaskError("Approved legacy compiled plan changed")
             compiled = json.loads(compiled_path.read_text(encoding="utf-8"))
-            report = inspect_stroke_continuity(
-                compiled["steps"], client.request("capabilities"))
+            capabilities = client.request("capabilities")
+            report = inspect_stroke_continuity(compiled["steps"], capabilities)
+            region = inspect_native_regions(compiled["steps"], capabilities)
             return {"scope": "legacy_plan",
-                    "approved_steps_sha256": compiled["native_steps_sha256"], **report}
+                    "approved_steps_sha256": compiled["native_steps_sha256"],
+                    **report, "native_region_preflight": region}
         compiled = self._verified_staged_plan(record)
         index = record["staged"].get("next_stage")
         if type(index) is not int or not 0 <= index < record["staged"]["total"]:
             raise TaskError("Generalist stage cursor is invalid")
         span = compiled["stage_spans"][index]
         segment = compiled["steps"][span["start"]:span["stop"]]
-        report = inspect_stroke_continuity(segment, client.request("capabilities"))
+        capabilities = client.request("capabilities")
+        report = inspect_stroke_continuity(segment, capabilities)
+        region = inspect_native_regions(segment, capabilities)
         return {"stage": index + 1, "stage_id": span["id"],
-                "approved_stage_sha256": span["steps_sha256"], **report}
+                "approved_stage_sha256": span["steps_sha256"],
+                **report, "native_region_preflight": region}
 
     @measure_operation("paint_stage")
     def paint_stage(self, client, confirm=False, ledger_directory=None,
@@ -484,11 +497,16 @@ class CreativeWorkflow:
             raise TaskError("Generalist stage instructions changed")
         if type(reject_segmented_joins) is not bool:
             raise TaskError("reject_segmented_joins must be boolean")
-        if reject_segmented_joins:
-            # Explicit opt-in: fail before any stage status change or native
-            # submission. Legacy callers retain their historical auto-mode
-            # segmented fallback until a real build-specific fix is verified.
-            reject_unsafe_segmented_joins(segment, client.request("capabilities"))
+        needs_regions = requires_native_regions(segment)
+        if reject_segmented_joins or needs_regions:
+            # R15 filled polygons require a native supported API. Check
+            # capabilities before recording any native submission intent.
+            # R13 strict stroke continuity remains optional and unchanged.
+            capabilities = client.request("capabilities")
+            if reject_segmented_joins:
+                reject_unsafe_segmented_joins(segment, capabilities)
+            if needs_regions:
+                require_supported_regions(segment, capabilities)
         record["status"] = "painting_unknown"
         record["active_stage"] = index
         self._save(record, "native_stage_%02d_submission_intent" % (index+1))
