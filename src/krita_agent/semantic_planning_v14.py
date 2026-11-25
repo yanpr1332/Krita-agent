@@ -357,17 +357,17 @@ def compile_semantic(candidate, brief):
                     "kind": "gesture", "path": verts + [verts[0]],
                     "brush": {"size": round(small, 2), "color": n["detail_color"],
                               "opacity": .85, "pressure_enabled": True},
-                    "pressure_curve": [[0, .2], [.2, .75], [.75, .68], [1, .2]],
+                    "natural": {"purpose": "contour", "spacing": 3.5,
+                                "smoothing_passes": 1},
                     "purpose": "Establish closed silhouette contour for " + n["name"],
                 }
             elif phase == "block_in":
-                spacing = min(120., max(5., bh/9))
+                # R15: use an actual editable Krita native filled polygon,
+                # not hundreds of broad scanline paintLine fallbacks. The
+                # subject's reviewed baseline foreground color is used.
+                # Region area, shape and build capability are checked later.
                 payload = {
-                    "kind": "coverage", "polygon": verts,
-                    "spacing": round(spacing, 3), "angle": 0,
-                    "brush": {"size": round(min(190., max(4., spacing*1.6)), 3),
-                              "color": n["color"], "opacity": .9,
-                              "pressure_enabled": False},
+                    "kind": "region", "polygon": verts,
                     "purpose": "Block in the base color for " + n["name"],
                 }
             else:
@@ -382,7 +382,11 @@ def compile_semantic(candidate, brief):
                     "brush": {"size": round(small*.7, 2),
                               "color": n["detail_color"], "opacity": .75,
                               "pressure_enabled": True},
-                    "pressure_curve": [[0, .15], [.35, .72], [1, .15]],
+                    "natural": {
+                        "purpose": ("fur" if "fur" in n["materials"]
+                                    else "fine_detail"),
+                        "spacing": 2.5, "smoothing_passes": 1,
+                    },
                     "purpose": "Indicate a form direction guide for " + n["name"],
                 }
             intents.append({"id": iid, "subject_id": sid, **payload})

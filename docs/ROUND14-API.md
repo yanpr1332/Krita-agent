@@ -4,6 +4,8 @@
 
 [General roadmap](ARTIST-ROADMAP-R13-R20.md) · [Target architecture](ARTIST-ARCHITECTURE-R13-R20.md) · [User-approved consolidated-acceptance policy](ROUND14-DEVELOPMENT-POLICY.md).
 
+> **R15 upgrade (when R15 is merged):** The planned `block_in` operation is now compiled to bounded native `region` / `draw.shape` polygon fills, replacing the older `coverage` scanline fallback. See [ROUND15-API.md](ROUND15-API.md). The original R14 PR did not include this R15 behavior.
+
 ## 1. Why this exists
 
 Round 12 showed that a model emitting complete v4 plans often fails strict geometric, material or budget constraints before reaching Krita. For R14 the model is only asked for **small normalized object declarations**: subject/part identity, rectangle, color, primitive silhouette, semantic materials, depth, and declared relations. Python owns pixel placement, valid primitive polygons, phase intents and the downstream reviewed ScenePlan. No model-generated paths, command strings, absolute local filenames, arbitrary APIs, raster pastes or tool calls are accepted.
@@ -52,7 +54,7 @@ A composition `/1` is **not** a finished painting: parts drawn as ellipses/recta
 
 The compiler generates an inspectable intermediary with `sketch`, `block_in`, `detail` stage goals and subject-specific `contour`, `region_blockin`, `detail_line` semantic tasks.
 
-It also emits a validated ScenePlan v4 with matching native pen intents; the **existing v4 → v3 → whitelisted native** compiler is authoritative. For now, `region_blockin` still lowers to the existing bounded native coverage strokes; proper area/fill engine is **planned R15**, not implemented by this change.
+It also emits a validated ScenePlan v4 with matching native pen intents; the **existing v4 → v3 → whitelisted native** compiler is authoritative. On the standalone R14 branch, `region_blockin` lowers to bounded native coverage strokes. The subsequent R15 branch changes that lowering to real native editable `region` polygon fills, as documented in [ROUND15-API.md](ROUND15-API.md).
 
 The paint plan explicitly sets:
 
