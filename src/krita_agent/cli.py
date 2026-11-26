@@ -20,7 +20,7 @@ from . import upstream as upstream_api
 from . import upstream3
 from . import revisions
 from .creative_plans import compile_scene
-from . import round4_cli, round5_cli, reference_cli_v10
+from . import round4_cli, round5_cli, reference_cli_v10, lineart_cli_v18
 
 
 def inspect(path, timeout=10):
@@ -235,6 +235,7 @@ def parser_build():
     round4_cli.register(commands,_connection)
     round5_cli.register(commands,_connection)
     reference_cli_v10.register(commands)
+    lineart_cli_v18.register(commands)
     return parser
 
 
@@ -254,6 +255,9 @@ def main(argv=None):
             return 0
         if args.command == "reference":
             _show(reference_cli_v10.execute(args))
+            return 0
+        if args.command == "lineart":
+            _show(lineart_cli_v18.execute(args))
             return 0
         if args.command == "creative":
             _show(round5_cli.execute(args,_client))
