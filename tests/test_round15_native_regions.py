@@ -37,7 +37,7 @@ def test_semantic_block_in_uses_genuine_native_filled_shapes_not_broad_scans():
     span = compiled["stage_spans"][1]
     part = compiled["steps"][span["start"]:span["stop"]]
     fills = [step for step in part if step["command"] == "draw.shape"]
-    assert len(fills) == len(scene["subjects"])
+    assert len(fills) == len(scene["subjects"])*3
     assert all(item["parameters"]["shape"] == "polygon" and
                item["parameters"]["fill"] == "ForegroundColor" for item in fills)
     assert not any(s["command"] == "draw.stroke" for s in part)
@@ -45,8 +45,9 @@ def test_semantic_block_in_uses_genuine_native_filled_shapes_not_broad_scans():
                    for s in compiled["steps"])
     assert compiled["requires_native_approval"] is True
     assert compiled["not_artwork_acceptance"] is True
-    # Each filled area is an editable Krita paint-layer operation.
-    assert sum(s["command"] == "layer.create" for s in part) == len(fills)
+    # R17 keeps each subject on its own editable paint layer, with three
+    # source-ordered native area fills for base, shade and light.
+    assert sum(s["command"] == "layer.create" for s in part) == len(scene["subjects"])
 
 
 def test_native_polygon_fill_reaches_allowlisted_krita_paint_polygon():
@@ -135,7 +136,7 @@ def test_zero_native_strokes_only_legal_for_filled_polygon():
     assert requires_native_regions(steps)
     assert inspect_native_regions(steps, {
         "symbols": {"Node.paintPolygon": True},
-    })["filled_region_steps"] == len(scene["subjects"])
+    })["filled_region_steps"] == len(scene["subjects"])*3
     with pytest.raises(TaskError, match="requires Node.paintPolygon"):
         require_supported_regions(steps, {"symbols": {"Node.paintPolygon": False}})
     with pytest.raises(TaskError, match="filled polygons"):

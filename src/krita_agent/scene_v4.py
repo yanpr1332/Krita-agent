@@ -170,7 +170,7 @@ def validate_scene_v4(candidate):
                             "speed_sensitivity", "pressure_interpolation",
                             "path", "polygon", "spacing", "angle", "render",
                             "jitter", "seed", "count", "length",
-                            "natural"), "paint intent")
+                            "natural", "fill_color"), "paint intent")
             iid = _id(item.get("id"), "paint-intent ID")
             sid = _id(item.get("subject_id"), "intent subject ID")
             if iid in intent_ids or sid not in by_id:
@@ -208,6 +208,15 @@ def validate_scene_v4(candidate):
                 "id": iid, "subject_id": sid, "kind": kind,
                 "purpose": purpose, "material": mat,
             }
+            if "fill_color" in item and kind != "region":
+                raise TaskError("Only native regions may specify fill_color")
+            if kind == "region" and "fill_color" in item:
+                import re
+                raw_color = item["fill_color"]
+                if (type(raw_color) is not str or
+                        re.fullmatch(r"#[0-9a-fA-F]{6}", raw_color) is None):
+                    raise TaskError("Native region fill_color must be #RRGGBB")
+                normalized["fill_color"] = raw_color.lower()
             if kind != "region":
                 normalized["seed"] = integer(
                     item.get("seed", 0), "intent seed", 0, 2147483647)
@@ -291,11 +300,16 @@ def lower_scene_v4(candidate):
                 if item["kind"] == "region":
                     # The *existing* allowlisted Krita draw.shape command
                     # performs an editable native polygon fill. No raster paste.
-                    elements.append({
+                    element = {
                         "kind": "polygon", "fill": "ForegroundColor",
                         "points": [{"x": x, "y": y}
                                    for x, y in item["polygon"]],
-                    })
+                    }
+                    if "fill_color" in item:
+                        # R17: the only shape-level brush override permitted
+                        # is a validated foreground RGB for this filled area.
+                        element["brush"] = {"color": item["fill_color"]}
+                    elements.append(element)
                 elif "render" in item:
                     elements.extend(expand_render_intent(item, selected, subject,
                                                          scene["document"]))

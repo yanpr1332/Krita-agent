@@ -14,6 +14,7 @@ from .creative_director import validate_brief
 from .protocol import TaskError
 from .scene_v3 import digest
 from .scene_v4 import validate_scene_v4
+from .lighting_v17 import validate_lighting, material_palette, light_regions
 
 COMPOSITION_SCHEMA = "krita-agent-composition/1"
 PAINT_PLAN_SCHEMA = "krita-agent-paint-plan/1"
@@ -28,7 +29,11 @@ SEMANTIC_SYSTEM = """You are a Krita painting composition director, NOT an
 executor. Return one small JSON object with schema krita-agent-composition/1.
 Do NOT return brush strokes, paths, pixels, commands, KRA paths, code, scripts,
 or any unrequested uploads. This is a geometric scaffold, NOT final artwork.
-Allowed top-level keys: schema, style, subjects, relations, notes.
+Allowed top-level keys: schema, style, subjects, relations, notes, lighting.
+Optional lighting: {direction:[-0.6,-0.8],strength:0.56,warmth:0.2,
+shadow_fraction:0.35,highlight_fraction:0.22}. The geometry solver
+creates actual bounded shadow/highlight native regions; do not specify
+shading polygons or executable commands in this model output.
 Supply 1..10 meaningful subjects with:
 {id:"cat",name:"Sitting cat",kind:"animal",bbox:[0.25,0.18,0.42,0.70],
  depth:0.7,color:"#9a7566",detail_color:"#3b3539",
@@ -174,8 +179,8 @@ def _check_relation(rel, nodes):
 
 def validate_composition(candidate):
     """Pure, canonical and strict high-level proposal validation."""
-    _mapping(candidate, ("schema", "style", "subjects", "relations", "notes"),
-             "composition")
+    _mapping(candidate, ("schema", "style", "subjects", "relations", "notes",
+                          "lighting"), "composition")
     if candidate.get("schema") != COMPOSITION_SCHEMA:
         raise TaskError("Expected composition schema /1")
     subjects = candidate.get("subjects")
@@ -261,6 +266,7 @@ def validate_composition(candidate):
         "notes": _text(candidate.get("notes", "Coherent composition scaffold"),
                        "composition notes", 240),
         "subjects": nodes, "relations": relations,
+        "lighting": validate_lighting(candidate.get("lighting")),
     }
 
 
@@ -320,13 +326,21 @@ def compile_semantic(candidate, brief):
     if width * height > 32000000:
         raise TaskError("Canvas budget exceeded")
     nodes = composition["subjects"]
+    lighting = composition["lighting"]
     v4_subjects = []
     outline_map = {}
+    region_light_by_id = {}
+    palettes = {}
     for n in nodes:
         box = _pixel_box(n["bbox"], width, height)
         if min(box[2], box[3]) < 8:
             raise TaskError("Semantic object too small for native drawing: " + n["id"])
-        outline = _to_pixels(_polygon(n["bbox"], n["outline"]), width, height)
+        normalized_outline = _polygon(n["bbox"], n["outline"])
+        outline = _to_pixels(normalized_outline, width, height)
+        palette = material_palette(n["color"], n["materials"], lighting)
+        palettes[n["id"]] = palette
+        region_light_by_id[n["id"]] = light_regions(
+            normalized_outline, palette, lighting, [width, height])
         v4_subjects.append({
             "id": n["id"], "name": n["name"], "kind": n["kind"],
             "materials": n["materials"], "parent": n["parent"],
@@ -362,13 +376,13 @@ def compile_semantic(candidate, brief):
                     "purpose": "Establish closed silhouette contour for " + n["name"],
                 }
             elif phase == "block_in":
-                # R15: use an actual editable Krita native filled polygon,
-                # not hundreds of broad scanline paintLine fallbacks. The
-                # subject's reviewed baseline foreground color is used.
-                # Region area, shape and build capability are checked later.
+                # R17: keep the real R15 editable base fill, then overlay
+                # two clipped native fill regions with material-aware RGB.
+                # This is a simple 2D light/value cue, not inferred normals.
                 payload = {
                     "kind": "region", "polygon": verts,
-                    "purpose": "Block in the base color for " + n["name"],
+                    "fill_color": palettes[sid]["base"],
+                    "purpose": "Establish base value and color for " + n["name"],
                 }
             else:
                 cx, cy = bx+bw*.5, by+bh*.5
@@ -392,6 +406,23 @@ def compile_semantic(candidate, brief):
             intents.append({"id": iid, "subject_id": sid, **payload})
             tasks.append({"subject_id": sid, "operation": operation,
                           "purpose": payload["purpose"]})
+            if phase == "block_in":
+                for region in region_light_by_id[sid][1:]:
+                    role = region["role"]
+                    extra = {
+                        "id": ("sha_" if role == "shadow" else "lit_") + sid,
+                        "subject_id": sid,
+                        "kind": "region",
+                        "polygon": _to_pixels(region["polygon"], width, height),
+                        "fill_color": region["color"],
+                        "purpose": "Apply bounded " + role + " value to " + n["name"],
+                    }
+                    intents.append(extra)
+                    tasks.append({
+                        "subject_id": sid,
+                        "operation": "material_" + role,
+                        "purpose": extra["purpose"],
+                    })
         v4_stages.append({"id": phase, "phase": phase, "goal": goal,
                           "intents": intents})
         semantic_stages.append({"id": phase, "operation": operation,
@@ -408,6 +439,8 @@ def compile_semantic(candidate, brief):
         "source_composition_sha256": digest(composition),
         "scene_v4_sha256": digest(scene),
         "stages": semantic_stages,
+        "lighting": lighting,
+        "palette_by_subject": palettes,
         "status": "structural_scaffold_only",
         "requires_native_approval": True,
         "artwork_accepted": False,
@@ -422,7 +455,9 @@ def propose_semantic(brief, provider, reference_image=None):
         "Plan a semantic object composition for a {}x{} Krita canvas. "
         "Title: {}. Style: {}. Brief: {}. "
         "Return only a bounded normalized composition, no pixel paths, "
-        "no native commands. Keep layout plausible and subjects distinct."
+        "no native commands. Keep layout plausible and subjects distinct. "
+        "Optionally describe one coherent lighting direction and warmth; "
+        "never draw shadow or highlight pixels yourself."
     ).format(spec["width"], spec["height"], spec["title"],
              spec["style"], spec["prompt"])
     candidate = provider.complete_json(
