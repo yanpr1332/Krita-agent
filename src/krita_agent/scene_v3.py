@@ -46,11 +46,22 @@ def _geometry_element(value, width, height, box, object_kind, palette):
     kind = value["kind"]
     element = dict(value)
     x, y, w, h = box
+    shape_color = (
+        kind == "polygon" and value.get("fill") == "ForegroundColor"
+        and type(value.get("brush")) is dict
+        and set(value["brush"]) == {"color"}
+    )
     if kind not in PAINT_KINDS and any(k in value for k in (
             "brush", "style", "brush_category", "pressure_curve",
             "pressure_variation", "variation_frequency", "variation_seed",
             "speed_sensitivity", "pressure_interpolation")):
-        raise TaskError("Stroke styles require an actual brush stroke")
+        if not shape_color or any(k in value for k in (
+                "style", "brush_category", "pressure_curve",
+                "pressure_variation", "variation_frequency",
+                "variation_seed", "speed_sensitivity",
+                "pressure_interpolation")):
+            raise TaskError("Only filled native polygons may override foreground RGB")
+        element["brush"] = brush_settings(value["brush"])
     selected_style = combine_style(palette, element) if kind in PAINT_KINDS else {}
     if kind in PAINT_KINDS:
         if kind == "bezier":

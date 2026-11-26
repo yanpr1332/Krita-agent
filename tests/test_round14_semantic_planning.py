@@ -81,7 +81,9 @@ def test_semantic_layer_produces_deterministic_reviewable_v4_and_tasks():
     assert tasks["source_composition_sha256"] == digest(composition)
     assert [s["phase"] for s in scene["stages"]] == [
         "sketch", "block_in", "detail"]
-    assert all(len(s["intents"]) == 5 for s in scene["stages"])
+    # R17 adds clipped highlight/shadow region intents while retaining
+    # exactly one R14 semantic subject layer per phase.
+    assert [len(s["intents"]) for s in scene["stages"]] == [5, 15, 5]
     assert scene == validate_scene_v4(scene)
     assert compile_semantic(deepcopy(candidate), brief()) == (
         composition, tasks, scene)

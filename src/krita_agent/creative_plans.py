@@ -53,7 +53,15 @@ def compile_scene(scene):
                     "preset", "size", "color", "opacity", "pressure_enabled"}:
                 raise TaskError("Invalid per-stroke brush settings")
             if override_raw and kind not in ("stroke", "bezier"):
-                raise TaskError("Per-element brush settings require native strokes")
+                # R17: one exact RGB color override is allowed on the
+                # real Krita ForegroundColor polygon fill. No shape-level
+                # size, preset, opacity or pressure changes are allowed.
+                if not (kind == "polygon" and
+                        element.get("fill") == "ForegroundColor" and
+                        set(override_raw) == {"color"}):
+                    raise TaskError(
+                        "Per-element shape brush override requires a native "
+                        "filled polygon with foreground color only")
             override = brush_settings(override_raw)
             effective = {**base_brush, **override}
             if current_brush is not None and set(current_brush) - set(effective):
